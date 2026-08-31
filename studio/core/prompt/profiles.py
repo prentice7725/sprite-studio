@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Data loader for generation and negative prompt profiles."""
 
 from __future__ import annotations

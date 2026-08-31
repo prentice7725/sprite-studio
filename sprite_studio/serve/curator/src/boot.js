@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // curator/boot.js — 부트스트랩 — 런 로드 → 전 도메인 초기 렌더 (항상 마지막 로드)
 // 로드 순서 SSoT = index.html (classic script 전역 어휘 공유; 빌드 스텝 없음)
 

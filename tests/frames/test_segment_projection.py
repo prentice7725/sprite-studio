@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Projection-profile + DP segmentation (sprite_studio/frames/segment.py) tests.
 
 The fused fixture (tests/fixtures/run-fused/) draws three poses whose arms

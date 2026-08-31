@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-request.json` 의 read-modify-write 는 격리 도메인 **하나** 안에서만 일어난다
 (plan sprite-studio/state-revision-read-mutation).
 

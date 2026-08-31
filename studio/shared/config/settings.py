@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Refine settings as data — spec §3.2 bans hardcoded thresholds.
 
 Every number the two Refine Engines steer by (grid search range, phase

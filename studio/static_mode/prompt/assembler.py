@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode prompt assembly (spec §10.2).
 
     Scene / Object Description

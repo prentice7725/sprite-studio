@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode project lifecycle and pipeline (spec §7.3, §11.3).
 
 Static projects are much lighter than sprite runs: there is no row layout, no

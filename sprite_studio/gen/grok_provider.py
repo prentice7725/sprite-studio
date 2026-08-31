@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Grok Imagine provider (xAI OAuth, no API key).
 
 grok build ships an Imagine skill with `image_gen` (text -> new image) and

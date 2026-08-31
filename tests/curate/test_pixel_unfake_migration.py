@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """은퇴한 `pixel_perfect` 키 -> 현행 `pixel_unfake` 이관 (plan sprite-gen/pixel-unfake-rename).
 
 용어 근거: "픽셀 퍼펙트" 는 광의

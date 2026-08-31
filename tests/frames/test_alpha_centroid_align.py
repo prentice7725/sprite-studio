@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """align_x "alpha-centroid" (perfectpixel-studio port) unit tests.
 
 The mode is opt-in: defaults must keep producing foot-centroid placement

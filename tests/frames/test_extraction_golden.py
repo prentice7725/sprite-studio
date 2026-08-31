@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Golden regression for connected-component frame extraction.
 
 Fixed synthetic row strips (tests/fixtures/run/raw/) go through

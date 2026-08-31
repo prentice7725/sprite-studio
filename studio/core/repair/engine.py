@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Transactional application of safe repair candidates."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Tests for the matte-based `cutout` background remover (imported-image utility).
 
 Synthetic fixtures are built in-process (no binary assets): an ivory canvas with

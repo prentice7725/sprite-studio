@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Normalize wide Grok multi-subject output into a component-row strip.
 
 Grok sometimes follows the subject/layout instruction but returns a 16:9

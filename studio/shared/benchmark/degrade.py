@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Synthetic degradation (spec §9.3).
 
 The benchmark's premise: take art we know is correct, break it the way an image

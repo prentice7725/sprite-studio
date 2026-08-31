@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Oklab-consistent, continuously weighted cell sampling (spec §5.4, §5.5, §8.3).
 
 This is the one place a lattice becomes logical pixels. Both modes call it, so

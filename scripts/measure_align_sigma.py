@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Measure per-frame horizontal jitter σ for `fit.align_x` variants.
 
 For each variant, copies the source run's `sprite-request.json` + `raw/` strips

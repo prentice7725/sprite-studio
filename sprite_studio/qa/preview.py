@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Build motion-QA previews for a sprite-studio run.
 
 For each state in frames/frames-manifest.json this writes:

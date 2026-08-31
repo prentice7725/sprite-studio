@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Regression tests for soft-alpha edges and trapped interior chroma blends.
 
 Reproduction (moe raws, 2026-07-08): a mint-green-hair character keyed on

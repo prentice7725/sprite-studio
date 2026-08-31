@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Per-state pixel-perfect variant resolution (curation.frame_variant) + mixed bake.
 
 The curator has a per-row pixel-perfect toggle (states.<state>.pixel_perfect) and a

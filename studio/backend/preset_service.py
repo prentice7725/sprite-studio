@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Data-driven presets, split by mode (spec §3.2 "Mod-friendly").
 
 Sprite presets describe a unit (directions, states, locks); static presets

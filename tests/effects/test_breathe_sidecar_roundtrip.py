@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """폐기된 호흡 사이드카가 큐레이터 왕복에서 살아남는지 + JS 위상식이 파이썬과 같은지.
 
 굽기 경로만 `splits`/`amplitude`/`subpixel`/`hold` 를 loud reject 하면 계약이 반쪽이다.

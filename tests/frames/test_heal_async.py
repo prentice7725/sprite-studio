@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """장기 heal 의 비차단 계약 (plan sprite-studio/long-op-loading-ux).
 
 엔진 갱신 후 첫 /api/run 이 heal 을 요청 안에서 동기로 돌리면 첫 탭이 진행률

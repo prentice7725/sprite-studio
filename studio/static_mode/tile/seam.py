@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Tile / seam-aware processing (spec §8.6).
 
 A tile is judged at its edges. When it repeats, the right column sits against

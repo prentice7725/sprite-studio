@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deterministic frame refinement with character-level shared locks.
 
 This is the first Studio refine stage. It consumes extracted cell-sized RGBA

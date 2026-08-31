@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Regression tests for chroma-key alpha cleanup and auto key selection.
 
 These guard three ways the extractor used to silently destroy real subject

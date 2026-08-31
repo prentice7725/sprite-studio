@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Non-destructive Refined → Repair orchestration and persisted review data."""
 
 from __future__ import annotations

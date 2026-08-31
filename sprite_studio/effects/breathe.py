@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """결정론 호흡(idle breathing) — 봉투 기반 스쿼시&스트레치 (변형 강도 장).
 
 호흡은 프레임 선택(깜빡임)과 직교하는 변조 레이어다 (maintainer 확정 2026-07-18).

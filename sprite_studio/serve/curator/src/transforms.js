@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // curator/transforms.js — 카드 변형 (회전/스케일/시어/플립) 적용 + 스테이지 조작 배선
 // 로드 순서 SSoT = index.html (classic script 전역 어휘 공유; 빌드 스텝 없음)
 

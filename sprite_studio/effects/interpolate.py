@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """AI 프레임 보간 — 한 상태의 두 프레임 사이 중간(in-between) 프레임을 만들어 테이크로 기록한다.
 
 파이프라인 도크트린과의 관계: "AI 개입은 raw 생성 한 곳뿐" — 보간도 raw 단계의

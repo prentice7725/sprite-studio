@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """조회는 런 파일을 쓰지 않는다 (plan sprite-studio/state-revision-read-mutation).
 
 합성 회귀는 `state_revision()` 조회 중 은퇴 키를 정규화하더라도 request 바이트와

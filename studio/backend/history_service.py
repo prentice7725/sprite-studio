@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Read-only generation and take history for the Studio review surface."""
 
 from __future__ import annotations

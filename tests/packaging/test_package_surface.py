@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Import-surface contract checks for downstream package consumers."""
 
 from __future__ import annotations

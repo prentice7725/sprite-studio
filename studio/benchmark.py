@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Runnable synthetic-degradation benchmark (spec §9, §16.10).
 
     python -m studio.benchmark --out runs/benchmark/baseline.json

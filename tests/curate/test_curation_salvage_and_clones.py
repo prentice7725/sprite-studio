@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """행 단위 큐레이션 보존(salvage) + stale 백업 + 프레임 복제(clones) 계약.
 
 배경 회귀 (2026-07-15, 합성 회귀): 엔진 커밋마다 heal 이 전

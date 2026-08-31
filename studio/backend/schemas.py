@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Small data contracts shared by the Studio services and UI.
 
 ``mode`` is the field that splits Asset Studio (spec §13.1). Every project

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """방향 앵커 = 승인된 프레임 (maintainer 2026-07-25).
 
 - 기본 앵커 = 그 방향 앵커 행의 **큐레이션 시퀀스 첫 인스턴스** (index 0 이 아니다) 이고,

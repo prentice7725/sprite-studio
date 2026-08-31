@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-studio migrate-breathe` — 폐기 사이드카를 옮기는 유일한 경로.
 
 모듈 docstring 이 "무엇을 버렸는지 전부 출력한다" 를 계약으로 걸었으므로, 폐기 키가

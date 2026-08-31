@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Repair adoption is explicit, revision-pinned and consumed by compose/export."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Shared palette build/remap in Oklab (spec §5.5, §8.3).
 
 Both modes quantise, but for different reasons: Sprite Mode wants one palette

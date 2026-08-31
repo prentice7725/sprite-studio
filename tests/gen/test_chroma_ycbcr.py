@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Tests for the opt-in YCbCr chrominance matting path (chroma.mode: "ycbcr").
 
 Port of perfectpixel-studio internal/sprite/chroma.go (MIT — see NOTICE).

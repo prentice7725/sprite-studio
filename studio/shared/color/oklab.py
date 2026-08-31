@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Oklab colour metric — the one distance space both modes agree on.
 
 ASSET_STUDIO_MODE_SPLIT_SPEC_v0.2 §5.5 makes this a contract, not a taste

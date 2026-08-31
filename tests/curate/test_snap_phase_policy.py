@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """추출 경로가 **어떤 위상으로 스냅하는지**를 고정한다 (헬퍼가 아니라 정책).
 
 회귀 (maintainer 2026-07-25, synthetic_fixture_b down_jump frame-0, plan

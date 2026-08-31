@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Sprite Refine Engine v0.2 (spec §5).
 
     Shared Lattice Estimate

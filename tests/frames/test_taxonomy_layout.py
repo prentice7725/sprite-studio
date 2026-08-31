@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """File taxonomy (layout: taxonomy/v1) e2e — 방향/자세 폴더 분리.
 
 기본 계약: 방향 계약 런은 raw/<dir>/<pose>.png · frames/<dir>/<pose>/ ·

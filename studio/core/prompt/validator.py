@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Prompt QA before a provider call."""
 
 from __future__ import annotations

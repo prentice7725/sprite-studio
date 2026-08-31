@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """``--chroma-key auto`` candidate scoring over a base that carries a background.
 
 Every base in this pipeline is a subject drawn on a flat chroma background. The

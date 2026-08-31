@@ -10,7 +10,7 @@ sprite-request.json  ->  레이아웃 가이드 + 프롬프트  ->  상태별 �
   ->  sprite-sheet-alpha.png + manifest.json.frame_layout
 ```
 
-- **라이선스**: MIT
+- **라이선스**: Apache-2.0
 - **버전**: 1.59.0 (`pyproject.toml`과 `SKILL.md`의 `version:`은 같은 릴리스 커밋에서 함께 올린다)
 
 > **이 저장소는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)을 포크해
@@ -253,14 +253,11 @@ pytest tests/frames         # 도메인 하나만
 
 ## 라이선스
 
-MIT. 전문은 [`LICENSE`](LICENSE).
+Apache-2.0. 전문은 [`LICENSE`](LICENSE).
 
-[`NOTICE`](NOTICE)는 MIT 자체가 요구하는 파일은 아니지만, 거기 적힌 제3자 귀속은
-**선택이 아니다**: perfectpixel-studio(MIT, Andrew Kim)에서 이식한 코드가 in-tree 에
-있고, MIT 는 그 저작권·허가 고지가 사본과 함께 이동할 것을 요구한다. 이 프로젝트의
-라이선스를 바꾼다고 그 의무가 사라지지 않는다.
+이 저장소는 Apache-2.0으로 배포되는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)의 포크에서 출발했으며 동일한 라이선스(Apache-2.0)를 유지합니다.
 
-이 저장소는 Apache-2.0 으로 배포되던 `sprite-gen` 의 포크에서 출발했다 — 그 경위도
-[`NOTICE`](NOTICE)에 적혀 있다.
+[`NOTICE`](NOTICE) 파일에 명시된 제3자 귀속은 **필수 고지 사항**입니다:
+`perfectpixel-studio`(MIT, Andrew Kim)에서 이식한 코드가 in-tree에 포함되어 있으며, MIT 라이선스 규정에 따라 해당 저작권 및 허가 고지가 `NOTICE` 파일에 함께 보존되어 있습니다.
 
 보안 문제 신고 절차는 [`SECURITY.md`](SECURITY.md)에 있다.

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deterministic palette-swap bake: one base sheet + a recolor spec -> N variant
 sheets, in a single command.
 

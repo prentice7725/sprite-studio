@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Direction contract: base(=down idle) -> per-direction anchors -> rows.
 
 `--directions` runs scaffold the directional-anchor workflow structurally:

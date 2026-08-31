@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """표시 파이프라인 단일화 계약 (maintainer 2026-07-24 "구현체가 몇 종류라 노이즈").
 
 한 파이프라인("이 프레임을 큐레이션 상태로 보여라")의 구현이 세 갈래였다:

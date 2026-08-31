@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Shared Core contracts: colour metric, config, palette, grid seam."""
 
 from __future__ import annotations

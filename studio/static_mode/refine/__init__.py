@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode Refine Engine v0.2 - scene/tile-oriented refine."""
 
 from .dither import DITHER_MODES, apply_dither

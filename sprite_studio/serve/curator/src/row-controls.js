@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // curator/row-controls.js — 줄 헤더 표시 컨트롤 팩토리 (토글/fps 스텝퍼/리롤 트리거)
 // 로드 순서 SSoT = index.html (classic script 전역 어휘 공유; 빌드 스텝 없음)
 

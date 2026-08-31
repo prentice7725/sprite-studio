@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """방향 앵커 = 사람이 승인한 **단 한 장** — 해석·후처리 베이크·materialize 의 SSoT.
 
 앵커는 그 방향의 identity 다 (directional-anchor-workflow.md). 그래서 앵커 재료는

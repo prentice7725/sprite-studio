@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Offline tests for the sprite_studio.gen provider layer.
 
 Network/OAuth provider calls (codex exec, grok) are exercised as live e2e in the

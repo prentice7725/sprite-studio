@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Mode dispatch and engine selection for the Sprite refine stage (spec §16.4).
 
 Drives ``refine_service.refine_state`` over a real run directory rather than

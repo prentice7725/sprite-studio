@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Dithering — Static Mode only, and off by default (spec §8.4).
 
 The policy matters more than the algorithm:

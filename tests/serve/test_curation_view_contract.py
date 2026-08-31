@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Curation-view display contract (run-contract.md §3/§4): imported `_base`/`_refs`
 sources surface as the base row + generation-material chips, the self-report `contract`
 field is populated, and filenames with URL-special characters are percent-encoded so

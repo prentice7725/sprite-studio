@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deterministic composite bake — stack curated rows by integer pivot translation.
 
 The execution half of the layer feature (`docs/layer-tracks.md` §4/§5). Given a

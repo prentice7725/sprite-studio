@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Backward-compatible wrapper for sprite_studio.compose.compose_atlas."""
 
 import sys

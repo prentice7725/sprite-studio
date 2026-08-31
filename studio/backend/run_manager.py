@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Studio run lifecycle; the existing prepare module owns run scaffolding."""
 
 from __future__ import annotations

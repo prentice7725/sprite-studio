@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode prompt policy (spec section 10.2)."""
 
 from .assembler import STYLE_PROFILES, StaticPromptAssembler, StaticPromptResult, assemble_static_prompt, load_style_profile

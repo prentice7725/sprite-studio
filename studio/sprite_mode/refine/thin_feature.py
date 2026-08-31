@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Thin-feature protection during refine (spec §5.6).
 
 A sword tip, a spear shaft, a bowstring, a plume, a horn, a tail — these are

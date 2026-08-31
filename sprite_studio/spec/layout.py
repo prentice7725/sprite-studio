@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Run-dir file taxonomy — 경로 구성의 단일 SSoT.
 
 기본 계약(택소노미, maintainer 확정 2026-07-14): 상태 ID 는 `<direction>_<pose>` 그대로

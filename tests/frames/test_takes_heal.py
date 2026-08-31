@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Takes 1급 계약 + 파생 캐시 자가치유(heal_run).
 
 - 한 상태의 프레임 풀 = primary raw + 선언된 테이크들(`states.<s>.takes`),

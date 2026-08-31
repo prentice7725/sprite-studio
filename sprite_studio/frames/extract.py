@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Extract component-row sprite strips into clean RGBA frames."""
 
 from __future__ import annotations

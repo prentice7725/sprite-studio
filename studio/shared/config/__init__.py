@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Data-driven refine settings for both Asset Studio modes."""
 
 from .settings import (

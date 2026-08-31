@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Codex `image_gen` provider (ChatGPT OAuth, no API key).
 
 Ported from the standalone `image-gen` skill (MIT, aldegad/image-gen). codex

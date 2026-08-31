@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Heuristic animation QA for refined frame sets.
 
 The checks are intentionally diagnostic: they never silently alter frames and

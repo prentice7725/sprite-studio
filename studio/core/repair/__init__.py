@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Local and temporal repair for refined sprite frames."""
 
 from .analyzer import RepairAnalyzer

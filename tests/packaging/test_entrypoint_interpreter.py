@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deployment-interpreter contract for the agent-facing entrypoints.
 
 The skill's dependencies (Pillow, NumPy) are declared in `pyproject.toml` and

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/controls.js — the app's action controls, rendered from single sources.
 //
 // Every button here goes through ui.button (one shape, one size). The open actions

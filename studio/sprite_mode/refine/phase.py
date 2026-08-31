@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Bounded Phase Correction — per-frame alignment inside a safety fence (spec §5.3).
 
 The lattice locks pitch for the state; each frame still needs its own phase,

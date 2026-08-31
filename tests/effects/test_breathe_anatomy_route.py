@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`GET /api/breathe-anatomy` 의 기준 프레임 해소를 **실제로** 태운다.
 
 이 라우트는 검출 SSoT 를 서버로 몬 설계의 유일한 진입점이다 — 큐레이터가 호흡을 켤 때,

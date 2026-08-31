@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Large-image grid search for scenes and tile sheets (spec §8.5).
 
 Static Mode's grid problem is the opposite of Sprite Mode's. There is one image

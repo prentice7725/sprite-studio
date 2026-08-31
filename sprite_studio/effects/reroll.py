@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Reroll a state's row as a NEW take — candidate pool, never a replacement.
 
 리롤 = 같은 행을 한 번 더 생성해 **테이크로 병기**한다 (maintainer 2026-07-19 "리롤버튼

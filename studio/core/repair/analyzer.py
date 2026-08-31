@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deterministic local defect detection on logical-pixel frames."""
 
 from __future__ import annotations

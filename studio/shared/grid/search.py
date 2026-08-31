@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Pitch/phase search shared by both Refine Engines.
 
 Sprite Mode searches an animation's pooled edge evidence; Static Mode searches

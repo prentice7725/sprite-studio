@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Shared contract for sprite-studio image generation providers.
 
 One generation call = prompt (+ optional reference images) -> one verified raw

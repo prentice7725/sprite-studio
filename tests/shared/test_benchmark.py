@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Synthetic degradation benchmark contracts (spec §9).
 
 The benchmark is the gate the spec puts in front of algorithm changes (§16.10),

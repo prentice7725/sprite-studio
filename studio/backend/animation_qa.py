@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Run animation QA against refined frames and persist the report."""
 
 from __future__ import annotations

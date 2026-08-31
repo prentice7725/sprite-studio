@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Domain of each pipeline module — the single source for the package taxonomy.
 
 Used at runtime to run a pipeline step as `-m sprite_studio.<domain>.<step>` and by

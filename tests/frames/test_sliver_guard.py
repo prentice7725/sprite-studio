@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """경계 스냅 슬리버 가드 계약 (plan sprite-studio/backbone-sliver-guard).
 
 회귀 (maintainer 2026-07-24, v8 down_jump): 경계 스냅의 최소 간격이 절대 2px 라

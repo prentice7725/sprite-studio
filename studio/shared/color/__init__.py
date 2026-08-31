@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Colour metric shared by Sprite Mode and Static Mode."""
 
 from .oklab import delta_e, nearest_index, oklab_to_rgb, rgb_delta_e, rgb_to_oklab

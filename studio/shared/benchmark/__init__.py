@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Synthetic degradation benchmark - the objective gate for algorithm changes."""
 
 from .degrade import DEGRADATIONS, catalogue, degrade

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Studio adapter for the engine-owned directional anchor contract."""
 
 from __future__ import annotations

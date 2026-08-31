@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Single sprite-studio CLI entrypoint."""
 
 from __future__ import annotations

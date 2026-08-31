@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Composite bake — deterministic stacking, run-dir diagnostics, and what it must not touch.
 
 `sprite_studio.compose.layers` answers what a request may declare; this file covers what only

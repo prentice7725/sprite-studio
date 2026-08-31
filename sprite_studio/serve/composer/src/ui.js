@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/ui.js — shared UI primitives. The single source for icons and for
 // button creation, so two controls can never diverge in size or shape.
 

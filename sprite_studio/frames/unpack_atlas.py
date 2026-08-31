@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Unpack a composed sprite sheet back into a curator-ready run directory.
 
 This is the inverse of `compose_sprite_atlas.py`. When only the combined

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """은퇴한 `fit` 키를 런의 `sprite-request.json` 에서 현행 키로 옮긴다 (일회성, 명시 실행).
 
 `fit.pixel_perfect` 는 2026-07-25 에 `fit.pixel_unfake` 로 교체됐다. 로더

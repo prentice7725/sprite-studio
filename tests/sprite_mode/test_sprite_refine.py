@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Sprite Refine Engine v0.2 contracts (spec §5).
 
 These lock the four behaviours the spec singles out, each stated as the failure

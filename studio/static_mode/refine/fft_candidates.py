@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """FFT candidate proposal (spec §8.2, §5.7).
 
 Exhaustive grid search costs `O(pitches × phases × edges)`. On a 96×96 sprite

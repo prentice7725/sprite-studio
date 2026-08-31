@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Serve the sprite-studio composition canvas — the "blank screen" assembly surface.
 
 This is the pre-run half of curation. The curation webview (`serve_curation.py`)

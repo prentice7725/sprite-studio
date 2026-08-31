@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """폐기된 분할선 호흡 설정을 봉투 스키마로 옮긴다 (일회성).
 
 `states.<state>.breathe` 의 `splits`/`amplitude`/`subpixel` 은 2026-07-25 에 봉투

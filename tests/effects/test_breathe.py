@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """결정론 호흡 레이어(sprite_studio.effects.breathe) 회귀 — 봉투 워프의 불변식.
 
 지키는 것 (구현이 아니라 계약):

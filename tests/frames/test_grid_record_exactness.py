@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """기록된 격자가 진실인가 — 칸수 불변식 + 쌍둥이 풋프린트 (plan sprite-studio/grid-record-exactness).
 
 회귀 (2026-07-18 side_idle): kCentroid 가 실제 샘플한 격자(31×58)와 manifest 에 기록된

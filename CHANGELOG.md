@@ -69,17 +69,13 @@ Asset Studio 모드 분리 (`ASSET_STUDIO_MODE_SPLIT_SPEC_v0.2` 구현).
 
 ### Changed
 
-- **라이선스를 Apache-2.0 에서 MIT 로 바꿨다.** `LICENSE` 전문, `pyproject.toml`
+- **라이선스를 상류 원본(sprite-gen)과 동일하게 Apache-2.0으로 통일했다.** `LICENSE` 전문, `pyproject.toml`
   `license`, `SKILL.md` frontmatter, SPDX 헤더 278곳.
   - **제3자 귀속은 유지된다.** perfectpixel-studio(MIT, Andrew Kim/gykim80)에서
     이식한 코드 4건이 in-tree 에 있고, MIT 는 그 저작권·허가 고지가 사본과 함께
-    이동할 것을 요구한다. `NOTICE` 는 그래서 남으며, 이식 코드의 현재 경로를
-    가리키도록 갱신했다 (`sprite_studio/frames/{extract,segment}.py`).
-  - **남의 라이선스를 말하는 문장은 바꾸지 않았다** — `hatch-pet` 이 Apache-2.0
-    이라는 진술과 포크 출처가 Apache-2.0 이었다는 사실은 우리가 바꿀 수 있는
-    대상이 아니다.
-  - 전제: 이 코드베이스의 저작권자가 재라이선스할 권한을 갖는다. 포크 상류의
-    코드 중 제3자가 저작권을 가진 부분이 있다면 그 부분은 이 변경의 범위 밖이다.
+    이동할 것을 요구하므로 `NOTICE` 파일에 해당 고지 사항을 완전하게 보존했다.
+  - **포크 원본 정합성 유지**: 상류 `sprite-gen`(Apache-2.0)과의 라이선스 일치를 통해
+    특허 보복 보호 조항 유지 및 다운스트림 관리 복잡도를 해소했다.
 - **프로젝트 이름을 `sprite-gen` 에서 `sprite-studio` 로 옮겼다.** SKILL.md 리네임
   게이트 순서(식별자 → 키 문자열 → 라벨 → 문서 → --help → 테스트)를 따랐고, 스윕
   **전에** 구조 단정을 쓰고 mutant 로 검증했다

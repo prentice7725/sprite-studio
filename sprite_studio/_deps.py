@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """The one module that imports NumPy — and the one place its absence is reported.
 
 NumPy is a declared runtime dependency (`pyproject.toml`), materialized by the

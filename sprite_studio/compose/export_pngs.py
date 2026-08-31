@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Export curated frames back to named PNGs (the inverse of an imported set).
 
 For an imported still set (e.g. a furniture pack), the natural deliverable is

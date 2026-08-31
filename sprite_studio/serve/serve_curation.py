@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Serve the sprite-studio curation webview for a single run directory.
 
 Standalone — no server framework, just the standard library plus the dependencies

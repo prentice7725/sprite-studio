@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode palette control (spec §8.3).
 
 Same Oklab machinery as Sprite Mode, different target. Sprite Mode optimises

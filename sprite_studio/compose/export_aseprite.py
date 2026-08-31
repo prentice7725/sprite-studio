@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Export a composed run as Aseprite-compatible atlas metadata.
 
 The exporter re-describes the existing atlas. It never re-encodes the image,

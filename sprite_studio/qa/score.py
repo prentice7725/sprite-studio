@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Score sprite inspection reports and produce correction hints."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """팔레트 = 절단 후 후처리 전용 불변식 (maintainer 확정 2026-07-20, plan
 sprite-studio/per-frame-pixel-grid).
 

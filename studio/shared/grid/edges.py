@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Axis edge profiles — the grid evidence both Refine Engines read.
 
 The *definition* of an edge lives in ``sprite_studio.frames.extract`` (public seam

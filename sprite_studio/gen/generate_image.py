@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deprecated shim — image generation now lives in `sprite_studio.gen`.
 
 This module previously stood in as a desktop-only placeholder during the package

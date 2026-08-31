@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """기준 프레임 키 — 파이썬과 JS 가 **같은 문자열**을 내는가 (그리고 웹뷰가 그 재료를
 어디서 긁어오는가).
 

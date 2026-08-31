@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode project lifecycle and mode dispatch (spec §13, §16)."""
 
 from __future__ import annotations

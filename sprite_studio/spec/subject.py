@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Subject profile — resolution-aware sparse-frame validation defaults.
 
 The sparse-frame floor exists to catch empty frames and extraction debris.

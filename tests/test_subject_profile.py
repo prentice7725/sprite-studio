@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Subject profile: the sparse-frame floor is declared by what the run draws.
 
 Synthetic boundary cases demonstrate that one absolute floor cannot scale across

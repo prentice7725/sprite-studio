@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Sprite Gen Studio Gradio entrypoint.
 
 Run with ``python -m studio.app``. The UI owns interaction; the backend owns

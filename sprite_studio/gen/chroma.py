@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Deterministic chroma-key -> transparent PNG contract for generated images.
 
 Ported verbatim in behaviour from the standalone `image-gen` skill helper

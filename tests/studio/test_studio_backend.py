@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Phase 1 Studio service contracts."""
 
 from __future__ import annotations

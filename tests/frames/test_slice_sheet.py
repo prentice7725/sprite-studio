@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Cell geometry checks for sprite_studio.frames.slice_sheet on a synthetic sheet."""
 
 from __future__ import annotations

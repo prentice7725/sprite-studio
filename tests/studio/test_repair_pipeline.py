@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """R0-R3 repair detection, safety and persistence contracts."""
 
 from __future__ import annotations

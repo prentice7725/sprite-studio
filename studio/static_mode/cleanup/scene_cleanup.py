@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Scene cleanup / Static Repair (spec §7.3, §8.1).
 
 Static Mode's repair is not Sprite Mode's. There are no neighbouring frames to

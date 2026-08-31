@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Regression tests for OS-neutral paths in machine-readable manifests."""
 
 from pathlib import Path, PureWindowsPath

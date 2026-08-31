@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Mode prompt QA (spec §10.2).
 
 The Sprite validator cannot be reused here, and the reason is worth stating

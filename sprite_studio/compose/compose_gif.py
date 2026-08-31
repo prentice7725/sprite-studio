@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Compose selected sprite frames into a clean transparent GIF.
 
 This is the reusable sprite-studio GIF exporter. It is intentionally small:

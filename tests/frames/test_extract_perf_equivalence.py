@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Byte-identity guard for the extract-performance optimizations (plan
 sprite-studio/extract-performance).
 

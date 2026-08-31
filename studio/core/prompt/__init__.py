@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Prompt Assembly Module for PixelRefiner-safe generation."""
 
 from .assembler import PromptAssembler, PromptResult

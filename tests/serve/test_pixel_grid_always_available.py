@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """픽셀 격자 컨트롤은 조건부로 숨지 않는다 (계약).
 
 maintainer 2026-07-24 ("10번 넘게 말한 것 같은데"): 격자와 픽셀퍼펙은 스크립트가

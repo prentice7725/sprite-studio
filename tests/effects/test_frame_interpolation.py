@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """AI 프레임 보간(sprite_studio.effects.interpolate) 배관 회귀.
 
 실 생성(provider CLI)은 CI 에서 돌리지 않는다 — interpolator 주입 시그니처로

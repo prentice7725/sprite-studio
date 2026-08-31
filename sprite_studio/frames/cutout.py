@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Background cutout for externally authored (imported) images — the unified
 post-edit entry point.
 

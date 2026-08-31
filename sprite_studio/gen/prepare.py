@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Prepare a sprite-studio component-row run.
 
 This script owns the numeric sprite recipe. It writes one request JSON, one

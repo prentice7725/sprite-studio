@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Directional bridge detection for one/two-cell thin features."""
 
 from __future__ import annotations

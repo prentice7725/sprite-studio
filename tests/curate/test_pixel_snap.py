@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Pixel-perfect twins share the pp footprint + curated transforms re-snap to the grid.
 
 1. plain/orig twins are fitted into the pixel-perfect frame's content bbox, so the

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Shared GIF helpers for sprite-studio.
 
 GIF previews must not leak the previous frame through transparent pixels. Use a

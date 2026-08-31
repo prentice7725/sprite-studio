@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Layer-track contract — rig profiles, track kinds, and composite stack validation.
 
 This module is the declaration half of the optional layer feature: it owns the

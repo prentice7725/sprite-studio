@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-studio curation` is the same program as the two older launch forms.
 
 The console script removes the "which interpreter?" question for the webview, but only if

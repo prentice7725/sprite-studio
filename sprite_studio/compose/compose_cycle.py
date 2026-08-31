@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Compose a QA-approved manual frame subset into a selected cycle.
 
 This is for cases where generation produces a larger row, but motion QA finds

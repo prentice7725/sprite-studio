@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """표시 샘플링 판정(nearest 여부)의 SSoT 회귀.
 
 maintainer 2026-07-24 "절대 원본 아님": 고해상 orig 트윈이 축소 표시되는 카드에서

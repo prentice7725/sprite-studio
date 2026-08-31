@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Sprite Mode Refine Engine v0.2 - animation-oriented refine."""
 
 from .engine import SpriteRefineEngine, SpriteRefineOutput, estimate_character_lattice

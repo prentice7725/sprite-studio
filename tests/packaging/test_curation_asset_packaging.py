@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """The curation SPA ships inside the package, from one location.
 
 `sprite-studio curation` finds its assets relative to `sprite_studio/serve/serve_curation.py`, so an

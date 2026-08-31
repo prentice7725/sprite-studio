@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Frame-set sampling against one locked lattice (spec §5.1).
 
 Everything the Sprite Refine Engine knows about a state arrives here at once:

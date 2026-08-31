@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-studio recolor` / `recolor-palette` are the same program as the wrappers.
 
 The console script is only safe if the CLI table points at the module's own

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Benchmark metrics (spec §9.4, §9.5).
 
 What "better" means, written down. Sprite Mode and Static Mode are graded on

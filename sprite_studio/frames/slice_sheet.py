@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Slice a multi-figure grid sheet into per-cell standing cuts (tachi-e).
 
 One generated image contains a COLSxROWS grid of the same character in

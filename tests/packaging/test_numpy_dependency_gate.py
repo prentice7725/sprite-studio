@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Missing-NumPy contract for the agent-facing entrypoints.
 
 `tests/test_entrypoint_interpreter.py` locks the other half of the deployment

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """동일색 런 최빈값 피치 추정기(perfectpixel unfake 이식)와 교차검증 경고를 고정한다.
 
 detect_pixel_grid 는 정수 씨앗 ±0.75 창 안에서만 소수 피치를 정밀화하므로, 씨앗

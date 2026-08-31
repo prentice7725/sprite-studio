@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Inspect generated sprite rows for closed-loop correction signals."""
 
 from __future__ import annotations

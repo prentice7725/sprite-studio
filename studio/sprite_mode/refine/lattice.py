@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Animation Shared Lattice — one cell pitch for a whole state (spec §5.2).
 
 Per-frame grid detection is correct for a single image and wrong for an

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Doc surface lock for the recolor feature.
 
 An external user who only reads the docs must be able to bake colourways. The

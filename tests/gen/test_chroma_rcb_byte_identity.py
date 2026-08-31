@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """바이트 동일 게이트 — 크로마 제거 스칼라 픽셀 루프의 벡터화 대비 동결 참조.
 
 플랜 `sprite-studio/extract-numpy-vectorization` 체크리스트 2번. 최적화 **전에** 세운다.

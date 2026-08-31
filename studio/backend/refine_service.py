@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Studio orchestration for the Extract → Sprite Refine stage.
 
 Mode dispatch lives here (spec §16.4): a run declares its mode, and the service

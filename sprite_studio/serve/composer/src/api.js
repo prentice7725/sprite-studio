@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/api.js — the server boundary. Every call to the compose server lives
 // here; no other module builds a fetch. Domain: transport, not model or view.
 

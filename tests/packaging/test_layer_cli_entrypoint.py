@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-studio compose-layers` is the same program as its two other launch forms.
 
 Three entry forms reach one declaration — the console subcommand, `-m

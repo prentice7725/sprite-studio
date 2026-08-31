@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """은퇴한 `sprite-gen-*` kind -> 현행 `sprite-studio-*` 이관 게이트.
 
 프로젝트 이름이 `sprite-gen` 에서 `sprite-studio` 로 바뀌면서, 런 디렉터리에

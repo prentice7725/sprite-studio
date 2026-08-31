@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Importable core for the sprite-studio pipeline."""
 
 # The declared NumPy dependency is gated here, at package import, so that every

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Grid evidence, weighting and sampling shared by both Refine Engines."""
 
 from .edges import accumulate_edge_profiles, axis_edge_profiles, cell_count, grid_edges, profile_to_list

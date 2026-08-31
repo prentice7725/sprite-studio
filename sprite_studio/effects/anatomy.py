@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """실루엣 해부 — 호흡 변형이 어디까지 미쳐야 하는지를 기하로 결정한다 (AI 개입 0).
 
 호흡을 "가슴선 하나"로 정의하려던 접근은 임의 몬스터에 일반화되지 않는다. 가슴은

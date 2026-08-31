@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // curator/row-export.js — 줄 단위 내보내기 (저장 팝오버: GIF 서버 굽기 / WebM·MP4 클라 샘플)
 // 로드 순서 SSoT = index.html (classic script 전역 어휘 공유; 빌드 스텝 없음)
 //

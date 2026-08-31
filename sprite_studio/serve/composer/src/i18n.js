@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/i18n.js — bilingual strings (en/ko). Classic script, shared globals.
 
 const STR = {

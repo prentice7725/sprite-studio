@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Small-cell continuous weighting (spec §5.4).
 
 The predecessor used a hard core margin: sample only the inner part of a cell,

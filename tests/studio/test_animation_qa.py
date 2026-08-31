@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Animation QA and runtime export contracts."""
 
 from __future__ import annotations

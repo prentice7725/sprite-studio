@@ -62,7 +62,7 @@ function breatheRangeProblems(raw) {
   return bad;
 }
 
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // curator/store.js — 런 스냅샷 + 큐레이션 인메모리 모델 (run/entries/프레임·복제 해석) — 클라이언트 상태 SSoT
 // 로드 순서 SSoT = index.html (classic script 전역 어휘 공유; 빌드 스텝 없음)
 

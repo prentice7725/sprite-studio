@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Baked colourways reach the curation view, and the adopted pick survives.
 
 `sprite-studio recolor` bakes variant sheets into `<run-dir>/variants/`; the view has to

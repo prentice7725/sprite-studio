@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Unified image generation layer for sprite-studio.
 
 Single source of truth for provider-backed image generation: codex (`image_gen`,

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """큐레이터 JS 미러가 파이썬 굽기와 **바이트 동일**한지 (Task Card Verification).
 
 호흡 워프는 두 곳에 구현돼 있다: 굽기(`sprite_studio/effects/breathe.py`)와 라이브 프리뷰

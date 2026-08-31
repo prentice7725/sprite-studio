@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/canvas.js — the row composition canvas (right main).
 //
 // Each row maps 1:1 to a run-dir state. Files dropped from the library become

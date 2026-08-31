@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/boot.js — bootstrap only. Loads server state, sets language, renders
 // the controls (controls.js) and the initial view. Loaded last; classic scripts
 // share globals via the load order declared in index.html.

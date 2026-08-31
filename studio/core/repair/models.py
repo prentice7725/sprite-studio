@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Data contracts for non-destructive sprite repair."""
 
 from __future__ import annotations

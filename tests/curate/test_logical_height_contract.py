@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`fit.logical_height` 계약 — 선언값이 아니라 파생 격자가 진실이다.
 
 회귀 (2026-07-25, 합성 회귀 hero synthetic fixtures): `conform`(눌림)이 제거된 뒤

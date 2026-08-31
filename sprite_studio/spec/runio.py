@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Safe run-dir IO shared by the pipeline scripts.
 
 Two concerns live together here because they answer the same question — "what

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static Refine Engine v0.2 and Static Mode pipeline contracts (spec §7, §8)."""
 
 from __future__ import annotations

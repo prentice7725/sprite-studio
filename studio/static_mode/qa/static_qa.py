@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Static QA (spec §14.2).
 
 Sprite QA asks whether a row holds together over time. Static QA asks whether

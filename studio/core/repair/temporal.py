@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Temporal majority repair with bounded local motion search."""
 
 from __future__ import annotations

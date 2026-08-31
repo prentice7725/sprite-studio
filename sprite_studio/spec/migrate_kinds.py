@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`sprite-studio migrate-kinds` — 은퇴 kind 를 디스크에서 옮긴다.
 
 읽기 경로는 은퇴 kind 를 메모리에서만 정규화하고 파일은 건드리지 않는다

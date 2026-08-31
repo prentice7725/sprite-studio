@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Configurable safety policy for repair analysis and application."""
 
 from __future__ import annotations

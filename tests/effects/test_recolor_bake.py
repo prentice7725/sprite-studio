@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Palette-swap bake: determinism, exact/tolerance substitution accuracy, and
 the No-Silent-Fallback reporting contract (nothing outside the map vanishes
 silently — it is named and counted)."""

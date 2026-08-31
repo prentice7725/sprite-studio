@@ -1,6 +1,6 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 [build-system]
-# 77, not 68: `license = "MIT"` below is the PEP 639 string form, which older
+# 77, not 68: `license = "Apache-2.0"` below is the PEP 639 string form, which older
 # setuptools rejects outright — measured, backend called directly, this very tree:
 # 76.1.0 dies with "`project.license` must be valid exactly by one definition", 77.0.1
 # builds. Nobody hit it because pip's build isolation always fetches the newest setuptools,
@@ -15,7 +15,7 @@ name = "sprite-studio"
 version = "1.59.0"
 description = "Component-row pipeline for clean 2D game sprites and animation atlases"
 readme = "README.md"
-license = "MIT"
+license = "Apache-2.0"
 requires-python = ">=3.10"
 dependencies = [
     "pillow>=12.0,<13",
@@ -68,7 +68,7 @@ testpaths = ["tests"]
 # run alone (`pytest tests/effects`). conftest.py stays at the tests/ root and is
 # imported by name (`from conftest import run_script`) from every subfolder, so the
 # tests/ dir must be on sys.path.
-pythonpath = ["tests"]
+pythonpath = [".", "tests"]
 # A hung subprocess test must become a named failure, not a silent stall. signal
 # method (SIGALRM) is required — thread method cannot interrupt a blocked
 # subprocess.wait(). 120s is generous for the extract/compose subprocess tests.

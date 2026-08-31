@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """The only boundary between Studio and the existing sprite-studio engine."""
 
 from __future__ import annotations

@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Run a bounded inspect -> score -> correction-hint loop."""
 
 from __future__ import annotations

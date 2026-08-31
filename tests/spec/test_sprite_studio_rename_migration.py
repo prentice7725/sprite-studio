@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """은퇴한 `sprite-gen-*` kind -> 현행 `sprite-studio-*` 이관 (프로젝트 리네임).
 
 `sprite-gen` 이 `sprite-studio` 로 이름이 바뀌면서 런 디렉터리에 기록된 `kind`

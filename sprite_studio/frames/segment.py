@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Projection-profile + DP optimal-cut frame segmentation (opt-in).
 
 Ported from perfectpixel-studio `internal/sprite/segment.go`

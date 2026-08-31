@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Cross-process and shared-mode contracts for the publish reader/writer lock."""
 
 from __future__ import annotations

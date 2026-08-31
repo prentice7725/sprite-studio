@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Layer split and object cutout (spec §7.4, §8.1).
 
 Two related jobs Static Mode has and Sprite Mode does not:

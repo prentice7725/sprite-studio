@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/session.js — the virtual composition session (pure model).
 //
 // The "unsaved buffer": the mounted library root and rows -> file references.

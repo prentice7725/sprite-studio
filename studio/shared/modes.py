@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Asset Studio mode registry (spec sections 0, 3, 18).
 
 One Studio, two production modes. This module is the single place that knows

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 // composer/library.js — the read-only library file tree (left sidebar).
 //
 // Lazy: a folder's children are fetched only when first expanded. Image rows are

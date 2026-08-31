@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Shared curation sidecar logic for sprite-studio.
 
 `curation.json` is an optional, non-destructive sidecar in a run directory. It

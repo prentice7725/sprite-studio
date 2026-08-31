@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """Quickstart smoke: prepare -> extract -> compose on the golden fixture."""
 
 import json

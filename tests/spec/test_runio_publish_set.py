@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: Apache-2.0
 """`runio.atomic_write_set` — publish a set of files, or publish none of them.
 
 The single-file writers make each artifact appear whole, which is enough for a
