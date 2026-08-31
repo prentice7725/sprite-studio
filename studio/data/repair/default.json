@@ -1,0 +1,20 @@
+{
+  "alpha_threshold": 16,
+  "max_hole_pixels": 3,
+  "max_orphan_pixels": 1,
+  "temporal_search_radius": 3,
+  "max_added_pixels": 24,
+  "max_added_ratio": 0.01,
+  "apply_small_holes": true,
+  "apply_temporal": true,
+  "safe_thresholds": {
+    "small_hole": 0.96,
+    "outline_gap": 0.98,
+    "orphan_pixel": 0.96,
+    "thin_feature_break": 0.97,
+    "temporal_missing_pixel": 0.97
+  },
+  "protected_regions": [
+    [0.25, 0.0, 0.75, 0.3]
+  ]
+}

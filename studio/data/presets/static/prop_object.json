@@ -1,0 +1,18 @@
+{
+  "id": "prop_object",
+  "display_name": "PROP OBJECT",
+  "asset_type": "PROP_OBJECT",
+  "style_profile": "prop_object",
+  "description": "single object or prop to be cut out and placed in a scene",
+  "background_policy": "auto",
+  "tileable": false,
+  "layer_intent": "none",
+  "export_size": [256, 256],
+  "refine": {
+    "fft_candidate_search": true,
+    "dither_mode": "off",
+    "seam_check": false,
+    "color_metric": "oklab",
+    "palette_colors": 16
+  }
+}

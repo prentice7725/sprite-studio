@@ -1,0 +1,5 @@
+{
+  "id": "tile_set",
+  "style": "TILE_SET profile: seamless repeating pixel-art texture, uniform lighting with no directional hotspot, even feature density across the whole square, limited palette, crisp block edges",
+  "cleanup_suffix": "edge-to-edge texture that continues past every border, no central focal object, no vignette, no border decoration, uniform illumination, flat readable color areas for the static refiner, {{BACKGROUND}}, no gradient falloff, no soft focus, no drop shadow, no text, no UI overlay, no frame"
+}

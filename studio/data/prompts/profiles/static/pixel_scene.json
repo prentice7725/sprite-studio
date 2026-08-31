@@ -1,0 +1,5 @@
+{
+  "id": "pixel_scene",
+  "style": "PIXEL_SCENE profile: clean pixel-art scene, flat color regions, limited palette, crisp block edges, readable depth through value separation rather than blur, consistent light direction",
+  "cleanup_suffix": "even lighting across the frame, flat readable color areas for the static refiner, hard edges between regions, {{BACKGROUND}}, no gradient banding, no soft focus, no depth of field, no lens flare, no bloom, no film grain, no watermark, no text, no UI overlay, no frame border"
+}

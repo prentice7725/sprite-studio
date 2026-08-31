@@ -1,0 +1,19 @@
+{
+  "id": "tile_set",
+  "display_name": "TILE SET",
+  "asset_type": "TILE_SET",
+  "style_profile": "tile_set",
+  "description": "seamless repeating ground/wall texture",
+  "background_policy": "auto",
+  "tileable": true,
+  "layer_intent": "none",
+  "export_size": [512, 512],
+  "refine": {
+    "fft_candidate_search": true,
+    "dither_mode": "serpentine",
+    "seam_check": true,
+    "seam_threshold": 0.08,
+    "color_metric": "oklab",
+    "palette_colors": 24
+  }
+}

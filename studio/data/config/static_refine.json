@@ -1,0 +1,78 @@
+{
+  "kind": "asset-studio-refine-config",
+  "mode": "static",
+  "version": 1,
+  "grid": {
+    "max_pitch": 64,
+    "min_pitch": 2.0,
+    "search_half_span": 0.75,
+    "search_step": 0.02,
+    "confidence_floor": 0.15,
+    "coarse_to_fine": true,
+    "large_image_pixels": 262144
+  },
+  "phase": {
+    "correction": "free",
+    "tolerance": 1.0,
+    "search_step": 0.05
+  },
+  "weighting": {
+    "mode": "continuous",
+    "anchors": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.75
+      ],
+      [
+        0.8,
+        0.35
+      ],
+      [
+        1.0,
+        0.1
+      ]
+    ],
+    "coverage_threshold": 0.5
+  },
+  "color": {
+    "metric": "oklab",
+    "cluster_iterations": 6,
+    "detail_bias": false,
+    "detail_bias_share": 0.4,
+    "detail_bias_lightness_gap": 0.25,
+    "detail_bias_max_lightness": 0.45
+  },
+  "thin_feature": {
+    "enabled": false,
+    "max_thickness": 1,
+    "coverage_relief": 0.0,
+    "temporal_evidence": false
+  },
+  "palette": {
+    "colors": 32,
+    "scope": "scene"
+  },
+  "fft": {
+    "candidate_search": true,
+    "candidates": 6,
+    "min_prominence": 0.12
+  },
+  "dither": {
+    "mode": "off",
+    "strength": 1.0,
+    "matrix": 4
+  },
+  "seam": {
+    "check": false,
+    "threshold": 0.08,
+    "band": 1
+  },
+  "cleanup": {
+    "orphan_max_area": 2,
+    "fringe_alpha_threshold": 128
+  }
+}

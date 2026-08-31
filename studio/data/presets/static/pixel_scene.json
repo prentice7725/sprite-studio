@@ -1,0 +1,18 @@
+{
+  "id": "pixel_scene",
+  "display_name": "PIXEL SCENE",
+  "asset_type": "PIXEL_SCENE",
+  "style_profile": "pixel_scene",
+  "description": "background or environment illustration in true pixel art",
+  "background_policy": "auto",
+  "tileable": false,
+  "layer_intent": "background",
+  "export_size": [1024, 1024],
+  "refine": {
+    "fft_candidate_search": true,
+    "dither_mode": "off",
+    "seam_check": false,
+    "color_metric": "oklab",
+    "palette_colors": 32
+  }
+}

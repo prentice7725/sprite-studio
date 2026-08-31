@@ -1,0 +1,5 @@
+{
+  "id": "prop_object",
+  "style": "PROP_OBJECT profile: single pixel-art object centered in frame, clean readable silhouette, flat color regions, limited palette, thick crisp outline separating the object from the background",
+  "cleanup_suffix": "one object only, fully inside the frame with generous margin, not cropped, hard outline all the way around the silhouette, {{BACKGROUND}}, no cast shadow on the background, no reflection, no gradient, no soft edges, no motion blur, no text, no UI overlay, no frame"
+}

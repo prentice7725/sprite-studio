@@ -1,0 +1,5 @@
+{
+  "id": "direct_pixel",
+  "style": "DIRECT_PIXEL profile: pixel art sprite, chunky square pixels, limited color palette, flat shading, crisp simple silhouette",
+  "safe_suffix": "full body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, consistent chunky square pixel size throughout, {{BACKGROUND}}, no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no depth of field, no text, no UI, no frame"
+}

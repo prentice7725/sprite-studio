@@ -1,0 +1,488 @@
+{
+  "kind": "asset-studio-benchmark",
+  "version": 1,
+  "cases": [
+    {
+      "case": "sprite:blur",
+      "mode": "sprite",
+      "degradations": [
+        "blur"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.064604,
+          "max_delta_e": 0.159958,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 16,
+          "retained": 0.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.041667
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "sprite:subpixel_offset",
+      "mode": "sprite",
+      "degradations": [
+        "subpixel_offset"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.0,
+          "max_delta_e": 0.0,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 5,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.0
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "sprite:antialiased_resize",
+      "mode": "sprite",
+      "degradations": [
+        "antialiased_resize"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 0.942029,
+          "missing_pixels": 8,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.123763,
+          "max_delta_e": 0.347314,
+          "compared_pixels": 130
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 14,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 0.857143
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.151389
+        }
+      },
+      "warnings": [
+        "recovered logical size (24, 25) != ground truth (24, 24)"
+      ]
+    },
+    {
+      "case": "sprite:pseudo_pixel_alias",
+      "mode": "sprite",
+      "degradations": [
+        "pseudo_pixel_alias"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.008761,
+          "max_delta_e": 0.045258,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 16,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.0
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "sprite:boundary_bleed",
+      "mode": "sprite",
+      "degradations": [
+        "boundary_bleed"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.000976,
+          "max_delta_e": 0.012274,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 13,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.142857
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "sprite:thin_feature_loss",
+      "mode": "sprite",
+      "degradations": [
+        "thin_feature_loss"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.0,
+          "max_delta_e": 0.0,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 5,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.0
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "sprite:subpixel_offset+boundary_bleed",
+      "mode": "sprite",
+      "degradations": [
+        "subpixel_offset",
+        "boundary_bleed"
+      ],
+      "metrics": {
+        "silhouette": {
+          "iou": 1.0,
+          "missing_pixels": 0,
+          "extra_pixels": 0
+        },
+        "color": {
+          "mean_delta_e": 0.002023,
+          "max_delta_e": 0.003544,
+          "compared_pixels": 138
+        },
+        "palette": {
+          "truth_colors": 5,
+          "result_colors": 11,
+          "retained": 1.0
+        },
+        "thin_feature": {
+          "thin_pixels": 14,
+          "recovered": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "temporal": {
+          "frames": 4,
+          "area_jitter": 0.0,
+          "palette_churn": 0.230769
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "static:blur",
+      "mode": "static",
+      "degradations": [
+        "blur"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.062784,
+          "max_delta_e": 0.159647,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retained": 0.083333
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 26,
+          "retention_ratio": 2.166667,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.189353,
+          "vertical_delta_e": 0.188469
+        }
+      },
+      "warnings": [
+        "recovered logical size (192, 192) != ground truth (32, 32)"
+      ]
+    },
+    {
+      "case": "static:antialiased_resize",
+      "mode": "static",
+      "degradations": [
+        "antialiased_resize"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.013111,
+          "max_delta_e": 0.03008,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retained": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retention_ratio": 2.666667,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.264796,
+          "vertical_delta_e": 0.258497
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "static:pseudo_pixel_alias",
+      "mode": "static",
+      "degradations": [
+        "pseudo_pixel_alias"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.028186,
+          "max_delta_e": 0.130328,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retained": 0.916667
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retention_ratio": 2.666667,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.278822,
+          "vertical_delta_e": 0.289726
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "static:boundary_bleed",
+      "mode": "static",
+      "degradations": [
+        "boundary_bleed"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.001102,
+          "max_delta_e": 0.009763,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retained": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retention_ratio": 2.666667,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.252931,
+          "vertical_delta_e": 0.249207
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "static:chroma_contamination",
+      "mode": "static",
+      "degradations": [
+        "chroma_contamination"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.0,
+          "max_delta_e": 0.0,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 12,
+          "retained": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 12,
+          "retention_ratio": 1.0,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.252921,
+          "vertical_delta_e": 0.249416
+        }
+      },
+      "warnings": []
+    },
+    {
+      "case": "static:tile:boundary_bleed",
+      "mode": "static",
+      "degradations": [
+        "boundary_bleed"
+      ],
+      "metrics": {
+        "color": {
+          "mean_delta_e": 0.001027,
+          "max_delta_e": 0.013995,
+          "compared_pixels": 1024
+        },
+        "palette": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retained": 1.0
+        },
+        "edges": {
+          "soft_alpha_pixels": 0,
+          "clean": true
+        },
+        "texture": {
+          "truth_colors": 12,
+          "result_colors": 32,
+          "retention_ratio": 2.666667,
+          "collapsed": false
+        },
+        "seam": {
+          "horizontal_delta_e": 0.00069,
+          "vertical_delta_e": 0.001712
+        }
+      },
+      "warnings": []
+    }
+  ],
+  "summary": {
+    "cases": 13,
+    "sprite_mean_iou": 0.991718,
+    "sprite_mean_thin_recovery": 0.979592,
+    "static_mean_palette_retained": 0.833333,
+    "static_mean_delta_e": 0.017702
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "id": "ogre",
+  "display_name": "OGRE",
+  "character_description": "large chunky chibi ogre warrior",
+  "identity_prompt": "large chunky chibi ogre warrior, broad heavy body, simple rugged armor, brown belt and boots, oversized practical club, tiny neutral face, ordinary battlefield ogre",
+  "default_generation_profile": "refine_first",
+  "background_policy": "auto",
+  "locks": {"grid": "state", "palette": "character", "baseline": "character", "pivot": "character", "scale": "character"},
+  "directions": ["down", "side", "up"],
+  "mirror": {"left": "side"},
+  "working_cell": 256,
+  "runtime_cell": 48,
+  "states": {
+    "idle": {"frames": 4, "fps": 4, "loop": true, "action": "heavy grounded idle breathing"},
+    "attack": {"frames": 4, "fps": 8, "loop": false, "action": "heavy readable club attack: ready, windup, strike, recovery"}
+  }
+}

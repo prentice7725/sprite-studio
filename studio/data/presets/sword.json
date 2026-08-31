@@ -1,0 +1,17 @@
+{
+  "id": "sword",
+  "display_name": "SWORD",
+  "character_description": "chunky chibi rank-and-file mercenary swordsman",
+  "identity_prompt": "chunky chibi rank-and-file mercenary swordsman, short stocky practical infantry body, plain steel helmet with a short blue plume, blue tunic, simple dark steel armor, brown belt and boots, simple broad one-handed sword, tiny neutral face, ordinary common soldier",
+  "default_generation_profile": "refine_first",
+  "background_policy": "auto",
+  "locks": {"grid": "state", "palette": "character", "baseline": "character", "pivot": "character", "scale": "character"},
+  "directions": ["down", "side", "up"],
+  "mirror": {"left": "side"},
+  "working_cell": 256,
+  "runtime_cell": 48,
+  "states": {
+    "idle": {"frames": 4, "fps": 4, "loop": true, "action": "subtle grounded idle breathing"},
+    "attack": {"frames": 4, "fps": 8, "loop": false, "action": "clear practical infantry sword attack: ready, windup, strike, recovery"}
+  }
+}

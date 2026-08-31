@@ -1,0 +1,5 @@
+{
+  "id": "flat_scene",
+  "style": "FLAT_SCENE profile: flat illustrated scene, bold shape language, large simple color regions, limited palette, minimal internal texture, strong figure-ground separation",
+  "cleanup_suffix": "large flat color areas, clear separation between background, midground and foreground, hard edges between regions, {{BACKGROUND}}, no gradient, no painterly texture, no soft shadow, no bloom, no grain, no text, no UI overlay, no frame"
+}

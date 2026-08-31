@@ -1,0 +1,18 @@
+{
+  "id": "flat_scene",
+  "display_name": "FLAT SCENE",
+  "asset_type": "FLAT_SCENE",
+  "style_profile": "flat_scene",
+  "description": "flat illustrated cut-scene or UI visual",
+  "background_policy": "auto",
+  "tileable": false,
+  "layer_intent": "foreground",
+  "export_size": [1280, 720],
+  "refine": {
+    "fft_candidate_search": false,
+    "dither_mode": "off",
+    "seam_check": false,
+    "color_metric": "oklab",
+    "palette_colors": 48
+  }
+}

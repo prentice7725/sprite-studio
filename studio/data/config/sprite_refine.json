@@ -1,0 +1,63 @@
+{
+  "kind": "asset-studio-refine-config",
+  "mode": "sprite",
+  "version": 1,
+  "lattice": {
+    "scope": "state",
+    "max_pitch": 48,
+    "min_pitch": 2.0,
+    "search_half_span": 0.75,
+    "search_step": 0.02,
+    "confidence_floor": 0.2
+  },
+  "phase": {
+    "correction": "bounded",
+    "tolerance": 0.35,
+    "search_step": 0.05
+  },
+  "weighting": {
+    "mode": "continuous",
+    "anchors": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        0.5,
+        0.7
+      ],
+      [
+        0.8,
+        0.3
+      ],
+      [
+        1.0,
+        0.1
+      ]
+    ],
+    "coverage_threshold": 0.5
+  },
+  "color": {
+    "metric": "oklab",
+    "cluster_iterations": 6,
+    "detail_bias": true,
+    "detail_bias_share": 0.4,
+    "detail_bias_lightness_gap": 0.25,
+    "detail_bias_max_lightness": 0.45
+  },
+  "thin_feature": {
+    "enabled": true,
+    "max_thickness": 2,
+    "coverage_relief": 0.28,
+    "temporal_evidence": true
+  },
+  "palette": {
+    "colors": 16,
+    "scope": "character"
+  },
+  "fft": {
+    "candidate_search": false,
+    "candidates": 4,
+    "min_prominence": 0.15
+  }
+}
