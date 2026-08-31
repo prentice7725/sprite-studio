@@ -1,263 +1,208 @@
-# sprite-studio
+# 🎨 sprite-studio
 
-생성형 이미지 모델로 **깨끗한 2D 게임 스프라이트와 애니메이션 아틀라스**를 만드는
-component-row 파이프라인. AI는 원본 한 장을 그리는 데만 쓰고, 그 뒤의 모든 변환은
-같은 입력이면 항상 같은 출력이 나오는 **결정론 코드 경로**가 담당한다.
+**생성형 AI로 상용 퀄리티의 2D 게임 스프라이트와 애니메이션 아틀라스를 제작하는 올인원 스튜디오 파이프라인**
 
-```text
-sprite-request.json  ->  레이아웃 가이드 + 프롬프트  ->  상태별 행 이미지 생성
-  ->  크로마 알파 제거  ->  연결 성분 분리  ->  투명 셀 배치
-  ->  sprite-sheet-alpha.png + manifest.json.frame_layout
+AI는 초기 원본 이미지(Raw)를 그리는 데만 활용하고, 이후의 모든 과정(배경 투명화, 프레임 분리, 픽셀 그리드 정렬, 팔레트 양자화, 아틀라스 패킹, 엔진 내보내기)은 **100% 결정론적(Deterministic) 수학 알고리즘**이 처리하여 완벽하고 일관된 게임 에셋을 완성합니다.
+
+- **라이선스**: Apache-2.0 (전문은 [`LICENSE`](LICENSE))
+- **버전**: 1.59.0 (`pyproject.toml`과 `SKILL.md`의 `version:`과 동기화됨)
+
+> **이 저장소는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)을 포크해 Asset Studio로 새로 고도화한 프로젝트입니다.**
+
+---
+
+## 🌟 왜 sprite-studio인가요?
+
+일반 생성형 AI로 게임 스프라이트를 만들 때 겪는 문제들을 완벽하게 해결합니다:
+
+| 일반 AI 이미지 생성의 한계 | sprite-studio의 해결 방식 |
+|---|---|
+| ❌ 배경 누끼(투명화) 시 가장자리 깨짐 및 잔여 색상 발생 | ✅ **스마트 크로마키 & CbCr 분리**: Hermite 소프트 매트와 디스필(Despill)로 완벽한 투명 알파 추출 |
+| ❌ 프레임마다 캐릭터 크기, 중심축, 위치가 제각각 튐 | ✅ **알파 중심축(Alpha-Centroid) 자동 정렬 & 슬라이싱**: 프레임 간 흔들림 없는 일관된 애니메이션 보장 |
+| ❌ 도트 스타일이지만 실제로는 안티에일리어싱 뭉개짐(가짜 도트) | ✅ **결정론적 픽셀 언페이크(Pixel-Unfake) & 격자 스냅**: 진짜 픽셀 아트 격자(Pitch/Phase)로 자동 스냅 |
+| ❌ 색상 변형(Colorway)을 위해 AI를 다시 돌리면 형태가 변함 | ✅ **원클릭 팔레트 스왑(Recolor)**: 기본 시트 1개로 N가지 색상 변형 시트를 수학적으로 즉시 굽기(Bake) |
+| ❌ 게임 엔진(Unity, Godot, Phaser 등)에 넣기 번거로움 | ✅ **표준 포맷 원클릭 익스포트**: Aseprite JSON, 프레임별 PNG, GIF, 스프라이트 아틀라스 시트 자동 생성 |
+
+---
+
+## 🔄 전체 제작 파이프라인 흐름
+
+```mermaid
+flowchart LR
+    A["1. 기획 & 스펙<br/>(sprite-request.json)"] --> B["2. AI 이미지 생성<br/>(Codex / Grok)"]
+    B --> C["3. 스마트 추출 & 픽셀화<br/>(크로마키 + 그리드 스냅)"]
+    C --> D["4. 합성 & 애니메이션<br/>(아틀라스 + GIF)"]
+    D --> E["5. 웹 UI 검수 & 큐레이션<br/>(Asset Studio / Curator)"]
+    E --> F["6. 게임 엔진 내보내기<br/>(Aseprite / PNG / Phaser)"]
 ```
 
-- **라이선스**: Apache-2.0
-- **버전**: 1.59.0 (`pyproject.toml`과 `SKILL.md`의 `version:`은 같은 릴리스 커밋에서 함께 올린다)
-
-> **이 저장소는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)을 포크해
-> Asset Studio 로 새로 만드는 중이다.** 포크 시점의 상태와 그 이후 변경은
-> [`CHANGELOG.md`](CHANGELOG.md)가 구분해 기록한다. 현재 진행 중인 작업은
-> Studio를 Sprite / Static 두 모드로 나누는 것이다 (아래
-> [Asset Studio](#asset-studio) 참조).
-
 ---
 
-## 핵심 원칙 — AI raw는 최종 에셋이 아니다
+## 🚀 빠른 시작 (Quick Start)
 
-이 저장소에서 가장 중요한 규칙이다.
+### 1. 설치 및 환경 설정
 
-- **AI가 개입하는 지점은 `raw/<state>.png` 생성 한 곳뿐이다.** 그 파일은 중간
-  산출물이고, 최종 에셋은 반드시 `extract` 경로(크로마 제거 → 컴포넌트 분리 →
-  피치 검출/그리드 스냅 → kCentroid → 공유 팔레트 → 셀 배치)를 거친다.
-- **단순 다운스케일 쇼트컷 금지.** raw를 `resize()` 한 줄로 줄여 최종 경로에 놓는
-  것은 픽셀 언페이크가 아니다 — 안티에일리어싱 가장자리 열화와 그리드 미정렬이
-  그대로 남는다.
-- **베이스가 스타일의 SSoT다.** 이미지 모델은 첨부 레퍼런스를 프롬프트 텍스트보다
-  강하게 따른다. 도트 결과물을 원하면 베이스부터 진짜 도트여야 한다.
-- **조용한 폴백 금지.** 확신이 없으면 그리드를 추측해 스냅하지 않고, 스냅하지
-  않았다는 사실을 보고한다.
+> [!IMPORTANT]
+> **CPython 3.10+** 및 표준 라이브러리의 `venv`/`ensurepip`가 필요합니다.
+> 격리된 환경과 정확한 의존성(Pillow, NumPy) 관리를 위해 반드시 가상환경(`.venv`)을 생성하여 사용하세요.
 
-전체 게이트 목록은 [`SKILL.md`](SKILL.md)가 소유한다.
-
----
-
-## 요구사항
-
-- **CPython 3.10+** — `pyproject.toml`의 `requires-python`이 선언하는 하한이고,
-  CI 매트릭스도 같은 값을 최소값으로 갖는다.
-- 표준 라이브러리의 `venv`/`ensurepip` — 아래 부트스트랩 한 줄이 이것에 의존한다.
-  배포판에 따라 별도 패키지로 빠져 있을 수 있다(예: Debian/Ubuntu의
-  `python3-venv`).
-- 런타임 의존성은 두 개뿐이며 둘 다 직접 의존성이다: **Pillow** (`>=12.0,<13`),
-  **NumPy** (`>=2.2.6,<3`). NumPy는 다른 패키지가 딸려 오는 것에 기대지 않는다 —
-  추출 경로가 직접 import 하고, 바이트 동일성 계약이 NEP 50 승격 규칙에 걸려 있다.
-
----
-
-## 설치
-
+**macOS / Linux:**
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -e .
+python3 -m venv .venv
 source .venv/bin/activate
+pip install -e ".[studio,dev]"
 ```
 
-Windows PowerShell:
-
+**Windows (PowerShell):**
 ```powershell
 py -m venv .venv
-.\.venv\Scripts\pip install -e .
 .\.venv\Scripts\Activate.ps1
+pip install -e ".[studio,dev]"
 ```
-
-### 인터프리터 규칙 (중요)
-
-`.venv`가 이 프로젝트의 **유일한** 인터프리터다. 전역 `python3`는 그날 `$PATH`가
-가리키는 아무 인터프리터이고, 거기 든 패키지는 손으로 넣은 것이라 선언과 실물이
-갈린다(실측: Pillow만 있고 NumPy가 없어서, 하나가 깔려 있다는 이유로 다 깔린
-것처럼 보이는 상태).
-
-- 이 README의 예제는 **활성화된 셸**을 전제로 상대 경로를 쓴다.
-- 셸을 활성화하지 않는 에이전트/문서(`SKILL.md`, `docs/*.md`)는 인터프리터를
-  절대경로로 명시한다: `$SPRITE_STUDIO_ROOT/.venv/bin/python ...`
-- "있으면 venv, 없으면 python3" 같은 폴백은 두지 않는다. 없으면 만들거나 요란하게
-  실패한다.
-
-설치하면 콘솔 스크립트 `sprite-studio`이 생기고, 그 스크립트의 shebang이 설치된
-환경의 인터프리터를 가리키므로 "어느 python?" 질문이 사라진다.
 
 ---
 
-## 빠른 시작
+### 2. 사용 방식 선택: GUI vs CLI
+
+`sprite-studio`는 **시각적 웹 스튜디오(GUI)**와 **터미널 자동화 파이프라인(CLI)** 두 가지 방식을 모두 지원합니다.
+
+#### 🖥️ 방법 A: Asset Studio (웹 GUI로 편리하게 작업하기)
+
+초보자나 아티스트는 마우스 클릭만으로 프롬프트 생성, 이미지 추출, QA, 팔레트 스왑을 수행할 수 있습니다:
 
 ```bash
-# 1. 런 준비 — sprite-request.json(수치 SSoT) + 레이아웃 가이드 + 프롬프트 생성
+python -m studio.app
+```
+브라우저에서 `http://127.0.0.1:7860`으로 접속하여 작업합니다.
+
+* **🎭 Sprite Mode**: 캐릭터 8방향 이동, 공격, 대기 등 연속 프레임 애니메이션 제작
+* **🏞️ Static Mode**: 타일셋, 배경, 정지 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 이음새 검사
+
+---
+
+#### 💻 방법 B: CLI 파이프라인 (명령어로 빠른 일괄 처리)
+
+```bash
+# 1. 런(Run) 프로젝트 생성 (스펙, 프롬프트, 레이아웃 가이드 생성)
 sprite-studio prepare --out-dir runs/hero --character-id hero --base-image base.png
 
-# 2. 상태 행 생성 (AI가 개입하는 유일한 단계)
-#    gen 은 런 디렉터리를 모른다 — 프롬프트와 출력 경로를 직접 받는다.
+# 2. AI 상태별 행(Row) 생성 (Codex 또는 Grok 연동)
 sprite-studio gen --provider grok \
   --prompt-file runs/hero/prompts/side_attack.txt \
   --out runs/hero/raw/side_attack.png \
   --ref runs/hero/references/anchors/side-anchor-x8.png
 
-# 3. 행을 프레임으로 추출 (결정론 변환)
+# 3. 크로마키 제거 및 프레임 분리/픽셀 정제
 sprite-studio extract --run-dir runs/hero
 
-# 4. 아틀라스 + 런타임 매니페스트 합성
+# 4. 스프라이트 시트 아틀라스 및 런타임 매니페스트 합성
 sprite-studio compose-atlas --run-dir runs/hero
 
-# 5. 모션을 모션으로 검수
+# 5. 애니메이션 미리보기 & 웹 큐레이션 뷰 실행
 sprite-studio preview --run-dir runs/hero
-sprite-studio curation --run-dir runs/hero      # 웹뷰로 후보 비교·선택
+sprite-studio curation --run-dir runs/hero
 ```
-
-`gen`은 provider 바이너리를 필요로 한다: `codex`(ChatGPT OAuth image_gen) 또는
-`grok`(xAI Imagine). 생성 단계 없이 기존 이미지를 들고 와도 파이프라인은 동작한다.
-크로마 키는 소재색을 보고 고른다 — 핑크/보라 소재면 그린 키, 녹색 식물이면 마젠타
-키 (`--transparent --chroma-key ...`, 분기표는 [`docs/chroma-alpha.md`](docs/chroma-alpha.md)).
 
 ---
 
-## CLI 도구
+## 💡 주요 기능 상세
 
-`sprite-studio <tool>` 형태로 호출한다. `scripts/<tool>.py`는 파일 이름으로 부르던
-호출자를 위한 하위 호환 래퍼일 뿐이며, 문서가 가르치는 형태는 아니다.
+### 1. 🎭 Sprite Mode vs 🏞️ Static Mode
+`Asset Studio`는 만드는 에셋의 특성에 따라 최적화된 두 가지 전용 모드를 제공합니다:
 
-| 분류 | 도구 |
-|---|---|
-| 런 구성 | `prepare` · `migrate-request` · `migrate-breathe` |
-| 생성 | `gen` · `normalize-grok-row` · `cutout` |
-| 추출 | `extract` · `slice-sheet` · `unpack-atlas` |
-| 합성 | `compose-atlas` · `compose-cycle` · `compose-gif` · `compose-layers` |
-| 출력 | `export-pngs` · `export-aseprite` |
-| 큐레이션 | `curation` · `compose` · `anchor` |
-| 컬러웨이 | `recolor` · `recolor-palette` |
-| QA | `preview` · `inspect` · `score` · `correction-loop` |
-
----
-
-## Asset Studio
-
-Gradio 기반 오퍼레이터 레이어. 엔진(`sprite_studio`)을 SSoT로 두고 그 위에 워크플로를
-얹는다.
-
-```bash
-pip install -e ".[studio]"
-python -m studio.app          # http://127.0.0.1:7860
-```
-
-Studio는 **하나의 스튜디오, 두 개의 생산 모드**로 나뉜다
-(`ASSET_STUDIO_MODE_SPLIT_SPEC_v0.2`).
-
-```text
-Asset Studio
-├─ Shared Core      studio/shared/       공통 코어
-├─ Sprite Mode      studio/sprite_mode/  캐릭터/유닛 애니메이션
-└─ Static Mode      studio/static_mode/  배경·타일·오브젝트·정지 이미지
-```
-
-두 모드는 색 거리·셀 가중치·격자 채점을 **똑같이** 측정하되(그래서 공통 코어),
-파이프라인과 QA와 후처리는 만드는 물건의 결에 따라 **나뉜다**.
-
-| | Sprite Mode | Static Mode |
+| 구분 | Sprite Mode (스프라이트 모드) | Static Mode (스태틱 모드) |
 |---|---|---|
-| 작업 단위 | 프레임 행 | 이미지 한 장 |
-| 셀 피치 | 상태 전체에 **고정** | 이미지마다 자유 |
-| 위상(phase) | 프레임마다 **제한된 범위 안에서만** 보정 | 자유 |
-| 얇은 특징 | 보호(커버리지 완화) | 해당 없음 |
-| 디더링 | **절대 사용 안 함** | 선택적, 기본 off |
-| 이음새(seam) | 해당 없음 | 검사 · 선택적 보정 |
-
-설계 근거와 각 알고리즘의 실패 사례는
-[`docs/asset-studio-modes.md`](docs/asset-studio-modes.md)에 있다.
-
-### 알고리즘 변경의 게이트 — 합성 열화 벤치마크
-
-정답을 아는 에셋을 일부러 열화시킨 뒤(블러, 서브픽셀 오프셋, 안티에일리어싱
-리사이즈, 경계 번짐, 얇은 특징 손실 등) 정제 결과를 원본과 비교한다. 결정론적이라
-점수가 바뀌면 알고리즘이 바뀐 것이고, 케이스별로 비교하므로 평균만 올리고 몇
-케이스를 망가뜨리는 변경이 개선으로 통과하지 못한다.
-
-```bash
-python -m studio.benchmark --out runs/benchmark/baseline.json      # 기준 기록
-python -m studio.benchmark --baseline runs/benchmark/baseline.json # 회귀 시 exit 1
-python -m studio.benchmark --list-degradations
-```
+| **대상 에셋** | 캐릭터/몬스터/유닛 애니메이션 프레임 행 | 배경 타일, 맵 오브젝트, 아이콘, 단일 일러스트 |
+| **셀 피치(격자)** | 모든 애니메이션 상태에 걸쳐 **고정 잠금** | 이미지별 개별 최적 크기 자동 계산 |
+| **위상(Phase) 보정** | 프레임 간 흔들림 방지를 위해 제한적 범위 내 보정 | 자유로운 2차원 위상 최적화 |
+| **디더링(Dithering)** | 픽셀 뭉침 방지를 위해 **절대 사용 안 함** | 질감 표현을 위해 선택적 사용 가능 |
+| **특화 기능** | 질량 중심축(Centroid) 정렬, 호흡(Breathe) 애니메이션 | 심리스(Seamless) 이음새 검사, 씬 컷아웃 |
 
 ---
 
-## 컬러웨이 — 팔레트 스왑 베이크
-
-베이스 시트 하나와 팔레트 맵으로 N개의 색상 변형 시트를 결정론적으로 굽는다.
-`recolor`는 스펙대로 변형을 만들고, `recolor-palette`는 베이스 시트에서 팔레트 맵
-초안을 뽑는다. 큐레이션 뷰가 결과를 blink-compare로 비교하고 채택하면
-`curation.json`의 `recolor.picked`에 기록된다.
+### 2. 🎨 컬러웨이 (원클릭 팔레트 스왑)
+캐릭터의 2P 컬러, 속성별 변형(불/물/번개), 적 몬스터 색놀이(Elite/Boss) 버전을 클릭 한 번으로 제작합니다:
 
 ```bash
-# 베이스 시트에서 팔레트 맵 초안 뽑기 (기본 출력은 stdout)
+# 1. 베이스 시트에서 사용된 색상 팔레트 맵 추출
 sprite-studio recolor-palette --base runs/hero/sprite-sheet-alpha.png --out palette.json
 
-# 스펙대로 variants/ 에 변형 시트 굽기
+# 2. 지정한 팔레트 스펙대로 다양한 컬러웨이 시트 즉시 굽기(Bake)
 sprite-studio recolor --run-dir runs/hero --spec recolor-spec.json
 ```
 
-자세한 내용은 [`docs/recolor.md`](docs/recolor.md).
-
 ---
 
-## 큐레이션 뷰
-
-에이전트 채팅은 이미지를 렌더링하지 못하지만 이 웹뷰는 할 수 있다. 스프라이트
-런뿐 아니라 **임의의 이미지 후보 묶음**(아이콘, 로고, 생성 초안)도 나란히 비교하고
-고를 수 있다.
+### 3. 🔍 비주얼 큐레이션 웹뷰 (Side-by-Side Compare)
+에이전트나 CLI 환경에서 확인하기 힘든 이미지 후보들을 웹 브라우저에서 나란히 띄워놓고 최적의 픽을 고릅니다:
 
 ```bash
-sprite-studio unpack-atlas --pngs-dir ./candidates --out-dir runs/pick   # 임의 이미지 반입
+# 임의의 이미지 폴더(후보군)를 불러와서 브라우저 큐레이션 뷰 띄우기
+sprite-studio unpack-atlas --pngs-dir ./candidates --out-dir runs/pick
 sprite-studio curation --run-dir runs/pick
 ```
 
 ---
 
-## 문서
+### 4. 📦 게임 엔진 포맷 내보내기 (Export)
+완성된 결과물을 실제 게임 엔진에 바로 임포트할 수 있도록 변환합니다:
 
-`SKILL.md`가 동작 계약이자 허브이고, 각 문서가 자기 표를 소유한다.
-
-| 관심사 | 문서 |
-|---|---|
-| 계약·구조 | [`docs/run-contract.md`](docs/run-contract.md) · [`docs/architecture.md`](docs/architecture.md) |
-| 요청 작성 | [`docs/states-and-frames.md`](docs/states-and-frames.md) · [`docs/subject-profiles.md`](docs/subject-profiles.md) · [`docs/pixel-unfake.md`](docs/pixel-unfake.md) · [`docs/chroma-alpha.md`](docs/chroma-alpha.md) |
-| 생성 | [`docs/gen.md`](docs/gen.md) · [`docs/frame-interpolation.md`](docs/frame-interpolation.md) · [`docs/seamless-video-loop.md`](docs/seamless-video-loop.md) |
-| 큐레이션 | [`docs/curation.md`](docs/curation.md) |
-| 컬러웨이 | [`docs/recolor.md`](docs/recolor.md) |
-| 레이어 트랙 | [`docs/layer-tracks.md`](docs/layer-tracks.md) |
-| 엔진 출력 | [`docs/engine-export.md`](docs/engine-export.md) |
-| 특수 입력 | [`docs/directional-anchor-workflow.md`](docs/directional-anchor-workflow.md) · [`docs/sheet-slicing.md`](docs/sheet-slicing.md) |
-| QA | [`docs/qa-motion.md`](docs/qa-motion.md) · [`docs/locomotion-curation.md`](docs/locomotion-curation.md) |
-| Studio | [`docs/studio.md`](docs/studio.md) · [`docs/asset-studio-modes.md`](docs/asset-studio-modes.md) |
-| 문제 해결 | [`docs/troubleshooting.md`](docs/troubleshooting.md) |
+* **Aseprite 호환 JSON**: Phaser, Flame, Godot 등에서 즉시 로드 가능한 JSON 메타데이터 생성 (`sprite-studio export-aseprite`)
+* **개별 PNG 프레임 분리**: 상태 및 방향별 프레임 PNG 내보내기 (`sprite-studio export-pngs`)
+* **애니메이션 GIF**: 기획 검토 및 웹 공유용 GIF 생성 (`sprite-studio compose-gif`)
 
 ---
 
-## 개발
+## 🛠️ CLI 도구 전체 요약
+
+| 분류 | 명령어 | 설명 |
+|---|---|---|
+| **런 관리** | `prepare` | 신규 프로젝트 런 생성 및 가이드/프롬프트 빌드 |
+| | `migrate-request` / `migrate-kinds` | 요청 스펙 및 온디스크 데이터 마이그레이션 |
+| **생성** | `gen` | AI 이미지 생성기(Codex/Grok) 호출 |
+| | `normalize-grok-row` | 생성된 행 이미지 규격 표준화 |
+| **추출/정제** | `extract` | 크로마키 제거, 픽셀 그리드 스냅, 프레임 분리 |
+| | `slice-sheet` | 기존 시트에서 개별 셀 분리 슬라이싱 |
+| | `unpack-atlas` | 기존 아틀라스를 프레임 단위로 언팩 |
+| **합성** | `compose-atlas` | 전체 프레임을 단일 아틀라스 시트로 패킹 |
+| | `compose-cycle` / `compose-gif` | 특정 동작 애니메이션 GIF 렌더링 |
+| | `compose-layers` | 다중 레이어 합성 |
+| **내보내기** | `export-aseprite` | Aseprite 호환 JSON 포맷 익스포트 |
+| | `export-pngs` | 상태별 개별 PNG 프레임 파일 내보내기 |
+| **컬러/큐레이션**| `recolor` / `recolor-palette` | 팔레트 추출 및 컬러웨이 시트 굽기 |
+| | `curation` | 웹 브라우저 기반 시각적 비교/선택 뷰어 |
+| **QA/품질** | `preview` | 애니메이션 재생 검수 |
+| | `inspect` / `score` / `correction-loop` | 자동 품질 채점 및 자가 교정 루프 |
+
+---
+
+## 📚 상세 기술 문서
+
+더 자세한 아키텍처 및 알고리즘 설명은 `docs/` 디렉터리의 문서를 참조하세요:
+
+* **핵심 구조 및 계약**: [`docs/architecture.md`](docs/architecture.md) · [`docs/run-contract.md`](docs/run-contract.md)
+* **모드별 알고리즘**: [`docs/asset-studio-modes.md`](docs/asset-studio-modes.md) · [`docs/studio.md`](docs/studio.md)
+* **크로마키 & 픽셀화**: [`docs/chroma-alpha.md`](docs/chroma-alpha.md) · [`docs/pixel-unfake.md`](docs/pixel-unfake.md)
+* **팔레트 & 레이어**: [`docs/recolor.md`](docs/recolor.md) · [`docs/layer-tracks.md`](docs/layer-tracks.md)
+* **엔진 연동**: [`docs/engine-export.md`](docs/engine-export.md)
+* **문제 해결 (FAQ)**: [`docs/troubleshooting.md`](docs/troubleshooting.md)
+
+---
+
+## 🧪 테스트 실행
 
 ```bash
 pip install -e ".[dev]"
-pytest                      # 전체
-pytest tests/frames         # 도메인 하나만
+pytest                      # 전체 테스트 실행
+pytest tests/frames         # 특정 도메인 테스트만 실행
 ```
-
-테스트는 도메인별 폴더(`tests/<domain>/`)로 묶여 있고, `conftest.py`는 `tests/`
-루트에서 이름으로 import 된다. 서브프로세스를 띄우는 테스트가 조용히 멈추지 않도록
-`pytest-timeout`을 `signal` 방식으로 강제한다.
 
 ---
 
-## 라이선스
+## 📄 라이선스 (License)
 
-Apache-2.0. 전문은 [`LICENSE`](LICENSE).
+이 프로젝트는 **Apache License 2.0**에 따라 배포됩니다. 전문은 [`LICENSE`](LICENSE) 파일에서 확인하실 수 있습니다.
 
-이 저장소는 Apache-2.0으로 배포되는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)의 포크에서 출발했으며 동일한 라이선스(Apache-2.0)를 유지합니다.
-
-[`NOTICE`](NOTICE) 파일에 명시된 제3자 귀속은 **필수 고지 사항**입니다:
-`perfectpixel-studio`(MIT, Andrew Kim)에서 이식한 코드가 in-tree에 포함되어 있으며, MIT 라이선스 규정에 따라 해당 저작권 및 허가 고지가 `NOTICE` 파일에 함께 보존되어 있습니다.
-
-보안 문제 신고 절차는 [`SECURITY.md`](SECURITY.md)에 있다.
+* 본 저장소는 Apache-2.0 라이선스로 배포되는 [`sprite-gen`](https://github.com/aldegad/sprite-gen)의 포크에서 출발하였으며 동일한 라이선스(Apache-2.0)를 유지합니다.
+* **제3자 귀속 고지 ([`NOTICE`](NOTICE))**: `perfectpixel-studio`(MIT, Andrew Kim)에서 이식한 알고리즘 코드 4건(알파 중심축 정렬, 투영 프로파일 분할, YCbCr 크로마키, 런렝스 피치 추정)에 대한 저작권 및 라이선스 고지는 `NOTICE` 파일에 보존되어 있습니다.
+* 보안 문제 신고 절차는 [`SECURITY.md`](SECURITY.md)를 참조하세요.
