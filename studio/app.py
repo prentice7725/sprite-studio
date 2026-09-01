@@ -102,8 +102,11 @@ def build_app(*, locale: str = "ko"):
     default_dirs = list(default_preset["directions"])
     default_states = list(default_preset["states"])
 
+    existing_runs = [info.run_id for info in run_manager.list_runs()]
+    initial_run = existing_runs[0] if existing_runs else None
+
     with gr.Blocks(title=t["app.title"]) as app:
-        current_run = gr.State(None)
+        current_run = gr.State(initial_run)
         current_state = gr.State(None)
 
         with gr.Row():
@@ -153,16 +156,17 @@ def build_app(*, locale: str = "ko"):
                         with gr.Column():
                             project_status = gr.Markdown("Run을 생성하면 상태가 표시됩니다.")
                             run_picker = gr.Dropdown(
-                                choices=[info.run_id for info in run_manager.list_runs()],
+                                choices=existing_runs,
+                                value=initial_run,
                                 label="Existing Runs",
-                                allow_custom_value=False,
+                                allow_custom_value=True,
                             )
                             refresh_runs = gr.Button("Refresh Runs")
 
                 with gr.Tab(t["tab.generate"]):
                     with gr.Row():
                         with gr.Column():
-                            generate_run = gr.Dropdown(label="Run")
+                            generate_run = gr.Dropdown(choices=existing_runs, value=initial_run, label="Run", allow_custom_value=True)
                             generate_direction = gr.Dropdown(default_dirs, value="side", label="Direction")
                             generate_pose = gr.Dropdown(default_states, value="attack", label="State")
                             prompt = gr.Textbox(label="Prompt", lines=12)
@@ -199,7 +203,7 @@ def build_app(*, locale: str = "ko"):
                             batch_output = gr.Markdown()
 
                 with gr.Tab(t["tab.review"]):
-                    review_run = gr.Dropdown(label="Run")
+                    review_run = gr.Dropdown(choices=existing_runs, value=initial_run, label="Run", allow_custom_value=True)
                     review_state = gr.Dropdown(label="State")
                     review_frames = gr.Gallery(label="EXTRACTED FRAMES", columns=4, height="auto")
                     review_refined_frames = gr.Gallery(label="REFINED FRAMES", columns=4, height="auto")
@@ -239,12 +243,12 @@ def build_app(*, locale: str = "ko"):
                     curation_output = gr.Markdown()
 
                 with gr.Tab(t["tab.matrix"]):
-                    matrix_run = gr.Dropdown(label="Run")
+                    matrix_run = gr.Dropdown(choices=existing_runs, value=initial_run, label="Run", allow_custom_value=True)
                     matrix_output = gr.Markdown()
                     matrix_refresh = gr.Button("Refresh Matrix")
 
                 with gr.Tab(t["tab.export"]):
-                    export_run = gr.Dropdown(label="Run")
+                    export_run = gr.Dropdown(choices=existing_runs, value=initial_run, label="Run", allow_custom_value=True)
                     compose_button = gr.Button("COMPOSE", variant="primary")
                     runtime_button = gr.Button("EXPORT RUNTIME 48×48")
                     export_output = gr.Markdown()
@@ -326,19 +330,82 @@ def build_app(*, locale: str = "ko"):
 
         def refresh_clicked():
             choices = [item.run_id for item in run_manager.list_runs()]
-            return tuple(gr.Dropdown(choices=choices) for _ in range(5))
+            val = choices[0] if choices else None
+            return tuple(gr.Dropdown(choices=choices, value=val) for _ in range(5))
 
         refresh_runs.click(refresh_clicked, outputs=[run_picker, generate_run, review_run, matrix_run, export_run])
 
         def run_selected(run_id_value):
             if not run_id_value:
-                return None, gr.Dropdown(choices=[]), gr.Dropdown(choices=[]), "", gr.Dropdown(choices=[])
+                return (
+                    None,
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(choices=[]),
+                    gr.Dropdown(choices=[]),
+                    gr.CheckboxGroup(choices=[]),
+                    "",
+                    gr.Dropdown(choices=[]),
+                )
             info = run_manager.load_run(run_id_value)
             poses = sorted({state.split("_", 1)[1] for state in info.states if "_" in state})
-            return info.run_id, gr.Dropdown(choices=list(info.states), value=info.states[0]), gr.Dropdown(choices=poses, value=poses[0] if poses else None), "", gr.Dropdown(choices=list(info.directions), value=info.directions[0] if info.directions else None)
+            states_list = list(info.states)
+            dirs_list = list(info.directions) if info.directions else []
+            return (
+                info.run_id,
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(choices=states_list, value=states_list[0] if states_list else None),
+                gr.Dropdown(choices=poses, value=poses[0] if poses else None),
+                gr.CheckboxGroup(choices=states_list, value=states_list),
+                f"### Selected\n`{info.path}`\n\n{len(info.states)} state rows.",
+                gr.Dropdown(choices=dirs_list, value=dirs_list[0] if dirs_list else None),
+            )
 
-        run_picker.change(run_selected, run_picker, [current_run, review_state, generate_pose, project_status, anchor_direction])
-        generate_run.change(lambda value: value, generate_run, current_run)
+        run_picker.change(
+            run_selected,
+            run_picker,
+            [current_run, generate_run, review_run, matrix_run, export_run, review_state, generate_pose, batch_states, project_status, anchor_direction],
+        )
+
+        def generate_run_changed(run_id_value):
+            if not run_id_value:
+                return (
+                    None,
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(value=None),
+                    gr.Dropdown(choices=[]),
+                    gr.Dropdown(choices=[]),
+                    gr.CheckboxGroup(choices=[]),
+                    gr.Dropdown(choices=[]),
+                )
+            info = run_manager.load_run(run_id_value)
+            poses = sorted({state.split("_", 1)[1] for state in info.states if "_" in state})
+            states_list = list(info.states)
+            dirs_list = list(info.directions) if info.directions else []
+            return (
+                info.run_id,
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(value=info.run_id),
+                gr.Dropdown(choices=states_list, value=states_list[0] if states_list else None),
+                gr.Dropdown(choices=poses, value=poses[0] if poses else None),
+                gr.CheckboxGroup(choices=states_list, value=states_list),
+                gr.Dropdown(choices=dirs_list, value=dirs_list[0] if dirs_list else None),
+            )
+
+        generate_run.change(
+            generate_run_changed,
+            generate_run,
+            [current_run, run_picker, review_run, matrix_run, export_run, review_state, generate_pose, batch_states, anchor_direction],
+        )
 
         def load_prompt_clicked(run_value, direction, pose):
             path, request = _run_state(run_value)
@@ -557,9 +624,27 @@ def build_app(*, locale: str = "ko"):
         clear_anchor_button.click(clear_anchor_clicked, [review_run, anchor_direction], anchor_output)
 
         def batch_clicked(run_value, selected_states, normalize, refine, repair, qa):
-            path, _ = _run_state(run_value)
-            job_id = batch_service.start_batch(path, list(selected_states or []), normalize=normalize, refine=refine, repair=repair, qa=qa)
-            return f"Batch `{job_id}` started.\n\n{batch_service.status_text(path)}"
+            if not run_value:
+                msg = "❌ 먼저 Project 또는 Generate 탭에서 Run을 선택하세요."
+                gr.Warning(msg)
+                return msg
+            try:
+                path, _ = _run_state(run_value)
+            except Exception as exc:
+                msg = f"❌ 런 로드 실패: {exc}"
+                gr.Warning(msg)
+                return msg
+            if not selected_states:
+                msg = "❌ 최소 하나 이상의 상태를 선택하세요."
+                gr.Warning(msg)
+                return msg
+            try:
+                job_id = batch_service.start_batch(path, list(selected_states or []), normalize=normalize, refine=refine, repair=repair, qa=qa)
+                return f"🚀 Batch `{job_id}` 시작됨.\n\n{batch_service.status_text(path)}"
+            except Exception as exc:
+                msg = f"❌ 배치 시작 실패: {exc}"
+                gr.Warning(msg)
+                return msg
 
         batch_button.click(batch_clicked, [generate_run, batch_states, batch_normalize, batch_refine, batch_repair, batch_qa], batch_output)
 

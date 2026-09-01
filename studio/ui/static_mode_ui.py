@@ -48,6 +48,9 @@ def build_static_tabs(gr, t: dict[str, str]):
     presets = list_static_presets()
     default_preset = load_static_preset("pixel_scene" if "pixel_scene" in presets else presets[0])
 
+    existing_projects = _projects()
+    initial_project = existing_projects[0] if existing_projects else None
+
     with gr.Column(visible=False) as container:
         with gr.Tabs():
             with gr.Tab(t.get("static.tab.project", "PROJECT")):
@@ -75,11 +78,11 @@ def build_static_tabs(gr, t: dict[str, str]):
                         create_button = gr.Button(t.get("static.project.create", "CREATE PROJECT"), variant="primary")
                     with gr.Column():
                         project_status = gr.Markdown("Create a Static project to begin.")
-                        project_picker = gr.Dropdown(choices=_projects(), label="Existing Projects", allow_custom_value=False)
+                        project_picker = gr.Dropdown(choices=existing_projects, value=initial_project, label="Existing Projects", allow_custom_value=True)
                         refresh_projects = gr.Button("Refresh Projects")
 
             with gr.Tab(t.get("static.tab.generate", "GENERATE")):
-                generate_project = gr.Dropdown(choices=_projects(), label="Project")
+                generate_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 static_prompt = gr.Textbox(label="Prompt", lines=10)
                 prompt_issues = gr.Markdown()
                 with gr.Row():
@@ -91,7 +94,7 @@ def build_static_tabs(gr, t: dict[str, str]):
                 generate_status = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.refine", "REFINE")):
-                refine_project = gr.Dropdown(choices=_projects(), label="Project")
+                refine_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 refine_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 with gr.Row():
                     dither_mode = gr.Dropdown(list(DITHER_MODES), value="off",
@@ -106,7 +109,7 @@ def build_static_tabs(gr, t: dict[str, str]):
                 refine_status = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.cleanup", "CLEANUP")):
-                cleanup_project = gr.Dropdown(choices=_projects(), label="Project")
+                cleanup_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 cleanup_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 orphan_max_area = gr.Number(value=2, precision=0, label=t.get("static.orphan", "Orphan Max Area (px)"))
                 hole_max_area = gr.Number(value=4, precision=0, label=t.get("static.hole", "Hole Fill Max Area (px)"))
@@ -115,7 +118,7 @@ def build_static_tabs(gr, t: dict[str, str]):
                 cleanup_output = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.tile", "TILE / LAYER")):
-                tile_project = gr.Dropdown(choices=_projects(), label="Project")
+                tile_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 tile_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 with gr.Row():
                     seam_button = gr.Button(t.get("static.seam.check", "SEAM CHECK"))
@@ -129,13 +132,13 @@ def build_static_tabs(gr, t: dict[str, str]):
                 layer_output = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.qa", "QA")):
-                qa_project = gr.Dropdown(choices=_projects(), label="Project")
+                qa_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 qa_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 qa_button = gr.Button(t.get("static.qa.run", "STATIC QA"), variant="primary")
                 qa_output = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.export", "EXPORT")):
-                export_project = gr.Dropdown(choices=_projects(), label="Project")
+                export_project = gr.Dropdown(choices=existing_projects, value=initial_project, label="Project", allow_custom_value=True)
                 export_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 export_button = gr.Button(t.get("static.export.run", "EXPORT"), variant="primary")
                 export_output = gr.Markdown()
