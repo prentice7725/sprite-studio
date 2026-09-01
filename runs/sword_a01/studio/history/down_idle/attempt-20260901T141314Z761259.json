@@ -1,0 +1,22 @@
+{
+  "kind": "sprite-studio-image-report",
+  "provider": "grok",
+  "prompt": "chunky chibi rank-and-file mercenary swordsman, short stocky practical infantry body, plain steel helmet with a short blue plume, blue tunic, simple dark steel armor, brown belt and boots, simple broad one-handed sword, tiny neutral face, ordinary common soldier\n\nfront-facing game sprite view, clear front silhouette,\nsubtle grounded idle breathing,\n4-frame readable motion when this is an animation row\n\nREFINE_FIRST profile: clean flat-color character illustration, simple cel shading, thick crisp outlines, very limited color palette, large simple color regions, minimal small detail, strong readable silhouette\n\nfull body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, clear flat regions for PixelRefiner, full frame edge-to-edge solid bright magenta background (#FF00FF), no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame\n\nno extra characters, no cropped limbs, no background scenery, no realistic rendering, no painterly texture, no excessive detail, no floating weapon, no weapon switching hands, no mirrored handedness, no left-right hand swap, no dramatic perspective, no diagonal tilt",
+  "out": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+  "raw": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png.raw.png",
+  "raw_bytes": 470021,
+  "elapsed_seconds": 40.104,
+  "model": null,
+  "session_id": null,
+  "refs": [
+    "C:\\workspace\\sprite-studio\\runs\\sword_a01\\base-source.jpg"
+  ],
+  "transparent": false,
+  "chroma": null,
+  "extra": {
+    "stdout_tail": "I'll generate the one requested image from the reference, then save it to the specified path.I'll edit the reference into one front-facing idle sprite, then copy it to the requested path.Copying the generated file to the required PNG path without resizing or restyling.Converting the file to a real PNG so the destination is a valid PNG, without changing size or style.C:\\workspace\\sprite-studio\\runs\\sword_a01\\studio\\work\\down_idle\\raw.png"
+  },
+  "state": "down_idle",
+  "prompt_source": "generated",
+  "timestamp": "20260901T141314Z761259"
+}

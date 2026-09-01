@@ -7,6 +7,8 @@
   "max_added_ratio": 0.01,
   "apply_small_holes": true,
   "apply_temporal": true,
+  "residual_protected_confidence": 0.69,
+  "residual_normal_confidence": 0.88,
   "safe_thresholds": {
     "small_hole": 0.96,
     "outline_gap": 0.98,

@@ -311,11 +311,35 @@ def _atomic_replace(target: Path, write_payload) -> None:
     fd, tmp_name = tempfile.mkstemp(dir=str(target.parent), prefix=f".{target.name}.", suffix=".tmp")
     try:
         write_payload(fd, tmp_name)
-        os.replace(tmp_name, target)
+        _replace_with_retry(tmp_name, target)
     except BaseException:
         if os.path.exists(tmp_name):
             os.unlink(tmp_name)
         raise
+
+
+def _replace_with_retry(tmp_name: str, target: Path, *, attempts: int = 8, base_delay: float = 0.005) -> None:
+    """``os.replace`` over a file a concurrent reader has open.
+
+    On POSIX this always succeeds — rename() only touches the directory
+    entry. On Windows, ``MoveFileExW`` can transiently raise
+    ``PermissionError`` (sharing violation) if a reader's handle, or a
+    moment of antivirus/indexer scanning, is between opens on the target at
+    the exact instant of replace — the concurrent UI-polling-vs-worker-thread
+    case this helper exists for (batch-queue.json et al). The failure is a
+    timing artifact, not a real conflict, so retry briefly with backoff
+    before giving up and propagating.
+    """
+    delay = base_delay
+    for attempt in range(attempts):
+        try:
+            os.replace(tmp_name, target)
+            return
+        except PermissionError:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(delay)
+            delay *= 2
 
 
 def atomic_write_text(target: Path, text: str) -> None:

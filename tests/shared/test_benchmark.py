@@ -28,6 +28,7 @@ from studio.shared.benchmark import (
 from studio.shared.benchmark.degrade import DEGRADATIONS
 from studio.shared.benchmark.harness import upscale
 from studio.shared.benchmark.metrics import silhouette_accuracy, temporal_consistency
+from studio.shared.config import MetricPolicySettings
 
 
 def test_every_degradation_actually_degrades_the_asset_it_models() -> None:
@@ -100,6 +101,24 @@ def test_silhouette_metric_notices_a_missing_limb() -> None:
     damaged.paste((0, 0, 0, 0), (0, 0, truth.width, 6))
     assert silhouette_accuracy(truth, damaged)["iou"] < 1.0
     assert silhouette_accuracy(truth, truth)["iou"] == 1.0
+
+
+def test_silhouette_metric_alpha_threshold_comes_from_policy_not_a_literal() -> None:
+    """§5: the "opaque" cutoff (was a bare 128) is now the configured
+    MetricPolicySettings.alpha_opaque_threshold — changing it changes the
+    metric's judgment, proving there is no hardcoded literal underneath."""
+    truth = Image.new("RGBA", (4, 4), (10, 20, 30, 255))
+    half_alpha = truth.copy()
+    half_alpha.putpixel((0, 0), (10, 20, 30, 100))  # below 128, at/above a permissive threshold
+
+    strict = MetricPolicySettings(alpha_opaque_threshold=128, palette_retained_delta_e=0.02, texture_collapse_ratio=0.25)
+    permissive = MetricPolicySettings(alpha_opaque_threshold=50, palette_retained_delta_e=0.02, texture_collapse_ratio=0.25)
+
+    strict_result = silhouette_accuracy(truth, half_alpha, policy=strict)
+    permissive_result = silhouette_accuracy(truth, half_alpha, policy=permissive)
+
+    assert strict_result["iou"] < 1.0  # pixel (0,0) reads as missing at threshold 128
+    assert permissive_result["iou"] == 1.0  # same pixel reads as present at threshold 50
 
 
 def test_default_suite_runs_and_summarises_both_modes() -> None:

@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "kind": "sprite-studio-generation-plan",
+  "order": [
+    {
+      "stage": 1,
+      "name": "direction-anchors",
+      "items": [
+        {
+          "state": "down_idle",
+          "role": "direction-anchor",
+          "direction": "down",
+          "refs": [
+            "base-source.*",
+            "references/layout-guides/down/idle.png"
+          ],
+          "note": "base 는 방향 앵커 생성까지만 identity 소스다 — 앵커 수락 후 행 생성에 base 를 재부착하지 않는다"
+        },
+        {
+          "state": "side_idle",
+          "role": "direction-anchor",
+          "direction": "side",
+          "refs": [
+            "base-source.*",
+            "references/layout-guides/side/idle.png"
+          ],
+          "note": "base 는 방향 앵커 생성까지만 identity 소스다 — 앵커 수락 후 행 생성에 base 를 재부착하지 않는다"
+        },
+        {
+          "state": "up_idle",
+          "role": "direction-anchor",
+          "direction": "up",
+          "refs": [
+            "base-source.*",
+            "references/layout-guides/up/idle.png"
+          ],
+          "note": "base 는 방향 앵커 생성까지만 identity 소스다 — 앵커 수락 후 행 생성에 base 를 재부착하지 않는다"
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "name": "action-rows",
+      "items": [
+        {
+          "state": "down_attack",
+          "role": "action-row",
+          "direction": "down",
+          "refs": [
+            "references/anchors/down-anchor-x8.png",
+            "references/layout-guides/down/attack.png"
+          ],
+          "materialize": "python3 -m sprite_studio.cli anchor --run-dir . --direction down",
+          "note": "앵커 ref 는 파생 캐시다 — 생성 직전 위 커맨드로 큐레이션 진실에서 다시 굽는다 (`--for-state <state>` 는 붙일 경로를 그대로 출력한다)"
+        },
+        {
+          "state": "side_attack",
+          "role": "action-row",
+          "direction": "side",
+          "refs": [
+            "references/anchors/side-anchor-x8.png",
+            "references/layout-guides/side/attack.png"
+          ],
+          "materialize": "python3 -m sprite_studio.cli anchor --run-dir . --direction side",
+          "note": "앵커 ref 는 파생 캐시다 — 생성 직전 위 커맨드로 큐레이션 진실에서 다시 굽는다 (`--for-state <state>` 는 붙일 경로를 그대로 출력한다)"
+        },
+        {
+          "state": "up_attack",
+          "role": "action-row",
+          "direction": "up",
+          "refs": [
+            "references/anchors/up-anchor-x8.png",
+            "references/layout-guides/up/attack.png"
+          ],
+          "materialize": "python3 -m sprite_studio.cli anchor --run-dir . --direction up",
+          "note": "앵커 ref 는 파생 캐시다 — 생성 직전 위 커맨드로 큐레이션 진실에서 다시 굽는다 (`--for-state <state>` 는 붙일 경로를 그대로 출력한다)"
+        }
+      ]
+    }
+  ],
+  "mirrored_directions": [
+    {
+      "direction": "left",
+      "mirror_of": "side",
+      "note": "생성 생략 — 런타임 미러가 기본. 미러로 부족해 재생성할 때는 반대편 행(raw/side/*.png)을 timing/scale 참조로만 부착하고, 대상 방향 앵커를 새로 뽑아 identity 로 쓴다 (directional-anchor-workflow.md 좌우 게이트)"
+    }
+  ]
+}

@@ -11,6 +11,8 @@ from PIL import Image, ImageDraw
 
 from studio.backend import repair_service
 from studio.core.repair import RepairAnalyzer, RepairPipeline, RepairProfile, TemporalRepairEngine
+from studio.core.repair.repair_pipeline import _residual_candidates
+from studio.shared.revision import content_revision
 
 
 BLUE = (60, 90, 180, 255)
@@ -202,3 +204,100 @@ def test_ai_micro_fix_rejects_unmasked_change(tmp_path: Path) -> None:
 
     with pytest.raises(ValueError, match="unmasked pixel"):
         repair_service.apply_ai_micro_fix(run_dir, "side_idle", job["job_id"], result_path)
+
+
+# --- §3: Refine residual provenance / stale validation ----------------------
+
+
+def test_residual_candidate_confidence_comes_from_profile_not_hardcoded() -> None:
+    """The 0.69 / 0.88 literals directive §3 flags must be config, not code."""
+    frame = _canvas(16)
+    ImageDraw.Draw(frame).rectangle((3, 3, 12, 12), fill=BLUE)
+    frame.putpixel((8, 8), (0, 0, 0, 0))  # the "residual" pixel, protected region
+    frame.putpixel((5, 5), (0, 0, 0, 0))  # unprotected
+
+    residuals = [
+        {"frame": 0, "pixels": [[8, 8]], "evidence": {}},
+        {"frame": 0, "pixels": [[5, 5]], "evidence": {}},
+    ]
+    custom_profile = RepairProfile(
+        protected_regions=((0.0, 0.0, 1.0, 1.0),),  # whole frame "protected" for pixel 1
+        residual_protected_confidence=0.4,
+        residual_normal_confidence=0.6,
+    )
+    candidates = _residual_candidates([frame], residuals, custom_profile)
+
+    assert candidates, "expected at least one residual candidate"
+    assert all(c.confidence in {0.4, 0.6} for c in candidates)
+    assert all(c.details.get("source") == "refine_residual" for c in candidates)
+
+
+def _refine_report_with_residual(refined_dir: Path, *, output_revision: str | None, present: bool) -> None:
+    report: dict = {"shared": {"logical_size": [16, 16]}}
+    if present:
+        report["kind"] = "asset-studio-sprite-refine"
+        report["residuals"] = [{"frame": 1, "pixels": [[4, 3]], "evidence": {}}]
+        if output_revision is not None:
+            report["output_revision"] = output_revision
+    (refined_dir / "refine.report.json").write_text(json.dumps(report), encoding="utf-8")
+
+
+def test_residual_accepted_when_output_revision_matches_current_bytes(tmp_path: Path) -> None:
+    run_dir, refined_dir = _repair_run(tmp_path)
+    frame_files = sorted(refined_dir.glob("frame-*.png"))
+    _refine_report_with_residual(refined_dir, output_revision=content_revision(frame_files), present=True)
+
+    analysis = repair_service.analyze_state(run_dir, "side_idle")
+
+    assert analysis["residual_provenance"]["residual_status"] == "accepted"
+    assert any(c["details"].get("source") == "refine_residual" for c in analysis["candidates"])
+
+
+def test_residual_stale_when_refined_bytes_changed_under_same_filenames(tmp_path: Path) -> None:
+    run_dir, refined_dir = _repair_run(tmp_path)
+    frame_files = sorted(refined_dir.glob("frame-*.png"))
+    stale_revision = content_revision(frame_files)
+    _refine_report_with_residual(refined_dir, output_revision=stale_revision, present=True)
+
+    # Re-refine: same filenames, different bytes (a later refine generation).
+    with Image.open(refined_dir / "frame-2.png") as opened:
+        changed = opened.convert("RGBA")
+    changed.putpixel((0, 0), BLUE)
+    changed.save(refined_dir / "frame-2.png")
+
+    analysis = repair_service.analyze_state(run_dir, "side_idle")
+
+    assert analysis["residual_provenance"]["residual_status"] == "stale"
+    assert analysis["residual_provenance"]["expected_revision"] == stale_revision
+    assert analysis["residual_provenance"]["current_revision"] != stale_revision
+    assert not any(c["details"].get("source") == "refine_residual" for c in analysis["candidates"])
+
+
+def test_residual_stale_when_refine_report_predates_revision_tracking(tmp_path: Path) -> None:
+    run_dir, refined_dir = _repair_run(tmp_path)
+    _refine_report_with_residual(refined_dir, output_revision=None, present=True)
+
+    analysis = repair_service.analyze_state(run_dir, "side_idle")
+
+    assert analysis["residual_provenance"]["residual_status"] == "stale"
+    assert analysis["residual_provenance"]["expected_revision"] is None
+    assert not any(c["details"].get("source") == "refine_residual" for c in analysis["candidates"])
+
+
+def test_residual_status_none_when_refine_report_has_no_residuals(tmp_path: Path) -> None:
+    run_dir, refined_dir = _repair_run(tmp_path)
+    _refine_report_with_residual(refined_dir, output_revision=None, present=False)
+
+    analysis = repair_service.analyze_state(run_dir, "side_idle")
+
+    assert analysis["residual_provenance"]["residual_status"] == "none"
+
+
+def test_stale_residual_never_reaches_repair_pipeline_candidates(tmp_path: Path) -> None:
+    run_dir, refined_dir = _repair_run(tmp_path)
+    _refine_report_with_residual(refined_dir, output_revision="deliberately-wrong-revision", present=True)
+
+    log = repair_service.repair_state(run_dir, "side_idle")
+
+    assert log["residual_provenance"]["residual_status"] == "stale"
+    assert not any(change.get("rule") == "thin_feature_at_risk" for change in log.get("changes", []))

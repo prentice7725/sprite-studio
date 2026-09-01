@@ -1,0 +1,25 @@
+{
+  "kind": "asset-studio-sprite-normalize-quality-config",
+  "version": 1,
+  "mode": "sprite",
+  "subject": {
+    "min_foreground_ratio": 0.02,
+    "min_bbox_width_ratio": 0.12,
+    "min_bbox_height_ratio": 0.25,
+    "max_side_edge_contact_ratio": 0.35,
+    "max_key_residual_ratio": 0.35
+  },
+  "forced_segmentation": {
+    "require_all_subjects_valid": true,
+    "stricter": {
+      "min_foreground_ratio": 0.04,
+      "min_bbox_width_ratio": 0.18,
+      "min_bbox_height_ratio": 0.35,
+      "max_side_edge_contact_ratio": 0.22,
+      "max_key_residual_ratio": 0.20
+    }
+  },
+  "anchor": {
+    "allow_recovered": false
+  }
+}

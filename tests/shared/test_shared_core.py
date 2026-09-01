@@ -15,6 +15,30 @@ from studio.shared.modes import resolve_asset_type, resolve_mode
 from studio.shared.palette import apply_palette, build_palette, palette_distance_report
 
 
+def _full_sections(mode: str) -> dict:
+    """Every required refine-config section, fully keyed, for tests that only
+    mean to exercise one specific defect (§2.2 now requires the whole set)."""
+    lattice_key = "grid" if mode == "static" else "lattice"
+    return {
+        lattice_key: {
+            "scope": "scene" if mode == "static" else "state",
+            "max_pitch": 48, "min_pitch": 2.0, "search_half_span": 0.75,
+            "search_step": 0.02, "confidence_floor": 0.2,
+            "coarse_to_fine": False, "large_image_pixels": 262144,
+        },
+        "phase": {"correction": "bounded", "tolerance": 0.35, "search_step": 0.05},
+        "weighting": {"mode": "continuous", "anchors": [[0.0, 1.0], [0.5, 0.7], [0.8, 0.3], [1.0, 0.1]], "coverage_threshold": 0.5},
+        "color": {"metric": "oklab", "cluster_iterations": 6, "detail_bias": True,
+                  "detail_bias_share": 0.4, "detail_bias_lightness_gap": 0.25, "detail_bias_max_lightness": 0.45},
+        "thin_feature": {"enabled": True, "max_thickness": 2, "coverage_relief": 0.28, "temporal_evidence": True},
+        "palette": {"colors": 16, "scope": "character" if mode == "sprite" else "scene"},
+        "fft": {"candidate_search": False, "candidates": 4, "min_prominence": 0.15},
+        "dither": {"mode": "off", "strength": 1.0, "matrix": 4},
+        "seam": {"check": False, "threshold": 0.08, "band": 1},
+        "cleanup": {"orphan_max_area": 2, "fringe_alpha_threshold": 128},
+    }
+
+
 def test_oklab_matches_reference_values() -> None:
     # Ottosson's published sRGB->Oklab values; if this drifts, every distance
     # threshold tuned against it silently changes meaning.
@@ -127,15 +151,23 @@ def test_refine_config_rejects_unknown_sections_and_overrides() -> None:
         settings_from_dict("sprite", {"nonsense": {}})
     with pytest.raises(ValueError, match="unknown refine override"):
         apply_overrides(load_refine_settings("sprite"), {"not_a_setting": 1})
+    # An unknown key inside one present section is reported specifically —
+    # before the (also true here) "config is incomplete" error, since it is
+    # the more actionable defect (§2.1 vs §2.2 ordering).
     with pytest.raises(ValueError, match="unknown keys"):
-        settings_from_dict("sprite", {"phase": {"tolerance": 0.2, "bogus": True}})
+        settings_from_dict("sprite", {"phase": {"correction": "bounded", "tolerance": 0.2, "search_step": 0.05, "bogus": True}})
 
 
 def test_refine_config_rejects_a_malformed_weighting_curve() -> None:
+    base = _full_sections("static")
+    bad_order = dict(base, weighting={"mode": "continuous", "coverage_threshold": 0.5,
+                                       "anchors": [[0.0, 1.0], [0.8, 0.3], [0.5, 0.7], [1.0, 0.1]]})
     with pytest.raises(ValueError, match="sorted by increasing radius"):
-        settings_from_dict("static", {"weighting": {"anchors": [[0.0, 1.0], [0.8, 0.3], [0.5, 0.7], [1.0, 0.1]]}})
+        settings_from_dict("static", bad_order)
+    bad_span = dict(base, weighting={"mode": "continuous", "coverage_threshold": 0.5,
+                                      "anchors": [[0.1, 1.0], [1.0, 0.1]]})
     with pytest.raises(ValueError, match="span radius"):
-        settings_from_dict("static", {"weighting": {"anchors": [[0.1, 1.0], [1.0, 0.1]]}})
+        settings_from_dict("static", bad_span)
 
 
 def test_flat_project_overrides_reach_the_right_section() -> None:
@@ -150,7 +182,9 @@ def test_flat_project_overrides_reach_the_right_section() -> None:
 
 def test_static_config_grid_section_loads_as_lattice() -> None:
     """Static spells it "grid", Sprite spells it "lattice"; one field holds both."""
-    settings = settings_from_dict("static", {"grid": {"max_pitch": 64}})
+    payload = _full_sections("static")
+    payload["grid"] = dict(payload["grid"], max_pitch=64)
+    settings = settings_from_dict("static", payload)
     assert settings.lattice.max_pitch == 64
 
 

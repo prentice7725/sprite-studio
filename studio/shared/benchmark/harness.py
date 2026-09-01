@@ -27,7 +27,13 @@ from typing import Any, Callable, Sequence
 import numpy as np
 from PIL import Image
 
-from studio.shared.config import BenchmarkSettings, RefineSettings, load_benchmark_settings, load_refine_settings
+from studio.shared.config import (
+    BenchmarkSettings,
+    MetricPolicySettings,
+    RefineSettings,
+    load_benchmark_settings,
+    load_refine_settings,
+)
 
 from .degrade import degrade
 from .metrics import sprite_metrics, static_metrics, temporal_consistency
@@ -200,6 +206,7 @@ def run_case(
     static_settings: RefineSettings | None = None,
     sprite_runner: SpriteRunner = _default_sprite_runner,
     static_runner: StaticRunner = _default_static_runner,
+    metric_policy: MetricPolicySettings | None = None,
 ) -> CaseResult:
     """Degrade one case, run it through refine, and score it against the truth."""
     degraded = [
@@ -210,14 +217,14 @@ def run_case(
     if case.mode == "sprite":
         settings = sprite_settings or load_refine_settings("sprite")
         recovered = list(sprite_runner(degraded, settings))
-        metrics = sprite_metrics(case.frames[0], recovered[0])
-        metrics["temporal"] = temporal_consistency(recovered)
+        metrics = sprite_metrics(case.frames[0], recovered[0], policy=metric_policy)
+        metrics["temporal"] = temporal_consistency(recovered, policy=metric_policy)
         if recovered[0].size != case.frames[0].size:
             warnings.append(f"recovered logical size {recovered[0].size} != ground truth {case.frames[0].size}")
     else:
         settings = static_settings or load_refine_settings("static")
         recovered_image = static_runner(degraded[0], settings)
-        metrics = static_metrics(case.frames[0], recovered_image)
+        metrics = static_metrics(case.frames[0], recovered_image, policy=metric_policy)
         if recovered_image.size != case.frames[0].size:
             warnings.append(f"recovered logical size {recovered_image.size} != ground truth {case.frames[0].size}")
     return CaseResult(

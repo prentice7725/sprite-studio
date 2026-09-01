@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "kind": "sprite-studio-run",
+  "mode": "sprite",
+  "config": {
+    "run_id": "sword_a01",
+    "character_id": "sword",
+    "provider": "grok",
+    "base_image": "C:\\Users\\seung\\AppData\\Local\\Temp\\gradio\\fa72c4fdc93e7aee2a05c6f47875b7f11cf3fb5f0733be92a73c72e44a4bc0e0\\swordman.jpg",
+    "directions": [
+      "down",
+      "side",
+      "up"
+    ],
+    "mirrors": {
+      "left": "side"
+    },
+    "states": {
+      "idle": {
+        "frames": 4,
+        "fps": 4,
+        "loop": true,
+        "action": "subtle grounded idle breathing"
+      },
+      "attack": {
+        "frames": 4,
+        "fps": 8,
+        "loop": false,
+        "action": "clear practical infantry sword attack: ready, windup, strike, recovery"
+      }
+    },
+    "cell_size": 256,
+    "runtime_size": 48,
+    "preset": "sword",
+    "description": "chunky chibi rank-and-file mercenary swordsman",
+    "generation_profile": "refine_first",
+    "background_policy": "magenta",
+    "mode": "sprite",
+    "refine": {},
+    "locks": {
+      "grid": "state",
+      "palette": "character",
+      "baseline": "character",
+      "pivot": "character",
+      "scale": "character"
+    }
+  },
+  "run_dir": "C:\\workspace\\sprite-studio\\runs\\sword_a01",
+  "prompt_profiles": {
+    "generation": "refine_first",
+    "negative": "default"
+  }
+}

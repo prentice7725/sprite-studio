@@ -1,0 +1,235 @@
+{
+  "ok": false,
+  "engine": "component-row",
+  "engine_revision": "bf67ca158d24",
+  "extract_args": {},
+  "run_dir": "C:\\workspace\\sprite-studio\\runs\\sword_a01",
+  "cell": {
+    "shape": "square",
+    "width": 256,
+    "height": 256,
+    "safe_margin_x": 24,
+    "safe_margin_y": 24,
+    "size": 256,
+    "safe_margin": 24
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [
+      255,
+      0,
+      255
+    ],
+    "selection": "manual"
+  },
+  "rows": [
+    {
+      "state": "down_idle",
+      "frames": 4,
+      "method": "components",
+      "files": [
+        "frames/down/idle/frame-0.png",
+        "frames/down/idle/frame-1.png",
+        "frames/down/idle/frame-2.png",
+        "frames/down/idle/frame-3.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 7366,
+          "bbox": [
+            107,
+            24,
+            151,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 3273
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 12610,
+          "bbox": [
+            75,
+            24,
+            181,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 6876
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 35458,
+          "bbox": [
+            28,
+            24,
+            232,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 14031
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 11613,
+          "bbox": [
+            84,
+            24,
+            164,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 6792
+        }
+      ],
+      "ok": false,
+      "engine_revision": "bf67ca158d24"
+    },
+    {
+      "state": "side_idle",
+      "frames": 4,
+      "method": "components",
+      "files": [
+        "frames/side/idle/frame-0.png",
+        "frames/side/idle/frame-1.png",
+        "frames/side/idle/frame-2.png",
+        "frames/side/idle/frame-3.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 17056,
+          "bbox": [
+            87,
+            24,
+            169,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 15912
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 17046,
+          "bbox": [
+            87,
+            24,
+            169,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 14795
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 12258,
+          "bbox": [
+            99,
+            24,
+            158,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 3179
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 32447,
+          "bbox": [
+            50,
+            24,
+            206,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 30836
+        }
+      ],
+      "ok": false,
+      "engine_revision": "bf67ca158d24"
+    },
+    {
+      "state": "up_idle",
+      "frames": 4,
+      "method": "components",
+      "files": [
+        "frames/up/idle/frame-0.png",
+        "frames/up/idle/frame-1.png",
+        "frames/up/idle/frame-2.png",
+        "frames/up/idle/frame-3.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 152,
+          "bbox": [
+            122,
+            212,
+            144,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 15450,
+          "bbox": [
+            66,
+            25,
+            196,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 192,
+          "bbox": [
+            90,
+            228,
+            154,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 56,
+          "bbox": [
+            124,
+            224,
+            132,
+            232
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ],
+      "ok": false,
+      "engine_revision": "bf67ca158d24"
+    }
+  ],
+  "errors": [
+    "down_idle: frame 00 has 3273 chroma-adjacent pixels",
+    "down_idle: frame 01 has 6876 chroma-adjacent pixels",
+    "down_idle: frame 02 has 14031 chroma-adjacent pixels",
+    "down_idle: frame 03 has 6792 chroma-adjacent pixels",
+    "side_idle: frame 00 has 15912 chroma-adjacent pixels",
+    "side_idle: frame 01 has 14795 chroma-adjacent pixels",
+    "side_idle: frame 02 has 3179 chroma-adjacent pixels",
+    "side_idle: frame 03 has 30836 chroma-adjacent pixels",
+    "up_idle: frame 00 is empty or too sparse (152 pixels < 256, character profile floor — small-subject run? declare \"subject\": \"effect\" in sprite-request.json, or pass --min-used-pixels)",
+    "up_idle: frame 02 is empty or too sparse (192 pixels < 256, character profile floor — small-subject run? declare \"subject\": \"effect\" in sprite-request.json, or pass --min-used-pixels)",
+    "up_idle: frame 03 is empty or too sparse (56 pixels < 256, character profile floor — small-subject run? declare \"subject\": \"effect\" in sprite-request.json, or pass --min-used-pixels)"
+  ],
+  "warnings": [
+    "down_idle: frame 02 is much larger than median (35458 vs 12112)",
+    "up_idle: frame 01 is much larger than median (15450 vs 172)",
+    "up_idle: frame 03 is much smaller than median (56 vs 172)"
+  ]
+}

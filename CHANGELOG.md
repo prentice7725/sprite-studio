@@ -134,11 +134,126 @@ Asset Studio 모드 분리 (`ASSET_STUDIO_MODE_SPLIT_SPEC_v0.2` 구현).
 - 배치 영속 작업 관측성 (`studio/backend/batch_service.py`, `studio/app.py`): 실시간 진행률, 단계, 경과시간, 실패 상세 표시, 중복 실행 방지 및 타이머 폴링.
 - 온보딩 시작 흐름 분리: 새 프로젝트 생성 시 "새로 생성"과 "기존 이미지 사용" 진입점 분리 및 필수 검증.
 
+**Normalize 견고화 — Subject Validity / Row-Level Acceptance Gate**
+(`SPRITE_STUDIO_GENERATION_NORMALIZE_HARDENING_DIRECTIVE.md` P0)
+
+기존 `normalize_grok_row`는 "스팬에 컴포넌트가 존재한다"를 "유효한 스프라이트
+subject다"와 동일시했다 — chroma 잔여물 덩어리·파편·좁은 세그멘테이션 조각도
+컴포넌트이고, 그중 가장 큰 것을 골라 셀에 끼워 넣으면 구조적으로는 "4칸 다 찼다"가
+됐다. 그 결과 실패한 생성이 4칸짜리 정상 행처럼 보이는 형태로 하류(Extract/Anchor)에
+승격될 수 있었다.
+
+- **Subject Validity Gate** (`sprite_studio/gen/normalize_quality.py`) — 셀마다
+  foreground 비율, bbox 폭/높이 비율, 측면(좌우) 엣지 접촉 비율, chroma 잔여 비율을
+  측정해 `valid`/`reasons`/`metrics`를 매긴다. 바닥 접촉은 정책적으로 감점하지 않는다
+  (다리가 셀 하단에 닿는 것은 정상). `extract.py`가 이미 갖고 있던
+  `alpha_nonzero_count`/`chroma_adjacent_count`를 재사용했다 — 픽셀 로직을 새로 쓰지 않았다.
+- **Row-Level Acceptance Gate** — `normalize_image()`가 이제 `report["result"]`
+  ∈ `{pass, recovered_with_warning, fail}`을 낸다. 자연 분할로 전원 유효해야 `pass`,
+  강제 세그멘테이션(스팬 수를 못 찾아 DP로 강제 분할)은 더 엄격한 정책으로 재평가하고
+  전원 유효해도 `recovered_with_warning`까지만 — 강제 분할은 절대 평범한 `pass`가 되지
+  않는다. 실패해도 정규화 결과물과 리포트는 그대로 디스크에 남아 진단에 쓸 수 있다
+  (조용히 사라지지 않는다).
+- **Studio 경계 강제** (`studio/backend/spritegen_bridge.py::normalize_state`) —
+  `result == "fail"`이면 `NormalizeQualityFailed`를 던진다. 세그멘테이션 자체가 실패하는
+  하드 실패(`SystemExit`)도 같은 타입으로 감싼다 — 전에는 `SystemExit`이
+  `batch_service`의 `except Exception`을 그냥 통과해 큐가 "running"에 멈춰 있다가 나중에
+  "interrupted"로 오분류되며 진짜 원인을 잃었다.
+- **배치 파이프라인 차단** (`studio/backend/batch_service.py`) — normalize 실패 시
+  상태를 `normalize_failed`로 명시하고 예외를 다시 던져 그 배치(앵커 포함)를 즉시
+  중단한다: Extract/Refine/QA/앵커 승격/의존 방향 생성이 전혀 시작되지 않는다.
+  `status_text()`가 실패 셀 번호와 사유를 사람이 읽을 수 있는 형태로 보여준다.
+- **앵커 승격 게이트** (`sprite_studio/curate/anchor.py::frame_source_path`) — 앵커로
+  선택된 실제 프레임의 normalize 리포트를 확인한다. `fail`은 항상 차단, 강제 복구
+  (`recovered_with_warning`)는 기본 차단(`normalize_quality.anchor.allow_recovered`로
+  런별 완화 가능), 선택된 프레임 자체가 `subjects[].valid == false`면 행 전체가
+  괜찮아도 차단한다 — 정체성 기준은 액션 프레임보다 엄격해야 한다.
+- **데이터 기반 정책** (`studio/data/config/sprite_normalize_quality.json`,
+  `studio/shared/config/settings.py::load_normalize_quality_settings`) — 프로덕션
+  임계값은 전부 이 설정에서 온다. 파싱은 `NormalizeQualityPolicy.from_dict`
+  (엔진 모듈)가 소유 — 미지정 `subject` 섹션·미지정 키는 즉시 실패(No Silent Fallback).
+  CLI/엔진 단독 사용은 여전히 `NormalizeQualityPolicy.default()`(보수적 내장값,
+  `--quality-config`로 대체 가능)로 동작한다.
+- 회귀 픽스처: 실제 문제 이미지(`20a93ecb-...png`)는 저장소에 없어 같은 병리를
+  재현하는 합성 이미지로 대체했다 — chroma 잔여 벽 1칸, 파편 1칸, 유효 subject 1칸,
+  좁은 잔여 스트립 1칸 (`tests/gen/test_normalize_quality.py`).
+
+**v0.2 Final Audit Fix** (`SPRITE_STUDIO_V02_FINAL_AUDIT_FIX_DIRECTIVE.md` P0/P1)
+
+### Fixed
+
+- **배치 큐 atomic persistence** (`studio/backend/batch_service.py`) — UI polling과
+  worker thread가 `batch-queue.json`을 동시에 읽고/쓰던 것이 실제 race였다
+  (`Path.write_text()`는 truncate-then-write라 polling이 torn JSON을 읽을 수 있었다).
+  temp-file + `os.replace()`로 발행하도록 바꿨다. Windows에서 concurrent reader가 잠깐
+  파일을 열고 있는 순간과 겹치면 `os.replace`가 일시적 `PermissionError`(sharing
+  violation)를 던질 수 있어, 그 경우에 한해 짧은 backoff로 재시도하는 로직을
+  `sprite_studio/spec/runio.py::_atomic_replace`에 추가했다 (POSIX에서는 rename이
+  디렉터리 엔트리만 바꾸므로 원래도 필요 없던 경로).
+  `load_queue()`가 JSON decode 실패·최상위가 object가 아님·`job_id`/`items`/
+  `total_items` 중 하나라도 없는 경우를 전부 명시적 `"corrupt"` 상태로 정규화한다
+  (invariant를 갖춘 dict로) — 이전처럼 `{"status": "failed", "error": ...}`만 반환해
+  호출부가 `KeyError`로 죽는 일이 없다.
+- **Config strict / no silent fallback** (`studio/shared/config/settings.py`) —
+  `LatticeSettings`/`PhaseSettings`/`WeightingSettings`/`ColorSettings`/
+  `ThinFeatureSettings`/`PaletteSettings`/`FftSettings`/`DitherSettings`/
+  `SeamSettings`/`CleanupSettings`/`SpriteQaSettings`/`StaticQaSettings`/
+  `MetricGateSettings`의 모든 tuning 필드에서 코드 기본값을 제거했다 (구조적으로
+  optional한 `DitherSettings.preset: str | None`만 예외). 로더가 이제 섹션마다
+  "필요한 key − payload key"로 누락을 검사하고, `RefineSettings`는 모드별 필수 섹션
+  10개(`lattice/grid, phase, weighting, color, thin_feature, palette, fft, dither,
+  seam, cleanup`)가 전부 있는지도 검사한다 — Sprite 쪽 `dither`/`seam`도 예외가
+  아니다(비활성 상태라도 명시해야 한다). 이 검증 때문에 실제로 비어 있던
+  `sprite_refine.json`의 `dither`/`seam`/`cleanup` 섹션과 `lattice.coarse_to_fine`/
+  `large_image_pixels`, `static_refine.json`의 `grid.scope`를 채워 넣었다 — 지금까지
+  코드 기본값으로 조용히 메워지고 있던 실제 hidden-fallback이었다.
+- **Refine residual provenance / stale 검증** (`studio/shared/revision.py` 신규,
+  `studio/backend/refine_service.py`, `studio/backend/repair_service.py`) — refine
+  residual의 신선도 검사가 파일명 비교(`report_sources == current_sources`)였던 것을
+  content-hash 비교로 바꿨다: 같은 파일명으로 다시 refine된 결과는 filename 비교로는
+  구분되지 않는다. `refine.report.json`에 `source_revision`/`output_revision`
+  (refined frame bytes + settings/lattice fingerprint 해시)을 기록하고, Repair가
+  현재 디스크의 refined frame으로 같은 해시를 재계산해 비교한다. 불일치(또는
+  `output_revision`이 아예 없는 구버전 리포트)는 residual을 조용히 버리지 않고
+  `residual_provenance: {"residual_status": "stale", ...}`로 분석/리페어 결과에
+  명시적으로 남긴다. residual 유래 후보의 confidence(`0.69`/`0.88` 리터럴,
+  `studio/core/repair/repair_pipeline.py::_residual_candidates`)를
+  `RepairProfile.residual_protected_confidence`/`residual_normal_confidence`
+  (`studio/data/repair/default.json`)로 옮겼다.
+- **Benchmark를 실제 CI regression gate로 연결** (`.github/workflows/ci.yml`) —
+  "Run Benchmark Gate" 스텝이 `--baseline` 없이 `python -m studio.benchmark`만
+  실행해 점수만 찍고 아무것도 게이트하지 않고 있었다. 커밋된 SSOT
+  `studio/data/benchmark/baseline.json`을 `--baseline`으로 비교하고 후보 리포트를
+  `.artifacts/benchmark-current.json`으로 아티팩트 업로드하도록 바꿨다.
+- **Benchmark 내부 threshold를 config화** (`studio/shared/config/settings.py`의
+  `MetricPolicySettings`, `studio/data/config/benchmark.json`의 `metric_policy`
+  섹션) — `studio/shared/benchmark/metrics.py` 여러 함수에 독립적으로 박혀 있던
+  `128`(alpha opaque threshold), `0.02`(palette retained ΔE), `0.25`(texture
+  collapse ratio)를 하나의 커밋된 섹션으로 모았다. 각 metric 함수는 이제
+  `policy: MetricPolicySettings | None` 인자를 받고, `None`이면 다른 settings 객체와
+  같은 관례로 `load_benchmark_settings().metric_policy`를 resolve한다.
+
 ### Known gaps
 
 - FX는 Sprite Mode의 서브타입으로 남아 있다 (별도 FX 모드 없음).
 - 벤치마크 케이스는 합성이다. 알고리즘이 알려진 열화에 대해 올바로 동작한다는 뜻이지,
   실제 생성 결과물의 품질이 좋아졌다는 뜻은 아니다.
+- **normalize 견고화는 디렉티브의 P0 범위만 구현했다.** 적응형 chroma 키 추정(§8),
+  largest-component 이상의 위성 컴포넌트 그룹핑(§9), 제한된 자동 재생성 정책(§11),
+  배치 UI 전면 개편(§12)은 P1로 미뤘다 — 사용자 확인 하에 범위를 좁혔다. chroma 잔여
+  탐지는 여전히 고정 색-거리 휴리스틱이라 마젠타/핑크 계열의 *정당한* subject 색상을
+  오탐할 수 있다 (적응형 추정이 없는 한 내재된 트레이드오프).
+- edge-contact/foreground 임계값은 실제 다수의 Grok 생성 실패 사례가 아니라 이 작업의
+  합성 픽스처로 튜닝했다 — 실 생성물로 벤치마크하며 재조정이 필요할 수 있다.
+- **v0.2 Final Audit Fix 디렉티브의 P1/P2 항목 중 i18n 전면 sweep과 Sprite UI
+  파이프라인 stage rail 재구성은 이번 작업에서 다루지 않았다.** Gradio 라벨/버튼/탭
+  타이틀/상태 메시지는 여전히 코드에 박힌 리터럴이고, Sprite 탭은 여전히
+  `PROJECT/GENERATE/REVIEW/MATRIX/EXPORT` 구조다 — 둘 다 별도 작업으로 남겨둔다
+  (`docs/asset-studio-modes.md`의 "Known gaps before v0.2 Complete" 참조).
+- `RepairProfile`(`studio/core/repair/profile.py`)과 `oklab_palette.py`의
+  `alpha_threshold` 기본값은 이번 config strictness 작업 범위 밖이다 — 여전히
+  "JSON이 있으면 덮어쓰고 없으면 코드 기본값" 방식이라, §2가 요구하는 required-key
+  검증까지는 가지 않았다.
 
 ---
 

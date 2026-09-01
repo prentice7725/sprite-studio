@@ -18,6 +18,29 @@ from sprite_studio.spec.layout import raw_rel
 from .prompt_service import effective_prompt
 from .schemas import ProviderStatus
 from studio.core.prompt import PromptValidator
+from studio.shared.config import load_normalize_quality_settings
+
+
+class NormalizeQualityFailed(RuntimeError):
+    """The normalized row did not clear the Subject Validity / Row-Level
+    Acceptance Gate (`SPRITE_STUDIO_GENERATION_NORMALIZE_HARDENING_DIRECTIVE.md`
+    §3/§6): promoting it would let a malformed generation reach Extract/Refine/
+    Anchor as if it were valid. Carries the parsed report — batch_service and
+    the UI surface it instead of a bare exit code (directive §21)."""
+
+    def __init__(self, state: str, report: dict[str, Any]):
+        self.state = state
+        self.report = report
+        cell_reasons = [
+            f"cell {subject.get('index')}: {', '.join(subject.get('reasons') or []) or 'invalid'}"
+            for subject in (report.get("subjects") or [])
+            if not subject.get("valid", True)
+        ]
+        detail = "; ".join(cell_reasons) if cell_reasons else (report.get("error") or report.get("result") or "fail")
+        valid = report.get("valid_subjects")
+        expected = report.get("expected_subjects")
+        counts = f"{valid}/{expected} valid subjects " if valid is not None and expected is not None else ""
+        super().__init__(f"normalize failed for '{state}': {counts}({detail})")
 
 
 def provider_status() -> list[ProviderStatus]:
@@ -92,23 +115,45 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
 
 
 def normalize_state(run_dir: Path, state: str) -> dict[str, Any]:
+    """Normalize, then enforce the quality gate before returning.
+
+    This is the only place normalize's report is consumed on the production
+    (Studio) path, so it is the only place that needs to know about
+    ``NormalizeQualityFailed`` — a FAIL result raises instead of being handed
+    back as if it were a usable row, which is what let a malformed generation
+    reach Extract/Anchor silently before (directive root cause, §1).
+    """
     request = request_for(run_dir)
     spec = request["states"][state]
     cell = request["cell"]
     raw = run_dir / raw_rel(request, state)
-    report = raw.with_name(raw.stem + ".normalize.report.json")
-    normalize_grok_row.run(
-        input=raw,
-        out=raw,
-        chroma_key=(request.get("chroma_key") or {}).get("hex", "green"),
-        count=int(spec["frames"]),
-        cell_width=int(cell["width"]),
-        cell_height=int(cell["height"]),
-        safe_margin_x=int(cell.get("safe_margin_x", cell.get("safe_margin", 24))),
-        safe_margin_y=int(cell.get("safe_margin_y", cell.get("safe_margin", 24))),
-        report=report,
-    )
-    return json.loads(report.read_text(encoding="utf-8"))
+    report_path = raw.with_name(raw.stem + ".normalize.report.json")
+    quality = load_normalize_quality_settings("sprite")
+    try:
+        normalize_grok_row.run(
+            input=raw,
+            out=raw,
+            chroma_key=(request.get("chroma_key") or {}).get("hex", "green"),
+            count=int(spec["frames"]),
+            cell_width=int(cell["width"]),
+            cell_height=int(cell["height"]),
+            safe_margin_x=int(cell.get("safe_margin_x", cell.get("safe_margin", 24))),
+            safe_margin_y=int(cell.get("safe_margin_y", cell.get("safe_margin", 24))),
+            report=report_path,
+            quality=quality,
+        )
+    except SystemExit as exc:
+        # A hard failure (couldn't segment into `count` spans, empty span, bad
+        # params) previously escaped as SystemExit — a BaseException that
+        # batch_service's `except Exception` never caught, leaving the batch
+        # queue stuck at status "running" until a later poll mislabeled it
+        # "interrupted" with a generic message (lost the real cause). Wrap it
+        # in the same typed, catchable failure as a soft quality FAIL.
+        raise NormalizeQualityFailed(state, {"result": "fail", "error": str(exc)}) from exc
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    if report.get("result") == "fail":
+        raise NormalizeQualityFailed(state, report)
+    return report
 
 
 def extract_frames(run_dir: Path, state: str | None = None, *, normalize: bool = False) -> int:

@@ -1,0 +1,165 @@
+{
+  "kind": "sprite-studio-grok-row-normalization",
+  "source_size": [
+    1376,
+    752
+  ],
+  "output_size": [
+    1024,
+    256
+  ],
+  "count": 4,
+  "cell": {
+    "width": 256,
+    "height": 256
+  },
+  "safe_margin": {
+    "x": 24,
+    "y": 24
+  },
+  "chroma_key": {
+    "rgb": [
+      255,
+      0,
+      255
+    ]
+  },
+  "segmentation": {
+    "natural_count": 3,
+    "forced": true,
+    "spans": [
+      [
+        0,
+        159
+      ],
+      [
+        159,
+        348
+      ],
+      [
+        348,
+        1087
+      ],
+      [
+        1087,
+        1376
+      ]
+    ]
+  },
+  "subjects": [
+    {
+      "index": 0,
+      "span": [
+        0,
+        159
+      ],
+      "leading_trim": 0,
+      "source_bbox": [
+        0,
+        0,
+        159,
+        752
+      ],
+      "source_size": [
+        159,
+        752
+      ],
+      "cell_bbox": [
+        107,
+        24,
+        151,
+        232
+      ],
+      "used_pixels": 7366,
+      "component_count": 47,
+      "dropped_components": 46
+    },
+    {
+      "index": 1,
+      "span": [
+        159,
+        348
+      ],
+      "leading_trim": 0,
+      "source_bbox": [
+        0,
+        4,
+        189,
+        376
+      ],
+      "source_size": [
+        189,
+        372
+      ],
+      "cell_bbox": [
+        75,
+        24,
+        181,
+        232
+      ],
+      "used_pixels": 12610,
+      "component_count": 147,
+      "dropped_components": 146
+    },
+    {
+      "index": 2,
+      "span": [
+        348,
+        1087
+      ],
+      "leading_trim": 0,
+      "source_bbox": [
+        0,
+        0,
+        739,
+        752
+      ],
+      "source_size": [
+        739,
+        752
+      ],
+      "cell_bbox": [
+        27,
+        24,
+        231,
+        232
+      ],
+      "used_pixels": 35468,
+      "component_count": 310,
+      "dropped_components": 309
+    },
+    {
+      "index": 3,
+      "span": [
+        1087,
+        1376
+      ],
+      "leading_trim": 0,
+      "source_bbox": [
+        0,
+        0,
+        289,
+        752
+      ],
+      "source_size": [
+        289,
+        752
+      ],
+      "cell_bbox": [
+        85,
+        24,
+        165,
+        232
+      ],
+      "used_pixels": 11643,
+      "component_count": 228,
+      "dropped_components": 227
+    }
+  ],
+  "resample": "nearest",
+  "align_x": "foot-centroid",
+  "align_y": "bottom",
+  "input": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+  "output": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+  "background": "transparent"
+}

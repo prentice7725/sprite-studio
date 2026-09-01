@@ -17,6 +17,12 @@ class RepairProfile:
     max_added_ratio: float = 0.01
     apply_small_holes: bool = True
     apply_temporal: bool = True
+    # Confidence assigned to a candidate sourced from Refine's residual
+    # handoff (`_residual_candidates`), split by whether it falls in a
+    # protected region — §3's "hardcoded repair confidence" fix: these were
+    # bare `0.69` / `0.88` literals in repair_pipeline.py.
+    residual_protected_confidence: float = 0.69
+    residual_normal_confidence: float = 0.88
     safe_thresholds: dict[str, float] = field(default_factory=lambda: {
         "small_hole": 0.96,
         "outline_gap": 0.98,
@@ -45,6 +51,8 @@ class RepairProfile:
             max_added_ratio=float(value.get("max_added_ratio", base.max_added_ratio)),
             apply_small_holes=bool(value.get("apply_small_holes", base.apply_small_holes)),
             apply_temporal=bool(value.get("apply_temporal", base.apply_temporal)),
+            residual_protected_confidence=float(value.get("residual_protected_confidence", base.residual_protected_confidence)),
+            residual_normal_confidence=float(value.get("residual_normal_confidence", base.residual_normal_confidence)),
             safe_thresholds=thresholds,
             protected_regions=tuple(tuple(float(number) for number in region) for region in regions),
         )

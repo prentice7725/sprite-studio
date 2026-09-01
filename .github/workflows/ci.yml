@@ -33,5 +33,19 @@ jobs:
           pytest -v
 
       - name: Run Benchmark Gate
+        # §4: a benchmark run with no --baseline just prints scores — it never
+        # exits non-zero, so it gated nothing. Compare against the committed
+        # SSOT baseline instead; the candidate report is kept as an artifact
+        # so a failure can be inspected without re-running the benchmark.
         run: |
-          python -m studio.benchmark
+          python -m studio.benchmark \
+            --out .artifacts/benchmark-current.json \
+            --baseline studio/data/benchmark/baseline.json
+
+      - name: Upload benchmark report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report-py${{ matrix.python-version }}
+          path: .artifacts/benchmark-current.json
+          if-no-files-found: ignore

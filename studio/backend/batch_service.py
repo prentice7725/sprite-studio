@@ -23,15 +23,47 @@ def _queue_path(run_dir: Path) -> Path:
     return run_dir / "studio" / "batch-queue.json"
 
 
+def _corrupt_payload(detail: str) -> dict[str, Any]:
+    """Invariant-preserving stand-in for a queue file that failed to parse.
+
+    §1 additional requirement: a corrupt read must never come back as a
+    partial dict — every caller (UI polling, ``status_text``, tests) indexes
+    ``job_id`` / ``items`` / ``total_items`` unconditionally, so a payload
+    missing them turns a torn read into a ``KeyError`` crash instead of a
+    visible, explicit "corrupt" status.
+    """
+    return {
+        "kind": "sprite-studio-batch",
+        "status": "corrupt",
+        "job_id": None,
+        "current_state": None,
+        "current_stage": None,
+        "completed_items": 0,
+        "total_items": 0,
+        "progress_percent": 0.0,
+        "items": [],
+        "error": detail,
+    }
+
+
 def load_queue(run_dir: Path) -> dict[str, Any] | None:
     path = _queue_path(run_dir)
     if not path.is_file():
         return None
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        raw = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        return _corrupt_payload(f"batch-queue.json could not be read: {exc}")
+    try:
+        payload = json.loads(raw)
     except json.JSONDecodeError:
-        return {"status": "failed", "error": "batch-queue.json is invalid"}
-    
+        return _corrupt_payload("batch-queue.json is invalid (malformed JSON)")
+    if not isinstance(payload, dict):
+        return _corrupt_payload("batch-queue.json is invalid (not a JSON object)")
+    missing = {"job_id", "items", "total_items"} - set(payload)
+    if missing:
+        return _corrupt_payload(f"batch-queue.json is invalid (missing keys: {sorted(missing)})")
+
     # Stale running job detection: if recorded as running but no active thread is alive
     if payload.get("status") == "running":
         job_id = payload.get("job_id")
@@ -53,9 +85,14 @@ def is_batch_running(run_dir: Path) -> bool:
 
 
 def _save(run_dir: Path, payload: dict[str, Any]) -> None:
+    # §1: UI polling (load_queue) and the worker thread (_update) touch this
+    # file concurrently. A plain write_text() truncates-then-writes in place,
+    # so a poll landing mid-write reads a torn/partial JSON document. Publish
+    # via temp-file + os.replace instead so a reader always sees either the
+    # previous complete payload or the new one, never a half-written one.
     path = _queue_path(run_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    atomic_write_text(path, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
 def _update(run_dir: Path, payload: dict[str, Any], **kwargs: Any) -> None:
@@ -118,7 +155,21 @@ def _execute(run_dir: Path, payload: dict[str, Any], *, normalize: bool, refine:
                 if normalize:
                     item["status"] = "normalizing"
                     _update(run_dir, payload, current_state=state, current_stage="normalizing", progress_percent=progress())
-                    item["normalize"] = spritegen_bridge.normalize_state(run_dir, state)
+                    try:
+                        item["normalize"] = spritegen_bridge.normalize_state(run_dir, state)
+                    except spritegen_bridge.NormalizeQualityFailed as exc:
+                        # Mark this state explicitly rather than leaving it
+                        # stuck at "normalizing" — the directive requires the
+                        # batch UI to show *why* a state stopped, not just that
+                        # the job did (§12/§21). Re-raise so the existing
+                        # outer handler still aborts the batch: extract/refine/
+                        # anchor promotion/dependent-direction generation must
+                        # never run against this state's normalize output.
+                        item["status"] = "normalize_failed"
+                        item["normalize_error"] = str(exc)
+                        item["normalize"] = exc.report
+                        _update(run_dir, payload, current_state=state, current_stage="normalizing", progress_percent=progress())
+                        raise
                     completed_units += 1
 
             # Stage 2: Extract this batch
@@ -271,13 +322,34 @@ def status_text(run_dir: Path) -> str:
         lines.append(f"**완료**: 전체 {total}개 상태 처리 완료 | **총 소요 시간**: {time_str}")
     elif status in {"FAILED", "INTERRUPTED"}:
         lines.append(f"**중단/실패**: {completed} / {total} states | **실패 위치**: `{payload.get('failed_state')}` [{str(payload.get('failed_stage')).upper()}]")
+    elif status == "CORRUPT":
+        lines.append(f"**⚠ 손상된 배치 큐**: {payload.get('error') or 'batch-queue.json is invalid'}")
 
     lines.append("")
     for item in payload.get("items", []):
         st = item.get("status", "queued")
-        icon = "✓" if st == "complete" else "⟳" if st in {"generating", "normalizing", "extracting", "refining", "repairing", "qa"} else "⏳"
+        if st == "complete":
+            icon = "✓"
+        elif st in {"normalize_failed", "failed"}:
+            icon = "✗"
+        elif st in {"generating", "normalizing", "extracting", "refining", "repairing", "qa"}:
+            icon = "⟳"
+        else:
+            icon = "⏳"
         lines.append(f"- {icon} `{item.get('state')}`: {st}")
-        
+        if st == "normalize_failed":
+            report = item.get("normalize") or {}
+            valid = report.get("valid_subjects")
+            expected = report.get("expected_subjects")
+            if valid is not None and expected is not None:
+                lines.append(f"  - Normalize: {valid} / {expected} valid subjects — Extract blocked, Anchor promotion blocked")
+            for subject in report.get("subjects") or []:
+                if not subject.get("valid", True):
+                    reasons = ", ".join(subject.get("reasons") or []) or "invalid"
+                    lines.append(f"  - cell {subject.get('index')}: {reasons}")
+            if item.get("normalize_error") and valid is None:
+                lines.append(f"  - {item['normalize_error']}")
+
     if payload.get("error"):
         lines.append(f"\n> ⚠ **오류**: {payload['error']}")
     return "\n".join(lines)

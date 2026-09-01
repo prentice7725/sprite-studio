@@ -23,6 +23,7 @@ from studio.core.refine import RefineResult
 from studio.core.refine.frame_refiner import refine_files
 from studio.shared.config import RefineSettings, apply_overrides, load_refine_settings
 from studio.shared.modes import SPRITE, resolve_mode
+from studio.shared.revision import content_revision
 from studio.sprite_mode.refine import SharedLattice, SpriteRefineEngine, estimate_character_lattice
 
 from .spritegen_bridge import request_for
@@ -193,6 +194,20 @@ def _write_refined(output, source_files: list[Path], output_dir: Path, state: st
     report["source_files"] = [str(path) for path in source_files]
     report["output_files"] = outputs
     report["logical_files"] = [str(logical_dir / f"frame-{index}.png") for index in range(len(output.logical_frames))]
+    # §3: residual staleness must be provable by content, not by filename list.
+    # `source_revision` identifies the extracted frames this refine ran on;
+    # `output_revision` identifies what it produced — refined frame bytes
+    # *plus* the settings/lattice fingerprint that shaped them, so a re-run
+    # with different tuning counts as a new revision even if by coincidence
+    # it reproduced identical pixels. Repair compares its own recomputed
+    # revision of the on-disk refined frames against this before trusting
+    # `residuals` from the same report.
+    report["source_revision"] = content_revision(source_files)
+    output_paths = [Path(path) for path in outputs]
+    report["output_revision"] = content_revision(
+        output_paths,
+        fingerprint={"settings": report.get("settings"), "lattice": report.get("lattice")},
+    )
     atomic_write_text(output_dir / "refine.report.json", json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     return RefineResult(state, tuple(str(path) for path in source_files), tuple(outputs), report)
 

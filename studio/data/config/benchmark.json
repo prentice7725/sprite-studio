@@ -1,6 +1,11 @@
 {
   "kind": "asset-studio-benchmark-config",
   "version": 1,
+  "metric_policy": {
+    "alpha_opaque_threshold": 128,
+    "palette_retained_delta_e": 0.02,
+    "texture_collapse_ratio": 0.25
+  },
   "sprite": {
     "silhouette.iou": {
       "direction": "higher",

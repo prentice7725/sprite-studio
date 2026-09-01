@@ -28,6 +28,7 @@ from ..frames.extract import (
     remove_chroma_background,
 )
 from ..frames.segment import segment_strip
+from .normalize_quality import NormalizeQualityPolicy, evaluate_subject, resolve_row_result
 
 CHROMA_KEYS = {
     "magenta": (255, 0, 255),
@@ -157,8 +158,20 @@ def normalize_image(
     resample: str = "nearest",
     align_x: str = "foot-centroid",
     align_y: str = "bottom",
+    quality: NormalizeQualityPolicy | None = None,
 ) -> tuple[Image.Image, dict[str, Any]]:
-    """Return ``(normalized_row, diagnostic_report)`` for one wide image."""
+    """Return ``(normalized_row, diagnostic_report)`` for one wide image.
+
+    ``quality`` gates cell acceptance (Subject Validity Gate + Row-Level
+    Acceptance Gate — see ``normalize_quality.py``). It never raises: a
+    malformed row still produces its normalized preview and a report with
+    ``report["result"] in {"pass", "recovered_with_warning", "fail"}`` so the
+    rejected output can be inspected (directive §7) instead of vanishing.
+    Callers that must not promote a failed row downstream (Studio's
+    ``spritegen_bridge.normalize_state``) check ``report["result"]``
+    themselves. Passing ``quality=None`` uses ``NormalizeQualityPolicy.default()``.
+    """
+    quality = quality or NormalizeQualityPolicy.default()
     if count < 1:
         raise ValueError("count must be positive")
     if cell_width < 1 or cell_height < 1:
@@ -193,6 +206,9 @@ def normalize_image(
     global_bbox = cleaned.getbbox()
     global_top, global_bottom = (global_bbox[1], global_bbox[3]) if global_bbox else (0, cleaned.height)
 
+    forced = natural_count != count
+    subject_policy = quality.subject_policy_for(forced=forced)
+
     fit = {"resample": resample, "align_x": align_x, "align_y": align_y}
     cells: list[Image.Image] = []
     subject_reports: list[dict[str, Any]] = []
@@ -219,6 +235,23 @@ def normalize_image(
             fit,
         )
         cells.append(cell)
+        validity = evaluate_subject(
+            cell,
+            cell_width=cell_width,
+            cell_height=cell_height,
+            safe_margin_x=safe_margin_x,
+            safe_margin_y=safe_margin_y,
+            chroma_key=chroma_key,
+            # fringe_key_threshold, not key_threshold: remove_chroma_background
+            # already erases anything within key_threshold of the key, so a
+            # pixel surviving as opaque foreground is by definition beyond
+            # key_threshold. Residue that leaked through keying (still within
+            # the broader keyed-color family, out to the fringe boundary) is
+            # what this metric needs to catch.
+            chroma_residual_threshold=fringe_key_threshold,
+            edge_margin=max(1, safe_margin_x),
+            policy=subject_policy,
+        )
         subject_reports.append(
             {
                 "index": index,
@@ -230,8 +263,14 @@ def normalize_image(
                 "used_pixels": sum(cell.getchannel("A").histogram()[1:]),
                 "component_count": len(components),
                 "dropped_components": len(components) - 1,
+                "valid": validity["valid"],
+                "reasons": validity["reasons"],
+                "metrics": validity["metrics"],
             }
         )
+
+    valid_subjects = sum(1 for subject in subject_reports if subject["valid"])
+    result = resolve_row_result(valid_subjects, count, forced=forced)
 
     output = Image.new("RGBA", (cell_width * count, cell_height), (0, 0, 0, 0))
     for index, cell in enumerate(cells):
@@ -247,10 +286,13 @@ def normalize_image(
         "chroma_key": {"rgb": list(chroma_key)},
         "segmentation": {
             "natural_count": natural_count,
-            "forced": natural_count != count,
+            "forced": forced,
             "spans": [list(span) for span in spans],
         },
         "subjects": subject_reports,
+        "result": result,
+        "expected_subjects": count,
+        "valid_subjects": valid_subjects,
         "resample": resample,
         "align_x": align_x,
         "align_y": align_y,
@@ -279,6 +321,8 @@ def run(
     align_y: str = "bottom",
     background: str = "transparent",
     report: Path | None = None,
+    quality: NormalizeQualityPolicy | None = None,
+    quality_config: Path | None = None,
 ) -> int:
     input = input.expanduser().resolve()
     out = out.expanduser().resolve()
@@ -286,6 +330,16 @@ def run(
         raise SystemExit(f"normalize-grok-row: input image not found: {input}")
     if background not in {"transparent", "chroma"}:
         raise SystemExit("normalize-grok-row: background must be transparent or chroma")
+    if quality is not None and quality_config is not None:
+        raise SystemExit("normalize-grok-row: pass either quality or quality_config, not both")
+    if quality_config is not None:
+        quality_config = quality_config.expanduser().resolve()
+        try:
+            quality = NormalizeQualityPolicy.from_dict(
+                json.loads(quality_config.read_text(encoding="utf-8"))
+            )
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            raise SystemExit(f"normalize-grok-row: invalid --quality-config {quality_config}: {exc}") from exc
     try:
         key = parse_chroma_key(chroma_key)
         with Image.open(input) as opened:
@@ -305,6 +359,7 @@ def run(
                 resample=resample,
                 align_x=align_x,
                 align_y=align_y,
+                quality=quality,
             )
     except (OSError, ValueError) as exc:
         raise SystemExit(f"normalize-grok-row: {exc}") from exc
@@ -345,6 +400,12 @@ def add_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--align-y", choices=("bottom", "center"), default="bottom")
     parser.add_argument("--background", choices=("transparent", "chroma"), default="transparent")
     parser.add_argument("--report", type=Path)
+    parser.add_argument(
+        "--quality-config",
+        type=Path,
+        help="JSON normalize_quality policy (Subject Validity / Row-Level Acceptance Gate "
+        "thresholds); default is a conservative built-in policy",
+    )
 
 
 def _build_parser() -> argparse.ArgumentParser:

@@ -1,0 +1,607 @@
+{
+  "kind": "sprite-studio-batch",
+  "job_id": "8f677929e96c",
+  "status": "failed",
+  "current_state": "down_idle",
+  "current_stage": "extracting",
+  "completed_items": 0,
+  "total_items": 6,
+  "progress_percent": 16.7,
+  "started_at": "2026-09-01T14:12:34+00:00",
+  "updated_at": "2026-09-01T14:15:01+00:00",
+  "elapsed_seconds": 147,
+  "options": {
+    "normalize": true,
+    "refine": true,
+    "repair": true,
+    "qa": true
+  },
+  "items": [
+    {
+      "state": "down_idle",
+      "status": "extracting",
+      "generate": {
+        "kind": "sprite-studio-image-report",
+        "provider": "grok",
+        "prompt": "chunky chibi rank-and-file mercenary swordsman, short stocky practical infantry body, plain steel helmet with a short blue plume, blue tunic, simple dark steel armor, brown belt and boots, simple broad one-handed sword, tiny neutral face, ordinary common soldier\n\nfront-facing game sprite view, clear front silhouette,\nsubtle grounded idle breathing,\n4-frame readable motion when this is an animation row\n\nREFINE_FIRST profile: clean flat-color character illustration, simple cel shading, thick crisp outlines, very limited color palette, large simple color regions, minimal small detail, strong readable silhouette\n\nfull body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, clear flat regions for PixelRefiner, full frame edge-to-edge solid bright magenta background (#FF00FF), no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame\n\nno extra characters, no cropped limbs, no background scenery, no realistic rendering, no painterly texture, no excessive detail, no floating weapon, no weapon switching hands, no mirrored handedness, no left-right hand swap, no dramatic perspective, no diagonal tilt",
+        "out": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+        "raw": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png.raw.png",
+        "raw_bytes": 470021,
+        "elapsed_seconds": 40.104,
+        "model": null,
+        "session_id": null,
+        "refs": [
+          "C:\\workspace\\sprite-studio\\runs\\sword_a01\\base-source.jpg"
+        ],
+        "transparent": false,
+        "chroma": null,
+        "extra": {
+          "stdout_tail": "I'll generate the one requested image from the reference, then save it to the specified path.I'll edit the reference into one front-facing idle sprite, then copy it to the requested path.Copying the generated file to the required PNG path without resizing or restyling.Converting the file to a real PNG so the destination is a valid PNG, without changing size or style.C:\\workspace\\sprite-studio\\runs\\sword_a01\\studio\\work\\down_idle\\raw.png"
+        },
+        "state": "down_idle",
+        "prompt_source": "generated"
+      },
+      "normalize": {
+        "kind": "sprite-studio-grok-row-normalization",
+        "source_size": [
+          1376,
+          752
+        ],
+        "output_size": [
+          1024,
+          256
+        ],
+        "count": 4,
+        "cell": {
+          "width": 256,
+          "height": 256
+        },
+        "safe_margin": {
+          "x": 24,
+          "y": 24
+        },
+        "chroma_key": {
+          "rgb": [
+            255,
+            0,
+            255
+          ]
+        },
+        "segmentation": {
+          "natural_count": 3,
+          "forced": true,
+          "spans": [
+            [
+              0,
+              159
+            ],
+            [
+              159,
+              348
+            ],
+            [
+              348,
+              1087
+            ],
+            [
+              1087,
+              1376
+            ]
+          ]
+        },
+        "subjects": [
+          {
+            "index": 0,
+            "span": [
+              0,
+              159
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              159,
+              752
+            ],
+            "source_size": [
+              159,
+              752
+            ],
+            "cell_bbox": [
+              107,
+              24,
+              151,
+              232
+            ],
+            "used_pixels": 7366,
+            "component_count": 47,
+            "dropped_components": 46
+          },
+          {
+            "index": 1,
+            "span": [
+              159,
+              348
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              4,
+              189,
+              376
+            ],
+            "source_size": [
+              189,
+              372
+            ],
+            "cell_bbox": [
+              75,
+              24,
+              181,
+              232
+            ],
+            "used_pixels": 12610,
+            "component_count": 147,
+            "dropped_components": 146
+          },
+          {
+            "index": 2,
+            "span": [
+              348,
+              1087
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              739,
+              752
+            ],
+            "source_size": [
+              739,
+              752
+            ],
+            "cell_bbox": [
+              27,
+              24,
+              231,
+              232
+            ],
+            "used_pixels": 35468,
+            "component_count": 310,
+            "dropped_components": 309
+          },
+          {
+            "index": 3,
+            "span": [
+              1087,
+              1376
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              289,
+              752
+            ],
+            "source_size": [
+              289,
+              752
+            ],
+            "cell_bbox": [
+              85,
+              24,
+              165,
+              232
+            ],
+            "used_pixels": 11643,
+            "component_count": 228,
+            "dropped_components": 227
+          }
+        ],
+        "resample": "nearest",
+        "align_x": "foot-centroid",
+        "align_y": "bottom",
+        "input": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+        "output": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\down\\idle.png",
+        "background": "transparent"
+      }
+    },
+    {
+      "state": "down_attack",
+      "status": "queued"
+    },
+    {
+      "state": "side_idle",
+      "status": "extracting",
+      "generate": {
+        "kind": "sprite-studio-image-report",
+        "provider": "grok",
+        "prompt": "chunky chibi rank-and-file mercenary swordsman, short stocky practical infantry body, plain steel helmet with a short blue plume, blue tunic, simple dark steel armor, brown belt and boots, simple broad one-handed sword, tiny neutral face, ordinary common soldier\n\nside-facing game sprite view, clear side silhouette,\nsubtle grounded idle breathing,\n4-frame readable motion when this is an animation row\n\nREFINE_FIRST profile: clean flat-color character illustration, simple cel shading, thick crisp outlines, very limited color palette, large simple color regions, minimal small detail, strong readable silhouette\n\nfull body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, clear flat regions for PixelRefiner, full frame edge-to-edge solid bright magenta background (#FF00FF), no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame\n\nno extra characters, no cropped limbs, no background scenery, no realistic rendering, no painterly texture, no excessive detail, no floating weapon, no weapon switching hands, no mirrored handedness, no left-right hand swap, no dramatic perspective, no diagonal tilt",
+        "out": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\side\\idle.png",
+        "raw": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\side\\idle.png.raw.png",
+        "raw_bytes": 330227,
+        "elapsed_seconds": 60.02,
+        "model": null,
+        "session_id": null,
+        "refs": [
+          "C:\\workspace\\sprite-studio\\runs\\sword_a01\\base-source.jpg"
+        ],
+        "transparent": false,
+        "chroma": null,
+        "extra": {
+          "stdout_tail": "I'll generate one edited image from the reference and save it to the requested path.Calling `image_edit` once with the reference and your prompt, then saving the result to the specified path.Copying the generated file to the requested PNG path without resizing or restyling.The copy landed, but I still need a real PNG. Checking the source file and converting it properly.C:\\workspace\\sprite-studio\\runs\\sword_a01\\studio\\work\\side_idle\\raw.png"
+        },
+        "state": "side_idle",
+        "prompt_source": "generated"
+      },
+      "normalize": {
+        "kind": "sprite-studio-grok-row-normalization",
+        "source_size": [
+          1376,
+          752
+        ],
+        "output_size": [
+          1024,
+          256
+        ],
+        "count": 4,
+        "cell": {
+          "width": 256,
+          "height": 256
+        },
+        "safe_margin": {
+          "x": 24,
+          "y": 24
+        },
+        "chroma_key": {
+          "rgb": [
+            255,
+            0,
+            255
+          ]
+        },
+        "segmentation": {
+          "natural_count": 1,
+          "forced": true,
+          "spans": [
+            [
+              0,
+              298
+            ],
+            [
+              298,
+              596
+            ],
+            [
+              596,
+              811
+            ],
+            [
+              811,
+              1376
+            ]
+          ]
+        },
+        "subjects": [
+          {
+            "index": 0,
+            "span": [
+              0,
+              298
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              298,
+              752
+            ],
+            "source_size": [
+              298,
+              752
+            ],
+            "cell_bbox": [
+              87,
+              24,
+              169,
+              232
+            ],
+            "used_pixels": 17056,
+            "component_count": 1,
+            "dropped_components": 0
+          },
+          {
+            "index": 1,
+            "span": [
+              298,
+              596
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              298,
+              752
+            ],
+            "source_size": [
+              298,
+              752
+            ],
+            "cell_bbox": [
+              87,
+              24,
+              169,
+              232
+            ],
+            "used_pixels": 17046,
+            "component_count": 1,
+            "dropped_components": 0
+          },
+          {
+            "index": 2,
+            "span": [
+              596,
+              811
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              215,
+              752
+            ],
+            "source_size": [
+              215,
+              752
+            ],
+            "cell_bbox": [
+              98,
+              24,
+              157,
+              232
+            ],
+            "used_pixels": 12258,
+            "component_count": 1,
+            "dropped_components": 0
+          },
+          {
+            "index": 3,
+            "span": [
+              811,
+              1376
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              0,
+              0,
+              565,
+              752
+            ],
+            "source_size": [
+              565,
+              752
+            ],
+            "cell_bbox": [
+              50,
+              24,
+              206,
+              232
+            ],
+            "used_pixels": 32447,
+            "component_count": 1,
+            "dropped_components": 0
+          }
+        ],
+        "resample": "nearest",
+        "align_x": "foot-centroid",
+        "align_y": "bottom",
+        "input": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\side\\idle.png",
+        "output": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\side\\idle.png",
+        "background": "transparent"
+      }
+    },
+    {
+      "state": "side_attack",
+      "status": "queued"
+    },
+    {
+      "state": "up_idle",
+      "status": "extracting",
+      "generate": {
+        "kind": "sprite-studio-image-report",
+        "provider": "grok",
+        "prompt": "chunky chibi rank-and-file mercenary swordsman, short stocky practical infantry body, plain steel helmet with a short blue plume, blue tunic, simple dark steel armor, brown belt and boots, simple broad one-handed sword, tiny neutral face, ordinary common soldier\n\nback-facing game sprite view, clear rear silhouette,\nsubtle grounded idle breathing,\n4-frame readable motion when this is an animation row\n\nREFINE_FIRST profile: clean flat-color character illustration, simple cel shading, thick crisp outlines, very limited color palette, large simple color regions, minimal small detail, strong readable silhouette\n\nfull body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, clear flat regions for PixelRefiner, full frame edge-to-edge solid bright magenta background (#FF00FF), no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame\n\nno extra characters, no cropped limbs, no background scenery, no realistic rendering, no painterly texture, no excessive detail, no floating weapon, no weapon switching hands, no mirrored handedness, no left-right hand swap, no dramatic perspective, no diagonal tilt",
+        "out": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\up\\idle.png",
+        "raw": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\up\\idle.png.raw.png",
+        "raw_bytes": 530282,
+        "elapsed_seconds": 38.221,
+        "model": null,
+        "session_id": null,
+        "refs": [
+          "C:\\workspace\\sprite-studio\\runs\\sword_a01\\base-source.jpg"
+        ],
+        "transparent": false,
+        "chroma": null,
+        "extra": {
+          "stdout_tail": "I'll generate the back-facing idle sprite from the reference, then save it to the requested path.Copying the generated image to the requested PNG path.C:\\workspace\\sprite-studio\\runs\\sword_a01\\studio\\work\\up_idle\\raw.png"
+        },
+        "state": "up_idle",
+        "prompt_source": "generated"
+      },
+      "normalize": {
+        "kind": "sprite-studio-grok-row-normalization",
+        "source_size": [
+          1376,
+          752
+        ],
+        "output_size": [
+          1024,
+          256
+        ],
+        "count": 4,
+        "cell": {
+          "width": 256,
+          "height": 256
+        },
+        "safe_margin": {
+          "x": 24,
+          "y": 24
+        },
+        "chroma_key": {
+          "rgb": [
+            255,
+            0,
+            255
+          ]
+        },
+        "segmentation": {
+          "natural_count": 1,
+          "forced": true,
+          "spans": [
+            [
+              0,
+              497
+            ],
+            [
+              497,
+              900
+            ],
+            [
+              900,
+              1138
+            ],
+            [
+              1138,
+              1376
+            ]
+          ]
+        },
+        "subjects": [
+          {
+            "index": 0,
+            "span": [
+              0,
+              497
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              4,
+              4,
+              26,
+              24
+            ],
+            "source_size": [
+              22,
+              20
+            ],
+            "cell_bbox": [
+              122,
+              212,
+              144,
+              232
+            ],
+            "used_pixels": 152,
+            "component_count": 32,
+            "dropped_components": 31
+          },
+          {
+            "index": 1,
+            "span": [
+              497,
+              900
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              4,
+              4,
+              397,
+              634
+            ],
+            "source_size": [
+              393,
+              630
+            ],
+            "cell_bbox": [
+              66,
+              25,
+              196,
+              232
+            ],
+            "used_pixels": 15488,
+            "component_count": 222,
+            "dropped_components": 221
+          },
+          {
+            "index": 2,
+            "span": [
+              900,
+              1138
+            ],
+            "leading_trim": 0,
+            "source_bbox": [
+              4,
+              4,
+              68,
+              8
+            ],
+            "source_size": [
+              64,
+              4
+            ],
+            "cell_bbox": [
+              90,
+              228,
+              154,
+              232
+            ],
+            "used_pixels": 192,
+            "component_count": 15,
+            "dropped_components": 14
+          },
+          {
+            "index": 3,
+            "span": [
+              1138,
+              1376
+            ],
+            "leading_trim": 30,
+            "source_bbox": [
+              4,
+              0,
+              12,
+              8
+            ],
+            "source_size": [
+              8,
+              8
+            ],
+            "cell_bbox": [
+              124,
+              224,
+              132,
+              232
+            ],
+            "used_pixels": 56,
+            "component_count": 8,
+            "dropped_components": 7
+          }
+        ],
+        "resample": "nearest",
+        "align_x": "foot-centroid",
+        "align_y": "bottom",
+        "input": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\up\\idle.png",
+        "output": "C:\\workspace\\sprite-studio\\runs\\sword_a01\\raw\\up\\idle.png",
+        "background": "transparent"
+      }
+    },
+    {
+      "state": "up_attack",
+      "status": "queued"
+    }
+  ],
+  "error": "RuntimeError at down_idle (Stage: extracting): extract failed for [down_idle,side_idle,up_idle] with exit code 1",
+  "failed_state": "down_idle",
+  "failed_stage": "extracting",
+  "finished_at": "2026-09-01T14:15:01+00:00"
+}

@@ -112,7 +112,7 @@ def _residual_candidates(
                 continue
             color = Counter(neighbor_colors).most_common(1)[0][0]
             protected = RepairAnalyzer._protected((px, py), bbox, profile)
-            confidence = 0.69 if protected else 0.88
+            confidence = profile.residual_protected_confidence if protected else profile.residual_normal_confidence
             candidates.append(
                 RepairCandidate(
                     frame=frame_idx,

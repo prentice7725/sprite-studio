@@ -3,6 +3,7 @@
   "mode": "static",
   "version": 1,
   "grid": {
+    "scope": "scene",
     "max_pitch": 64,
     "min_pitch": 2.0,
     "search_half_span": 0.75,

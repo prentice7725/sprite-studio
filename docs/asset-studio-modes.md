@@ -206,11 +206,19 @@ offsets (and which frames were held at the bound), thin-feature protection and
 the palette summary. Static REFINE shows the FFT candidate list, the chosen
 grid, palette/dither mode, seam report and tile wrap preview.
 
-## Production Features & Integrations (v0.2 Complete)
+## Production Features & Integrations (v0.2 RC)
 
 * **Character-Scoped Shared Lattice**: `lattice.scope == "character"` estimates a single shared lattice over all frames across states and locks it for consistent pixel pitch.
-* **Sprite Refine Residual → Repair Handoff**: Thin-feature loss during refine is recorded as structured residuals and automatically consumed by `RepairPipeline` as high-priority repair candidates.
+* **Sprite Refine Residual → Repair Handoff**: Thin-feature loss during refine is recorded as structured residuals and automatically consumed by `RepairPipeline` as high-priority repair candidates. The handoff is revision-safe — Refine stamps a content-hashed `output_revision` (refined frame bytes + settings/lattice fingerprint) into `refine.report.json`, and Repair recomputes that hash before trusting a residual; a mismatch (or a report predating this field) reports an explicit `stale` status instead of silently keeping or silently dropping the residual.
 * **Static Provider Generation & Dither Presets**: Full provider generation pipeline with prompt assembler/validator for static assets, plus data-driven dither presets (`environment_soft`, `environment_crisp`, `scenery_diffuse`).
-* **Multi-Metric Benchmark Gating**: Multi-metric evaluation and strict regression gates across silhouette, color, thin-feature, palette, edge, temporal, texture, and seam metrics.
-* **Batch Observability**: Real-time persistent batch queue tracking progress percentages, stages, elapsed time, and thread lifecycle.
+* **Multi-Metric Benchmark Gating**: Multi-metric evaluation and strict regression gates across silhouette, color, thin-feature, palette, edge, temporal, texture, and seam metrics, checked in CI against a committed baseline (`studio/data/benchmark/baseline.json`) via `python -m studio.benchmark --baseline ...` — a run with no `--baseline` only prints scores and gates nothing.
+* **Batch Observability**: Real-time persistent batch queue tracking progress percentages, stages, elapsed time, and thread lifecycle. `batch-queue.json` is published via temp-file + atomic replace so a UI poll never observes a torn write, and a genuinely corrupt file reports an explicit `corrupt` status rather than a partial payload.
+* **Strict Data Configuration**: Refine/QA/Benchmark settings are required-key, required-section, no-hidden-default dataclasses — a config missing a tuning value (or an entire section, e.g. Sprite's inert `dither`/`seam`) fails to load instead of silently filling in a code default. Benchmark's own cross-module policy constants (opaque-alpha threshold, palette-retained ΔE, texture-collapse ratio) are likewise a committed `metric_policy` section, not independent literals per metric function.
+
+### Known gaps before `v0.2 Complete`
+
+* **i18n visible-string sweep** — not started. Gradio labels, button text, tab titles and status/validation messages are still English/Korean literals in the UI modules rather than routed through locale resources.
+* **Sprite UI pipeline-stage rail** — not started. The Sprite tabs are still organized as `PROJECT / GENERATE / REVIEW / MATRIX / EXPORT`, not the `GENERATED → NORMALIZED → EXTRACTED → REFINED → REPAIRED → QA → EXPORT` stage rail.
+
+Until both are closed, this reads as **v0.2 RC** — the mechanisms above are production-wired and race/stale/hidden-default failures are caught by tests, but the spec isn't fully closed out.
 

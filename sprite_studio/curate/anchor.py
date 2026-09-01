@@ -34,7 +34,7 @@ from typing import Any
 from sprite_studio.curate.curation import (anchor_choices, apply_pixel_edits, apply_transform, edit_index,
                        frame_variant, load_curation, pixel_snap_scale, source_frame_index,
                        state_instances, state_pixel_ops, state_plan)
-from sprite_studio.spec.layout import row_frame_rel, state_frame_total
+from sprite_studio.spec.layout import raw_rel, row_frame_rel, state_frame_total
 
 ANCHOR_SCALE = 8
 CONTENT_ALPHA_FLOOR = 40  # 콘텐츠 crop 기준 (프린지 알파를 콘텐츠로 세지 않는다)
@@ -227,7 +227,56 @@ def frame_source_path(run_dir: Path, request: dict[str, Any], curation: dict[str
             f"anchor: row '{state}' is not extracted yet — generate and extract it first "
             f"(this is the normal state before that row exists, not a broken run)")
     src_index = source_frame_index(curation, state, index, state_frame_total(request, state))
+    _check_normalize_quality(run_dir, request, state, src_index)
     return run_dir / row_frame_rel(row, src_index, frame_variant(curation, state))
+
+
+def _check_normalize_quality(run_dir: Path, request: dict[str, Any], state: str, src_index: int) -> None:
+    """앵커 승격 게이트 (directive §5): chroma 잔여물·파편으로 오염된 프레임이 방향
+    identity 로 굳지 못하게 막는다.
+
+    `frame_source_path` 를 거치는 모든 소비자(뷰의 `anchor_status`, 생성의
+    `bake_frame`/`anchor_image`)가 자동으로 이 게이트를 받는다 — 단일 관문
+    (같은 파일의 `row-not-extracted` 게이트와 같은 자리). `result` 가 아예
+    없는 리포트(이 게이트 이전에 쓰인 리포트, 또는 normalize 를 거치지 않는
+    소스)는 대상이 아니다 — 조용히 통과시킨다(소급 차단 금지).
+
+    "recovered_with_warning" 을 기본으로 막는 이유: 자연 분할로 못 찾은 subject
+    수를 강제로 채운 행이다 — 정체성 기준(anchor)은 액션 프레임보다 엄격해야
+    한다(§5). `allow_recovered` 로 명시적으로 낮출 수 있다."""
+    raw = run_dir / raw_rel(request, state)
+    report_path = raw.with_name(raw.stem + ".normalize.report.json")
+    if not report_path.is_file():
+        return
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return
+    result = report.get("result")
+    if result is None:
+        return
+    if result == "fail":
+        raise AnchorUnavailable(
+            "normalize-failed",
+            f"anchor: row '{state}' failed the normalize quality gate "
+            f"({report.get('valid_subjects')}/{report.get('expected_subjects')} valid subjects) "
+            f"— regenerate '{state}' before it can back a direction anchor")
+    if result == "recovered_with_warning":
+        allow = bool(((request.get("normalize_quality") or {}).get("anchor") or {}).get("allow_recovered", False))
+        if not allow:
+            raise AnchorUnavailable(
+                "normalize-recovered",
+                f"anchor: row '{state}' only passed normalize via forced-segmentation recovery "
+                f"— inspect frame {state}#{src_index} in the curation view before promoting it as "
+                f"a direction anchor, or set normalize_quality.anchor.allow_recovered in "
+                f"sprite-request.json")
+    subjects = report.get("subjects") or []
+    if 0 <= src_index < len(subjects) and subjects[src_index].get("valid") is False:
+        reasons = ", ".join(subjects[src_index].get("reasons") or []) or "invalid"
+        raise AnchorUnavailable(
+            "normalize-subject-invalid",
+            f"anchor: frame {state}#{src_index} failed subject validation ({reasons}) — cannot "
+            f"use it as a direction anchor")
 
 
 def bake_frame(run_dir: Path, request: dict[str, Any], curation: dict[str, Any] | None,
