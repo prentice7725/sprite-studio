@@ -134,6 +134,66 @@ def list_projects(*, root: Path | None = None) -> list[StaticProjectInfo]:
     return found
 
 
+def generate_asset(
+    info: StaticProjectInfo,
+    asset: str = "scene",
+    *,
+    prompt_override: str | None = None,
+    provider: str | None = None,
+) -> dict[str, Any]:
+    """Generate one static asset via provider and persist as raw source."""
+    if not _SAFE_ID.fullmatch(asset):
+        raise ValueError(f"invalid asset name: {asset!r}")
+    
+    from studio.static_mode.prompt import StaticPromptAssembler, StaticPromptValidator
+    from .provider_service import generate_image
+    
+    chosen_provider = provider or info.provider
+    if prompt_override:
+        prompt = prompt_override
+    else:
+        prompt = StaticPromptAssembler().assemble(
+            description=info.description,
+            asset_type=info.asset_type,
+            style_profile=info.style_profile,
+            tileable=info.tileable,
+            layer_intent=info.layer_intent,
+            background_policy=info.background_policy,
+        )
+    
+    validator = StaticPromptValidator()
+    validator.require_valid(prompt, asset_type=info.asset_type, tileable=info.tileable)
+    
+    target = info.path / "raw" / f"{asset}.png"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    
+    refs: list[Path] = []
+    base_img = info.path / "raw" / "base.png"
+    if base_img.is_file():
+        refs.append(base_img)
+        
+    result = generate_image(
+        chosen_provider,
+        prompt,
+        target,
+        refs=refs,
+        aspect_ratio="1:1" if info.tileable else "16:9" if chosen_provider == "grok" else None,
+        workdir=info.path / "static" / "work" / asset,
+    )
+    
+    report = result.to_dict() | {
+        "asset": asset,
+        "project_id": info.project_id,
+        "asset_type": info.asset_type,
+        "tileable": info.tileable,
+    }
+    
+    log_dir = info.path / "qa"
+    log_dir.mkdir(parents=True, exist_ok=True)
+    atomic_write_text(log_dir / f"{asset}.generate.json", json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    return report
+
+
 def import_asset(info: StaticProjectInfo, image_path: Path, *, asset: str = "scene") -> Path:
     """Bring a generated or hand-supplied image into the project as a raw asset."""
     if not _SAFE_ID.fullmatch(asset):
@@ -142,6 +202,7 @@ def import_asset(info: StaticProjectInfo, image_path: Path, *, asset: str = "sce
     with Image.open(image_path) as opened:
         atomic_save_image(opened.convert("RGBA"), target)
     return target
+
 
 
 def raw_assets(info: StaticProjectInfo) -> list[str]:

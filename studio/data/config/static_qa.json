@@ -1,0 +1,11 @@
+{
+  "kind": "asset-studio-static-qa-config",
+  "version": 1,
+  "mode": "static",
+  "soft_ratio_threshold": 0.02,
+  "min_delta_e_threshold": 0.02,
+  "orphan_max_area": 2,
+  "fringe_alpha_threshold": 128,
+  "fill_max_area": 4,
+  "min_layers": 2
+}

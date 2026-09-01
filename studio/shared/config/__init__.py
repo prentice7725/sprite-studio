@@ -1,36 +1,48 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Data-driven refine settings for both Asset Studio modes."""
+"""Data-driven refine, QA and benchmark settings for both Asset Studio modes."""
 
 from .settings import (
+    BenchmarkSettings,
     CleanupSettings,
     ColorSettings,
     DitherSettings,
     FftSettings,
     LatticeSettings,
+    MetricGateSettings,
     PaletteSettings,
     PhaseSettings,
     RefineSettings,
     SeamSettings,
+    SpriteQaSettings,
+    StaticQaSettings,
     ThinFeatureSettings,
     WeightingSettings,
     apply_overrides,
+    load_benchmark_settings,
+    load_qa_settings,
     load_refine_settings,
     settings_from_dict,
 )
 
 __all__ = [
+    "BenchmarkSettings",
     "CleanupSettings",
     "ColorSettings",
     "DitherSettings",
     "FftSettings",
     "LatticeSettings",
+    "MetricGateSettings",
     "PaletteSettings",
     "PhaseSettings",
     "RefineSettings",
     "SeamSettings",
+    "SpriteQaSettings",
+    "StaticQaSettings",
     "ThinFeatureSettings",
     "WeightingSettings",
     "apply_overrides",
+    "load_benchmark_settings",
+    "load_qa_settings",
     "load_refine_settings",
     "settings_from_dict",
 ]

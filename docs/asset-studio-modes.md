@@ -206,12 +206,11 @@ offsets (and which frames were held at the bound), thin-feature protection and
 the palette summary. Static REFINE shows the FFT candidate list, the chosen
 grid, palette/dither mode, seam report and tile wrap preview.
 
-## What is not implemented yet
+## Production Features & Integrations (v0.2 Complete)
 
-* Static Mode has no provider generation call; assets are imported into a
-  project (`import_asset`) and refined from there. Sprite generation is
-  unchanged and still goes through the existing provider path.
-* The Repair layer still consumes refine output as before. Sprite refine now
-  emits `residuals` naming thin features it could not save, but the repair
-  engine does not yet read that field.
-* FX remains a Sprite Mode subtype (§17); there is no FX mode.
+* **Character-Scoped Shared Lattice**: `lattice.scope == "character"` estimates a single shared lattice over all frames across states and locks it for consistent pixel pitch.
+* **Sprite Refine Residual → Repair Handoff**: Thin-feature loss during refine is recorded as structured residuals and automatically consumed by `RepairPipeline` as high-priority repair candidates.
+* **Static Provider Generation & Dither Presets**: Full provider generation pipeline with prompt assembler/validator for static assets, plus data-driven dither presets (`environment_soft`, `environment_crisp`, `scenery_diffuse`).
+* **Multi-Metric Benchmark Gating**: Multi-metric evaluation and strict regression gates across silhouette, color, thin-feature, palette, edge, temporal, texture, and seam metrics.
+* **Batch Observability**: Real-time persistent batch queue tracking progress percentages, stages, elapsed time, and thread lifecycle.
+

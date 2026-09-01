@@ -8,6 +8,7 @@ import json
 import shlex
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -127,7 +128,7 @@ def run_loop(
             next_run_dir=str(next_run_dir),
             attempt=attempt + 1,
         )
-        completed = subprocess.run(shlex.split(command), capture_output=True, text=True)
+        completed = subprocess.run(shlex.split(command, posix=sys.platform != "win32"), capture_output=True, text=True)
         atomic_write_text(
             attempt_dir / "provider.log",
             completed.stdout + ("\n--- stderr ---\n" + completed.stderr if completed.stderr else ""),

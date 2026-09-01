@@ -19,6 +19,8 @@ a viewer sees) — mixing those up is how a diffused error slowly drifts hue.
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Sequence
 
 import numpy as np
@@ -29,7 +31,24 @@ from studio.shared.config import DitherSettings
 
 
 Color = tuple[int, int, int, int]
-DITHER_MODES = ("off", "ordered", "serpentine")
+DITHER_MODES = ("off", "ordered", "serpentine", "preset")
+
+
+def _load_dither_preset(preset_name: str | None) -> DitherSettings:
+    preset_file = Path(__file__).parents[2] / "data" / "presets" / "dither.json"
+    name = preset_name or "environment_soft"
+    if not preset_file.is_file():
+        raise ValueError(f"dither presets file missing: {preset_file}")
+    data = json.loads(preset_file.read_text(encoding="utf-8"))
+    if name not in data:
+        raise ValueError(f"unknown dither preset {name!r}; expected one of {sorted(data)}")
+    info = data[name]
+    return DitherSettings(
+        mode=str(info.get("algorithm", "ordered")),
+        strength=float(info.get("strength", 0.35)),
+        matrix=int(info.get("matrix", 4)),
+        preset=name,
+    )
 
 
 def _bayer(size: int) -> np.ndarray:
@@ -63,6 +82,9 @@ def apply_dither(
     mode = str(settings.mode).lower()
     if mode not in DITHER_MODES:
         raise ValueError(f"dither.mode must be one of {DITHER_MODES} (got {settings.mode!r})")
+    if mode == "preset":
+        resolved = _load_dither_preset(settings.preset)
+        return apply_dither(image, palette, resolved, alpha_threshold=alpha_threshold)
     if mode == "off" or not palette:
         from studio.shared.palette import apply_palette
 
@@ -79,10 +101,6 @@ def _ordered(image: Image.Image, palette: Sequence[Color], settings: DitherSetti
     threshold = _bayer(int(settings.matrix))
     tile = np.tile(threshold, (height // threshold.shape[0] + 1, width // threshold.shape[1] + 1))[:height, :width]
 
-    # The perturbation is scaled by the palette's own coarseness: a 4-colour
-    # palette needs a much larger nudge to reach a neighbouring entry than a
-    # 64-colour one, and a fixed offset would be invisible in one and garish in
-    # the other.
     spread = _palette_spread(palette_lab) * float(settings.strength)
     linear = srgb_to_linear(source[:, :, :3].astype(np.float64) / 255.0)
     nudged = np.clip(linear + (tile * spread)[:, :, None], 0.0, 1.0)
@@ -106,12 +124,7 @@ def _palette_spread(palette_lab: np.ndarray) -> float:
 
 
 def _serpentine(image: Image.Image, palette: Sequence[Color], settings: DitherSettings, alpha_threshold: int) -> Image.Image:
-    """Floyd–Steinberg with alternating row direction.
-
-    Serpentine ordering exists to break the diagonal worming that left-to-right
-    diffusion produces on large flat areas — which is precisely what Static Mode
-    has a lot of (skies, walls, ground).
-    """
+    """Floyd–Steinberg with alternating row direction."""
     source = np.asarray(image.convert("RGBA"), dtype=np.uint8)
     height, width, _ = source.shape
     entries, palette_lab = _palette_arrays(palette)

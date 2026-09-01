@@ -98,13 +98,31 @@ def _candidate_overlay(frame: Image.Image, candidates: list[RepairCandidate], si
     return _scale(overlay, size)
 
 
+def _load_refine_residuals(run_dir: Path, request: dict[str, Any], state: str, source_files: list[Path]) -> list[dict[str, Any]]:
+    report_path = _state_dir(run_dir, request, state) / "refined" / "refine.report.json"
+    if not report_path.is_file():
+        return []
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        if report.get("kind") != "asset-studio-sprite-refine":
+            return []
+        report_sources = [Path(p).name for p in report.get("source_files", [])]
+        current_sources = [p.name for p in source_files]
+        if report_sources and report_sources != current_sources:
+            return []
+        return list(report.get("residuals") or [])
+    except (json.JSONDecodeError, OSError):
+        return []
+
+
 def analyze_state(run_dir: Path, state: str) -> dict[str, Any]:
     request = request_for(run_dir)
     if state not in request.get("states", {}):
         raise ValueError(f"unknown state: {state}")
     frames, source_files, source_size = _load_logical(run_dir, request, state)
     profile = _profile(run_dir)
-    candidates = RepairPipeline().analyze(frames, state=state, profile=profile)
+    residuals = _load_refine_residuals(run_dir, request, state, source_files)
+    candidates = RepairPipeline().analyze(frames, state=state, profile=profile, residuals=residuals)
     repair_dir = _repair_dir(run_dir, request, state)
     repair_dir.mkdir(parents=True, exist_ok=True)
     overlay_dir = repair_dir / "proposals"
@@ -172,7 +190,8 @@ def repair_state(run_dir: Path, state: str, *, candidate_ids: set[str] | None = 
     request = request_for(run_dir)
     frames, source_files, source_size = _load_logical(run_dir, request, state)
     profile = _profile(run_dir)
-    result = RepairPipeline().repair(frames, state=state, profile=profile, candidate_ids=candidate_ids)
+    residuals = _load_refine_residuals(run_dir, request, state, source_files)
+    result = RepairPipeline().repair(frames, state=state, profile=profile, candidate_ids=candidate_ids, residuals=residuals)
     state_dir = _state_dir(run_dir, request, state)
     repaired_dir = state_dir / "repaired"
     if repaired_dir.is_dir():

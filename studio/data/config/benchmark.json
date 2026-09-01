@@ -1,0 +1,73 @@
+{
+  "kind": "asset-studio-benchmark-config",
+  "version": 1,
+  "sprite": {
+    "silhouette.iou": {
+      "direction": "higher",
+      "tolerance": 0.002,
+      "gate": true
+    },
+    "thin_feature.recovered": {
+      "direction": "higher",
+      "tolerance": 0.01,
+      "gate": true
+    },
+    "color.mean_delta_e": {
+      "direction": "lower",
+      "tolerance": 0.005,
+      "gate": true
+    },
+    "palette.retained": {
+      "direction": "higher",
+      "tolerance": 0.02,
+      "gate": true
+    },
+    "edges.soft_alpha_pixels": {
+      "direction": "lower",
+      "tolerance": 0,
+      "gate": true
+    },
+    "temporal.area_jitter": {
+      "direction": "lower",
+      "tolerance": 0.01,
+      "gate": true
+    },
+    "temporal.palette_churn": {
+      "direction": "lower",
+      "tolerance": 0.01,
+      "gate": true
+    }
+  },
+  "static": {
+    "color.mean_delta_e": {
+      "direction": "lower",
+      "tolerance": 0.005,
+      "gate": true
+    },
+    "palette.retained": {
+      "direction": "higher",
+      "tolerance": 0.02,
+      "gate": true
+    },
+    "edges.soft_alpha_pixels": {
+      "direction": "lower",
+      "tolerance": 0,
+      "gate": true
+    },
+    "texture.retention_ratio": {
+      "direction": "higher",
+      "tolerance": 0.02,
+      "gate": false
+    },
+    "seam.horizontal_delta_e": {
+      "direction": "lower",
+      "tolerance": 0.005,
+      "gate": true
+    },
+    "seam.vertical_delta_e": {
+      "direction": "lower",
+      "tolerance": 0.005,
+      "gate": true
+    }
+  }
+}

@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Refine settings as data — spec §3.2 bans hardcoded thresholds.
+"""Refine, QA and Benchmark settings as data — spec §3.2 bans hardcoded thresholds.
 
 Every number the two Refine Engines steer by (grid search range, phase
 tolerance, FFT candidate count, palette size, dither mode, seam threshold)
 arrives from ``studio/data/config/<mode>_refine.json`` and may be overridden
 per project. The dataclasses below are the typed shape of that file; loading is
-strict — an unknown section or a malformed anchor curve fails loudly rather
-than falling back to a built-in default nobody can see (No Silent Fallback).
+strict — an unknown section, an unknown key, or a malformed anchor curve
+fails loudly rather than falling back to a built-in default nobody can see (No Silent Fallback).
 """
 
 from __future__ import annotations
@@ -31,6 +31,14 @@ class LatticeSettings:
     coarse_to_fine: bool = False
     large_image_pixels: int = 262144
 
+    def __post_init__(self) -> None:
+        if self.min_pitch < 1.0 or self.max_pitch < self.min_pitch:
+            raise ValueError(f"invalid pitch range: min_pitch={self.min_pitch}, max_pitch={self.max_pitch}")
+        if not (0.0 <= self.confidence_floor <= 1.0):
+            raise ValueError(f"confidence_floor must be in [0, 1], got {self.confidence_floor}")
+        if self.search_step <= 0:
+            raise ValueError(f"search_step must be positive, got {self.search_step}")
+
 
 @dataclass(frozen=True)
 class PhaseSettings:
@@ -38,12 +46,22 @@ class PhaseSettings:
     tolerance: float = 0.35
     search_step: float = 0.05
 
+    def __post_init__(self) -> None:
+        if self.tolerance < 0:
+            raise ValueError(f"phase tolerance must be non-negative, got {self.tolerance}")
+        if self.search_step <= 0:
+            raise ValueError(f"phase search_step must be positive, got {self.search_step}")
+
 
 @dataclass(frozen=True)
 class WeightingSettings:
     mode: str = "continuous"
     anchors: tuple[tuple[float, float], ...] = ((0.0, 1.0), (0.5, 0.7), (0.8, 0.3), (1.0, 0.1))
     coverage_threshold: float = 0.5
+
+    def __post_init__(self) -> None:
+        if not (0.0 < self.coverage_threshold <= 1.0):
+            raise ValueError(f"coverage_threshold must be in (0, 1], got {self.coverage_threshold}")
 
 
 @dataclass(frozen=True)
@@ -55,6 +73,12 @@ class ColorSettings:
     detail_bias_lightness_gap: float = 0.25
     detail_bias_max_lightness: float = 0.45
 
+    def __post_init__(self) -> None:
+        if self.metric != "oklab":
+            raise ValueError(f"only oklab color metric is supported, got {self.metric!r}")
+        if self.cluster_iterations < 1:
+            raise ValueError(f"cluster_iterations must be >= 1, got {self.cluster_iterations}")
+
 
 @dataclass(frozen=True)
 class ThinFeatureSettings:
@@ -63,11 +87,21 @@ class ThinFeatureSettings:
     coverage_relief: float = 0.28
     temporal_evidence: bool = True
 
+    def __post_init__(self) -> None:
+        if self.max_thickness < 1:
+            raise ValueError(f"max_thickness must be >= 1, got {self.max_thickness}")
+        if not (0.0 <= self.coverage_relief <= 1.0):
+            raise ValueError(f"coverage_relief must be in [0, 1], got {self.coverage_relief}")
+
 
 @dataclass(frozen=True)
 class PaletteSettings:
     colors: int = 16
     scope: str = "character"
+
+    def __post_init__(self) -> None:
+        if self.colors < 2:
+            raise ValueError(f"palette colors must be >= 2, got {self.colors}")
 
 
 @dataclass(frozen=True)
@@ -76,12 +110,23 @@ class FftSettings:
     candidates: int = 4
     min_prominence: float = 0.15
 
+    def __post_init__(self) -> None:
+        if self.candidates < 1:
+            raise ValueError(f"fft candidates must be >= 1, got {self.candidates}")
+        if not (0.0 <= self.min_prominence <= 1.0):
+            raise ValueError(f"min_prominence must be in [0, 1], got {self.min_prominence}")
+
 
 @dataclass(frozen=True)
 class DitherSettings:
     mode: str = "off"
     strength: float = 1.0
     matrix: int = 4
+    preset: str | None = None
+
+    def __post_init__(self) -> None:
+        if self.matrix < 2:
+            raise ValueError(f"dither matrix must be >= 2, got {self.matrix}")
 
 
 @dataclass(frozen=True)
@@ -90,11 +135,23 @@ class SeamSettings:
     threshold: float = 0.08
     band: int = 1
 
+    def __post_init__(self) -> None:
+        if self.threshold < 0:
+            raise ValueError(f"seam threshold must be non-negative, got {self.threshold}")
+        if self.band < 1:
+            raise ValueError(f"seam band must be >= 1, got {self.band}")
+
 
 @dataclass(frozen=True)
 class CleanupSettings:
     orphan_max_area: int = 2
     fringe_alpha_threshold: int = 128
+
+    def __post_init__(self) -> None:
+        if self.orphan_max_area < 0:
+            raise ValueError(f"orphan_max_area must be non-negative, got {self.orphan_max_area}")
+        if not (0 <= self.fringe_alpha_threshold <= 255):
+            raise ValueError(f"fringe_alpha_threshold must be in [0, 255], got {self.fringe_alpha_threshold}")
 
 
 @dataclass(frozen=True)
@@ -119,9 +176,56 @@ class RefineSettings:
         return payload
 
 
-# Static Mode spells its lattice section "grid" (spec §8.1 "Large-image Grid
-# Search"); Sprite Mode spells it "lattice" (§5.2). One settings field holds
-# both so no engine has to branch on which spelling a project file used.
+@dataclass(frozen=True)
+class SpriteQaSettings:
+    baseline_tolerance: float = 1.5
+    scale_jump_ratio: float = 0.20
+    duplicate_threshold: int = 2
+    side_balance_threshold: int = 3
+    min_frames: int = 1
+
+    def __post_init__(self) -> None:
+        if self.baseline_tolerance < 0:
+            raise ValueError("baseline_tolerance must be non-negative")
+        if not (0.0 <= self.scale_jump_ratio <= 1.0):
+            raise ValueError("scale_jump_ratio must be in [0, 1]")
+
+
+@dataclass(frozen=True)
+class StaticQaSettings:
+    soft_ratio_threshold: float = 0.02
+    min_delta_e_threshold: float = 0.02
+    orphan_max_area: int = 2
+    fringe_alpha_threshold: int = 128
+    fill_max_area: int = 4
+    min_layers: int = 2
+
+    def __post_init__(self) -> None:
+        if not (0.0 <= self.soft_ratio_threshold <= 1.0):
+            raise ValueError("soft_ratio_threshold must be in [0, 1]")
+        if self.min_delta_e_threshold < 0:
+            raise ValueError("min_delta_e_threshold must be non-negative")
+
+
+@dataclass(frozen=True)
+class MetricGateSettings:
+    direction: str = "higher"  # "higher" or "lower"
+    tolerance: float = 0.002
+    gate: bool = True
+
+    def __post_init__(self) -> None:
+        if self.direction not in {"higher", "lower"}:
+            raise ValueError(f"direction must be 'higher' or 'lower', got {self.direction!r}")
+        if self.tolerance < 0:
+            raise ValueError("tolerance must be non-negative")
+
+
+@dataclass(frozen=True)
+class BenchmarkSettings:
+    sprite: dict[str, MetricGateSettings] = field(default_factory=dict)
+    static: dict[str, MetricGateSettings] = field(default_factory=dict)
+
+
 _SECTION_TYPES: dict[str, type] = {
     "lattice": LatticeSettings,
     "grid": LatticeSettings,
@@ -160,13 +264,7 @@ def _build_section(name: str, payload: dict[str, Any]) -> Any:
 
 
 def _normalize_anchors(raw: Any) -> tuple[tuple[float, float], ...]:
-    """Validate the continuous-weighting falloff curve (spec §5.4).
-
-    The curve is the whole point of the small-cell fix, so a malformed one is
-    an error rather than a clamp: an unsorted or non-spanning anchor list would
-    otherwise interpolate to weights nobody intended and quietly reintroduce
-    the hard-cut artifacts the curve exists to remove.
-    """
+    """Validate the continuous-weighting falloff curve (spec §5.4)."""
     if not isinstance(raw, (list, tuple)) or len(raw) < 2:
         raise ValueError("weighting.anchors needs at least two [radius, weight] pairs")
     anchors: list[tuple[float, float]] = []
@@ -212,9 +310,35 @@ def load_refine_settings(mode: str, *, config_dir: Path | None = None) -> Refine
     return settings_from_dict(mode, payload)
 
 
-# The spec's project JSON writes overrides flat (§13.2 "refine": {"phase_correction":
-# "bounded", ...}). Sectioned overrides are accepted too; this table is the bridge so
-# neither the project schema nor the settings shape has to bend toward the other.
+def load_qa_settings(mode: str, *, config_dir: Path | None = None) -> SpriteQaSettings | StaticQaSettings:
+    directory = config_dir or CONFIG_DIR
+    path = directory / f"{mode}_qa.json"
+    if not path.is_file():
+        raise ValueError(f"no QA config for mode {mode!r}: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"QA config must be an object: {path}")
+    values = {k: v for k, v in payload.items() if k not in {"kind", "mode", "version"}}
+    if mode == "sprite":
+        return SpriteQaSettings(**values)
+    if mode == "static":
+        return StaticQaSettings(**values)
+    raise ValueError(f"unknown QA mode: {mode!r}")
+
+
+def load_benchmark_settings(*, config_dir: Path | None = None) -> BenchmarkSettings:
+    directory = config_dir or CONFIG_DIR
+    path = directory / "benchmark.json"
+    if not path.is_file():
+        raise ValueError(f"no benchmark config found: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"benchmark config must be an object: {path}")
+    sprite_rules = {k: MetricGateSettings(**v) for k, v in payload.get("sprite", {}).items()}
+    static_rules = {k: MetricGateSettings(**v) for k, v in payload.get("static", {}).items()}
+    return BenchmarkSettings(sprite=sprite_rules, static=static_rules)
+
+
 _FLAT_OVERRIDES: dict[str, tuple[str, str]] = {
     "shared_lattice_scope": ("lattice", "scope"),
     "phase_correction": ("phase", "correction"),

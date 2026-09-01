@@ -41,6 +41,7 @@ class SampleReport:
     protected_cells: int
     rescued_cells: int
     mean_coverage: float
+    lost_cells: tuple[tuple[int, int], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -49,6 +50,7 @@ class SampleReport:
             "protected_cells": self.protected_cells,
             "rescued_cells": self.rescued_cells,
             "mean_coverage": round(self.mean_coverage, 6),
+            "lost_cells": [list(cell) for cell in self.lost_cells],
         }
 
 
@@ -189,11 +191,15 @@ def snap_to_lattice(
     output[keep, :3] = rgb[keep]
     output[keep, 3] = 255
     logical = Image.fromarray(output.reshape(rows, columns, 4), mode="RGBA")
+    lost_mask = protected & (~keep)
+    lost_cells = tuple((int(idx % columns), int(idx // columns)) for idx in np.flatnonzero(lost_mask))
+
     report = SampleReport(
         logical_size=(columns, rows),
         filled_cells=int(np.count_nonzero(keep)),
         protected_cells=int(np.count_nonzero(protected)),
         rescued_cells=rescued,
         mean_coverage=float(coverage[filled_weight > 0].mean()) if np.any(filled_weight > 0) else 0.0,
+        lost_cells=lost_cells,
     )
     return logical, report

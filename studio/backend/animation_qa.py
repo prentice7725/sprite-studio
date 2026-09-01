@@ -6,9 +6,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from PIL import Image
+
 from sprite_studio.spec.layout import frames_dir_rel, row_frame_rel
 
 from studio.core.animation import AnimationQaResult, analyze_animation
+from studio.shared.config import load_qa_settings
 
 from .spritegen_bridge import request_for
 
@@ -30,12 +33,12 @@ def _source_files(run_dir: Path, request: dict, state: str) -> list[Path]:
 def run_animation_qa(run_dir: Path, state: str) -> AnimationQaResult:
     request = request_for(run_dir)
     source_files = _source_files(run_dir, request, state)
-    from PIL import Image
     frames = []
     for path in source_files:
         with Image.open(path) as opened:
             frames.append(opened.convert("RGBA"))
-    result = analyze_animation(frames, state)
+    qa_settings = load_qa_settings("sprite")
+    result = analyze_animation(frames, state, settings=qa_settings)
     qa_dir = run_dir / "studio" / "qa"
     qa_dir.mkdir(parents=True, exist_ok=True)
     if source_files and "repaired" in source_files[0].parts:

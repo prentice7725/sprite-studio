@@ -27,7 +27,7 @@ from typing import Any, Callable, Sequence
 import numpy as np
 from PIL import Image
 
-from studio.shared.config import RefineSettings, load_refine_settings
+from studio.shared.config import BenchmarkSettings, RefineSettings, load_benchmark_settings, load_refine_settings
 
 from .degrade import degrade
 from .metrics import sprite_metrics, static_metrics, temporal_consistency
@@ -233,18 +233,26 @@ def run_benchmark(cases: Sequence[BenchmarkCase] | None = None, **kwargs: Any) -
     return report
 
 
-def compare_runs(baseline: dict[str, Any], candidate: dict[str, Any], *, tolerance: float = 1e-6) -> dict[str, Any]:
-    """Diff two benchmark reports so a regression cannot hide behind an average.
+def compare_runs(
+    baseline: dict[str, Any],
+    candidate: dict[str, Any],
+    *,
+    tolerance: float | None = None,
+    settings: BenchmarkSettings | None = None,
+) -> dict[str, Any]:
+    """Diff two benchmark reports across all configured metrics (spec §9.5, §16.10).
 
-    Reports per-case movement on the headline metric for each mode. A change
+    Reports per-case movement on every metric declared for that mode. A change
     that lifts the mean while dropping three cases is a regression with good
     marketing, and this is what makes that visible.
     """
     def index(report: dict[str, Any]) -> dict[str, dict[str, Any]]:
         return {case["case"]: case for case in report.get("cases", [])}
 
+    benchmark_settings = settings or load_benchmark_settings()
     before, after = index(baseline), index(candidate)
     moved: list[dict[str, Any]] = []
+
     for name in sorted(set(before) | set(after)):
         if name not in before:
             moved.append({"case": name, "change": "added"})
@@ -252,25 +260,57 @@ def compare_runs(baseline: dict[str, Any], candidate: dict[str, Any], *, toleran
         if name not in after:
             moved.append({"case": name, "change": "removed"})
             continue
-        keys = ("silhouette", "iou") if before[name]["mode"] == "sprite" else ("color", "mean_delta_e")
-        old = (before[name]["metrics"].get(keys[0]) or {}).get(keys[1])
-        new = (after[name]["metrics"].get(keys[0]) or {}).get(keys[1])
-        if old is None or new is None or abs(float(new) - float(old)) <= tolerance:
-            continue
-        # Higher IoU is better; lower colour error is better.
-        improved = float(new) > float(old) if keys[0] == "silhouette" else float(new) < float(old)
-        moved.append(
-            {
-                "case": name,
-                "metric": f"{keys[0]}.{keys[1]}",
-                "before": old,
-                "after": new,
-                "change": "improved" if improved else "regressed",
-            }
-        )
+
+        mode = before[name].get("mode", "sprite")
+        rules = benchmark_settings.sprite if mode == "sprite" else benchmark_settings.static
+
+        for metric_path, rule in rules.items():
+            parts = metric_path.split(".", 1)
+            section_name = parts[0]
+            key_name = parts[1] if len(parts) > 1 else "value"
+
+            old_sec = before[name].get("metrics", {}).get(section_name)
+            new_sec = after[name].get("metrics", {}).get(section_name)
+            if not isinstance(old_sec, dict) or not isinstance(new_sec, dict):
+                continue
+            old_val = old_sec.get(key_name)
+            new_val = new_sec.get(key_name)
+            if old_val is None or new_val is None:
+                continue
+
+            eff_tolerance = rule.tolerance if tolerance is None else tolerance
+            diff_val = float(new_val) - float(old_val)
+            if abs(diff_val) <= eff_tolerance:
+                continue
+
+            if rule.direction == "higher":
+                improved = diff_val > eff_tolerance
+                regressed = diff_val < -eff_tolerance
+            else:
+                improved = diff_val < -eff_tolerance
+                regressed = diff_val > eff_tolerance
+
+            if improved or regressed:
+                moved.append(
+                    {
+                        "case": name,
+                        "metric": metric_path,
+                        "before": old_val,
+                        "after": new_val,
+                        "change": "improved" if improved else "regressed",
+                        "gate": rule.gate,
+                    }
+                )
+
+    regressions = [item for item in moved if item.get("change") == "regressed"]
+    gated_regressions = [item for item in regressions if item.get("gate", True)]
+    improvements = [item for item in moved if item.get("change") == "improved"]
+
     return {
         "kind": "asset-studio-benchmark-comparison",
         "moved": moved,
-        "regressions": [item for item in moved if item.get("change") == "regressed"],
-        "improvements": [item for item in moved if item.get("change") == "improved"],
+        "regressions": regressions,
+        "gated_regressions": gated_regressions,
+        "improvements": improvements,
     }
+

@@ -67,12 +67,14 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         diff = compare_runs(json.loads(args.baseline.read_text(encoding="utf-8")), payload)
         for item in diff["improvements"]:
-            print(f"IMPROVED  {item['case']}: {item.get('metric')} {item.get('before')} -> {item.get('after')}")
+            gate_tag = " [GATE]" if item.get("gate") else ""
+            print(f"IMPROVED  {item['case']}: {item.get('metric')} {item.get('before')} -> {item.get('after')}{gate_tag}")
         for item in diff["regressions"]:
-            print(f"REGRESSED {item['case']}: {item.get('metric')} {item.get('before')} -> {item.get('after')}")
-        if diff["regressions"]:
-            # Non-zero so this can gate a change rather than merely describe one.
-            print(f"{len(diff['regressions'])} case(s) regressed against the baseline", file=sys.stderr)
+            gate_tag = " [GATE]" if item.get("gate") else ""
+            print(f"REGRESSED {item['case']}: {item.get('metric')} {item.get('before')} -> {item.get('after')}{gate_tag}")
+        gated = diff.get("gated_regressions", diff["regressions"])
+        if gated:
+            print(f"{len(gated)} gating metric regression(s) detected against the baseline", file=sys.stderr)
             return 1
     return 0
 

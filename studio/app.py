@@ -126,11 +126,16 @@ def build_app(*, locale: str = "ko"):
                 with gr.Tab(t["tab.project"]):
                     with gr.Row():
                         with gr.Column():
+                            start_flow = gr.Radio(
+                                [t.get("start.generate_new", "Generate New"), t.get("start.use_existing", "Use Existing Image")],
+                                value=t.get("start.generate_new", "Generate New"),
+                                label=t.get("start.flow", "Start Mode"),
+                            )
                             preset = gr.Dropdown(presets, value=default_preset["id"], label="Preset")
                             run_id = gr.Textbox(label="Run ID", value="sword_a01")
                             character_id = gr.Textbox(label="Character ID", value="sword")
                             description = gr.Textbox(label="Description", value=default_preset.get("character_description", ""))
-                            base_image = gr.Image(type="filepath", label="Base Image")
+                            base_image = gr.Image(type="filepath", label="Base Image (Required for Existing Image)", visible=False)
                             provider = gr.Radio(["grok", "codex"], value="grok", label="Provider")
                             generation_profile = gr.Radio(
                                 ["direct_pixel", "refine_first"],
@@ -269,9 +274,16 @@ def build_app(*, locale: str = "ko"):
                 gr.Dropdown(["auto", "green", "magenta", "red", "blue", "transparent"], value=data.get("background_policy", "auto")),
             )
 
-        preset.change(preset_changed, preset, [directions, states, description, generation_profile, background_policy])
+        def flow_changed(flow_val):
+            use_existing = flow_val == t.get("start.use_existing", "Use Existing Image")
+            return gr.Image(visible=use_existing)
 
-        def create_clicked(preset_id, rid, cid, desc, image, selected_provider, selected_profile, selected_background, selected_dirs, selected_states):
+        start_flow.change(flow_changed, start_flow, base_image)
+
+        def create_clicked(flow_val, preset_id, rid, cid, desc, image, selected_provider, selected_profile, selected_background, selected_dirs, selected_states):
+            use_existing = flow_val == t.get("start.use_existing", "Use Existing Image")
+            if use_existing and not image:
+                raise ValueError(t.get("project.base_image_required", "기존 이미지 사용 모드에서는 기본 이미지(Base Image)를 반드시 첨부해야 합니다."))
             data = load_preset(preset_id)
             image_path = Path(image) if image else None
             config = StudioRunConfig(
@@ -308,7 +320,7 @@ def build_app(*, locale: str = "ko"):
 
         create_button.click(
             create_clicked,
-            [preset, run_id, character_id, description, base_image, provider, generation_profile, background_policy, directions, states],
+            [start_flow, preset, run_id, character_id, description, base_image, provider, generation_profile, background_policy, directions, states],
             [current_run, project_status, run_picker, generate_run, review_run, matrix_run, export_run, current_state, batch_states, anchor_direction],
         )
 
@@ -530,10 +542,17 @@ def build_app(*, locale: str = "ko"):
         batch_button.click(batch_clicked, [generate_run, batch_states, batch_normalize, batch_refine, batch_repair, batch_qa], batch_output)
 
         def batch_refresh_clicked(run_value):
-            path, _ = _run_state(run_value)
-            return batch_service.status_text(path)
+            if not run_value:
+                return "Run을 선택하세요."
+            try:
+                path, _ = _run_state(run_value)
+                return batch_service.status_text(path)
+            except Exception as exc:
+                return f"상태 조회 실패: {exc}"
 
         batch_refresh.click(batch_refresh_clicked, generate_run, batch_output)
+        batch_timer = gr.Timer(value=1.5)
+        batch_timer.tick(batch_refresh_clicked, generate_run, batch_output)
 
         def animation_qa_clicked(run_value, state):
             path, _ = _run_state(run_value)

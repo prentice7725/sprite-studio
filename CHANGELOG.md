@@ -125,11 +125,17 @@ Asset Studio 모드 분리 (`ASSET_STUDIO_MODE_SPLIT_SPEC_v0.2` 구현).
   둘 다 완벽한 복원 점수를 보고하고 있었다. 손상 규모에 따라 점수가 단조 감소하는지도
   함께 확인했다.
 
+**프로덕션 파이프라인 실연결 및 고도화 (v0.2 Complete)**
+- 캐릭터 스코프 공유 래티스 (`studio/backend/refine_service.py`, `batch_service.py`): `lattice.scope == "character"` 시 전체 추출 프레임을 풀링하여 래티스를 1회 추정하고 모든 상태에 동일 피치 주입.
+- Refine Residual → Repair 자동 연동 (`studio/core/repair/repair_pipeline.py`, `studio/backend/repair_service.py`): refine 손실 셀을 구조화된 잔여(`residuals`)로 RepairCandidate에 주입하여 자동 수리 제안 및 적용.
+- 외부 설정 전면 이관: `sprite_qa.json`, `static_qa.json`, `benchmark.json`, `dither.json` 생성 및 dataclass 엄격한 로딩/검증(`studio/shared/config/settings.py`).
+- 벤치마크 다중 메트릭 및 회귀 게이트: 모든 메트릭(silhouette, color, thin_feature, palette, edge, temporal, texture, seam)을 비교하여 게이트 메트릭 회귀 시 비정상 종료 (`studio/benchmark.py`, `harness.py`).
+- Static Provider Generation 및 디더 프리셋: 공통 프로바이더 어댑터(`studio/backend/provider_service.py`) 구축 및 `static_service.generate_asset` 연동, `dither.py` preset 모드 추가.
+- 배치 영속 작업 관측성 (`studio/backend/batch_service.py`, `studio/app.py`): 실시간 진행률, 단계, 경과시간, 실패 상세 표시, 중복 실행 방지 및 타이머 폴링.
+- 온보딩 시작 흐름 분리: 새 프로젝트 생성 시 "새로 생성"과 "기존 이미지 사용" 진입점 분리 및 필수 검증.
+
 ### Known gaps
 
-- Static Mode에는 provider 생성 호출이 없다. 에셋을 프로젝트로 가져와서 정제한다.
-- Repair 레이어가 아직 `residuals` 필드를 읽지 않는다. Sprite refine은 살리지 못한
-  얇은 특징을 보고하지만 소비하는 쪽이 없다.
 - FX는 Sprite Mode의 서브타입으로 남아 있다 (별도 FX 모드 없음).
 - 벤치마크 케이스는 합성이다. 알고리즘이 알려진 열화에 대해 올바로 동작한다는 뜻이지,
   실제 생성 결과물의 품질이 좋아졌다는 뜻은 아니다.

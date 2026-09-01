@@ -53,10 +53,16 @@ def build_static_tabs(gr, t: dict[str, str]):
             with gr.Tab(t.get("static.tab.project", "PROJECT")):
                 with gr.Row():
                     with gr.Column():
+                        start_flow = gr.Radio(
+                            [t.get("start.generate_new", "Generate New"), t.get("start.use_existing", "Use Existing Image")],
+                            value=t.get("start.generate_new", "Generate New"),
+                            label=t.get("start.flow", "Start Mode"),
+                        )
                         preset = gr.Dropdown(presets, value=default_preset["id"], label=t.get("static.preset", "Preset"))
                         project_id = gr.Textbox(label="Project ID", value="battlefield_bg_001")
                         description = gr.Textbox(label=t.get("static.description", "Scene / Object Description"),
                                                  value=default_preset.get("description", ""), lines=3)
+                        base_image = gr.Image(type="filepath", label="Base Image (Required for Existing Image)", visible=False)
                         asset_type = gr.Dropdown(list(ASSET_TYPES), value=default_preset["asset_type"],
                                                  label=t.get("static.asset_type", "Asset Type"))
                         provider = gr.Radio(["grok", "codex"], value="grok", label="Provider")
@@ -74,9 +80,11 @@ def build_static_tabs(gr, t: dict[str, str]):
 
             with gr.Tab(t.get("static.tab.generate", "GENERATE")):
                 generate_project = gr.Dropdown(choices=_projects(), label="Project")
-                static_prompt = gr.Textbox(label="Prompt", lines=12)
+                static_prompt = gr.Textbox(label="Prompt", lines=10)
                 prompt_issues = gr.Markdown()
-                build_prompt_button = gr.Button(t.get("static.prompt.build", "BUILD PROMPT"), variant="primary")
+                with gr.Row():
+                    build_prompt_button = gr.Button(t.get("static.prompt.build", "BUILD PROMPT"))
+                    generate_button = gr.Button(t.get("static.generate.run", "GENERATE STATIC ASSET"), variant="primary")
                 import_image = gr.Image(type="filepath", label=t.get("static.import", "Import Source Image"))
                 asset_name = gr.Textbox(value="scene", label="Asset Name")
                 import_button = gr.Button(t.get("static.import.run", "IMPORT AS RAW ASSET"))
@@ -92,17 +100,12 @@ def build_static_tabs(gr, t: dict[str, str]):
                     run_cleanup = gr.Checkbox(value=True, label=t.get("static.cleanup", "Cleanup"))
                 refine_button = gr.Button(t.get("static.refine.run", "STATIC REFINE"), variant="primary")
                 refined_preview = gr.Image(label="REFINED (logical)")
-                # §12.3 "Static Refine 표시 항목": candidates, chosen grid, palette/dither,
-                # seam preview, tile wrap preview.
                 fft_candidates = gr.Markdown(label="FFT candidate list")
                 selected_grid = gr.Markdown(label="Selected grid")
                 palette_summary = gr.Markdown(label="Palette / dither mode")
                 refine_status = gr.Markdown()
 
             with gr.Tab(t.get("static.tab.cleanup", "CLEANUP")):
-                # Its own section (spec §12.3), not just a refine toggle: tuning a
-                # speck threshold must not re-run the grid search and re-decide the
-                # lattice underneath the operator.
                 cleanup_project = gr.Dropdown(choices=_projects(), label="Project")
                 cleanup_asset_name = gr.Textbox(value="scene", label="Asset Name")
                 orphan_max_area = gr.Number(value=2, precision=0, label=t.get("static.orphan", "Orphan Max Area (px)"))
@@ -143,6 +146,12 @@ def build_static_tabs(gr, t: dict[str, str]):
         choices = _projects()
         return [gr.Dropdown(choices=choices) for _ in pickers]
 
+    def flow_changed(flow_val):
+        use_existing = flow_val == t.get("start.use_existing", "Use Existing Image")
+        return gr.Image(visible=use_existing)
+
+    start_flow.change(flow_changed, start_flow, base_image)
+
     def preset_changed(preset_id: str):
         data = load_static_preset(preset_id)
         return (
@@ -159,7 +168,10 @@ def build_static_tabs(gr, t: dict[str, str]):
         [description, asset_type, tileable, layer_intent, export_width, export_height],
     )
 
-    def create_clicked(preset_id, pid, desc, atype, prov, tile, intent, width, height):
+    def create_clicked(flow_val, preset_id, pid, desc, base_img_path, atype, prov, tile, intent, width, height):
+        use_existing = flow_val == t.get("start.use_existing", "Use Existing Image")
+        if use_existing and not base_img_path:
+            raise ValueError(t.get("project.base_image_required", "Base image is required for Existing Image mode."))
         data = load_static_preset(preset_id)
         overrides = dict(data.get("refine") or {})
         config = StaticProjectConfig(
@@ -168,6 +180,7 @@ def build_static_tabs(gr, t: dict[str, str]):
             asset_type=atype,
             style_profile=data.get("style_profile", "pixel_scene"),
             description=desc or "",
+            base_image=Path(base_img_path) if base_img_path else None,
             tileable=bool(tile),
             export_size=(int(width), int(height)),
             layer_intent=str(intent or "none"),
@@ -182,7 +195,7 @@ def build_static_tabs(gr, t: dict[str, str]):
 
     create_button.click(
         create_clicked,
-        [preset, project_id, description, asset_type, provider, tileable, layer_intent, export_width, export_height],
+        [start_flow, preset, project_id, description, base_image, asset_type, provider, tileable, layer_intent, export_width, export_height],
         [project_status, *pickers],
     )
     refresh_projects.click(lambda: _refresh_all(), outputs=pickers)
@@ -202,6 +215,20 @@ def build_static_tabs(gr, t: dict[str, str]):
 
     build_prompt_button.click(build_prompt_clicked, generate_project, [static_prompt, prompt_issues])
 
+    def generate_clicked(pid, prompt_text, prov, asset):
+        if not pid:
+            return "Select a project first."
+        info = static_service.load_project(pid)
+        report = static_service.generate_asset(
+            info,
+            asset=str(asset or "scene").strip(),
+            prompt_override=prompt_text or None,
+            provider=prov or None,
+        )
+        return f"Generated `{report['asset']}` via `{report['provider']}` in {report.get('elapsed_seconds', '?')}s -> `{report['out']}`"
+
+    generate_button.click(generate_clicked, [generate_project, static_prompt, provider, asset_name], generate_status)
+
     def import_clicked(pid, image_path, asset):
         if not pid or not image_path:
             return "Select a project and an image."
@@ -215,8 +242,6 @@ def build_static_tabs(gr, t: dict[str, str]):
         if not pid:
             return None, "", "", "", "Select a project first."
         info = static_service.load_project(pid)
-        # UI toggles are project overrides, persisted the same way a preset's are,
-        # so the report always records the settings that actually ran.
         overrides = dict(info.refine or {}) | {"dither_mode": dither, "fft_candidate_search": bool(fft)}
         info = replace(info, refine=overrides)
         report = static_service.refine_asset(info, str(asset or "scene").strip(), cleanup=bool(cleanup))

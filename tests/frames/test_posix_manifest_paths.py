@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for OS-neutral paths in machine-readable manifests."""
 
-from pathlib import Path, PureWindowsPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 
 from sprite_studio.spec.runio import relative_posix
 
@@ -17,7 +17,7 @@ def test_relative_posix_reproduces_windows_backslash_bug_without_windows() -> No
 
 
 def test_relative_posix_is_noop_for_posix_paths() -> None:
-    root = Path("/sprite/run")
+    root = PurePosixPath("/sprite/run")
     frame = root / "frames" / "walk" / "frame-0.png"
 
     assert relative_posix(frame, root) == str(frame.relative_to(root))

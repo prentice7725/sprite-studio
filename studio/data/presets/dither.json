@@ -1,0 +1,17 @@
+{
+  "environment_soft": {
+    "algorithm": "ordered",
+    "strength": 0.35,
+    "matrix": 4
+  },
+  "environment_crisp": {
+    "algorithm": "ordered",
+    "strength": 0.70,
+    "matrix": 4
+  },
+  "scenery_diffuse": {
+    "algorithm": "serpentine",
+    "strength": 0.50,
+    "matrix": 4
+  }
+}

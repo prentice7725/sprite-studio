@@ -105,9 +105,14 @@ def extract_frames(run_dir: Path, state: str | None = None, *, normalize: bool =
     return extract.run(run_dir=run_dir, states=state or "all", normalize_grok_row=normalize)
 
 
-def refine_frames(run_dir: Path, state: str):
+def refine_frames(run_dir: Path, state: str, *, shared_lattice=None):
     from .refine_service import refine_state
-    return refine_state(run_dir, state)
+    return refine_state(run_dir, state, shared_lattice=shared_lattice)
+
+
+def refine_states(run_dir: Path, states: list[str]):
+    from .refine_service import refine_states as rs
+    return rs(run_dir, states)
 
 
 def analyze_repairs(run_dir: Path, state: str):

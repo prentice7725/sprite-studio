@@ -24,7 +24,7 @@ from typing import Any
 import numpy as np
 from PIL import Image
 
-from studio.shared.config import RefineSettings
+from studio.shared.config import RefineSettings, StaticQaSettings, load_qa_settings
 from studio.static_mode.refine.palette import palette_usage, tone_consistency
 from studio.static_mode.tile.seam import check_seams
 
@@ -61,14 +61,16 @@ def run_static_qa(
     image: Image.Image,
     settings: RefineSettings,
     *,
+    qa_settings: StaticQaSettings | None = None,
     asset_type: str = "PIXEL_SCENE",
     palette: tuple[tuple[int, int, int, int], ...] = (),
     tileable: bool = False,
     layers: int | None = None,
 ) -> StaticQaResult:
+    qa_config = qa_settings or load_qa_settings("static")
     warnings: list[dict[str, Any]] = []
     edges = _edge_cleanliness(image)
-    if edges["soft_ratio"] > 0.02:
+    if edges["soft_ratio"] > qa_config.soft_ratio_threshold:
         warnings.append(
             {
                 "severity": "warning",
@@ -93,7 +95,7 @@ def run_static_qa(
                 }
             )
         separation = usage.get("separation") or {}
-        if separation.get("min_delta_e") is not None and separation["min_delta_e"] < 0.02:
+        if separation.get("min_delta_e") is not None and separation["min_delta_e"] < qa_config.min_delta_e_threshold:
             warnings.append(
                 {
                     "severity": "warning",
@@ -116,7 +118,7 @@ def run_static_qa(
 
     if layers is not None:
         metrics["layers"] = layers
-        if layers < 2:
+        if layers < qa_config.min_layers:
             warnings.append(
                 {
                     "severity": "info",

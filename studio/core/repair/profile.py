@@ -22,6 +22,7 @@ class RepairProfile:
         "outline_gap": 0.98,
         "orphan_pixel": 0.96,
         "thin_feature_break": 0.97,
+        "thin_feature_at_risk": 0.85,
         "temporal_missing_pixel": 0.97,
     })
     # Normalized against the occupied sprite bbox, not the whole canvas.

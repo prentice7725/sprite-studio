@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 
 from PIL import Image
 
@@ -21,9 +21,9 @@ from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 
 from studio.core.refine import RefineResult
 from studio.core.refine.frame_refiner import refine_files
-from studio.shared.config import apply_overrides, load_refine_settings
+from studio.shared.config import RefineSettings, apply_overrides, load_refine_settings
 from studio.shared.modes import SPRITE, resolve_mode
-from studio.sprite_mode.refine import SpriteRefineEngine
+from studio.sprite_mode.refine import SharedLattice, SpriteRefineEngine, estimate_character_lattice
 
 from .spritegen_bridge import request_for
 
@@ -52,7 +52,45 @@ def _source_files(run_dir: Path, state: str) -> list[Path]:
     return [run_dir / row_frame_rel(row, index) for index in range(len(row["files"]))]
 
 
-def refine_state(run_dir: Path, state: str) -> RefineResult:
+def _load_state_frames(run_dir: Path, state: str) -> list[Image.Image]:
+    files = _source_files(run_dir, state)
+    frames: list[Image.Image] = []
+    for path in files:
+        with Image.open(path) as opened:
+            frames.append(opened.convert("RGBA"))
+    return frames
+
+
+def estimate_run_character_lattice(
+    run_dir: Path,
+    states: Sequence[str] | None = None,
+    settings: RefineSettings | None = None,
+) -> SharedLattice:
+    """Estimate a character-scoped shared lattice across all target states in a run."""
+    manifest_path = run_dir / "frames" / "frames-manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError("extract first: frames/frames-manifest.json is missing")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    available_states = [row["state"] for row in manifest.get("rows", []) if row.get("files")]
+    target_states = list(states) if states is not None else available_states
+    if not target_states:
+        raise ValueError("no extracted states available to estimate character lattice")
+    
+    frames_by_state: dict[str, list[Image.Image]] = {}
+    for state in target_states:
+        if state in available_states:
+            frames_by_state[state] = _load_state_frames(run_dir, state)
+    if not frames_by_state:
+        raise ValueError(f"no extracted frames found for target states: {target_states}")
+    
+    config = (_studio_metadata(run_dir).get("config") or {})
+    overrides = dict(config.get("refine") or {})
+    overrides.pop("engine", None)
+    resolved_settings = settings or apply_overrides(load_refine_settings(SPRITE), overrides)
+    return estimate_character_lattice(frames_by_state, resolved_settings)
+
+
+def refine_state(run_dir: Path, state: str, *, shared_lattice: SharedLattice | None = None) -> RefineResult:
     """Refine one state with the engine its mode declares."""
     mode = run_mode(run_dir)
     if mode != SPRITE:
@@ -85,10 +123,10 @@ def refine_state(run_dir: Path, state: str) -> RefineResult:
         raise ValueError(f"unknown refine engine {engine_version!r}; expected v1 or v2")
 
     settings = apply_overrides(load_refine_settings(SPRITE), overrides)
-    frames = []
-    for path in source_files:
-        with Image.open(path) as opened:
-            frames.append(opened.convert("RGBA"))
+    if shared_lattice is None and settings.lattice.scope == "character":
+        shared_lattice = estimate_run_character_lattice(run_dir, settings=settings)
+
+    frames = _load_state_frames(run_dir, state)
     output = SpriteRefineEngine(settings).refine(
         frames,
         state=state,
@@ -97,8 +135,41 @@ def refine_state(run_dir: Path, state: str) -> RefineResult:
         safe_margin_x=safe_margin_x,
         safe_margin_y=safe_margin_y,
         locks=locks,
+        shared_lattice=shared_lattice,
     )
     return _write_refined(output, source_files, output_dir, state)
+
+
+def refine_states(run_dir: Path, states: Sequence[str]) -> dict[str, RefineResult]:
+    """Refine multiple states, estimating character lattice once if scope == 'character'."""
+    mode = run_mode(run_dir)
+    if mode != SPRITE:
+        raise ValueError(f"refine_states is the Sprite Mode path; run {run_dir.name} is {mode!r}")
+    config = (_studio_metadata(run_dir).get("config") or {})
+    overrides = dict(config.get("refine") or {})
+    engine_version = str(overrides.get("engine", "v2"))
+    
+    shared_lattice: SharedLattice | None = None
+    if engine_version == "v2":
+        clean_overrides = {k: v for k, v in overrides.items() if k != "engine"}
+        settings = apply_overrides(load_refine_settings(SPRITE), clean_overrides)
+        if settings.lattice.scope == "character":
+            shared_lattice = estimate_run_character_lattice(run_dir, states=states, settings=settings)
+            
+    results: dict[str, RefineResult] = {}
+    for state in states:
+        results[state] = refine_state(run_dir, state, shared_lattice=shared_lattice)
+    return results
+
+
+def refine_run(run_dir: Path) -> dict[str, RefineResult]:
+    """Refine all extracted states in a run."""
+    manifest_path = run_dir / "frames" / "frames-manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError("extract first: frames/frames-manifest.json is missing")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    states = [row["state"] for row in manifest.get("rows", []) if row.get("files")]
+    return refine_states(run_dir, states)
 
 
 def _write_refined(output, source_files: list[Path], output_dir: Path, state: str) -> RefineResult:

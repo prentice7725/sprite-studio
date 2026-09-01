@@ -1,0 +1,10 @@
+{
+  "kind": "asset-studio-sprite-qa-config",
+  "version": 1,
+  "mode": "sprite",
+  "baseline_tolerance": 1.5,
+  "scale_jump_ratio": 0.20,
+  "duplicate_threshold": 2,
+  "side_balance_threshold": 3,
+  "min_frames": 1
+}

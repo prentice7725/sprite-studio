@@ -134,13 +134,32 @@ def residual_thin_features(sampled: Sequence[SampledFrame]) -> list[dict[str, An
     residues: list[dict[str, Any]] = []
     for frame in sampled:
         lost = frame.protection.protected_pixels - frame.sample.rescued_cells
-        if frame.protection.protected_pixels and frame.sample.rescued_cells == 0 and lost > 0:
+        if frame.sample.lost_cells:
+            for x, y in frame.sample.lost_cells:
+                residues.append(
+                    {
+                        "frame": frame.index,
+                        "type": "thin_feature_at_risk",
+                        "logical_region": {"x": x, "y": y, "w": 1, "h": 1},
+                        "pixels": [[x, y]],
+                        "evidence": {
+                            "protected_pixels": frame.protection.protected_pixels,
+                            "rescued_cells": frame.sample.rescued_cells,
+                        },
+                        "hint": "repair layer should verify thin-feature continuity on this cell",
+                    }
+                )
+        elif frame.protection.protected_pixels and frame.sample.rescued_cells == 0 and lost > 0:
             residues.append(
                 {
                     "frame": frame.index,
                     "type": "thin_feature_at_risk",
-                    "protected_pixels": frame.protection.protected_pixels,
-                    "rescued_cells": frame.sample.rescued_cells,
+                    "logical_region": {"x": 0, "y": 0, "w": frame.logical.width, "h": frame.logical.height},
+                    "pixels": [],
+                    "evidence": {
+                        "protected_pixels": frame.protection.protected_pixels,
+                        "rescued_cells": frame.sample.rescued_cells,
+                    },
                     "hint": "repair layer should verify thin-feature continuity on this frame",
                 }
             )

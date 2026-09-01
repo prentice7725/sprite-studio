@@ -27,7 +27,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-VENV_PYTHON = REPO_ROOT / ".venv" / "bin" / "python"
+VENV_PYTHON = f"{REPO_ROOT}/.venv/bin/python"
 
 
 def _missing_numpy_message() -> str:
@@ -58,5 +58,3 @@ except ModuleNotFoundError as exc:  # pragma: no cover - exercised in a subproce
     raise ModuleNotFoundError(_missing_numpy_message()) from exc
 
 np = numpy
-
-__all__ = ["np", "numpy", "REPO_ROOT", "VENV_PYTHON"]
