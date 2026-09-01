@@ -38,8 +38,9 @@ def load_queue(run_dir: Path) -> dict[str, Any] | None:
         with _ACTIVE_LOCK:
             thread = _ACTIVE_THREADS.get(str(job_id))
             if thread is None or not thread.is_alive():
+                if not payload.get("error"):
+                    payload["error"] = "Worker thread or host process terminated before batch completion"
                 payload["status"] = "interrupted"
-                payload["error"] = "Worker thread or host process terminated before batch completion"
                 payload["finished_at"] = _now()
                 _save(run_dir, payload)
                 _ACTIVE_THREADS.pop(str(job_id), None)
@@ -54,16 +55,11 @@ def is_batch_running(run_dir: Path) -> bool:
 def _save(run_dir: Path, payload: dict[str, Any]) -> None:
     path = _queue_path(run_dir)
     path.parent.mkdir(parents=True, exist_ok=True)
-    atomic_write_text(path, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def _now() -> str:
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
-
-
-def _update(run_dir: Path, payload: dict[str, Any], *, status: str | None = None, **fields: Any) -> None:
-    if status:
-        payload["status"] = status
+def _update(run_dir: Path, payload: dict[str, Any], **kwargs: Any) -> None:
+    payload.update(kwargs)
     payload["updated_at"] = _now()
     started = payload.get("started_at")
     if started:
@@ -73,11 +69,15 @@ def _update(run_dir: Path, payload: dict[str, Any], *, status: str | None = None
             payload["elapsed_seconds"] = max(0, int((now_dt - start_dt).total_seconds()))
         except (ValueError, TypeError):
             pass
-    payload.update(fields)
     _save(run_dir, payload)
 
 
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
 def _execute(run_dir: Path, payload: dict[str, Any], *, normalize: bool, refine: bool, repair: bool, qa: bool) -> None:
+    request = spritegen_bridge.request_for(run_dir)
     states = [item["state"] for item in payload["items"]]
     stages_per_item = 1 + (1 if normalize else 0) + 1 + (1 if refine else 0) + (1 if repair else 0) + (1 if qa else 0)
     total_units = len(states) * stages_per_item
@@ -88,29 +88,48 @@ def _execute(run_dir: Path, payload: dict[str, Any], *, normalize: bool, refine:
         return min(100.0, round(100.0 * completed_units / max(1, total_units), 1))
 
     try:
-        # Stage 1: Generate
-        for item in payload["items"]:
-            state = item["state"]
-            item["status"] = "generating"
-            _update(run_dir, payload, current_state=state, current_stage="generating", progress_percent=progress())
-            item["generate"] = spritegen_bridge.generate_state(run_dir, state)
-            completed_units += 1
+        # Determine anchor ordering if directional
+        is_directional = bool((request.get("directions") or {}).get("set"))
+        anchor_items = []
+        action_items = []
+        if is_directional:
+            from sprite_studio.curate.anchor import anchor_state, state_direction
+            for item in payload["items"]:
+                st = item["state"]
+                d = state_direction(request, st)
+                if d is not None and st == anchor_state(request, d):
+                    anchor_items.append(item)
+                else:
+                    action_items.append(item)
+        
+        batches_to_gen = [anchor_items, action_items] if (anchor_items and action_items) else [payload["items"]]
 
-            if normalize:
-                item["status"] = "normalizing"
-                _update(run_dir, payload, current_state=state, current_stage="normalizing", progress_percent=progress())
-                item["normalize"] = spritegen_bridge.normalize_state(run_dir, state)
+        for batch in batches_to_gen:
+            if not batch:
+                continue
+            # Stage 1: Generate & Normalize this batch
+            for item in batch:
+                state = item["state"]
+                item["status"] = "generating"
+                _update(run_dir, payload, current_state=state, current_stage="generating", progress_percent=progress())
+                item["generate"] = spritegen_bridge.generate_state(run_dir, state)
                 completed_units += 1
 
-        # Stage 2: Extract
-        item_states = ",".join(states)
-        for item in payload["items"]:
-            item["status"] = "extracting"
-        _update(run_dir, payload, current_state=states[0], current_stage="extracting", progress_percent=progress())
-        code = spritegen_bridge.extract_frames(run_dir, item_states)
-        if code != 0:
-            raise RuntimeError(f"extract failed with exit code {code}")
-        completed_units += len(states)
+                if normalize:
+                    item["status"] = "normalizing"
+                    _update(run_dir, payload, current_state=state, current_stage="normalizing", progress_percent=progress())
+                    item["normalize"] = spritegen_bridge.normalize_state(run_dir, state)
+                    completed_units += 1
+
+            # Stage 2: Extract this batch
+            batch_states = ",".join(item["state"] for item in batch)
+            for item in batch:
+                item["status"] = "extracting"
+            _update(run_dir, payload, current_state=batch[0]["state"], current_stage="extracting", progress_percent=progress())
+            code = spritegen_bridge.extract_frames(run_dir, batch_states)
+            if code != 0:
+                raise RuntimeError(f"extract failed for [{batch_states}] with exit code {code}")
+            completed_units += len(batch)
 
         # Precompute character lattice once if scope == "character"
         character_lattice = None

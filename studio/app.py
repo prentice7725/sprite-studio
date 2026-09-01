@@ -376,36 +376,58 @@ def build_app(*, locale: str = "ko"):
         def generate_clicked(run_value, direction, pose):
             path, request = _run_state(run_value)
             state = _selected_state(direction, pose)
-            report = spritegen_bridge.generate_state(path, state)
-            raw_original, raw = _raw_paths(path, request, state)
-            return raw_original, raw, f"Generated `{state}` via `{report['provider']}`."
+            try:
+                report = spritegen_bridge.generate_state(path, state)
+                raw_original, raw = _raw_paths(path, request, state)
+                return raw_original, raw, f"Generated `{state}` via `{report['provider']}`."
+            except Exception as exc:
+                msg = f"❌ `{state}` 생성 실패: {exc}"
+                gr.Warning(msg)
+                raw_original, raw = _raw_paths(path, request, state)
+                return raw_original, raw, msg
 
         generate_button.click(generate_clicked, [generate_run, generate_direction, generate_pose], [raw_preview, normalized_preview, generate_status])
 
         def normalize_clicked(run_value, direction, pose):
             path, request = _run_state(run_value)
             state = _selected_state(direction, pose)
-            report = spritegen_bridge.normalize_state(path, state)
-            _, normalized = _raw_paths(path, request, state)
-            return normalized, f"Normalized `{state}`: {report['output_size'][0]}×{report['output_size'][1]}"
+            try:
+                report = spritegen_bridge.normalize_state(path, state)
+                _, normalized = _raw_paths(path, request, state)
+                return normalized, f"Normalized `{state}`: {report['output_size'][0]}×{report['output_size'][1]}"
+            except Exception as exc:
+                msg = f"❌ `{state}` 노멀라이즈 실패: {exc}"
+                gr.Warning(msg)
+                _, normalized = _raw_paths(path, request, state)
+                return normalized, msg
 
         normalize_button.click(normalize_clicked, [generate_run, generate_direction, generate_pose], [normalized_preview, generate_status])
 
         def extract_clicked(run_value, direction, pose):
             path, _ = _run_state(run_value)
             state = _selected_state(direction, pose)
-            code = spritegen_bridge.extract_frames(path, state)
-            return f"Extract finished for `{state}` (exit {code}).\n\n{qa_service.summary(path, state)}"
+            try:
+                code = spritegen_bridge.extract_frames(path, state)
+                return f"Extract finished for `{state}` (exit {code}).\n\n{qa_service.summary(path, state)}"
+            except Exception as exc:
+                msg = f"❌ `{state}` 프레임 추출 실패: {exc}"
+                gr.Warning(msg)
+                return msg
 
         extract_button.click(extract_clicked, [generate_run, generate_direction, generate_pose], generate_status)
 
         def refine_clicked(run_value, direction, pose):
             path, request = _run_state(run_value)
             state = _selected_state(direction, pose)
-            result = spritegen_bridge.refine_frames(path, state)
-            from sprite_studio.spec.layout import frames_dir_rel
-            refined = str(path / frames_dir_rel(request, state) / "refined" / "frame-0.png")
-            return refined, _refine_details(result.report, t), f"Refined `{state}` with shared grid/palette/baseline/scale locks."
+            try:
+                result = spritegen_bridge.refine_frames(path, state)
+                from sprite_studio.spec.layout import frames_dir_rel
+                refined = str(path / frames_dir_rel(request, state) / "refined" / "frame-0.png")
+                return refined, _refine_details(result.report, t), f"Refined `{state}` with shared grid/palette/baseline/scale locks."
+            except Exception as exc:
+                msg = f"❌ `{state}` 정제 실패: {exc}"
+                gr.Warning(msg)
+                return None, "", msg
 
         refine_button.click(
             refine_clicked,

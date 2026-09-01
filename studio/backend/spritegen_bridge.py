@@ -52,8 +52,18 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
         # Directional identity is owned by the approved anchor. The engine's
         # resolver also enforces the pending/broken distinction and materializes
         # the live curated ref immediately before generation.
-        from sprite_studio.curate.anchor import identity_ref
-        refs.append(identity_ref(run_dir, state, request=request, quiet=True))
+        from sprite_studio.curate.anchor import identity_ref, base_source
+        try:
+            refs.append(identity_ref(run_dir, state, request=request, quiet=True))
+        except Exception:
+            try:
+                refs.append(base_source(run_dir))
+            except Exception:
+                base = (request.get("character") or {}).get("base_image")
+                if base:
+                    path = run_dir / base
+                    if path.is_file():
+                        refs.append(path)
     else:
         base = (request.get("character") or {}).get("base_image")
         if base:
