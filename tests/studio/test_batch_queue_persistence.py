@@ -174,3 +174,46 @@ def test_finished_failed_interrupted_states_keep_required_keys(tmp_path: Path) -
         result = batch_service.load_queue(run_dir)
         assert _REQUIRED_KEYS <= set(result)
         assert result["status"] == status
+
+
+def test_execute_records_systemexit_as_a_real_failure_not_a_misreported_interrupt(
+    tmp_path: Path, monkeypatch
+) -> None:
+    """§ live incident 2026-09-02: `generate_state`/the grok provider raise
+    `SystemExit` on plenty of ordinary, expected failure paths (a bad
+    provider output, a missing anchor, a generation timeout) — all
+    `BaseException`, not `Exception`. `except Exception` in `_execute` let
+    those escape the worker thread uncaught: `finally` still popped the job
+    out of `_ACTIVE_THREADS` (it always runs), so the *next* `load_queue()`
+    poll saw "status": "running" with no matching live thread and reported
+    the generic "Worker thread or host process terminated before batch
+    completion" — masking whatever had actually failed. `_execute` must catch
+    `SystemExit` too and persist the real error before the thread dies."""
+    run_dir = tmp_path / "run"
+    (run_dir / "studio").mkdir(parents=True)
+    (run_dir / "sprite-request.json").write_text(
+        json.dumps({"states": {"idle": {"frames": 4}}}), encoding="utf-8"
+    )
+
+    def _boom(*args, **kwargs):
+        raise SystemExit("gen: file is not a PNG (magic mismatch) — refusing to claim success")
+
+    monkeypatch.setattr(batch_service.spritegen_bridge, "generate_state", _boom)
+
+    payload = _make_payload("job-systemexit", current_state="idle", current_stage="queued",
+                             total_items=1, items=[{"state": "idle", "status": "queued"}])
+    with batch_service._ACTIVE_LOCK:
+        batch_service._ACTIVE_THREADS["job-systemexit"] = threading.current_thread()
+
+    # Must not raise past _execute — the worker thread contract is that
+    # failures are recorded, never left to kill the thread silently.
+    batch_service._execute(run_dir, payload, normalize=False, refine=False, repair=False, qa=False)
+
+    result = batch_service.load_queue(run_dir)
+    assert result["status"] == "failed"
+    assert "SystemExit" in result["error"]
+    assert "magic mismatch" in result["error"]
+    assert result["failed_state"] == "idle"
+    # The thread bookkeeping must still be cleaned up (finally: always runs).
+    with batch_service._ACTIVE_LOCK:
+        assert "job-systemexit" not in batch_service._ACTIVE_THREADS

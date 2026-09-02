@@ -235,13 +235,27 @@ def _execute(run_dir: Path, payload: dict[str, Any], *, normalize: bool, refine:
             progress_percent=100.0,
             finished_at=_now(),
         )
-    except Exception as exc:
+    except BaseException as exc:
+        # This codebase raises `SystemExit` pervasively for fail-loud paths
+        # (`AnchorUnavailable`, `GenTimeoutError`, `verify_png`, a non-zero
+        # provider exit code) — all `BaseException`, not `Exception`. An
+        # `except Exception` here let those escape uncaught: `finally` below
+        # still popped the thread out of `_ACTIVE_THREADS` (it always runs),
+        # but the real error was never written to the queue, so the *next*
+        # `load_queue()` poll found "status": "running" with no matching live
+        # thread and reported the generic, uninformative "Worker thread or
+        # host process terminated before batch completion" — masking
+        # whatever actually failed (observed 2026-09-02: reproduced with no
+        # host process restart involved at all). Catch broadly here so the
+        # genuine exception is always what gets recorded.
         current_st = payload.get("current_state")
         current_sg = payload.get("current_stage")
         payload["error"] = f"{type(exc).__name__} at {current_st} (Stage: {current_sg}): {exc}"
         payload["failed_state"] = current_st
         payload["failed_stage"] = current_sg
         _update(run_dir, payload, status="failed", finished_at=_now())
+        if isinstance(exc, KeyboardInterrupt):
+            raise
     finally:
         with _ACTIVE_LOCK:
             _ACTIVE_THREADS.pop(str(payload.get("job_id")), None)
