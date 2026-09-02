@@ -14,5 +14,8 @@ app/desktop/src-tauri/binaries/sprite-mcp-*
 .gjc/
 uv.lock
 
+# generated run output (sprite-studio gen artifacts) — never track
+/runs/
+
 # transient validator reply scratch (never track)
 .validator-reply-*
