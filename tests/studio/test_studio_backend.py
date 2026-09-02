@@ -45,7 +45,16 @@ def test_create_run_builds_engine_request_and_studio_metadata(tmp_path: Path) ->
     assert metadata["config"]["generation_profile"] == "refine_first"
     prompt_manifest = json.loads((info.path / "studio" / "prompts" / "side_idle.manifest.json").read_text(encoding="utf-8"))
     assert prompt_manifest["generation_profile"] == "refine_first"
-    assert set(prompt_manifest["blocks"]) == {"identity", "direction_action", "style_profile", "refiner_safe_suffix", "negative"}
+    assert prompt_manifest["target_kind"] == "animation_row"
+    assert prompt_manifest["frame_count"] == 4
+    assert set(prompt_manifest["blocks"]) == {
+        "production_contract", "identity", "direction_action", "style_profile", "refiner_safe_suffix", "negative",
+    }
+    # §3: the upstream row contract (exact frame count, invisible slots, anchor
+    # lock) must survive Studio's prompt assembly, not be replaced by it.
+    assert "Exactly 4 full-body frames" in prompt_manifest["blocks"]["production_contract"]
+    assert "equal-width invisible" in prompt_manifest["blocks"]["production_contract"]
+    assert "single character only" not in prompt_manifest["final_prompt"].lower()
     assert run_manager.get_run_status("sword_a01", root=tmp_path / "runs")["side_idle"] == "not-generated"
 
 
@@ -68,19 +77,19 @@ def test_prompt_override_is_explicit_and_reversible(tmp_path: Path) -> None:
 
 def test_prompt_profiles_are_assembled_and_validated() -> None:
     result = PromptAssembler().assemble(
-        "sword", "side", "attack", "direct_pixel", background_policy="green",
+        "sword", "side", "attack", "direct_pixel", frames=4, background_policy="green",
         identity="plain steel swordsman",
     )
 
     assert result.blocks["style_profile"].startswith("DIRECT_PIXEL")
     assert "#00FF00" in result.blocks["refiner_safe_suffix"]
     assert not [issue for issue in result.issues if issue.severity == "error"]
-    assert not PromptValidator().validate(result.final_prompt)
+    assert not PromptValidator().validate(result.final_prompt, target_kind="animation_row")
 
 
 def test_attack_prompt_locks_weapon_handedness_and_uses_state_action() -> None:
     result = PromptAssembler().assemble(
-        "sword", "side", "attack", "refine_first", background_policy="green",
+        "sword", "side", "attack", "refine_first", frames=4, background_policy="green",
         identity="swordsman", action_text="four-frame sword strike: windup, slash, recovery",
     )
 

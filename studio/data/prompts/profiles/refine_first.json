@@ -1,5 +1,5 @@
 {
   "id": "refine_first",
   "style": "REFINE_FIRST profile: clean flat-color character illustration, simple cel shading, thick crisp outlines, very limited color palette, large simple color regions, minimal small detail, strong readable silhouette",
-  "safe_suffix": "full body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, single character only, clear flat regions for PixelRefiner, {{BACKGROUND}}, no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame"
+  "safe_suffix": "full body, centered, with generous margin around the subject, not cropped, upright straight-on game sprite composition, {{SUBJECT}}, clear flat regions for PixelRefiner, {{BACKGROUND}}, no gradient, no texture, no vignette, no drop shadow, no soft shadow, no outer glow, no bloom, no blur, no painterly texture, no text, no UI, no frame"
 }

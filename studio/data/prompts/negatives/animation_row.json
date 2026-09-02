@@ -1,0 +1,4 @@
+{
+  "id": "animation_row",
+  "text": "no unrelated secondary characters, no missing animation poses, no blank slots, no duplicated pose merged into another slot, no overlapping poses, no cropped limbs, no pose crossing slot boundaries, no frame labels, no visible guides, no background scenery, no realistic rendering, no painterly texture, no excessive detail, no floating weapon, no weapon switching hands, no mirrored handedness, no left-right hand swap, no dramatic perspective, no diagonal tilt"
+}

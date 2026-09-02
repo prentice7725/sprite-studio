@@ -13,7 +13,7 @@ from sprite_studio.frames import extract
 from sprite_studio.gen import generate_image as generate_one
 from sprite_studio.gen import normalize_grok_row
 from sprite_studio.gen import prepare
-from sprite_studio.spec.layout import raw_rel
+from sprite_studio.spec.layout import guide_rel, raw_rel
 
 from .prompt_service import effective_prompt
 from .schemas import ProviderStatus
@@ -66,7 +66,16 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
     request = request_for(run_dir)
     provider = provider or json.loads((run_dir / "studio" / "studio.json").read_text(encoding="utf-8"))["config"]["provider"]
     prompt, source = effective_prompt(run_dir, request, state)
-    prompt_errors = [issue.message for issue in PromptValidator().validate(prompt) if issue.severity == "error"]
+    # §4/§13: target kind for validation always comes from the request SSOT
+    # (states[state].frames), never from the prompt text itself — an operator
+    # override prompt for a 4-frame row is still a row, and must not be held to
+    # the single-image "single character only" rule.
+    frames = int(request["states"][state]["frames"])
+    target_kind = "single" if frames <= 1 else "animation_row"
+    prompt_errors = [
+        issue.message for issue in PromptValidator().validate(prompt, target_kind=target_kind)
+        if issue.severity == "error"
+    ]
     if prompt_errors:
         raise ValueError(f"prompt validation failed for {state}: {'; '.join(prompt_errors)}")
     raw = run_dir / raw_rel(request, state)
@@ -93,6 +102,14 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
             path = run_dir / base
             if path.is_file():
                 refs.append(path)
+    # §5: the prompt text tells the model "the attached layout guide shows the
+    # N frame boxes..." (sprite_studio.gen.prepare.row_prompt) — that sentence
+    # is a lie unless the guide image is actually attached as a provider
+    # reference. Order matches the prompt's own "Reference 1 = identity,
+    # Reference 2 = layout guide" framing.
+    guide_path = run_dir / guide_rel(request, state)
+    if guide_path.is_file():
+        refs.append(guide_path)
     result = generate_one(
         provider,
         prompt,

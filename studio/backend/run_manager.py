@@ -108,7 +108,9 @@ def create_run(config: StudioRunConfig, *, root: Path | None = None) -> RunInfo:
         "mode": config.mode,
         "config": asdict(config) | {"base_image": str(config.base_image) if config.base_image else None},
         "run_dir": str(run_dir),
-        "prompt_profiles": {"generation": config.generation_profile, "negative": "default"},
+        # "auto": negative profile is resolved per-state from the target kind
+        # (single vs animation_row), not a single fixed profile name (§7).
+        "prompt_profiles": {"generation": config.generation_profile, "negative": "auto"},
     }
     studio_dir = run_dir / "studio"
     studio_dir.mkdir(parents=True, exist_ok=True)
