@@ -759,10 +759,21 @@ def direction_prefix_requirements(request: dict[str, Any], state: str) -> list[s
         f"Lock the whole row to {facing}. Do not average it into a different facing.",
     ]
     if state == direction_anchor_states(directions).get(direction):
-        requirements.append(
-            "This row is the CANONICAL DIRECTION ANCHOR for this facing: derive identity from the "
-            "attached base image, change only the facing/orientation, and keep poses minimal "
-            "(subtle breathing) so a single frame can be cropped as the anchor.")
+        # A "Generate New" run may start with no base image at all (base image
+        # is optional there; only "Use Existing Image" requires one) — this
+        # instruction must not claim an attachment that was never made, or the
+        # model is told to copy a reference that does not exist.
+        if request.get("character", {}).get("base_image"):
+            requirements.append(
+                "This row is the CANONICAL DIRECTION ANCHOR for this facing: derive identity from the "
+                "attached base image, change only the facing/orientation, and keep poses minimal "
+                "(subtle breathing) so a single frame can be cropped as the anchor.")
+        else:
+            requirements.append(
+                "This row is the CANONICAL DIRECTION ANCHOR for this facing: no base reference image is "
+                "attached. Establish this character's design directly from the identity description in "
+                "this prompt, change only the facing/orientation, and keep poses minimal (subtle "
+                "breathing) so a single frame can be cropped as the anchor.")
     else:
         requirements.append(
             "Derive identity from the attached accepted direction anchor for this facing, "

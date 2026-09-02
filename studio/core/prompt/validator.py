@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import Literal
 
@@ -22,9 +23,15 @@ class PromptValidator:
     prompt must keep "single character only"; an "animation_row" prompt must
     NEVER carry that clause (it contradicts "same character repeated once per
     slot") and must instead carry its own exact-frame-count / slot contract.
+
+    `expected_frames`, when given, checks that every "exactly N" the prompt
+    states actually equals the request SSOT — presence of *an* "exactly ...
+    slot" contract isn't enough on its own: an operator override for a
+    4-frame state can still say "Exactly 3 poses..." and pass the presence
+    check while generating the wrong frame count.
     """
 
-    def validate(self, prompt: str, *, target_kind: str = "single") -> list[PromptIssue]:
+    def validate(self, prompt: str, *, target_kind: str = "single", expected_frames: int | None = None) -> list[PromptIssue]:
         lowered = prompt.lower()
         required = [
             ("full body", "FULL_BODY", "full body clause is missing"),
@@ -47,6 +54,18 @@ class PromptValidator:
                     "error", "ROW_CONTRACT_MISSING",
                     "row prompt is missing the exact-frame-count / slot contract",
                 ))
+            if expected_frames is not None:
+                stated = {int(n) for n in re.findall(r"exactly\s+(\d+)", lowered)}
+                if not stated:
+                    issues.append(PromptIssue(
+                        "error", "ROW_FRAME_COUNT_MISSING",
+                        f"row prompt does not state an exact frame count (request expects {expected_frames})",
+                    ))
+                elif stated != {expected_frames}:
+                    issues.append(PromptIssue(
+                        "error", "ROW_FRAME_COUNT_MISMATCH",
+                        f"row prompt states 'exactly {sorted(stated)}' but the request expects exactly {expected_frames}",
+                    ))
         if "direct_pixel" not in lowered and "refine_first" not in lowered and "pixel art" not in lowered and "flat-color" not in lowered:
             issues.append(PromptIssue("error", "PROFILE_MISSING", "generation profile style clause is missing"))
         if "background" not in lowered and "#00ff00" not in lowered and "#ff00ff" not in lowered:
@@ -55,8 +74,8 @@ class PromptValidator:
             issues.append(PromptIssue("warning", "HANDEDNESS_CONSTRAINT_MISSING", "attack prompt does not explicitly lock weapon hand continuity"))
         return issues
 
-    def require_valid(self, prompt: str, *, target_kind: str = "single") -> None:
-        issues = self.validate(prompt, target_kind=target_kind)
+    def require_valid(self, prompt: str, *, target_kind: str = "single", expected_frames: int | None = None) -> None:
+        issues = self.validate(prompt, target_kind=target_kind, expected_frames=expected_frames)
         errors = [issue.message for issue in issues if issue.severity == "error"]
         if errors:
             raise ValueError("prompt validation failed: " + "; ".join(errors))

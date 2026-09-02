@@ -72,8 +72,12 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
     # the single-image "single character only" rule.
     frames = int(request["states"][state]["frames"])
     target_kind = "single" if frames <= 1 else "animation_row"
+    # `expected_frames` catches operator-override drift: an override prompt for
+    # a 4-frame state that says "Exactly 3 poses..." must fail validation
+    # instead of silently generating the wrong frame count.
     prompt_errors = [
-        issue.message for issue in PromptValidator().validate(prompt, target_kind=target_kind)
+        issue.message
+        for issue in PromptValidator().validate(prompt, target_kind=target_kind, expected_frames=frames)
         if issue.severity == "error"
     ]
     if prompt_errors:
@@ -81,21 +85,32 @@ def generate_state(run_dir: Path, state: str, *, provider: str | None = None) ->
     raw = run_dir / raw_rel(request, state)
     refs: list[Path] = []
     if (request.get("directions") or {}).get("set"):
-        # Directional identity is owned by the approved anchor. The engine's
-        # resolver also enforces the pending/broken distinction and materializes
-        # the live curated ref immediately before generation.
-        from sprite_studio.curate.anchor import identity_ref, base_source
-        try:
-            refs.append(identity_ref(run_dir, state, request=request, quiet=True))
-        except Exception:
+        # `Generate New` makes the base image optional (`Use Existing Image` is
+        # where it's required) — but a directional run has two very different
+        # rows, and the old "identity_ref, except Exception: fall back to
+        # base_source" here never actually ran either branch as intended:
+        # `identity_ref`/`base_source` raise `SystemExit`/`AnchorUnavailable`
+        # (a `SystemExit` subclass) on failure, not `Exception`, so a
+        # no-base-image anchor row didn't fall back — it killed generate_state
+        # before the provider was ever called (regression: base image marked
+        # optional in the UI, hard-required in practice for any directional run).
+        from sprite_studio.curate.anchor import anchor_state, base_source, identity_ref, state_direction
+        direction = state_direction(request, state)
+        if direction is not None and state == anchor_state(request, direction):
+            # Direction anchor row: base image is optional. With one, it is
+            # the identity source for this very first anchor generation; without
+            # one, generate from text identity + layout guide alone — no image
+            # ref is invented to stand in for it.
             try:
                 refs.append(base_source(run_dir))
-            except Exception:
-                base = (request.get("character") or {}).get("base_image")
-                if base:
-                    path = run_dir / base
-                    if path.is_file():
-                        refs.append(path)
+            except SystemExit:
+                pass
+        else:
+            # Action row: identity is owned by the approved direction anchor,
+            # full stop. A missing/broken anchor (`AnchorUnavailable`) fails
+            # loud here — it must never silently regenerate from the base image
+            # and drift from the identity the operator already approved.
+            refs.append(identity_ref(run_dir, state, request=request, quiet=True))
     else:
         base = (request.get("character") or {}).get("base_image")
         if base:

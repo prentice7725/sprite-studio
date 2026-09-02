@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
 from PIL import Image, ImageDraw
 
 from studio.backend import run_manager, spritegen_bridge
@@ -169,3 +170,105 @@ def test_generate_state_attaches_anchor_and_layout_guide_refs(tmp_path: Path, mo
     assert refs[1].is_file()
     assert refs[1].name == "attack.png"  # references/layout-guides/side/attack.png
     assert "layout-guides" in str(refs[1]).replace("\\", "/")
+
+
+# --- I. "Generate New" without a base image must not crash the anchor row ----
+#
+# `base_source()`/`AnchorUnavailable` raise `SystemExit`, not `Exception` — the
+# old `except Exception: fall back to base_source()` around `identity_ref`
+# never actually ran for either failure mode, so a directional run with no
+# base image (a supported "Generate New" path in the UI) died before the
+# provider was ever called. generate_state must now special-case the anchor
+# row (image ref optional) vs an action row (identity ref mandatory, fail loud).
+
+def test_directional_anchor_row_generates_without_base_image(tmp_path: Path, monkeypatch) -> None:
+    config = StudioRunConfig(
+        run_id="sword_nobase",
+        character_id="sword",
+        provider="grok",
+        base_image=None,
+        directions=("side",),
+        mirrors={},
+        states={"idle": {"frames": 4, "fps": 4, "loop": True, "action": "idle"}},
+        preset="sword",
+    )
+    info = run_manager.create_run(config, root=tmp_path / "runs")
+
+    captured: dict = {}
+
+    class _FakeResult:
+        def to_dict(self) -> dict:
+            return {"provider": "grok", "prompt": captured.get("prompt", ""), "out": "", "raw": "",
+                     "raw_bytes": 0, "elapsed_seconds": 0.0, "model": None, "session_id": None,
+                     "refs": [], "transparent": False, "chroma": None}
+
+    def _fake_generate_one(provider, prompt, raw, *, refs=None, aspect_ratio=None, workdir=None, **kwargs):
+        captured["prompt"] = prompt
+        captured["refs"] = list(refs or [])
+        return _FakeResult()
+
+    monkeypatch.setattr(spritegen_bridge, "generate_one", _fake_generate_one)
+
+    # Must not raise — this is the exact path that used to die with SystemExit
+    # before the provider was ever invoked.
+    spritegen_bridge.generate_state(info.path, "side_idle", provider="grok")
+
+    # No image ref exists to attach, but the layout guide still does.
+    assert len(captured["refs"]) == 1
+    assert "layout-guides" in str(captured["refs"][0]).replace("\\", "/")
+    # The prompt must not claim an attachment that was never made.
+    assert "derive identity from the attached base image" not in captured["prompt"].lower()
+    assert "no base reference image is attached" in captured["prompt"].lower()
+
+
+def test_action_row_fails_loud_without_an_approved_anchor(tmp_path: Path, monkeypatch) -> None:
+    base = tmp_path / "base.png"
+    _base(base)
+    config = StudioRunConfig(
+        run_id="sword_noanchor",
+        character_id="sword",
+        provider="grok",
+        base_image=base,
+        directions=("side",),
+        mirrors={},
+        states={"attack": {"frames": 4, "fps": 8, "loop": False, "action": "attack"}},
+        preset="sword",
+    )
+    info = run_manager.create_run(config, root=tmp_path / "runs")
+
+    monkeypatch.setattr(spritegen_bridge, "generate_one", lambda *a, **k: pytest.fail("must not reach the provider"))
+
+    # side_idle (the anchor row) was never generated/curated: the action row
+    # must fail loud instead of silently substituting the base image.
+    with pytest.raises(SystemExit):
+        spritegen_bridge.generate_state(info.path, "side_attack", provider="grok")
+
+
+# --- J. row composition is per-slot, not "one subject centered in the image" -
+
+def test_row_composition_is_per_slot_not_whole_image() -> None:
+    row = PromptAssembler().assemble("sword", "side", "attack", "direct_pixel", frames=4)
+    single = PromptAssembler().assemble("sword", "side", "idle", "direct_pixel", frames=1)
+
+    assert "each full-body pose centered within its own slot" in row.blocks["refiner_safe_suffix"]
+    assert "centered, with generous margin around the subject" not in row.final_prompt
+
+    assert "centered, with generous margin around the subject" in single.blocks["refiner_safe_suffix"]
+
+
+# --- K. validator catches a frame-count mismatch, not just contract presence -
+
+def test_validator_catches_row_frame_count_mismatch() -> None:
+    # Has "exactly" and "slot" (so the presence-only check would pass) but
+    # states the wrong count for a 4-frame request.
+    drifted = "Exactly 3 full-body poses, one complete pose per slot. full body, no drop shadow, no blur, no cropped. direct_pixel."
+    issues = PromptValidator().validate(drifted, target_kind="animation_row", expected_frames=4)
+    assert "ROW_FRAME_COUNT_MISMATCH" in {issue.code for issue in issues}
+
+    correct = "Exactly 4 full-body poses, one complete pose per slot. full body, no drop shadow, no blur, no cropped. direct_pixel."
+    issues = PromptValidator().validate(correct, target_kind="animation_row", expected_frames=4)
+    assert "ROW_FRAME_COUNT_MISMATCH" not in {issue.code for issue in issues}
+
+    no_count = "exactly one complete pose per slot. full body, no drop shadow, no blur, no cropped. direct_pixel."
+    issues = PromptValidator().validate(no_count, target_kind="animation_row", expected_frames=4)
+    assert "ROW_FRAME_COUNT_MISSING" in {issue.code for issue in issues}

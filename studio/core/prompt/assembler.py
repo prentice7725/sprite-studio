@@ -25,6 +25,14 @@ _SUBJECT_CLAUSES = {
     ),
 }
 
+# "centered, with generous margin around the subject" reads as ONE subject
+# centered in the whole image — exactly the single-pose framing a row must not
+# imply. A row centers each pose within its OWN slot instead.
+_COMPOSITION_CLAUSES = {
+    "single": "centered, with generous margin around the subject",
+    "animation_row": "each full-body pose centered within its own slot, with generous margin inside each slot",
+}
+
 
 def target_kind_for(frames: int) -> str:
     return "single" if frames <= 1 else "animation_row"
@@ -94,6 +102,7 @@ class PromptAssembler:
         action = self._action(direction, state, frames, target_kind, action_text=action_text)
         safe_suffix = str(profile["safe_suffix"])
         safe_suffix = safe_suffix.replace("{{SUBJECT}}", _SUBJECT_CLAUSES[target_kind])
+        safe_suffix = safe_suffix.replace("{{COMPOSITION}}", _COMPOSITION_CLAUSES[target_kind])
         safe_suffix = safe_suffix.replace("{{BACKGROUND}}", background_block)
         blocks = {
             "identity": identity.strip() or character_id,
@@ -103,7 +112,7 @@ class PromptAssembler:
             "negative": str(negative["text"]),
         }
         final_prompt = "\n\n".join(blocks.values())
-        issues = tuple(self.validator.validate(final_prompt, target_kind=target_kind))
+        issues = tuple(self.validator.validate(final_prompt, target_kind=target_kind, expected_frames=frames))
         return PromptResult(
             character_id, direction, state, generation_profile, target_kind, frames,
             background, blocks, final_prompt, issues,
