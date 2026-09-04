@@ -24,10 +24,9 @@ To point the browser directly at another API origin, set `VITE_API_BASE_URL`, fo
 example `http://127.0.0.1:8765/api`. The default is `/api`, which uses the Vite
 development proxy and also keeps asset URLs same-origin in the browser.
 
-This slice implements Project, Static Mode, Generate, Refine, Repair, Animation
-QA, Curation launch, Sprite Export, and Batch against the existing
-service-backed routes. The legacy Gradio paths remain available for
-side-by-side parity checks.
+This front end implements Project, Static Mode, Generate, Refine, Repair,
+Animation QA, Curation launch, Sprite Export, and Batch workflows against
+FastAPI service-backed routes.
 
 ## Single-port preview
 

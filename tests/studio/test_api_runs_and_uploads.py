@@ -79,8 +79,7 @@ def _minimal_run_body(run_id: str = "api_created_run", **overrides) -> dict:
 
 def test_create_run_without_base_image(tmp_path: Path, monkeypatch) -> None:
     """§ base image is optional for "Generate New" — the fix from the earlier
-    identity_ref/base_source SystemExit incident must hold through the API
-    too, not just the Gradio path."""
+    identity_ref/base_source SystemExit incident must hold through the API."""
     _isolate(tmp_path, monkeypatch)
     response = client.post("/api/runs", json=_minimal_run_body())
     assert response.status_code == 201

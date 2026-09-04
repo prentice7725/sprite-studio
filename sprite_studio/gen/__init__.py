@@ -35,8 +35,10 @@ from .grok_provider import GrokProvider
 PROVIDERS = ("codex", "grok")
 
 # Default-provider policy (maintainer 확정 2026-07-17): the default backend is codex
-# (GPT `image_gen`). If codex is unavailable in the environment (CLI missing or
-# not logged in) the default resolution falls back to grok — but OBSERVABLY, never
+# (GPT `image_gen`) only when the installed CLI is known to expose image generation.
+# If codex is unavailable in the environment (CLI missing, not logged in, or the
+# current CLI has no image-generation capability) the default resolution falls back
+# to grok — but OBSERVABLY, never
 # silently (No Silent Fallback): the chosen provider and the fallback reason are
 # reported. A user can change the default with SPRITE_STUDIO_DEFAULT_PROVIDER. An
 # EXPLICIT `--provider` is always honored exactly (no availability fallback) — an
@@ -44,10 +46,32 @@ PROVIDERS = ("codex", "grok")
 DEFAULT_PROVIDER_ENV = "SPRITE_STUDIO_DEFAULT_PROVIDER"
 HARD_DEFAULT_PROVIDER = "codex"
 _CODEX_PROBE_TIMEOUT_SECONDS = 15
+CODEX_IMAGE_GEN_ENV = "SPRITE_STUDIO_CODEX_IMAGE_GEN"
+
+
+def codex_image_generation_available() -> tuple[bool, str]:
+    """Report whether this environment explicitly enables Codex image generation.
+
+    The regular Codex CLI can be installed and logged in while still exposing no
+    ``image_gen`` tool.  A successful ``codex login status`` therefore is not a
+    sufficient capability check.  Keep the rollout adapter available for a
+    compatible Codex distribution, but require an explicit opt-in there so the
+    Studio never starts a 180-second child process for a text-only CLI.
+    """
+    value = os.environ.get(CODEX_IMAGE_GEN_ENV, "").strip().lower()
+    if value in {"1", "true", "yes", "on"}:
+        return True, "Codex image generation explicitly enabled"
+    return False, (
+        "Codex CLI is installed, but this environment does not expose image generation; "
+        f"use Grok or set {CODEX_IMAGE_GEN_ENV}=1 only on a verified image_gen-capable Codex environment"
+    )
 
 
 def _make_provider(name: str, *, keep_session: bool):
     if name == "codex":
+        available, reason = codex_image_generation_available()
+        if not available:
+            raise SystemExit(f"codex-gen: {reason}")
         return CodexProvider(keep_session=keep_session)
     if name == "grok":
         return GrokProvider()
@@ -78,6 +102,9 @@ def _codex_available() -> tuple[bool, str]:
         tail = (completed.stdout or completed.stderr or "").strip().splitlines()[-3:]
         detail = f": {' '.join(tail)}" if tail else ""
         return False, f"codex not logged in (codex login status exit {completed.returncode}{detail})"
+    capability_ok, capability_reason = codex_image_generation_available()
+    if not capability_ok:
+        return False, capability_reason
     return True, ""
 
 

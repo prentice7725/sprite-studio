@@ -53,72 +53,32 @@ flowchart LR
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[studio,api,dev]"
+pip install -e ".[studio,dev]"
 ```
 
 **Windows (PowerShell):**
 ```powershell
 py -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -e ".[studio,api,dev]"
+pip install -e ".[studio,dev]"
 ```
 
 ---
 
-### 2. 사용 방식 선택: GUI, API, CLI
+### 2. 사용 방식 선택: Web Studio, REST API, CLI
 
-`sprite-studio`는 **시각적 웹 스튜디오(GUI)**, **FastAPI API**, **터미널 자동화 파이프라인(CLI)**을 지원합니다.
+`sprite-studio`는 직관적인 **Asset Studio 웹 GUI (React + FastAPI)**, 자동화 및 파이프라인 연동을 위한 **REST API**, 터미널 일괄 처리를 위한 **CLI**를 지원합니다.
 
-#### 🖥️ 방법 A: Asset Studio (Gradio 웹 GUI)
+#### 🖥️ 방법 A: Asset Studio (올인원 웹 GUI)
 
-초보자나 아티스트는 마우스 클릭만으로 프롬프트 생성, 이미지 추출, 정제, QA를 수행할 수 있습니다:
+브라우저에서 마우스 클릭만으로 프롬프트 생성, AI 이미지 생성 및 정규화, 크로마키 추출, 픽셀 정제, 애니메이션 QA 및 익스포트까지 전체 과정을 수행할 수 있습니다.
 
-```bash
-python -m studio.app
-```
-브라우저에서 `http://127.0.0.1:7860`으로 접속하여 작업합니다.
+* **🎭 Sprite Mode**: 캐릭터 다방향 연속 프레임 애니메이션 제작, 스마트 누끼, 픽셀 그리드 잠금 및 정제, 지터 검사 및 애니메이션 QA
+* **🏞️ Static Mode**: 배경 씬, 타일셋, 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 타일 이음새 검사/복원
+* **⚡ Batch 처리**: 여러 애니메이션 상태(State) 일괄 생성·정제 및 WebSocket 실시간 진행 상황 모니터링
 
-* **🎭 Sprite Mode**: 캐릭터의 여러 방향 이동, 공격, 대기 등 연속 프레임 애니메이션 제작
-* **🏞️ Static Mode**: 타일셋, 배경, 정지 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 이음새 검사
-
----
-
-#### 🌐 방법 B: FastAPI API (React 마이그레이션용)
-
-현재 API 셸은 상태 확인, 이미지 업로드, 런 생성·조회·삭제, 프롬프트 조회·수정, 생성·정규화·추출·정제, 배치 실행 및 진행률 스트림을 제공합니다. 또한 Review/Repair, Anchor, Animation QA, Curation launch, Sprite Export, Preset, Static Mode 라우트가 연결되어 있습니다. [`studio/api/ENDPOINTS.md`](studio/api/ENDPOINTS.md)에 구현 현황이 표시되어 있습니다.
-
-```bash
-python -m studio.api.main              # 사용 가능한 포트를 자동 선택
-python -m studio.api.main --port 8765  # 포트를 고정하고 싶을 때
-```
-
-실행 시 출력되는 주소의 `/docs`에서 OpenAPI 문서를 확인합니다. 개발 중에는 `--reload`를 추가할 수 있습니다.
-
----
-
-#### ⚛️ 방법 C: React/Vite 웹 UI (현재 마이그레이션 단계)
-
-React 화면은 FastAPI를 통해서만 기존 Studio Service와 Engine에 접근합니다. 개발 모드에서는 두 프로세스를 실행하며, Vite가 `/api`와 WebSocket 요청을 FastAPI `8765` 포트로 프록시합니다.
-
-터미널 1 — API:
-
-```bash
-python -m studio.api.main --port 8765
-```
-
-터미널 2 — React:
-
-```bash
-cd web
-npm install
-npm run dev
-```
-
-브라우저에서 `http://127.0.0.1:5173`으로 접속합니다. 현재 React UI에는 Project, Static, Generate, Refine, Repair, QA, Curation/Export, Batch 흐름이 연결되어 있습니다. 상세 실행법은 [`web/README.md`](web/README.md)를 참고하세요.
-
-API가 다른 주소에서 실행 중이면 `web/.env.local`에 `VITE_API_BASE_URL`을 지정할 수 있습니다.
-
-빌드 후에는 별도 Vite 포트 없이 FastAPI 하나로 실행할 수 있습니다:
+##### 1) 단일 포트 통합 실행 (권장)
+React 웹 앱을 빌드해 두면 FastAPI 서버 하나로 프론트엔드와 백엔드를 모두 서빙합니다:
 
 ```bash
 cd web
@@ -126,12 +86,43 @@ npm run build
 cd ..
 python -m studio.api.main --port 8765
 ```
+브라우저에서 `http://127.0.0.1:8765`으로 접속합니다.
 
-`web/dist`가 존재하면 FastAPI가 React 정적 파일을 함께 서빙하므로 `http://127.0.0.1:8765`으로 접속합니다. Tauri 패키징은 이 웹 배포 흐름이 안정화된 뒤 별도 검토합니다.
+##### 2) 프론트엔드 개발 모드 (Vite HMR)
+UI 코드 수정 시 실시간 핫 리로딩을 사용하려면 두 터미널에서 실행합니다:
+
+* **터미널 1 (FastAPI API)**:
+  ```bash
+  python -m studio.api.main --port 8765
+  ```
+* **터미널 2 (React / Vite)**:
+  ```bash
+  cd web
+  npm install
+  npm run dev
+  ```
+브라우저에서 `http://127.0.0.1:5173`으로 접속합니다 (요청은 `8765` 포트의 FastAPI로 자동 프록시됩니다).
+
+> [!NOTE]
+> **AI Provider 선택 안내**:
+> * 기본값으로 **Grok**을 지원하며, Codex CLI가 설치되어 있고 이미지 생성 옵트인(`SPRITE_STUDIO_CODEX_IMAGE_GEN=1`)이 활성화된 환경에서는 Codex도 함께 선택할 수 있습니다.
 
 ---
 
-#### 💻 방법 D: CLI 파이프라인 (명령어로 빠른 일괄 처리)
+#### 🌐 방법 B: REST API (FastAPI)
+
+헤드리스 서버로 구동하거나 외부 도구 및 게임 엔진 파이프라인과 직접 연동할 수 있습니다:
+
+```bash
+python -m studio.api.main --port 8765
+```
+
+서버 실행 후 브라우저에서 `http://127.0.0.1:8765/docs`에 접속하면 Swagger 대화형 OpenAPI 문서를 확인할 수 있습니다.
+엔드포인트 세부 명세는 [`studio/api/ENDPOINTS.md`](studio/api/ENDPOINTS.md)를 참고하세요.
+
+---
+
+#### 💻 방법 C: CLI 파이프라인 (명령어로 빠른 일괄 처리)
 
 ```bash
 # 1. 런(Run) 프로젝트 생성 (스펙, 프롬프트, 레이아웃 가이드 생성)

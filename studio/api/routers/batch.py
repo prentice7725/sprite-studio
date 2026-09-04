@@ -6,9 +6,8 @@ ENDPOINTS.md §"Sprite Mode — Batch".
 (§Conventions) — this router does not track batch state of its own. The
 WebSocket is a thin push transport over that same file: poll it, and only
 send a frame when its content actually changed, until the batch reaches a
-terminal status. There is no pub/sub under the file — polling here is the
-same thing the Gradio `gr.Timer(1.5)` UI already did, just moved server-side
-so the client gets pushed deltas instead of re-fetching on its own clock.
+terminal status. Polling runs server-side so the client receives pushed
+deltas over WebSocket instead of re-fetching on its own clock.
 """
 
 from __future__ import annotations

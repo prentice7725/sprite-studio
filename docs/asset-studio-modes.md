@@ -198,8 +198,8 @@ asset it models to keep that from recurring.
 ## UI
 
 The mode selector at the top of the Studio decides which surface exists at all —
-Sprite tabs and Static tabs are built separately (`studio/ui/static_mode_ui.py`)
-so an option belonging to the other mode is never reachable (§12.4).
+Sprite views and Static views are built separately in the React UI and FastAPI
+endpoints so an option belonging to the other mode is never reachable (§12.4).
 
 Sprite REFINE shows the shared lattice, cell-size confidence, per-frame phase
 offsets (and which frames were held at the bound), thin-feature protection and
@@ -217,7 +217,7 @@ grid, palette/dither mode, seam report and tile wrap preview.
 
 ### Known gaps before `v0.2 Complete`
 
-* **i18n visible-string sweep** — not started. Gradio labels, button text, tab titles and status/validation messages are still English/Korean literals in the UI modules rather than routed through locale resources.
+* **i18n visible-string sweep** — not started. UI labels, button text, tab titles and status/validation messages are still English/Korean literals in the UI modules rather than routed through locale resources.
 * **Sprite UI pipeline-stage rail** — not started. The Sprite tabs are still organized as `PROJECT / GENERATE / REVIEW / MATRIX / EXPORT`, not the `GENERATED → NORMALIZED → EXTRACTED → REFINED → REPAIRED → QA → EXPORT` stage rail.
 
 Until both are closed, this reads as **v0.2 RC** — the mechanisms above are production-wired and race/stale/hidden-default failures are caught by tests, but the spec isn't fully closed out.

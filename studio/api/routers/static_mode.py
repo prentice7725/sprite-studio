@@ -32,6 +32,7 @@ from studio.api.uploads import resolve_upload
 from studio.backend import preset_service, static_service
 from studio.backend.schemas import StaticProjectConfig
 from studio.static_mode.prompt import StaticPromptAssembler
+from sprite_studio.gen.base import GenTimeoutError
 
 router = APIRouter(prefix="/static", tags=["static"])
 
@@ -43,6 +44,8 @@ def _action(action: Callable[[], Any]) -> Any:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except FileExistsError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
+    except GenTimeoutError as exc:
+        raise HTTPException(status_code=504, detail=f"image provider timeout: {exc}") from exc
     except SystemExit as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001 - preserve service failure context

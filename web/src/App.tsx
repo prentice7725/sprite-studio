@@ -22,6 +22,7 @@ import {
   getStaticPrompt,
   getStaticStatus,
   listRuns,
+  listProviders,
   listStaticProjects,
   normalize,
   RefineResponse,
@@ -48,10 +49,17 @@ import {
   uploadImage,
   websocketUrl,
 } from './api'
+import type { Provider, ProviderStatus } from './api'
 
 type Tab = 'project' | 'static' | 'generate' | 'refine' | 'review' | 'qa' | 'export' | 'batch'
 type Notice = { kind: 'success' | 'error' | 'info'; text: string }
 type StaticAction = 'generate' | 'refine' | 'cleanup' | 'seam-check' | 'seam-repair' | 'layers-split' | 'layers-cutout' | 'qa' | 'export'
+
+const fallbackProviderChoices: Provider[] = ['grok']
+
+function providerLabel(provider: Provider): string {
+  return provider === 'codex' ? 'Codex image_gen' : 'Grok'
+}
 
 const tabs: Array<{ id: Tab; label: string; hint: string }> = [
   { id: 'project', label: 'Project', hint: 'Create and select runs' },
@@ -77,6 +85,7 @@ function formatBytes(bytes: number): string {
 function App() {
   const [tab, setTab] = useState<Tab>('project')
   const [runs, setRuns] = useState<RunSummary[]>([])
+  const [providers, setProviders] = useState<ProviderStatus[]>([])
   const [selectedRunId, setSelectedRunId] = useState('')
   const [runDetail, setRunDetail] = useState<RunDetail | null>(null)
   const [runStatus, setRunStatus] = useState<Record<string, string>>({})
@@ -111,6 +120,10 @@ function App() {
   const activeState = selectedRun?.states.includes(selectedState)
     ? selectedState
     : selectedRun?.states[0] ?? ''
+  const providerChoices = useMemo<Provider[]>(() => {
+    const available = providers.filter((provider) => provider.available).map((provider) => provider.name)
+    return available.length ? available : fallbackProviderChoices
+  }, [providers])
 
   async function refreshRuns(preferredRunId?: string) {
     const nextRuns = await listRuns()
@@ -126,6 +139,9 @@ function App() {
   useEffect(() => {
     void refreshRuns().catch((error: unknown) => {
       setNotice({ kind: 'error', text: `API에 연결할 수 없습니다: ${error instanceof Error ? error.message : String(error)}` })
+    })
+    void listProviders().then(setProviders).catch(() => {
+      // Keep Grok as the safe UI fallback while the API is unavailable.
     })
   }, [])
 
@@ -225,7 +241,7 @@ function App() {
     const characterId = String(form.get('character_id') || '').trim()
     const directionList = String(form.get('directions') || '').split(',').map((value) => value.trim()).filter(Boolean)
     const stateList = String(form.get('states') || '').split(',').map((value) => value.trim()).filter(Boolean)
-    const provider = String(form.get('provider') || 'grok') as 'grok' | 'codex'
+    const provider = String(form.get('provider') || providerChoices[0] || 'grok') as Provider
     const file = (form.get('base_image') as File | null)
     if (!runId || !characterId || !directionList.length || !stateList.length) {
       setNotice({ kind: 'error', text: 'Run ID, Character ID, 방향, 상태를 모두 입력하세요.' })
@@ -610,7 +626,7 @@ function App() {
                   <label>Character ID<input name="character_id" defaultValue="hero" required /></label>
                 </div>
                 <div className="form-row">
-                  <label>Provider<select name="provider" defaultValue="grok"><option value="grok">Grok</option><option value="codex">Codex</option></select></label>
+                  <label>Provider<select name="provider" defaultValue={providerChoices[0]}>{providerChoices.map((item) => <option key={item} value={item}>{providerLabel(item)}</option>)}</select><span className="helper">Only providers reported as image-generation capable by the API are shown.</span></label>
                   <label>Directions<input name="directions" defaultValue="down,side,up" /></label>
                 </div>
                 <label>States<input name="states" defaultValue="idle,attack" /><span className="helper">Comma-separated pose names. Each starts as a 4-frame state.</span></label>
@@ -626,7 +642,7 @@ function App() {
           </div>
         )}
 
-        {tab === 'static' && <StaticPanel projects={staticProjects} selectedProjectId={selectedStaticId} onProjectChange={setSelectedStaticId} onCreate={(event) => void handleCreateStatic(event)} status={staticStatus} assetName={staticAssetName} onAssetChange={setStaticAssetName} prompt={staticPrompt} onPromptChange={setStaticPrompt} outputAsset={staticOutput} report={staticReport} busy={busy} onImport={(file) => void handleStaticImport(file)} onAction={(action) => void handleStaticAction(action)} />}
+        {tab === 'static' && <StaticPanel projects={staticProjects} providerChoices={providerChoices} selectedProjectId={selectedStaticId} onProjectChange={setSelectedStaticId} onCreate={(event) => void handleCreateStatic(event)} status={staticStatus} assetName={staticAssetName} onAssetChange={setStaticAssetName} prompt={staticPrompt} onPromptChange={setStaticPrompt} outputAsset={staticOutput} report={staticReport} busy={busy} onImport={(file) => void handleStaticImport(file)} onAction={(action) => void handleStaticAction(action)} />}
         {tab === 'generate' && <GeneratePanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} onStateChange={setSelectedState} prompt={prompt} promptSource={promptSource} onPromptChange={setPrompt} onSavePrompt={() => void handleSavePrompt()} rawAsset={rawAsset} busy={busy} onGenerate={() => void handleGenerate()} onNormalize={() => void handleNormalize()} onExtract={() => void handleExtract()} status={runStatus} />}
         {tab === 'refine' && <RefinePanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} onStateChange={setSelectedState} busy={busy} onRefine={() => void handleRefine()} previewAsset={refinedAsset} summary={refineSummary} />}
         {tab === 'review' && <ReviewPanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} onStateChange={setSelectedState} review={review} selectedCandidates={selectedCandidates} onToggleCandidate={(id) => setSelectedCandidates((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id])} busy={busy} onAction={(action) => void handleReviewAction(action)} />}
@@ -634,10 +650,6 @@ function App() {
         {tab === 'export' && <ExportPanel run={selectedRun} exportResult={exportResult} curationUrl={curationUrl} busy={busy} onCuration={() => void handleCuration()} onExport={(kind) => void handleExport(kind)} />}
         {tab === 'batch' && <BatchPanel run={selectedRun} states={selectedRun?.states ?? []} selectedStates={batchStates} onToggle={(state) => setBatchStates((current) => current.includes(state) ? current.filter((item) => item !== state) : [...current, state])} onStart={() => void handleStartBatch()} busy={busy} status={batchStatus} jobId={batchJobId} />}
 
-        <section className="migration-note" aria-label="Migration status">
-          <div><p className="eyebrow">NEXT API SURFACES</p><h2>Static Mode and presets are the remaining API migration</h2></div>
-          <p className="muted">Sprite review, repair, animation QA, curation launch, and export now use FastAPI adapters. The legacy Gradio UI remains available for side-by-side parity checks.</p>
-        </section>
       </main>
     </div>
   )
@@ -669,9 +681,10 @@ function StatePicker({ state, states, onChange }: { state: string; states: strin
   return <label>State<select value={state} onChange={(event) => onChange(event.target.value)}>{states.map((item) => <option key={item} value={item}>{labelForState(item)}</option>)}</select></label>
 }
 
-function StaticPanel({ projects, selectedProjectId, onProjectChange, onCreate, status, assetName, onAssetChange, prompt, onPromptChange, outputAsset, report, busy, onImport, onAction }: { projects: StaticProject[]; selectedProjectId: string; onProjectChange: (id: string) => void; onCreate: (event: FormEvent<HTMLFormElement>) => void; status: Record<string, string>; assetName: string; onAssetChange: (value: string) => void; prompt: string; onPromptChange: (value: string) => void; outputAsset: string; report: string; busy: string; onImport: (file: File | null) => void; onAction: (action: StaticAction) => void }) {
+function StaticPanel({ projects, providerChoices, selectedProjectId, onProjectChange, onCreate, status, assetName, onAssetChange, prompt, onPromptChange, outputAsset, report, busy, onImport, onAction }: { projects: StaticProject[]; providerChoices: Provider[]; selectedProjectId: string; onProjectChange: (id: string) => void; onCreate: (event: FormEvent<HTMLFormElement>) => void; status: Record<string, string>; assetName: string; onAssetChange: (value: string) => void; prompt: string; onPromptChange: (value: string) => void; outputAsset: string; report: string; busy: string; onImport: (file: File | null) => void; onAction: (action: StaticAction) => void }) {
   const project = projects.find((item) => item.project_id === selectedProjectId) ?? null
-  return <div className="content-grid static-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">STATIC PROJECT</p><h2>Create a scene or tile</h2></div><span className="step-number">S1</span></div><p className="muted">Static assets use their own project directory and deterministic refine pipeline. No sprite directions or frame manifest are invented.</p><form className="form-stack" onSubmit={onCreate}><label>Project ID<input name="project_id" defaultValue="scene-demo" required /></label><label>Description<textarea name="description" rows={4} defaultValue="A small pixel-art forest clearing with readable flat color regions." required /></label><div className="form-row"><label>Provider<select name="provider" defaultValue="grok"><option value="grok">Grok</option><option value="codex">Codex</option></select></label><label>Asset type<select name="asset_type" defaultValue="PIXEL_SCENE"><option value="PIXEL_SCENE">Pixel scene</option><option value="TILE_SET">Tile set</option><option value="PROP_OBJECT">Prop object</option><option value="FLAT_SCENE">Flat scene</option></select></label></div><div className="form-row"><label>Style profile<input name="style_profile" defaultValue="pixel_scene" /></label><label>Layer intent<select name="layer_intent" defaultValue="none"><option value="none">No split requested</option><option value="background">Background</option><option value="midground">Midground</option><option value="foreground">Foreground</option></select></label></div><div className="form-row"><label>Export width<input name="export_width" type="number" min="1" defaultValue="1024" /></label><label>Export height<input name="export_height" type="number" min="1" defaultValue="1024" /></label></div><label className="check-row"><input name="tileable" type="checkbox" />Tileable asset</label><label>Base image <span className="optional">optional</span><input name="base_image" type="file" accept="image/*" /><span className="helper">Upload is staged through POST /api/uploads; the browser never passes a filesystem path.</span></label><button className="primary-button" disabled={busy === 'static-create'} type="submit">{busy === 'static-create' ? 'Creating…' : 'Create static project'}</button></form></section><section className="panel static-workbench"><div className="panel-heading"><div><p className="eyebrow">STATIC PIPELINE</p><h2>Generate → refine → deliver</h2></div><span className="count-badge">{projects.length}</span></div><label>Active static project<select value={selectedProjectId} onChange={(event) => onProjectChange(event.target.value)}><option value="">Select a project</option>{projects.map((item) => <option key={item.project_id} value={item.project_id}>{item.project_id} · {item.asset_type}</option>)}</select></label>{project ? <><div className="stat-grid static-stats"><Stat label="Type" value={project.asset_type} /><Stat label="Tileable" value={project.tileable ? 'yes' : 'no'} /><Stat label="Export" value={`${project.export_size[0]} × ${project.export_size[1]}`} /><Stat label="Asset status" value={status[assetName] ?? 'not started'} /></div><label>Asset name<input value={assetName} onChange={(event) => onAssetChange(event.target.value)} /><span className="helper">Use letters, numbers, hyphens, or underscores.</span></label><label>Effective prompt<textarea value={prompt} onChange={(event) => onPromptChange(event.target.value)} rows={8} /></label><div className="button-grid"><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('generate')}>{busy === 'static-generate' ? 'Generating…' : 'Generate'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onImport(null)}>Import image</button><label className="file-button secondary-button">Choose import file<input type="file" accept="image/*" onChange={(event) => onImport(event.target.files?.[0] ?? null)} /></label><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('refine')}>{busy === 'static-refine' ? 'Refining…' : 'Refine'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('cleanup')}>Cleanup</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('seam-check')}>Seam check</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('seam-repair')}>Seam repair</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('layers-split')}>Split layers</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('layers-cutout')}>Cutout</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('qa')}>Run QA</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('export')}>{busy === 'static-export' ? 'Exporting…' : 'Export PNG'}</button></div>{outputAsset ? <div className="asset-preview"><img src={outputAsset} alt={`Static ${assetName} output preview`} /><span>Latest static output</span></div> : <EmptyState text="Generate or import an asset to begin the static pipeline." />}{report && <details className="report-details"><summary>Latest report</summary><pre className="report-box">{report}</pre></details>}</> : <EmptyState text="Create or select a static project to open its pipeline." />}</section></div>
+  const providerOptions = providerChoices.map((item) => <option key={item} value={item}>{providerLabel(item)}</option>)
+  return <div className="content-grid static-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">STATIC PROJECT</p><h2>Create a scene or tile</h2></div><span className="step-number">S1</span></div><p className="muted">Static assets use their own project directory and deterministic refine pipeline. No sprite directions or frame manifest are invented.</p><form className="form-stack" onSubmit={onCreate}><label>Project ID<input name="project_id" defaultValue="scene-demo" required /></label><label>Description<textarea name="description" rows={4} defaultValue="A small pixel-art forest clearing with readable flat color regions." required /></label><div className="form-row"><label>Provider<select name="provider" defaultValue={providerChoices[0]}>{providerOptions}</select><span className="helper">Only providers reported as image-generation capable by the API are shown.</span></label><label>Asset type<select name="asset_type" defaultValue="PIXEL_SCENE"><option value="PIXEL_SCENE">Pixel scene</option><option value="TILE_SET">Tile set</option><option value="PROP_OBJECT">Prop object</option><option value="FLAT_SCENE">Flat scene</option></select></label></div><div className="form-row"><label>Style profile<input name="style_profile" defaultValue="pixel_scene" /></label><label>Layer intent<select name="layer_intent" defaultValue="none"><option value="none">No split requested</option><option value="background">Background</option><option value="midground">Midground</option><option value="foreground">Foreground</option></select></label></div><div className="form-row"><label>Export width<input name="export_width" type="number" min="1" defaultValue="1024" /></label><label>Export height<input name="export_height" type="number" min="1" defaultValue="1024" /></label></div><label className="check-row"><input name="tileable" type="checkbox" />Tileable asset</label><label>Base image <span className="optional">optional</span><input name="base_image" type="file" accept="image/*" /><span className="helper">Upload is staged through POST /api/uploads; the browser never passes a filesystem path.</span></label><button className="primary-button" disabled={busy === 'static-create'} type="submit">{busy === 'static-create' ? 'Creating…' : 'Create static project'}</button></form></section><section className="panel static-workbench"><div className="panel-heading"><div><p className="eyebrow">STATIC PIPELINE</p><h2>Generate → refine → deliver</h2></div><span className="count-badge">{projects.length}</span></div><label>Active static project<select value={selectedProjectId} onChange={(event) => onProjectChange(event.target.value)}><option value="">Select a project</option>{projects.map((item) => <option key={item.project_id} value={item.project_id}>{item.project_id} · {item.asset_type}</option>)}</select></label>{project ? <><div className="stat-grid static-stats"><Stat label="Type" value={project.asset_type} /><Stat label="Tileable" value={project.tileable ? 'yes' : 'no'} /><Stat label="Export" value={`${project.export_size[0]} × ${project.export_size[1]}`} /><Stat label="Asset status" value={status[assetName] ?? 'not started'} /></div><label>Asset name<input value={assetName} onChange={(event) => onAssetChange(event.target.value)} /><span className="helper">Use letters, numbers, hyphens, or underscores.</span></label><label>Effective prompt<textarea value={prompt} onChange={(event) => onPromptChange(event.target.value)} rows={8} /></label><div className="button-grid"><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('generate')}>{busy === 'static-generate' ? 'Generating…' : 'Generate'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onImport(null)}>Import image</button><label className="file-button secondary-button">Choose import file<input type="file" accept="image/*" onChange={(event) => onImport(event.target.files?.[0] ?? null)} /></label><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('refine')}>{busy === 'static-refine' ? 'Refining…' : 'Refine'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('cleanup')}>Cleanup</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('seam-check')}>Seam check</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('seam-repair')}>Seam repair</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('layers-split')}>Split layers</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('layers-cutout')}>Cutout</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('qa')}>Run QA</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('export')}>{busy === 'static-export' ? 'Exporting…' : 'Export PNG'}</button></div>{outputAsset ? <div className="asset-preview"><img src={outputAsset} alt={`Static ${assetName} output preview`} /><span>Latest static output</span></div> : <EmptyState text="Generate or import an asset to begin the static pipeline." />}{report && <details className="report-details"><summary>Latest report</summary><pre className="report-box">{report}</pre></details>}</> : <EmptyState text="Create or select a static project to open its pipeline." />}</section></div>
 }
 
 function AssetStrip({ title, assets, state }: { title: string; assets: string[]; state: string }) {

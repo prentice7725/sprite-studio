@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """GET /api/runs/{run_id}/assets/{path} — ENDPOINTS.md §Assets.
 
-Every image/file the Gradio UI loaded from a local path becomes a URL here
-instead of a JSON-embedded base64 blob. `run_id` is resolved through
-`run_manager.load_run` (so the same 404 contract as every other run route
+File assets are served as direct URLs here instead of JSON-embedded base64 blobs.
+`run_id` is resolved through `run_manager.load_run` (so the same 404 contract as every other run route
 applies); `path` is resolved under that run's own directory and must never be
 allowed to escape it via `..` or an absolute-path component.
 """

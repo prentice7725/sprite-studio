@@ -2,6 +2,13 @@ export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\
 
 export type Provider = 'grok' | 'codex'
 
+export interface ProviderStatus {
+  name: Provider
+  available: boolean
+  message: string
+  detail: string | null
+}
+
 export interface StateSpec {
   frames: number
   fps: number
@@ -159,10 +166,15 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     } catch {
       // Keep the HTTP status when the server did not return JSON.
     }
+    if (response.status === 504) detail = `Image provider timeout: ${detail}. Check the provider session and retry.`
     throw new Error(detail)
   }
   if (response.status === 204) return undefined as T
   return response.json() as Promise<T>
+}
+
+export function listProviders(): Promise<ProviderStatus[]> {
+  return request<ProviderStatus[]>('/providers')
 }
 
 export function listRuns(): Promise<RunSummary[]> {

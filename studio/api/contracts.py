@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Pydantic request/response contract for the Sprite Studio API.
 
-Source of truth for what `studio/api/*` routers accept and return, written
-BEFORE any FastAPI route exists (SPRITE_STUDIO_REACT_MIGRATION directive,
-Phase 0). Each model traces to one or more `studio/app.py` / `studio/ui/
-static_mode_ui.py` Gradio callbacks — see ``ENDPOINTS.md`` next to this file
-for the full route -> model -> backend-function map.
+Source of truth for what `studio/api/*` routers accept and return (SPRITE_STUDIO_REACT_MIGRATION
+directive). See ``ENDPOINTS.md`` next to this file for the full route -> model -> backend-function map.
 
 Two shapes recur on purpose:
 
@@ -16,13 +13,9 @@ Two shapes recur on purpose:
   (``*.report.json`` on disk); duplicating their shape here would just be a
   second place for them to drift out of sync. Only the OUTER envelope
   (status, timing, file paths) is typed.
-- Every field that was a local filesystem path in the Gradio UI (an image
-  preview, a gallery of frame files) becomes a `str` **asset URL**
-  (``/api/runs/{run_id}/assets/...``) here, per the "no base64 blobs" rule —
-  see ``ENDPOINTS.md`` §Assets. A field that WAS a Gradio ``gr.Image(type=
-  "filepath")`` upload becomes an ``upload_id`` produced by ``POST
-  /api/uploads`` first — an HTTP client cannot hand the server a local path
-  the way an in-process Gradio callback could.
+- File references are represented as `str` **asset URLs** (``/api/runs/{run_id}/assets/...``),
+  per the "no base64 blobs" rule — see ``ENDPOINTS.md`` §Assets. Uploads are handled
+  by staging files through ``POST /api/uploads`` to acquire an ``upload_id``.
 """
 
 from __future__ import annotations
@@ -56,8 +49,8 @@ class ProviderStatusModel(BaseModel):
 
 
 class UploadResponse(BaseModel):
-    """POST /api/uploads — the HTTP replacement for Gradio's local filepath
-    upload. `upload_id` is redeemed by a create/import/apply request below."""
+    """POST /api/uploads — stages an uploaded file.
+    `upload_id` is redeemed by a create/import/apply request below."""
 
     upload_id: str
     filename: str

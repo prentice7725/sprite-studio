@@ -24,13 +24,13 @@ from fastapi import APIRouter, HTTPException
 from studio.api.contracts import ExtractResponse, GenerateResponse, NormalizeResponse, RefineResponse
 from studio.api.deps import asset_url, load_run_and_request, require_state
 from studio.backend import qa_service, spritegen_bridge
+from sprite_studio.gen.base import GenTimeoutError
 
 router = APIRouter(prefix="/runs/{run_id}/states/{state}", tags=["generate"])
 
 
 def _refine_summary(report: dict[str, Any]) -> str:
-    """Locale-neutral port of `studio.app._refine_details` (that version
-    renders through the Gradio i18n dict; this API has no locale concept)."""
+    """Format refine report details into a human-readable summary string."""
     if report.get("kind") != "asset-studio-sprite-refine":
         return "legacy refine engine (v1): no lattice report"
     lattice = report["lattice"]
@@ -59,6 +59,8 @@ def generate(run_id: str, state: str) -> GenerateResponse:
     require_state(request, state)
     try:
         report = spritegen_bridge.generate_state(run_dir, state)
+    except GenTimeoutError as exc:
+        raise HTTPException(status_code=504, detail=f"image provider timeout: {exc}") from exc
     except SystemExit as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except ValueError as exc:

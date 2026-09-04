@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """POST /api/uploads storage — ENDPOINTS.md §Uploads.
 
-An HTTP client cannot hand the server a local filesystem path the way an
-in-process Gradio `gr.Image(type="filepath")` callback could; it uploads
-bytes instead. This module owns where those bytes land and how a later
+An HTTP client cannot hand the server a local filesystem path directly;
+it uploads bytes instead. This module owns where those bytes land and how a later
 request (`base_image_upload_id`, `upload_id`, `result_upload_id` in
 `studio.api.contracts`) redeems the id it got back for a real path a
 `studio/backend/*` function can take.

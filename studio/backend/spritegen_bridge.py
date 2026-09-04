@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from sprite_studio.frames import extract
-from sprite_studio.gen import generate_image as generate_one
+from sprite_studio.gen import codex_image_generation_available, generate_image as generate_one
 from sprite_studio.gen import normalize_grok_row
 from sprite_studio.gen import prepare
 from sprite_studio.spec.layout import guide_rel, raw_rel
@@ -49,6 +49,9 @@ def provider_status() -> list[ProviderStatus]:
         found = shutil.which(name)
         if not found:
             result.append(ProviderStatus(name, False, f"{name} CLI를 찾을 수 없습니다."))
+        elif name == "codex":
+            available, message = codex_image_generation_available()
+            result.append(ProviderStatus(name, available, message, found))
         else:
             result.append(ProviderStatus(name, True, f"{name} CLI 사용 가능", found))
     return result

@@ -1,17 +1,37 @@
 # Sprite Gen Studio
 
-Sprite Gen Studio is the operator layer described in
-`SPRITE_GEN_STUDIO_IMPLEMENTATION_SPEC_v0.1.md`. It keeps the existing
-sprite-studio engine as the source of truth and adds a Gradio workflow around it.
+Sprite Gen Studio is the visual operator layer. It keeps the existing
+sprite-studio engine as the source of truth and exposes a FastAPI backend
+(`studio/api/`) coupled with a React/Vite web interface (`web/`).
 
 ## Start
 
+### Option 1: Built Single-Origin Server (Recommended)
+
 ```powershell
 pip install -e ".[studio]"
-python -m studio.app
+cd web
+npm run build
+cd ..
+python -m studio.api.main --port 8765
 ```
 
-Then open `http://127.0.0.1:7860`.
+Open `http://127.0.0.1:8765`. FastAPI serves the production React application and handles all API routes.
+
+### Option 2: Frontend Development Mode
+
+In Terminal 1 (FastAPI API server):
+```powershell
+python -m studio.api.main --port 8765
+```
+
+In Terminal 2 (Vite Dev Server):
+```powershell
+cd web
+npm run dev
+```
+
+Open `http://127.0.0.1:5173`.
 
 ## Phase 1 workflow
 

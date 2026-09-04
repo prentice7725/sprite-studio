@@ -41,7 +41,9 @@ _SID_RE = re.compile(r"session id: ([0-9a-f-]+)")
 # (`<Codex state root>/skills/.system/imagegen/agents/openai.yaml` ships
 # `default_prompt: "Use $imagegen to make or edit an image for this project."`).
 # We state the trigger rather than describing the tool in prose so the invocation
-# contract is explicit and single-owned here.
+# contract is explicit and single-owned here. The unified generator gates this
+# adapter behind ``SPRITE_STUDIO_CODEX_IMAGE_GEN=1`` because the regular Codex
+# CLI may not expose image generation at all.
 #
 # Scope of the trigger: naming the skill does not create the tool. Whether the
 # built-in `image_gen` tool is offered to the session at all is a capability of

@@ -49,19 +49,18 @@ dev = [
     # FastAPI's TestClient (starlette.testclient) requires httpx at runtime.
     "httpx>=0.27",
 ]
+# Web studio runtime: FastAPI backend, ASGI server, validation and upload support.
 studio = [
-    "gradio>=6.0,<7",
-]
-# SPRITE_STUDIO_REACT_MIGRATION Phase 1: the FastAPI shell in `studio/api/`.
-# Declared explicitly rather than ridden in transitively through `gradio`
-# (which happens to pull all three today) — the same reasoning as numpy
-# above: a direct import needs a direct, versioned dependency of its own, not
-# a floor borrowed from an unrelated package's requirements.
-api = [
     "fastapi>=0.115,<1",
     "uvicorn[standard]>=0.30,<1",
     "pydantic>=2.7,<3",
     # multipart form parsing for POST /api/uploads (UploadFile).
+    "python-multipart>=0.0.9",
+]
+api = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "pydantic>=2.7,<3",
     "python-multipart>=0.0.9",
 ]
 

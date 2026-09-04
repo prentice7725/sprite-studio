@@ -1,18 +1,12 @@
 # Sprite Studio API — Endpoint Contract
 
 Companion to [`contracts.py`](contracts.py) (the typed request/response models
-this table names). Written before any route exists — this is the plan a
-FastAPI router implements against, and the plan a React client is built
-against, so the two stop drifting from each other and from the Gradio
-behavior they're replacing.
+this table names). This document serves as the single source of truth for FastAPI
+routers and the React client.
 
-**Every row traces to an existing `studio/app.py` or
-`studio/ui/static_mode_ui.py` Gradio callback** (or is explicitly marked
-`NEW`, where HTTP needs something Gradio's in-process callback got for free —
-mainly file upload and async job status). The "Backend call" column is the
-`studio/backend/*` function the route calls — routers stay thin: parse
-request → call the backend function → shape the response. **No route calls
-`sprite_studio/*` directly.**
+The "Backend call" column is the `studio/backend/*` function the route calls —
+routers stay thin: parse request → call the backend function → shape the response.
+**No route calls `sprite_studio/*` directly.**
 
 **Implemented so far** (`studio/api/routers/`): Health, Uploads, Assets, Runs
 (list/get/status/create/delete), Presets, Prompt,
@@ -26,14 +20,13 @@ service-backed routes.
 
 - Base path: `/api`. All bodies are JSON; no endpoint accepts or returns
   base64 image data.
-- **Assets are URLs, not blobs.** Any image/file a Gradio callback returned as
-  a local path becomes `GET /api/runs/{run_id}/assets/{path}` (Sprite) or
+- **Assets are URLs, not blobs.** Images and files are exposed as
+  `GET /api/runs/{run_id}/assets/{path}` (Sprite) or
   `GET /api/static/{project_id}/assets/{path}` (Static) — see §Assets.
-- **Uploads.** Any Gradio `gr.Image(type="filepath")` input becomes `POST
-  /api/uploads` first; the route that used to receive a local path now
-  receives the returned `upload_id`.
-- **Errors.** Every 4xx/5xx body is `ErrorResponse` (`{"detail": "..."}`) —
-  the same message text `gr.Warning(...)` shows today, not a stack trace.
+- **Uploads.** Client image uploads are staged through `POST /api/uploads` first;
+  subsequent routes receive the returned `upload_id`.
+- **Errors.** Every 4xx/5xx body is `ErrorResponse` (`{"detail": "..."}`) with
+  clean user-facing error text, not a stack trace.
   Normalize's 422 is the one documented exception (structured `detail`, see
   its row below).
 - **`SystemExit`.** The engine (`sprite_studio.gen`, `sprite_studio.curate.
@@ -88,7 +81,7 @@ service-backed routes.
 
 `CreateRunRequest` has no "Generate New" / "Use Existing Image" flow field —
 that distinction (base image required only for "Use Existing Image") is a
-Gradio form-level UX rule (`app.py`'s `create_clicked`), not a server
+client form-level UX rule, not a server
 invariant: `StudioRunConfig`/`create_run` already accept `base_image=None`
 unconditionally (§ the 2026-09-02 identity_ref/base_source fix made this the
 actual production contract, not an edge case). The client enforces the
@@ -118,7 +111,7 @@ ever calls `POST /api/uploads`.
 | Method | Path | Request | Response | Backend call |
 |---|---|---|---|---|
 | POST | `/api/runs/{run_id}/batches` | `BatchStartRequest` | `BatchStartResponse` | `batch_service.start_batch` |
-| GET | `/api/runs/{run_id}/batches/current` | — | `BatchStatus` | `batch_service.load_queue` (poll fallback, replaces the Gradio `gr.Timer(1.5)`) |
+| GET | `/api/runs/{run_id}/batches/current` | — | `BatchStatus` | `batch_service.load_queue` (poll fallback) |
 | WS | `/api/runs/{run_id}/batches/{job_id}/events` | — | stream of `BatchStatus` | pushes `batch_service.load_queue` on change (0.5s poll internally, only sends on an actual diff) instead of client-side polling; closes `1000` once a terminal status (`complete`/`failed`/`interrupted`/`corrupt`) is sent, `4404` if the run or its queue file doesn't exist, `4409` if `job_id` is not the run's current batch (a newer one replaced it, or it never matched) |
 
 ## Sprite Mode — Review / Repair / AI Micro Fix
@@ -186,8 +179,7 @@ ever calls `POST /api/uploads`.
 ## Deliberately out of scope for this pass
 
 - **Repair proposal image identity** (`repair_candidates` choices) stays a
-  list of opaque candidate id strings, same as the Gradio `Dropdown(choices=
-  ...)` today — the client renders them next to the matching `repair_diff`
+  list of opaque candidate id strings — the client renders them next to the matching `repair_diff`
   asset by index, not by re-deriving meaning from the id.
 - **`launch_curation`** keeps spawning the existing standalone curation HTTP
   server on its own port rather than being folded into this API — it is a

@@ -7,8 +7,7 @@ status, asset file serving. Phase 2: per-state prompt (get/blocks/override),
 generate/normalize/extract/refine, uploads, and run create/delete. Phase 3:
 batch start/poll + a WebSocket progress stream. Phases 5-6 add presets,
 review/repair, anchor, animation QA, curation launch, sprite export, and
-Static Mode adapters. See ENDPOINTS.md and `studio/app.py` for the Gradio UI
-kept side by side during migration.
+Static Mode adapters. See ENDPOINTS.md for endpoint specifications.
 """
 
 from __future__ import annotations
