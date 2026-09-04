@@ -26,6 +26,7 @@ from pydantic import BaseModel, Field
 
 GenerationProfile = Literal["direct_pixel", "refine_first"]
 Provider = Literal["grok", "codex"]
+GenerationStrategy = Literal["AUTO", "ROW_FAST", "KEYPOSE_SEQUENTIAL"]
 StaticAssetType = Literal["PIXEL_SCENE", "TILE_SET", "PROP_OBJECT", "FLAT_SCENE"]
 BatchStatusKind = Literal["running", "complete", "failed", "interrupted", "corrupt"]
 StageKind = Literal[
@@ -153,6 +154,44 @@ class GenerateResponse(BaseModel):
     prompt_source: Literal["generated", "override"]
 
 
+class GenerateRequest(BaseModel):
+    strategy: GenerationStrategy | None = None
+
+
+class StrategyUpdateRequest(BaseModel):
+    strategy: GenerationStrategy
+
+
+class GenerationStrategyResponse(BaseModel):
+    state: str
+    requested: GenerationStrategy
+    resolved: Literal["ROW_FAST", "KEYPOSE_SEQUENTIAL"]
+    reason: str
+    policy: dict[str, Any]
+    motion_plan: dict[str, Any]
+    motion_plan_asset: str | None = None
+
+
+class KeyPoseApproveRequest(BaseModel):
+    indices: list[int] = Field(min_length=1)
+
+
+class SequentialAssetResponse(BaseModel):
+    index: int
+    phase: str
+    role: Literal["key", "between"]
+    asset: str | None = None
+    status: Literal["generated", "pending", "missing"]
+
+
+class SequentialGenerationResponse(BaseModel):
+    state: str
+    status: str
+    motion_plan: dict[str, Any]
+    key_poses: list[SequentialAssetResponse] = Field(default_factory=list)
+    inbetweens: list[SequentialAssetResponse] = Field(default_factory=list)
+
+
 class NormalizeResponse(BaseModel):
     result: Literal["pass", "fail"]
     output_asset: str
@@ -227,6 +266,22 @@ class BatchStatus(BaseModel):
 # Sprite Mode — Review / Repair / AI Micro Fix
 # --------------------------------------------------------------------------
 
+class GenerationVariantResponse(BaseModel):
+    id: str
+    timestamp: str | None = None
+    provider: str
+    model: str | None = None
+    raw_asset: str | None = None
+
+
+class RevisionVariantResponse(BaseModel):
+    id: str
+    label: str
+    frames: int | None = None
+    raw_asset: str | None = None
+    exists: bool = False
+
+
 class ReviewDataResponse(BaseModel):
     frames: list[str]
     refined_frames: list[str]
@@ -237,6 +292,8 @@ class ReviewDataResponse(BaseModel):
     repair_summary: str
     qa_summary: str
     history_summary: str
+    generation_variants: list[GenerationVariantResponse] = Field(default_factory=list)
+    revision_variants: list[RevisionVariantResponse] = Field(default_factory=list)
 
 
 class RepairDecideRequest(BaseModel):

@@ -114,6 +114,18 @@ ever calls `POST /api/uploads`.
 | GET | `/api/runs/{run_id}/batches/current` | — | `BatchStatus` | `batch_service.load_queue` (poll fallback) |
 | WS | `/api/runs/{run_id}/batches/{job_id}/events` | — | stream of `BatchStatus` | pushes `batch_service.load_queue` on change (0.5s poll internally, only sends on an actual diff) instead of client-side polling; closes `1000` once a terminal status (`complete`/`failed`/`interrupted`/`corrupt`) is sent, `4404` if the run or its queue file doesn't exist, `4409` if `job_id` is not the run's current batch (a newer one replaced it, or it never matched) |
 
+### Generation strategy / sequential animation
+
+| Method | Path | Request | Response | Backend owner |
+|---|---|---|---|---|
+| GET | `/api/runs/{run_id}/states/{state}/strategy` | — | `GenerationStrategyResponse` | `strategy_service` |
+| PUT | `/api/runs/{run_id}/states/{state}/strategy` | `StrategyUpdateRequest` | `GenerationStrategyResponse` | per-run strategy override + Motion Plan |
+| POST | `/api/runs/{run_id}/states/{state}/motion-plan` | optional `StrategyUpdateRequest` | `GenerationStrategyResponse` | `strategy_service` |
+| GET | `/api/runs/{run_id}/states/{state}/sequential` | — | `SequentialGenerationResponse` | sequential manifest read |
+| POST | `/api/runs/{run_id}/states/{state}/sequential/key-poses` | — | `SequentialGenerationResponse` | provider-backed key-pose generation |
+| POST | `/api/runs/{run_id}/states/{state}/sequential/approve` | `KeyPoseApproveRequest` | `SequentialGenerationResponse` | explicit key-pose approval |
+| POST | `/api/runs/{run_id}/states/{state}/sequential/inbetweens` | — | `SequentialGenerationResponse` | identity + previous/next accepted key refs |
+
 ## Sprite Mode — Review / Repair / AI Micro Fix
 
 | Method | Path | Request | Response | Backend call |

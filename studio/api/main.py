@@ -21,7 +21,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from studio.api.routers import assets, batch, generate, health, presets, prompt, review, runs, static_mode, uploads
+from studio.api.routers import assets, batch, generate, health, presets, prompt, review, runs, static_mode, strategy, uploads
 
 # Comma-separated dev origins (the Vite dev server) allowed to call this API
 # cross-origin. Irrelevant once the built React app is served BY this same
@@ -57,6 +57,7 @@ def create_app() -> FastAPI:
     app.include_router(generate.router, prefix="/api")
     app.include_router(batch.router, prefix="/api")
     app.include_router(review.router, prefix="/api")
+    app.include_router(strategy.router, prefix="/api")
     app.include_router(static_mode.router, prefix="/api")
     app.include_router(presets.router, prefix="/api")
     # Production integration: after `cd web && npm run build`, the same API

@@ -33,12 +33,18 @@ npm run dev
 
 Open `http://127.0.0.1:5173`.
 
-## Phase 1 workflow
+## React workspace workflow
 
-1. In **PROJECT**, choose a preset, upload the base image, select directions and
-   states, then create a run.
-2. In **GENERATE**, inspect the generated prompt, save an optional override, and
-   generate one state through the selected provider.
+1. In **PROJECT**, choose a data-backed preset, upload the optional base image,
+   select directions and animations, then create an asset. The preset supplies
+   cell sizes, mirrors, locks, generation profile, and state specs.
+2. Select the asset and animation from the shared Asset Library, then open
+   **WORKSPACE**. Generate, Refine, Repair, QA, and Export are tools in that
+   workspace; they keep the active asset/state selection instead of asking for a
+   new state on every page.
+   The persistent canvas viewer supports checker/grid toggles and integer zoom;
+   the frame timeline supports thumbnail scrubbing, play/loop, and keyboard
+   navigation. Repair also exposes generation variants and declared revisions.
 3. If the provider returns a wide free-layout canvas, click **AUTO NORMALIZE**.
    The canonical raw row is updated in place and a normalization report is kept
    beside it.
@@ -53,9 +59,13 @@ Open `http://127.0.0.1:5173`.
 7. **MATRIX** shows run progress, and **EXPORT** composes the current engine atlas.
    **EXPORT RUNTIME 48×48** then creates a nearest-neighbor runtime atlas and a
    runtime manifest without changing the working-size atlas.
-8. **RUN BATCH** queues selected state rows and executes generation, optional
-   normalization, one shared extraction pass, refine, and animation QA in order.
-   **REFRESH BATCH** reads the persisted queue status after the provider finishes.
+8. Open **Jobs** from the top bar to queue selected state rows. The global drawer
+   executes generation, optional normalization, one shared extraction pass,
+   refine, and animation QA while the active asset workspace remains available.
+   The persisted queue and WebSocket status remain backend-owned.
+11. Static projects use the static preset catalog. Tileable projects expose a
+    3×3 wrap context after seam check/repair; non-tileable projects use the same
+    canvas viewer without inventing tile controls.
 9. **REVIEW** also shows generation attempt history and engine-owned candidate
    takes (`reroll`, `tween`, and other declared takes) without rewriting them.
    Select an approved frame and use **PIN REVIEW FRAME AS ANCHOR**; the engine's
@@ -66,6 +76,19 @@ Open `http://127.0.0.1:5173`.
     handedness continuity clause. The validator warns when a custom attack
     override removes that clause; post-extract Animation QA remains the visual
     evidence gate.
+
+## Generation strategy workflow
+
+The Workspace exposes the server-owned strategy enum `AUTO`, `ROW_FAST`, and
+`KEYPOSE_SEQUENTIAL`. `AUTO` resolves through
+`studio/data/config/generation_strategy.json`; the resolved decision and phase
+list are persisted as `<run>/studio/motion-plans/<state>.json`.
+
+For sequential work, generate key poses first, explicitly approve at least two,
+then generate bidirectional inbetweens. These images stay in the sequential
+manifest until the operator is ready to promote them into a downstream
+production pipeline; a failed row-quality gate can point to the same sequential
+plan without silently replacing the row result.
 
 The direct CLI remains available for debugging. The Studio backend uses the
 same Python modules (`prepare`, `gen`, `normalize-grok-row`, `extract`, and
@@ -83,9 +106,10 @@ same Python modules (`prepare`, `gen`, `normalize-grok-row`, `extract`, and
 - Animation QA: `<run>/studio/qa/<state>.animation.json`
 - Direction anchors: `<run>/curation.json` and derived `references/anchors/`
 
-Phase 2 currently adds animation continuity QA, the existing curation surface,
-and fixed-size runtime export. Batch queue, take history, and anchor editing
-remain follow-up work.
+The current React workflow includes animation continuity QA, the existing
+curation surface, fixed-size runtime export, and the global Jobs drawer. Batch
+state remains persisted in `<run>/studio/batch-queue.json`; take history and
+anchor editing continue to use the existing engine-owned records.
 
 ## Asset Studio mode split (v0.2)
 

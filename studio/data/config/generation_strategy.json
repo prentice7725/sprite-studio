@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "default": "AUTO",
+  "states": {
+    "idle": "ROW_FAST",
+    "simple_idle": "ROW_FAST",
+    "attack": "KEYPOSE_SEQUENTIAL",
+    "walk": "KEYPOSE_SEQUENTIAL",
+    "run": "KEYPOSE_SEQUENTIAL"
+  },
+  "max_row_fast_frames": 4,
+  "fallback_on_row_quality_fail": "KEYPOSE_SEQUENTIAL"
+}

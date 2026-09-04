@@ -75,6 +75,26 @@ def _review_response(run_id: str, run_dir: Path, request: dict[str, Any], state:
     refined_dir = run_dir / frames_dir_rel(request, state) / "refined"
     refined = sorted(refined_dir.glob("frame-*.png")) if refined_dir.is_dir() else []
     candidates = data.get("candidates") or []
+    generation_variants = []
+    for index, record in enumerate(history_service.generation_history(run_dir, state)):
+        raw_path = Path(str(record.get("raw", ""))) if record.get("raw") else None
+        generation_variants.append({
+            "id": f"attempt-{index + 1}",
+            "timestamp": record.get("timestamp"),
+            "provider": str(record.get("provider", "unknown")),
+            "model": record.get("model"),
+            "raw_asset": asset_url(run_id, run_dir, raw_path) if raw_path and raw_path.is_file() else None,
+        })
+    revision_variants = []
+    for take in history_service.take_history(run_dir, state):
+        raw_path = Path(str(take["raw"])) if take.get("raw") else None
+        revision_variants.append({
+            "id": str(take.get("id") or take.get("label") or "take"),
+            "label": str(take.get("label") or "take"),
+            "frames": int(take["frames"]) if take.get("frames") is not None else None,
+            "raw_asset": asset_url(run_id, run_dir, raw_path) if raw_path and raw_path.is_file() else None,
+            "exists": bool(take.get("exists")),
+        })
     return ReviewDataResponse(
         frames=[asset_url(run_id, run_dir, path) for path in _manifest_frames(run_dir, state) if path.is_file()],
         refined_frames=[asset_url(run_id, run_dir, path) for path in refined if path.is_file()],
@@ -85,6 +105,8 @@ def _review_response(run_id: str, run_dir: Path, request: dict[str, Any], state:
         repair_summary=repair_service.summary(run_dir, state),
         qa_summary=qa_service.summary(run_dir, state),
         history_summary=history_service.summary(run_dir, state),
+        generation_variants=generation_variants,
+        revision_variants=revision_variants,
     )
 
 

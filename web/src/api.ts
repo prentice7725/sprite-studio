@@ -1,6 +1,7 @@
 export const API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/$/, '')
 
 export type Provider = 'grok' | 'codex'
+export type GenerationStrategy = 'AUTO' | 'ROW_FAST' | 'KEYPOSE_SEQUENTIAL'
 
 export interface ProviderStatus {
   name: Provider
@@ -14,6 +15,21 @@ export interface StateSpec {
   fps: number
   loop: boolean
   action: string
+}
+
+export interface SpritePreset {
+  id: string
+  display_name: string
+  character_description: string
+  identity_prompt: string
+  default_generation_profile: string
+  background_policy: string
+  locks: Record<string, string>
+  directions: string[]
+  mirror: Record<string, string>
+  working_cell: number
+  runtime_cell: number
+  states: Record<string, StateSpec>
 }
 
 export interface RunSummary {
@@ -53,6 +69,54 @@ export interface GenerateResponse {
   prompt_source: 'generated' | 'override'
 }
 
+export interface GenerationStrategyResponse {
+  state: string
+  requested: GenerationStrategy
+  resolved: Exclude<GenerationStrategy, 'AUTO'>
+  reason: string
+  policy: Record<string, unknown>
+  motion_plan: MotionPlan
+  motion_plan_asset: string | null
+}
+
+export interface MotionPlanPhase {
+  index: number
+  id: string
+  role: 'key' | 'between'
+  weight: number
+}
+
+export interface MotionPlan {
+  kind: string
+  version: number
+  animation: string
+  loop: boolean
+  frames: number
+  fps: number
+  strategy: Exclude<GenerationStrategy, 'AUTO'>
+  requested_strategy: GenerationStrategy
+  reason: string
+  phases: MotionPlanPhase[]
+  key_pose_indices: number[]
+  fallback_on_row_quality_fail: GenerationStrategy | null
+}
+
+export interface SequentialAsset {
+  index: number
+  phase: string
+  role: 'key' | 'between'
+  asset: string | null
+  status: 'generated' | 'pending' | 'missing'
+}
+
+export interface SequentialGenerationResponse {
+  state: string
+  status: string
+  motion_plan: MotionPlan
+  key_poses: SequentialAsset[]
+  inbetweens: SequentialAsset[]
+}
+
 export interface NormalizeResponse {
   result: 'pass' | 'fail'
   output_asset: string
@@ -83,6 +147,24 @@ export interface ReviewData {
   repair_summary: string
   qa_summary: string
   history_summary: string
+  generation_variants?: GenerationVariant[]
+  revision_variants?: RevisionVariant[]
+}
+
+export interface GenerationVariant {
+  id: string
+  timestamp: string | null
+  provider: string
+  model: string | null
+  raw_asset: string | null
+}
+
+export interface RevisionVariant {
+  id: string
+  label: string
+  frames: number | null
+  raw_asset: string | null
+  exists: boolean
 }
 
 export interface AnimationQaResponse {
@@ -107,6 +189,19 @@ export interface StaticProject {
   export_size: [number, number]
   layer_intent: string
   background_policy: string
+}
+
+export interface StaticPreset {
+  id: string
+  display_name: string
+  asset_type: StaticProject['asset_type']
+  style_profile: string
+  description: string
+  background_policy: string
+  tileable: boolean
+  layer_intent: string
+  export_size: [number, number]
+  refine: Record<string, unknown>
 }
 
 export interface StaticStatus {
@@ -177,6 +272,14 @@ export function listProviders(): Promise<ProviderStatus[]> {
   return request<ProviderStatus[]>('/providers')
 }
 
+export function listPresets(): Promise<string[]> {
+  return request<string[]>('/presets')
+}
+
+export function getPreset(presetId: string): Promise<SpritePreset> {
+  return request<SpritePreset>(`/presets/${encodeURIComponent(presetId)}`)
+}
+
 export function listRuns(): Promise<RunSummary[]> {
   return request<RunSummary[]>('/runs')
 }
@@ -212,6 +315,34 @@ export function savePrompt(runId: string, state: string, prompt: string): Promis
 
 export function generate(runId: string, state: string): Promise<GenerateResponse> {
   return request<GenerateResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/generate`, { method: 'POST' })
+}
+
+export function getGenerationStrategy(runId: string, state: string): Promise<GenerationStrategyResponse> {
+  return request<GenerationStrategyResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/strategy`)
+}
+
+export function saveGenerationStrategy(runId: string, state: string, strategy: GenerationStrategy): Promise<GenerationStrategyResponse> {
+  return request<GenerationStrategyResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/strategy`, { method: 'PUT', body: JSON.stringify({ strategy }) })
+}
+
+export function createMotionPlan(runId: string, state: string, strategy?: GenerationStrategy): Promise<GenerationStrategyResponse> {
+  return request<GenerationStrategyResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/motion-plan`, { method: 'POST', ...(strategy ? { body: JSON.stringify({ strategy }) } : {}) })
+}
+
+export function getSequential(runId: string, state: string): Promise<SequentialGenerationResponse> {
+  return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential`)
+}
+
+export function generateKeyPoses(runId: string, state: string): Promise<SequentialGenerationResponse> {
+  return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential/key-poses`, { method: 'POST' })
+}
+
+export function approveKeyPoses(runId: string, state: string, indices: number[]): Promise<SequentialGenerationResponse> {
+  return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential/approve`, { method: 'POST', body: JSON.stringify({ indices }) })
+}
+
+export function generateInbetweens(runId: string, state: string): Promise<SequentialGenerationResponse> {
+  return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential/inbetweens`, { method: 'POST' })
 }
 
 export function normalize(runId: string, state: string): Promise<NormalizeResponse> {
@@ -285,6 +416,10 @@ export function listStaticPresets(): Promise<string[]> {
   return request<string[]>('/static/presets')
 }
 
+export function getStaticPreset(presetId: string): Promise<StaticPreset> {
+  return request<StaticPreset>(`/static/presets/${encodeURIComponent(presetId)}`)
+}
+
 export function createStaticProject(body: Record<string, unknown>): Promise<StaticProject> {
   return request<StaticProject>('/static', { method: 'POST', body: JSON.stringify(body) })
 }
@@ -305,11 +440,11 @@ export function staticImport(projectId: string, body: { asset: string; upload_id
   return request(`/static/${encodeURIComponent(projectId)}/import`, { method: 'POST', body: JSON.stringify(body) })
 }
 
-export function staticRefine(projectId: string, body: { asset: string; cleanup: boolean; dither_mode: string; fft_candidate_search: boolean }): Promise<{ output_asset: string; report: Record<string, unknown> }> {
+export function staticRefine(projectId: string, body: { asset: string; cleanup?: boolean; dither_mode?: string; fft_candidate_search?: boolean }): Promise<{ output_asset: string; report: Record<string, unknown> }> {
   return request(`/static/${encodeURIComponent(projectId)}/refine`, { method: 'POST', body: JSON.stringify(body) })
 }
 
-export function staticCleanup(projectId: string, body: { asset: string; orphan_max_area: number; hole_max_area: number }): Promise<{ output_asset: string; report: Record<string, unknown> }> {
+export function staticCleanup(projectId: string, body: { asset: string; orphan_max_area?: number; hole_max_area?: number }): Promise<{ output_asset: string; report: Record<string, unknown> }> {
   return request(`/static/${encodeURIComponent(projectId)}/cleanup`, { method: 'POST', body: JSON.stringify(body) })
 }
 
