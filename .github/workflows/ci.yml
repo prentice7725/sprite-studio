@@ -49,3 +49,25 @@ jobs:
           name: benchmark-report-py${{ matrix.python-version }}
           path: .artifacts/benchmark-current.json
           if-no-files-found: ignore
+
+  web:
+    name: Web Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install Web Dependencies
+        working-directory: web
+        run: npm ci
+
+      - name: Build Web Studio
+        working-directory: web
+        run: npm run build

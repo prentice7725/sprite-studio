@@ -1,0 +1,390 @@
+/* Workspace editor UX pass.
+   Keep this file isolated from the legacy stylesheet so the layout can be
+   iterated without destabilizing Project/Static screens. */
+
+/* The Jobs drawer is global; a second full-page Jobs destination only adds
+   navigation noise. Keep the drawer trigger in the top bar as the entrypoint. */
+.nav-list .nav-item:nth-child(4) {
+  display: none;
+}
+
+.sidebar-footer {
+  display: none;
+}
+
+.asset-tree {
+  max-height: min(58dvh, 720px);
+}
+
+/* Workspace becomes an editor: persistent canvas/timeline on the left,
+   compact tool inspector on the right. */
+.main-content:has(> .workspace-tools) {
+  width: 100%;
+  max-width: none;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 20px 24px 28px;
+  display: grid;
+  grid-template-columns: minmax(520px, 1fr) minmax(310px, 370px);
+  grid-template-areas:
+    "topbar topbar"
+    "notice notice"
+    "context tools"
+    "context work"
+    "context extras";
+  grid-template-rows: auto auto auto auto 1fr;
+  align-content: start;
+  gap: 12px 16px;
+}
+
+.main-content:has(> .workspace-tools) > .topbar {
+  grid-area: topbar;
+  align-items: center;
+  margin: 0;
+  min-height: 54px;
+}
+
+.main-content:has(> .workspace-tools) > .topbar h1 {
+  font-size: 21px;
+  line-height: 1.2;
+}
+
+.main-content:has(> .workspace-tools) > .topbar .eyebrow {
+  margin-bottom: 4px;
+}
+
+.main-content:has(> .workspace-tools) > .notice {
+  grid-area: notice;
+  margin: 0;
+}
+
+.main-content:has(> .workspace-tools) > .workspace-tools {
+  grid-area: tools;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  margin: 0;
+  align-self: start;
+}
+
+.main-content:has(> .workspace-tools) .workspace-tool {
+  min-height: 43px;
+  padding: 7px 8px;
+  text-align: center;
+}
+
+.main-content:has(> .workspace-tools) .workspace-tool strong {
+  font-size: 11px;
+}
+
+.main-content:has(> .workspace-tools) .workspace-tool small {
+  display: none;
+}
+
+/* Asset selection belongs to the left Asset Library. The top selector is kept
+   on Project/Static screens but removed from Workspace. */
+.main-content:has(> .workspace-tools) .run-selector {
+  display: none;
+}
+
+.main-content:has(> .workspace-tools) .selection-chip {
+  min-height: 32px;
+}
+
+.main-content:has(> .workspace-tools) > .workspace-context {
+  grid-area: context;
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  min-width: 0;
+  min-height: calc(100dvh - 105px);
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(460px, 1fr) auto;
+  gap: 10px;
+}
+
+.main-content:has(> .workspace-tools) .canvas-viewer {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.main-content:has(> .workspace-tools) .canvas-stage {
+  min-height: 460px;
+  max-height: calc(100dvh - 325px);
+  padding: 28px;
+}
+
+.main-content:has(> .workspace-tools) .canvas-stage img {
+  flex: 0 0 auto;
+}
+
+.main-content:has(> .workspace-tools) .canvas-toolbar {
+  margin-bottom: 8px;
+}
+
+.main-content:has(> .workspace-tools) .timeline {
+  padding: 11px 12px 9px;
+  border-radius: 10px;
+}
+
+.main-content:has(> .workspace-tools) .timeline-heading {
+  margin-bottom: 7px;
+}
+
+.main-content:has(> .workspace-tools) .timeline-heading .eyebrow,
+.main-content:has(> .workspace-tools) .timeline-heading h3 {
+  display: none;
+}
+
+.main-content:has(> .workspace-tools) .timeline-strip {
+  min-height: 92px;
+  padding-bottom: 5px;
+}
+
+.main-content:has(> .workspace-tools) .timeline-frame {
+  flex-basis: 68px;
+}
+
+.main-content:has(> .workspace-tools) .timeline-frame img {
+  width: 56px;
+  height: 56px;
+}
+
+.main-content:has(> .workspace-tools) .timeline-footer {
+  margin-top: 2px;
+}
+
+/* Tool panels act as an inspector instead of competing with the canvas. */
+.main-content:has(> .workspace-tools) > .work-grid,
+.main-content:has(> .workspace-tools) > .review-grid,
+.main-content:has(> .workspace-tools) > .single-grid {
+  grid-area: work;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-self: start;
+  min-width: 0;
+}
+
+.main-content:has(> .workspace-tools) > .strategy-panel,
+.main-content:has(> .workspace-tools) > .variants-panel {
+  grid-area: extras;
+  align-self: start;
+  margin: 0;
+}
+
+.main-content:has(> .workspace-tools) .panel {
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.main-content:has(> .workspace-tools) .panel-heading {
+  margin-bottom: 12px;
+}
+
+.main-content:has(> .workspace-tools) .panel-heading h2 {
+  font-size: 16px;
+}
+
+.main-content:has(> .workspace-tools) .panel-heading .eyebrow {
+  margin-bottom: 4px;
+}
+
+.main-content:has(> .workspace-tools) .muted {
+  margin-bottom: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* The state is selected once in Asset Library. Repeating the same dropdown in
+   every tool creates hesitation and accidental context switches. */
+.main-content:has(> .workspace-tools) .prompt-panel > label:first-of-type,
+.main-content:has(> .workspace-tools) .work-grid > .panel:first-child > label:first-of-type,
+.main-content:has(> .workspace-tools) .review-grid > .panel:first-child > label:first-of-type,
+.main-content:has(> .workspace-tools) .qa-panel > label:first-of-type {
+  display: none;
+}
+
+/* Generate used to be exposed twice: once in the prompt panel and once in the
+   pipeline. The pipeline button is the single action source now. */
+.main-content:has(> .workspace-tools) .prompt-panel > .primary-button {
+  display: none;
+}
+
+.main-content:has(> .workspace-tools) .prompt-preview {
+  margin: 10px 0;
+  max-height: 150px;
+}
+
+.main-content:has(> .workspace-tools) .prompt-preview p {
+  max-height: 92px;
+}
+
+.main-content:has(> .workspace-tools) textarea {
+  min-height: 120px;
+}
+
+.main-content:has(> .workspace-tools) .pipeline-actions {
+  margin: 10px 0 0;
+  gap: 6px;
+}
+
+.main-content:has(> .workspace-tools) .pipeline-action {
+  min-height: 40px;
+}
+
+/* Preview duplication in the inspector is intentionally removed. The persistent
+   center canvas is the visual source of truth. */
+.main-content:has(> .workspace-tools) .output-panel .asset-preview,
+.main-content:has(> .workspace-tools) .output-panel > .empty-state {
+  display: none;
+}
+
+.main-content:has(> .workspace-tools) .output-panel {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.main-content:has(> .workspace-tools) .output-panel .panel-heading {
+  margin-bottom: 6px;
+}
+
+.main-content:has(> .workspace-tools) .report-box {
+  max-height: 190px;
+  margin-top: 10px;
+}
+
+.main-content:has(> .workspace-tools) .review-output {
+  max-height: 350px;
+  overflow: auto;
+}
+
+.main-content:has(> .workspace-tools) .asset-group {
+  margin-top: 12px;
+}
+
+.main-content:has(> .workspace-tools) .asset-grid {
+  grid-template-columns: repeat(3, minmax(64px, 1fr));
+}
+
+.main-content:has(> .workspace-tools) .strategy-options {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.main-content:has(> .workspace-tools) .strategy-option {
+  min-height: 50px;
+  padding: 8px;
+}
+
+.main-content:has(> .workspace-tools) .strategy-option small {
+  margin-top: 2px;
+}
+
+.main-content:has(> .workspace-tools) .button-row,
+.main-content:has(> .workspace-tools) .button-grid {
+  gap: 7px;
+}
+
+.main-content:has(> .workspace-tools) .primary-button,
+.main-content:has(> .workspace-tools) .secondary-button {
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 12px;
+}
+
+/* Canvas zoom is now real 1x/2x/4x/8x. The grid follows one image pixel at the
+   chosen integer scale instead of using a fixed decorative 16px grid. */
+.canvas-stage.pixel-grid {
+  --pixel-grid-size: 1px;
+  background-image:
+    linear-gradient(rgba(122, 215, 203, .22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122, 215, 203, .22) 1px, transparent 1px),
+    repeating-conic-gradient(#253149 0 25%, #172238 0 50%);
+  background-size:
+    var(--pixel-grid-size) var(--pixel-grid-size),
+    var(--pixel-grid-size) var(--pixel-grid-size),
+    24px 24px;
+}
+
+.zoom-preset {
+  min-width: 34px;
+  padding-inline: 6px;
+}
+
+/* Static had two UI controls for the same import action. The button already
+   opens a native picker, so keep one import entrypoint. */
+.static-workbench .file-button {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .main-content:has(> .workspace-tools) {
+    grid-template-columns: minmax(430px, 1fr) minmax(280px, 330px);
+    padding-inline: 16px;
+  }
+
+  .main-content:has(> .workspace-tools) .zoom-preset {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .main-content:has(> .workspace-tools) {
+    display: block;
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .main-content:has(> .workspace-tools) > * + * {
+    margin-top: 12px;
+  }
+
+  .main-content:has(> .workspace-tools) > .workspace-context {
+    position: static;
+    min-height: 0;
+    grid-template-rows: minmax(360px, auto) auto;
+  }
+
+  .main-content:has(> .workspace-tools) .canvas-stage {
+    min-height: 360px;
+    max-height: 70dvh;
+  }
+
+  .main-content:has(> .workspace-tools) > .workspace-tools {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 6px 0;
+    background: var(--bg);
+  }
+}
+
+@media (max-width: 560px) {
+  .main-content:has(> .workspace-tools) {
+    padding: 12px;
+  }
+
+  .main-content:has(> .workspace-tools) > .workspace-tools {
+    grid-template-columns: repeat(5, minmax(52px, 1fr));
+    overflow-x: auto;
+  }
+
+  .main-content:has(> .workspace-tools) .canvas-stage {
+    min-height: 300px;
+    padding: 12px;
+  }
+
+  .main-content:has(> .workspace-tools) .timeline-controls {
+    gap: 4px;
+  }
+
+  .main-content:has(> .workspace-tools) .timeline-toggle {
+    display: none;
+  }
+}
