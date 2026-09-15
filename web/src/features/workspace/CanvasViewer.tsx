@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 
 interface CanvasViewerProps {
   src: string | null
@@ -47,14 +48,14 @@ export default function CanvasViewer({ src, alt, pixelArt = true, label = 'Canva
     setZoom(zoomSteps[next])
   }
 
-  const imageStyle = zoom === 'fit'
+  const imageStyle: CSSProperties = zoom === 'fit'
     ? { width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%' }
     : naturalSize
       ? { width: `${naturalSize.width * zoom}px`, height: `${naturalSize.height * zoom}px`, maxWidth: 'none', maxHeight: 'none' }
       : { width: `${zoom * 100}%`, maxWidth: 'none', maxHeight: 'none' }
 
   const stageStyle = numericZoom && grid
-    ? { '--pixel-grid-size': `${numericZoom}px` } as React.CSSProperties
+    ? { '--pixel-grid-size': `${numericZoom}px` } as CSSProperties
     : undefined
 
   return <section className="canvas-viewer" aria-label={label}>
