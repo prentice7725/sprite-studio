@@ -37,6 +37,7 @@ export default function CanvasViewer({ src, alt, pixelArt = true, label = 'Canva
   const zoomLabel = useMemo(() => zoom === 'fit' ? 'Fit' : `${zoom}×`, [zoom])
   const visibleSrc = suppressStaleSource ? null : src
   const numericZoom = zoom === 'fit' ? null : zoom
+  const gridAvailable = numericZoom !== null && numericZoom >= 2
 
   function stepZoom(direction: -1 | 1) {
     if (zoom === 'fit') {
@@ -54,7 +55,7 @@ export default function CanvasViewer({ src, alt, pixelArt = true, label = 'Canva
       ? { width: `${naturalSize.width * zoom}px`, height: `${naturalSize.height * zoom}px`, maxWidth: 'none', maxHeight: 'none' }
       : { width: `${zoom * 100}%`, maxWidth: 'none', maxHeight: 'none' }
 
-  const stageStyle = numericZoom && grid
+  const stageStyle = gridAvailable && grid
     ? { '--pixel-grid-size': `${numericZoom}px` } as CSSProperties
     : undefined
 
@@ -68,11 +69,11 @@ export default function CanvasViewer({ src, alt, pixelArt = true, label = 'Canva
         {pixelArt && zoomSteps.map((value) => <button className={`tool-button text-button zoom-preset ${zoom === value ? 'active' : ''}`} type="button" key={value} onClick={() => setZoom(value)}>{value}×</button>)}
       </div>
       <div className="toolbar-group">
-        {pixelArt && <button className={`tool-button text-button ${grid ? 'active' : ''}`} type="button" disabled={zoom === 'fit'} onClick={() => setGrid((value) => !value)} aria-pressed={grid}>Grid</button>}
+        {pixelArt && <button className={`tool-button text-button ${grid && gridAvailable ? 'active' : ''}`} type="button" disabled={!gridAvailable} onClick={() => setGrid((value) => !value)} aria-pressed={grid && gridAvailable}>Grid</button>}
         <button className={`tool-button text-button ${checker ? 'active' : ''}`} type="button" onClick={() => setChecker((value) => !value)} aria-pressed={checker}>Checker</button>
       </div>
     </div>
-    <div className={`canvas-stage ${checker ? 'checker' : ''} ${grid && numericZoom ? 'pixel-grid' : ''}`} style={stageStyle}>
+    <div className={`canvas-stage ${checker ? 'checker' : ''} ${grid && gridAvailable ? 'pixel-grid' : ''}`} style={stageStyle}>
       {visibleSrc ? <img src={visibleSrc} alt={alt} className={pixelArt ? 'pixelated' : undefined} style={imageStyle} onLoad={(event) => setNaturalSize({ width: event.currentTarget.naturalWidth, height: event.currentTarget.naturalHeight })} /> : <p className="helper">{suppressStaleSource ? 'Loading the selected animation…' : 'Select a generated or refined frame to inspect it here.'}</p>}
     </div>
   </section>
