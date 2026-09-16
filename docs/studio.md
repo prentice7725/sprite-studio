@@ -46,8 +46,9 @@ Open `http://127.0.0.1:5173`.
    the frame timeline supports thumbnail scrubbing, play/loop, and keyboard
    navigation. Repair also exposes generation variants and declared revisions.
 3. If the provider returns a wide free-layout canvas, click **AUTO NORMALIZE**.
-   The canonical raw row is updated in place and a normalization report is kept
-   beside it.
+   Heavy operations start as background Jobs; the drawer shows progress and
+   keeps the workspace usable while the canonical raw row is updated in place
+   and a normalization report is kept beside it.
 4. Click **EXTRACT** to produce frames and show the operator-friendly QA result.
 5. Click **FRAME REFINE** to derive a refined frame set. It applies one shared
    scale, baseline, grid, palette, and pivot decision for the selected state and
@@ -62,17 +63,20 @@ Open `http://127.0.0.1:5173`.
 8. Open **Jobs** from the top bar to queue selected state rows. The global drawer
    executes generation, optional normalization, one shared extraction pass,
    refine, and animation QA while the active asset workspace remains available.
-   The persisted queue and WebSocket status remain backend-owned.
-11. Static projects use the static preset catalog. Tileable projects expose a
+   The persisted batch queue and WebSocket status remain backend-owned. Single
+   Generate/Normalize/Extract/Refine/Repair/QA/Export actions use the same drawer
+   through `<run>/studio/jobs/<job_id>.json`; they support cooperative cancel and
+   retry after failure.
+9. Static projects use the static preset catalog. Tileable projects expose a
     3×3 wrap context after seam check/repair; non-tileable projects use the same
     canvas viewer without inventing tile controls.
-9. **REVIEW** also shows generation attempt history and engine-owned candidate
+10. **REVIEW** also shows generation attempt history and engine-owned candidate
    takes (`reroll`, `tween`, and other declared takes) without rewriting them.
    Select an approved frame and use **PIN REVIEW FRAME AS ANCHOR**; the engine's
    directional-anchor resolver validates ownership, generation revision, and frame
    existence before saving the curation pin. **CLEAR ANCHOR PIN** restores the
    anchor-row sequence head.
-10. Attack prompts use the preset's declared action text and automatically add a
+11. Attack prompts use the preset's declared action text and automatically add a
     handedness continuity clause. The validator warns when a custom attack
     override removes that clause; post-extract Animation QA remains the visual
     evidence gate.
@@ -89,6 +93,17 @@ then generate bidirectional inbetweens. These images stay in the sequential
 manifest until the operator is ready to promote them into a downstream
 production pipeline; a failed row-quality gate can point to the same sequential
 plan without silently replacing the row result.
+
+Use **Promote to Refine / QA** only after the inbetweens are accepted. Promotion
+fits each one-image phase into the declared cell size, writes the canonical
+`frames/.../frame-N.png` files and updates `frames/frames-manifest.json`. The
+existing Refine and Animation QA services then consume the same frame surface;
+the sequential source manifest remains available for review and rollback.
+
+When `AUTO` is using `ROW_FAST` and Row Normalize fails its quality gate, the
+API persists a `KEYPOSE_SEQUENTIAL` override and returns the new Motion Plan in
+the 422 detail. The UI surfaces the recovery action instead of retrying the
+stalled row provider call invisibly.
 
 The direct CLI remains available for debugging. The Studio backend uses the
 same Python modules (`prepare`, `gen`, `normalize-grok-row`, `extract`, and

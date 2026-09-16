@@ -42,6 +42,12 @@ service-backed routes.
 - **Batch progress** is a WebSocket per job (§Batch); the on-disk
   `batch-queue.json` (`studio.backend.batch_service`) stays the persisted
   SSOT, the socket is just a transport over `load_queue()`.
+- **Single-operation jobs** use a separate persisted file per operation under
+  `<run>/studio/jobs/<job_id>.json`. The worker calls one existing
+  `studio/backend/*` module, while HTTP and WebSocket expose its state and
+  URL-shaped result. Cancellation is cooperative: a provider subprocess that
+  is already running finishes its current call, then the worker records
+  `cancelled` before starting no further stage.
 
 ---
 
@@ -102,7 +108,7 @@ ever calls `POST /api/uploads`.
 | Method | Path | Request | Response | Backend call |
 |---|---|---|---|---|
 | POST | `/api/runs/{run_id}/states/{state}/generate` | — | `GenerateResponse` | `spritegen_bridge.generate_state` |
-| POST | `/api/runs/{run_id}/states/{state}/normalize` | — | `NormalizeResponse` | `spritegen_bridge.normalize_state` (a `NormalizeQualityFailed` maps to 422, not 500 — it's an expected quality-gate outcome; body is `{"detail": {"message": str, "report": <normalize report dict>}}`, not the plain-string `ErrorResponse` every other error uses, so the client can render per-cell reasons) |
+| POST | `/api/runs/{run_id}/states/{state}/normalize` | optional `NormalizeRequest` | `NormalizeResponse` | `spritegen_bridge.normalize_state` (a `NormalizeQualityFailed` maps to 422; AUTO + ROW_FAST failures persist a KEYPOSE_SEQUENTIAL Motion Plan in the error detail) |
 | POST | `/api/runs/{run_id}/states/{state}/extract` | — | `ExtractResponse` | `spritegen_bridge.extract_frames` + `qa_service.summary` |
 | POST | `/api/runs/{run_id}/states/{state}/refine` | — | `RefineResponse` | `spritegen_bridge.refine_frames` |
 
@@ -113,6 +119,29 @@ ever calls `POST /api/uploads`.
 | POST | `/api/runs/{run_id}/batches` | `BatchStartRequest` | `BatchStartResponse` | `batch_service.start_batch` |
 | GET | `/api/runs/{run_id}/batches/current` | — | `BatchStatus` | `batch_service.load_queue` (poll fallback) |
 | WS | `/api/runs/{run_id}/batches/{job_id}/events` | — | stream of `BatchStatus` | pushes `batch_service.load_queue` on change (0.5s poll internally, only sends on an actual diff) instead of client-side polling; closes `1000` once a terminal status (`complete`/`failed`/`interrupted`/`corrupt`) is sent, `4404` if the run or its queue file doesn't exist, `4409` if `job_id` is not the run's current batch (a newer one replaced it, or it never matched) |
+
+## Sprite Mode — Single-operation Jobs
+
+The React Workspace submits heavy one-state operations here instead of holding
+an HTTP request open until the engine returns. Only one single-operation job is
+allowed per run at a time; Batch keeps its existing independent queue and API.
+
+| Method | Path | Request | Response | Backend owner |
+|---|---|---|---|---|
+| POST | `/api/runs/{run_id}/jobs` | `JobStartRequest` | `JobStartResponse` (`202`) | `job_service.start_job` |
+| GET | `/api/runs/{run_id}/jobs` | — | `JobListResponse` | `job_service.list_jobs` |
+| GET | `/api/runs/{run_id}/jobs/{job_id}` | — | `JobStatusResponse` | `job_service.load_job` |
+| POST | `/api/runs/{run_id}/jobs/{job_id}/cancel` | — | `JobStatusResponse` | cooperative `job_service.cancel_job` |
+| POST | `/api/runs/{run_id}/jobs/{job_id}/retry` | — | `JobStartResponse` (`202`) | `job_service.retry_job` (failed/cancelled/interrupted only) |
+| WS | `/api/runs/{run_id}/jobs/{job_id}/events` | — | stream of `JobStatusResponse` | pushes persisted job changes; closes `1000` at `succeeded`/`failed`/`cancelled`/`interrupted`, `4404` when the job is absent |
+
+`JobStartRequest.operation` supports `generate`, `normalize`, `extract`,
+`refine`, `repair_analyze`, `repair_safe`, `repair_decide`, `repair_undo`,
+`repair_adopt`, `repair_unadopt`, `animation_qa`, `export_compose`,
+`export_runtime`, `sequential_key_poses`, `sequential_inbetweens`, and
+`sequential_promote`. `repair_decide` receives `options.candidate_ids` and
+`options.accept`; `normalize` may retain the requested strategy in `options`
+for audit/retry.
 
 ### Generation strategy / sequential animation
 
@@ -125,6 +154,7 @@ ever calls `POST /api/uploads`.
 | POST | `/api/runs/{run_id}/states/{state}/sequential/key-poses` | — | `SequentialGenerationResponse` | provider-backed key-pose generation |
 | POST | `/api/runs/{run_id}/states/{state}/sequential/approve` | `KeyPoseApproveRequest` | `SequentialGenerationResponse` | explicit key-pose approval |
 | POST | `/api/runs/{run_id}/states/{state}/sequential/inbetweens` | — | `SequentialGenerationResponse` | identity + previous/next accepted key refs |
+| POST | `/api/runs/{run_id}/states/{state}/sequential/promote` | — | `SequentialGenerationResponse` | publish approved sequence to canonical `frames/` + `frames-manifest.json` for Refine/QA |
 
 ## Sprite Mode — Review / Repair / AI Micro Fix
 

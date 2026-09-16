@@ -32,6 +32,16 @@ BatchStatusKind = Literal["running", "complete", "failed", "interrupted", "corru
 StageKind = Literal[
     "queued", "generating", "normalizing", "extracting", "refining", "repairing", "qa", "complete",
 ]
+JobOperation = Literal[
+    "generate", "normalize", "extract", "refine",
+    "repair_analyze", "repair_safe", "repair_decide", "repair_undo",
+    "repair_adopt", "repair_unadopt", "animation_qa",
+    "export_compose", "export_runtime",
+    "sequential_key_poses", "sequential_inbetweens", "sequential_promote",
+]
+JobStatusKind = Literal[
+    "running", "succeeded", "failed", "cancel_requested", "cancelled", "interrupted",
+]
 
 
 # --------------------------------------------------------------------------
@@ -176,6 +186,10 @@ class KeyPoseApproveRequest(BaseModel):
     indices: list[int] = Field(min_length=1)
 
 
+class NormalizeRequest(BaseModel):
+    strategy: GenerationStrategy | None = None
+
+
 class SequentialAssetResponse(BaseModel):
     index: int
     phase: str
@@ -190,6 +204,8 @@ class SequentialGenerationResponse(BaseModel):
     motion_plan: dict[str, Any]
     key_poses: list[SequentialAssetResponse] = Field(default_factory=list)
     inbetweens: list[SequentialAssetResponse] = Field(default_factory=list)
+    promoted: bool = False
+    promoted_assets: list[str] = Field(default_factory=list)
 
 
 class NormalizeResponse(BaseModel):
@@ -234,6 +250,7 @@ class BatchItemStatus(BaseModel):
     generate: dict[str, Any] | None = None
     normalize: dict[str, Any] | None = None
     normalize_error: str | None = None
+    normalize_fallback: dict[str, Any] | None = None
     refine: dict[str, Any] | None = None
     repair_analysis: dict[str, Any] | None = None
     repair: dict[str, Any] | None = None
@@ -260,6 +277,45 @@ class BatchStatus(BaseModel):
     updated_at: str | None = None
     finished_at: str | None = None
     elapsed_seconds: int | None = None
+
+
+# --------------------------------------------------------------------------
+# Sprite Mode — Single background jobs
+# --------------------------------------------------------------------------
+
+class JobStartRequest(BaseModel):
+    operation: JobOperation
+    state: str | None = None
+    options: dict[str, Any] = Field(default_factory=dict)
+
+
+class JobStartResponse(BaseModel):
+    job_id: str
+
+
+class JobStatusResponse(BaseModel):
+    """Persisted single-operation job state and its JSON result envelope."""
+
+    job_id: str
+    operation: JobOperation
+    state: str | None
+    status: JobStatusKind
+    current_stage: str
+    progress_percent: float
+    cancel_requested: bool = False
+    attempt: int = 1
+    parent_job_id: str | None = None
+    result: dict[str, Any] | None = None
+    error: str | None = None
+    created_at: str
+    started_at: str | None = None
+    updated_at: str
+    finished_at: str | None = None
+    elapsed_seconds: int | None = None
+
+
+class JobListResponse(BaseModel):
+    jobs: list[JobStatusResponse]
 
 
 # --------------------------------------------------------------------------

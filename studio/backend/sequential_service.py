@@ -9,12 +9,16 @@ fed a half-approved sequence by accident.
 from __future__ import annotations
 
 import json
+import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from PIL import Image
+
 from sprite_studio.gen import generate_image
-from sprite_studio.spec.layout import guide_rel
-from sprite_studio.spec.runio import atomic_write_text
+from sprite_studio.spec.layout import frames_dir_rel, guide_rel
+from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 
 from .prompt_service import effective_prompt
 from .spritegen_bridge import request_for
@@ -173,5 +177,142 @@ def generate_inbetweens(run_dir: Path, state: str, *, provider: str | None = Non
         generated.append({"index": index, "phase": phase["id"], "role": "between", "path": str(result.out), "between": [previous, following], "provider": result.provider, "model": result.model})
     manifest["inbetweens"] = generated
     manifest["status"] = "sequential_frames_generated"
+    _save_manifest(run_dir, state, manifest)
+    return manifest
+
+
+def _fit_to_cell(image: Image.Image, request: dict[str, Any]) -> Image.Image:
+    """Place one approved image into the shared frame-cell contract."""
+    image = image.convert("RGBA")
+    cell = request["cell"]
+    width = int(cell["width"])
+    height = int(cell["height"])
+    margin_x = int(cell.get("safe_margin_x", cell.get("safe_margin", 24)))
+    margin_y = int(cell.get("safe_margin_y", cell.get("safe_margin", 24)))
+    target = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    bbox = image.getbbox()
+    if bbox is None:
+        return target
+    content = image.crop(bbox)
+    available_width = max(1, width - margin_x * 2)
+    available_height = max(1, height - margin_y)
+    scale = min(available_width / content.width, available_height / content.height)
+    resized = content.resize(
+        (max(1, round(content.width * scale)), max(1, round(content.height * scale))),
+        Image.Resampling.LANCZOS,
+    )
+    fit = request.get("fit") or {}
+    align_y = str(fit.get("align_y", "bottom")).lower()
+    left = (width - resized.width) // 2
+    top = height - margin_y - resized.height if align_y == "bottom" else (height - resized.height) // 2
+    target.alpha_composite(resized, (max(0, left), max(0, top)))
+    return target
+
+
+def _ordered_assets(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    plan = manifest.get("motion_plan") or {}
+    accepted = {int(index) for index in manifest.get("accepted_key_poses", [])}
+    key_by_index = {int(item["index"]): item for item in manifest.get("key_poses", [])}
+    between_by_index = {int(item["index"]): item for item in manifest.get("inbetweens", [])}
+    missing: list[int] = []
+    ordered: list[dict[str, Any]] = []
+    for phase in plan.get("phases", []):
+        index = int(phase["index"])
+        item = key_by_index.get(index) if phase.get("role") == "key" else between_by_index.get(index)
+        if phase.get("role") == "key" and index not in accepted:
+            item = None
+        if not item or not Path(str(item.get("path", ""))).is_file():
+            missing.append(index)
+        else:
+            ordered.append(item)
+    if missing:
+        raise ValueError(
+            "cannot promote sequential frames; every planned phase must have an "
+            f"approved/generated image (missing frames: {missing})"
+        )
+    return ordered
+
+
+def promote_to_shared_frames(run_dir: Path, state: str) -> dict[str, Any]:
+    """Publish an approved sequential sequence to the shared Refine/QA surface."""
+    request = request_for(run_dir)
+    manifest = _load_manifest(run_dir, state)
+    if manifest.get("status") != "sequential_frames_generated":
+        raise ValueError("generate inbetweens before promoting sequential frames")
+    ordered = _ordered_assets(manifest)
+    if not ordered:
+        raise ValueError("sequential manifest has no frames to promote")
+
+    canonical_dir = run_dir / frames_dir_rel(request, state)
+    canonical_dir.mkdir(parents=True, exist_ok=True)
+    previous_dir = _sequence_dir(run_dir, state) / "previous-canonical"
+    previous_files = sorted(
+        path for path in canonical_dir.glob("frame-*.png")
+        if not path.name.endswith(".plain.png")
+    )
+    if previous_files:
+        if previous_dir.exists():
+            shutil.rmtree(previous_dir)
+        previous_dir.mkdir(parents=True, exist_ok=True)
+        for path in previous_files:
+            shutil.copy2(path, previous_dir / path.name)
+        manifest["previous_canonical"] = [str(path) for path in previous_files]
+    for path in previous_files:
+        path.unlink()
+
+    files: list[str] = []
+    for index, item in enumerate(ordered):
+        source = Path(str(item["path"]))
+        output = canonical_dir / f"frame-{index}.png"
+        with Image.open(source) as opened:
+            atomic_save_image(_fit_to_cell(opened, request), output)
+        files.append(output.relative_to(run_dir).as_posix())
+
+    manifest_path = run_dir / "frames" / "frames-manifest.json"
+    if manifest_path.is_file():
+        try:
+            frames_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as exc:
+            raise ValueError(f"frames manifest is invalid: {exc}") from exc
+    else:
+        frames_manifest = {
+            "ok": True,
+            "engine": "sequential-promotion",
+            "cell": request.get("cell"),
+            "chroma_key": request.get("chroma_key"),
+            "errors": [],
+            "warnings": [],
+            "rows": [],
+        }
+    rows = [row for row in frames_manifest.get("rows", []) if row.get("state") != state]
+    rows.append({
+        "state": state,
+        "frames": len(files),
+        "method": "sequential-promoted",
+        "files": files,
+        "frame_records": [
+            {"index": index, "source": item.get("path"), "role": item.get("role"), "phase": item.get("phase")}
+            for index, item in enumerate(ordered)
+        ],
+        "ok": True,
+        "engine_revision": "sequential-promotion-v1",
+        "sequential": {"strategy": "KEYPOSE_SEQUENTIAL", "motion_plan": manifest.get("motion_plan")},
+    })
+    frames_manifest.update({
+        "ok": True,
+        "engine": frames_manifest.get("engine", "sequential-promotion"),
+        "cell": frames_manifest.get("cell") or request.get("cell"),
+        "chroma_key": frames_manifest.get("chroma_key") or request.get("chroma_key"),
+        "errors": [error for error in frames_manifest.get("errors", []) if not str(error).startswith(f"{state}:")],
+        "rows": rows,
+    })
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    atomic_write_text(manifest_path, json.dumps(frames_manifest, ensure_ascii=False, indent=2) + "\n")
+    manifest["status"] = "promoted"
+    manifest["promoted"] = {
+        "at": datetime.now(timezone.utc).isoformat(),
+        "files": files,
+        "status": "published_to_shared_frames",
+    }
     _save_manifest(run_dir, state, manifest)
     return manifest

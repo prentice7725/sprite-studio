@@ -94,6 +94,11 @@ def _sequential_response(run_id: str, run_dir, state: str, manifest: dict) -> Se
         motion_plan=plan,
         key_poses=assets(list(manifest.get("key_poses") or [])),
         inbetweens=assets(list(manifest.get("inbetweens") or [])),
+        promoted=bool(manifest.get("promoted")),
+        promoted_assets=[
+            asset_url(run_id, run_dir, run_dir / str(path))
+            for path in (manifest.get("promoted", {}).get("files") or [])
+        ],
     )
 
 
@@ -125,3 +130,9 @@ def approve_key_poses(run_id: str, state: str, body: KeyPoseApproveRequest) -> S
 def generate_inbetweens(run_id: str, state: str) -> SequentialGenerationResponse:
     run_dir, _request = _sequential_context(run_id, state)
     return _run(lambda: _sequential_response(run_id, run_dir, state, sequential_service.generate_inbetweens(run_dir, state)))
+
+
+@router.post("/sequential/promote", response_model=SequentialGenerationResponse)
+def promote_sequential(run_id: str, state: str) -> SequentialGenerationResponse:
+    run_dir, _request = _sequential_context(run_id, state)
+    return _run(lambda: _sequential_response(run_id, run_dir, state, sequential_service.promote_to_shared_frames(run_dir, state)))

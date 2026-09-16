@@ -21,9 +21,9 @@ from typing import Any
 
 from fastapi import APIRouter, HTTPException
 
-from studio.api.contracts import ExtractResponse, GenerateResponse, NormalizeResponse, RefineResponse
+from studio.api.contracts import ExtractResponse, GenerateResponse, NormalizeRequest, NormalizeResponse, RefineResponse
 from studio.api.deps import asset_url, load_run_and_request, require_state
-from studio.backend import qa_service, spritegen_bridge
+from studio.backend import qa_service, spritegen_bridge, strategy_service
 from sprite_studio.gen.base import GenTimeoutError
 
 router = APIRouter(prefix="/runs/{run_id}/states/{state}", tags=["generate"])
@@ -83,9 +83,10 @@ def generate(run_id: str, state: str) -> GenerateResponse:
 
 
 @router.post("/normalize", response_model=NormalizeResponse)
-def normalize(run_id: str, state: str) -> NormalizeResponse:
+def normalize(run_id: str, state: str, body: NormalizeRequest | None = None) -> NormalizeResponse:
     run_dir, request = load_run_and_request(run_id)
     require_state(request, state)
+    requested = body.strategy if body else None
     try:
         report = spritegen_bridge.normalize_state(run_dir, state)
     except spritegen_bridge.NormalizeQualityFailed as exc:
@@ -93,7 +94,16 @@ def normalize(run_id: str, state: str) -> NormalizeResponse:
         # Acceptance Gate), not a server error — 422 with the full parsed
         # report so the client can render per-cell reasons the way
         # `batch_service.status_text` already does, not just a string.
-        raise HTTPException(status_code=422, detail={"message": str(exc), "report": exc.report}) from exc
+        fallback = strategy_service.fallback_after_row_quality_failure(run_dir, request, state, requested)
+        if fallback:
+            fallback = {
+                **fallback,
+                "motion_plan_asset": asset_url(run_id, run_dir, fallback["motion_plan_path"]),
+            }
+        raise HTTPException(
+            status_code=422,
+            detail={"message": str(exc), "report": exc.report, "fallback": fallback},
+        ) from exc
     except SystemExit as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001

@@ -29,9 +29,17 @@ Generate, Refine, Repair, Animation QA, and Export are tools inside the active
 Workspace; Batch is available from the global Jobs drawer. Sprite preset details
 are loaded from FastAPI rather than duplicated in React.
 
+The application shell owns selection, API orchestration, and job state while
+Workspace presentation lives in `src/features/workspace/WorkspacePanels.tsx`.
+This keeps the persistent canvas/timeline and inspector-like pipeline tools
+together without growing `App.tsx` into another monolithic UI component.
+
 The Workspace also provides a persistent canvas viewer, keyboard-friendly frame
-timeline, read-only generation variant history, and a locale toggle. Static
-projects use `/api/static/presets`; tileable outputs show a 3×3 wrap preview
+timeline, read-only generation variant history, and a locale toggle. Heavy
+single-operation actions start through the Jobs drawer and stream their
+persisted status over WebSocket; cancellation is cooperative while a provider
+call is already running, and failed jobs can be retried. Static projects use
+`/api/static/presets`; tileable outputs show a 3×3 wrap preview
 after seam check/repair.
 
 When the FastAPI server is running, `npm run api:types` fetches its OpenAPI

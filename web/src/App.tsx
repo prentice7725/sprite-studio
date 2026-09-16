@@ -1,30 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
   BatchStatus,
+  JobStatus,
   AnimationQaResponse,
   ReviewData,
   StaticProject,
   StaticPreset,
   StaticQaResponse,
-  adoptRepair,
-  analyzeRepair,
-  composeExport,
   createRun,
   createStaticProject,
-  extract,
-  generate,
   getCurrentBatch,
   getGenerationStrategy,
   getSequential,
-  generateKeyPoses,
   approveKeyPoses,
-  generateInbetweens,
   getPrompt,
   getReview,
   getRun,
   getRunStatus,
   getPreset,
-  GenerateResponse,
   getStaticPrompt,
   getStaticPreset,
   getStaticStatus,
@@ -33,16 +26,7 @@ import {
   listPresets,
   listStaticProjects,
   listStaticPresets,
-  normalize,
-  RefineResponse,
-  refine,
-  runAnimationQa,
-  runtimeExport,
-  safeRepair,
-  decideRepair,
   launchCuration,
-  undoRepair,
-  unadoptRepair,
   RunDetail,
   RunSummary,
   savePrompt,
@@ -58,17 +42,21 @@ import {
   staticSeam,
   uploadImage,
   websocketUrl,
+  jobWebsocketUrl,
+  startJob,
+  cancelJob,
+  retryJob,
 } from './api'
-import type { Provider, ProviderStatus, SpritePreset } from './api'
+import type { JobOperation, Provider, ProviderStatus, SpritePreset } from './api'
 import type { GenerationStrategy, MotionPlan, SequentialGenerationResponse } from './api'
 import AssetLibrary from './features/assets/AssetLibrary'
 import CreateAssetForm, { type CreateAssetDraft } from './features/assets/CreateAssetForm'
 import JobDrawer from './features/jobs/JobDrawer'
 import { WorkspaceSelectionProvider, useWorkspaceSelection } from './features/workspace/WorkspaceSelectionContext'
-import AnimationTimeline from './features/workspace/AnimationTimeline'
-import CanvasViewer from './features/workspace/CanvasViewer'
 import VariantsPanel from './features/workspace/VariantsPanel'
 import StrategyPlanner from './features/workspace/StrategyPlanner'
+import { EmptyState, ExportPanel, GeneratePanel, QaPanel, RefinePanel, ReviewPanel, WorkspaceContextPanel } from './features/workspace/WorkspacePanels'
+import type { ReviewAction } from './features/workspace/WorkspacePanels'
 import StaticWorkspace, { type StaticCreateDraft } from './features/static/StaticWorkspace'
 import { useI18n } from './i18n'
 
@@ -144,6 +132,9 @@ function App() {
   const [batchStates, setBatchStates] = useState<string[]>([])
   const [batchJobId, setBatchJobId] = useState('')
   const [batchStatus, setBatchStatus] = useState<BatchStatus | null>(null)
+  const [singleJobId, setSingleJobId] = useState('')
+  const [singleJobRunId, setSingleJobRunId] = useState('')
+  const [singleJobStatus, setSingleJobStatus] = useState<JobStatus | null>(null)
   const [notice, setNotice] = useState<Notice | null>(null)
   const [busy, setBusy] = useState('')
   const [jobDrawerOpen, setJobDrawerOpen] = useState(false)
@@ -312,12 +303,99 @@ function App() {
     return () => socket.close()
   }, [batchJobId, selectedRunId])
 
+  useEffect(() => {
+    if (!singleJobId || !singleJobRunId) return
+    const socket = new WebSocket(jobWebsocketUrl(singleJobRunId, singleJobId))
+    socket.onmessage = (event) => {
+      try {
+        const next = JSON.parse(event.data) as JobStatus
+        setSingleJobStatus(next)
+        if (next.status === 'succeeded') {
+          const result = next.result ?? {}
+          const jobState = next.state ?? ''
+          if (next.operation === 'generate') {
+            setRawAsset(String(result.raw_asset ?? ''))
+            setNotice({ kind: 'success', text: `Generated ${labelForState(jobState)} in ${Number(result.elapsed_seconds ?? 0).toFixed(1)}s (${formatBytes(Number(result.raw_bytes ?? 0))}).` })
+          } else if (next.operation === 'normalize') {
+            setRawAsset(String(result.output_asset ?? ''))
+            const passed = result.result === 'pass'
+            setNotice({ kind: passed ? 'success' : 'error', text: `Normalize ${String(result.result ?? 'complete')}: ${String(result.valid_subjects ?? '?')}/${String(result.expected_subjects ?? '?')} subjects valid.` })
+          } else if (next.operation === 'refine') {
+            setRefinedAsset(String(result.refined_preview_asset ?? ''))
+            setRefineSummary(JSON.stringify(result.report ?? {}, null, 2))
+            setNotice({ kind: 'success', text: `Refined ${labelForState(jobState)}.` })
+          } else if (next.operation === 'animation_qa') {
+            setAnimationQa((result.qa ?? {}) as AnimationQaResponse)
+            const qa = (result.qa ?? {}) as { ok?: boolean; summary?: string }
+            setNotice({ kind: qa.ok ? 'success' : 'error', text: qa.summary ?? 'Animation QA completed.' })
+          } else if (next.operation === 'export_compose' || next.operation === 'export_runtime') {
+            setExportResult({ kind: next.operation === 'export_compose' ? 'compose' : 'runtime', manifest_asset: String(result.manifest_asset ?? ''), ...(result as { atlas_asset?: string; sprite_sheet_asset?: string; size?: [number, number] }) })
+            setNotice({ kind: 'success', text: `${next.operation === 'export_compose' ? 'Compose' : 'Runtime export'} completed.` })
+          } else if (next.operation.startsWith('repair_')) {
+            if (singleJobRunId === selectedRunId && jobState === activeState) {
+              void getReview(singleJobRunId, jobState).then(setReview)
+            }
+            setSelectedCandidates([])
+            setNotice({ kind: 'success', text: `Repair ${next.operation.replace('repair_', '')} completed.` })
+          } else if (next.operation.startsWith('sequential_')) {
+            if (singleJobRunId === selectedRunId && jobState === activeState) {
+              void getSequential(singleJobRunId, jobState).then((value) => { setSequential(value); setMotionPlan(value.motion_plan) })
+            }
+            setNotice({ kind: 'success', text: `${next.operation.replaceAll('_', ' ')} completed.` })
+          }
+          void getRunStatus(singleJobRunId).then((status) => {
+            if (singleJobRunId === selectedRunId) setRunStatus(status.states)
+          }).catch(() => { /* the job result remains authoritative */ })
+          setBusy('')
+        } else if (next.status === 'failed') {
+          setBusy('')
+          const result = next.result ?? {}
+          const fallback = result.fallback as { strategy?: GenerationStrategy; motion_plan?: MotionPlan } | undefined
+          if (next.operation === 'normalize' && fallback?.strategy && fallback.motion_plan) {
+            setGenerationStrategy(fallback.strategy)
+            setMotionPlan(fallback.motion_plan)
+            setSequential(null)
+            setNotice({ kind: 'info', text: `${next.state ?? 'state'}: Row Normalize quality failed. A KEYPOSE_SEQUENTIAL Motion Plan is ready; generate and approve key poses to continue.` })
+          } else {
+            setNotice({ kind: 'error', text: next.error ?? 'Background job failed.' })
+          }
+        } else if (next.status === 'cancelled') {
+          setBusy('')
+          setNotice({ kind: 'info', text: 'Background job cancelled.' })
+        }
+      } catch {
+        setNotice({ kind: 'error', text: 'Job WebSocket 응답을 해석하지 못했습니다.' })
+      }
+    }
+    socket.onerror = () => setNotice({ kind: 'error', text: 'Job WebSocket 연결에 실패했습니다.' })
+    return () => socket.close()
+  }, [singleJobId, singleJobRunId, selectedRunId, activeState])
+
   function selectRun(runId: string) {
     setSelectedRunId(runId)
     setSelectedFrame(0)
     setBatchJobId('')
     setBatchStatus(null)
     setNotice(null)
+  }
+
+  async function beginJob(operation: JobOperation, state?: string, options: Record<string, unknown> = {}) {
+    if (!selectedRunId) return false
+    setBusy(`job:${operation}`)
+    setNotice(null)
+    try {
+      const result = await startJob(selectedRunId, { operation, ...(state ? { state } : {}), options })
+      setSingleJobId(result.job_id)
+      setSingleJobRunId(selectedRunId)
+      setSingleJobStatus(null)
+      setJobDrawerOpen(true)
+      setNotice({ kind: 'info', text: `${operation.replaceAll('_', ' ')} job ${result.job_id} started.` })
+      return true
+    } catch (error: unknown) {
+      setBusy('')
+      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
+      return false
+    }
   }
 
   async function handleCreateRun(draft: CreateAssetDraft) {
@@ -373,19 +451,20 @@ function App() {
     }
   }
 
-  async function handleSequential(action: 'key-poses' | 'approve' | 'inbetweens', indices: number[] = []) {
+  async function handleSequential(action: 'key-poses' | 'approve' | 'inbetweens' | 'promote', indices: number[] = []) {
     if (!selectedRunId || !activeState) return
+    if (action !== 'approve') {
+      const operation: JobOperation = action === 'key-poses' ? 'sequential_key_poses' : action === 'inbetweens' ? 'sequential_inbetweens' : 'sequential_promote'
+      await beginJob(operation, activeState)
+      return
+    }
     setSequentialBusy(action)
     setNotice(null)
     try {
-      const result = action === 'key-poses'
-        ? await generateKeyPoses(selectedRunId, activeState)
-        : action === 'approve'
-          ? await approveKeyPoses(selectedRunId, activeState, indices)
-          : await generateInbetweens(selectedRunId, activeState)
+      const result = await approveKeyPoses(selectedRunId, activeState, indices)
       setSequential(result)
       setMotionPlan(result.motion_plan)
-      setNotice({ kind: 'success', text: `${activeState}: ${action === 'key-poses' ? 'key poses generated' : action === 'approve' ? 'key poses approved' : 'bidirectional inbetweens generated'}.` })
+      setNotice({ kind: 'success', text: `${activeState}: key poses approved.` })
     } catch (error: unknown) {
       setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
     } finally {
@@ -395,66 +474,22 @@ function App() {
 
   async function handleGenerate() {
     if (!selectedRunId || !activeState) return
-    setBusy('generate')
-    setNotice(null)
-    try {
-      const result: GenerateResponse = await generate(selectedRunId, activeState)
-      setRawAsset(result.raw_asset)
-      setNotice({ kind: 'success', text: `Generated ${labelForState(activeState)} in ${result.elapsed_seconds.toFixed(1)}s (${formatBytes(result.raw_bytes)}).` })
-      await getRunStatus(selectedRunId).then((status) => setRunStatus(status.states))
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
-    }
+    await beginJob('generate', activeState)
   }
 
   async function handleNormalize() {
     if (!selectedRunId || !activeState) return
-    setBusy('normalize')
-    setNotice(null)
-    try {
-      const result = await normalize(selectedRunId, activeState)
-      setRawAsset(result.output_asset)
-      setNotice({ kind: result.result === 'pass' ? 'success' : 'error', text: `Normalize ${result.result}: ${result.valid_subjects}/${result.expected_subjects} subjects valid.` })
-      await getRunStatus(selectedRunId).then((status) => setRunStatus(status.states))
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
-    }
+    await beginJob('normalize', activeState, { strategy: generationStrategy })
   }
 
   async function handleExtract() {
     if (!selectedRunId || !activeState) return
-    setBusy('extract')
-    setNotice(null)
-    try {
-      const result = await extract(selectedRunId, activeState)
-      setNotice({ kind: result.exit_code === 0 ? 'success' : 'error', text: result.summary || `Extract exit code ${result.exit_code}.` })
-      await getRunStatus(selectedRunId).then((status) => setRunStatus(status.states))
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
-    }
+    await beginJob('extract', activeState)
   }
 
   async function handleRefine() {
     if (!selectedRunId || !activeState) return
-    setBusy('refine')
-    setNotice(null)
-    try {
-      const result: RefineResponse = await refine(selectedRunId, activeState)
-      setRefinedAsset(result.refined_preview_asset ?? '')
-      setRefineSummary(result.summary)
-      setNotice({ kind: 'success', text: `Refined ${labelForState(activeState)}.` })
-      await getRunStatus(selectedRunId).then((status) => setRunStatus(status.states))
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
-    }
+    await beginJob('refine', activeState)
   }
 
   async function handleSavePrompt() {
@@ -603,42 +638,27 @@ function App() {
     }
   }
 
-  async function handleReviewAction(action: 'load' | 'analyze' | 'safe' | 'undo' | 'adopt' | 'unadopt' | 'accept' | 'reject') {
+  async function handleReviewAction(action: ReviewAction) {
     if (!selectedRunId || !activeState) return
-    setBusy(`review-${action}`)
-    setNotice(null)
-    try {
-      let result: ReviewData
-      if (action === 'load') result = await getReview(selectedRunId, activeState)
-      else if (action === 'analyze') result = await analyzeRepair(selectedRunId, activeState)
-      else if (action === 'safe') result = await safeRepair(selectedRunId, activeState)
-      else if (action === 'undo') result = await undoRepair(selectedRunId, activeState)
-      else if (action === 'adopt') result = await adoptRepair(selectedRunId, activeState)
-      else if (action === 'unadopt') result = await unadoptRepair(selectedRunId, activeState)
-      else result = await decideRepair(selectedRunId, activeState, selectedCandidates, action === 'accept')
-      setReview(result)
-      setSelectedCandidates([])
-      setNotice({ kind: 'success', text: action === 'load' ? 'Review loaded.' : `Repair ${action} completed.` })
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
+    if (action === 'load') {
+      setBusy('review-load')
+      try {
+        setReview(await getReview(selectedRunId, activeState))
+        setNotice({ kind: 'success', text: 'Review loaded.' })
+      } catch (error: unknown) {
+        setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
+      } finally {
+        setBusy('')
+      }
+      return
     }
+    const operation: JobOperation = action === 'analyze' ? 'repair_analyze' : action === 'safe' ? 'repair_safe' : action === 'undo' ? 'repair_undo' : action === 'adopt' ? 'repair_adopt' : action === 'unadopt' ? 'repair_unadopt' : 'repair_decide'
+    await beginJob(operation, activeState, action === 'accept' || action === 'reject' ? { candidate_ids: selectedCandidates, accept: action === 'accept' } : {})
   }
 
   async function handleAnimationQa() {
     if (!selectedRunId || !activeState) return
-    setBusy('animation-qa')
-    setNotice(null)
-    try {
-      const result = await runAnimationQa(selectedRunId, activeState)
-      setAnimationQa(result)
-      setNotice({ kind: result.ok ? 'success' : 'error', text: result.summary })
-    } catch (error: unknown) {
-      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
-    }
+    await beginJob('animation_qa', activeState)
   }
 
   async function handleCuration() {
@@ -659,16 +679,28 @@ function App() {
 
   async function handleExport(kind: 'compose' | 'runtime') {
     if (!selectedRunId) return
-    setBusy(`export-${kind}`)
-    setNotice(null)
+    await beginJob(kind === 'compose' ? 'export_compose' : 'export_runtime')
+  }
+
+  async function handleCancelSingleJob() {
+    if (!singleJobId || !singleJobRunId) return
     try {
-      const result = kind === 'compose' ? await composeExport(selectedRunId) : await runtimeExport(selectedRunId)
-      setExportResult({ kind, ...result })
-      setNotice({ kind: 'success', text: `${kind === 'compose' ? 'Compose' : 'Runtime export'} completed.` })
+      setSingleJobStatus(await cancelJob(singleJobRunId, singleJobId))
     } catch (error: unknown) {
       setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
-    } finally {
-      setBusy('')
+    }
+  }
+
+  async function handleRetrySingleJob() {
+    if (!singleJobId || !singleJobRunId) return
+    try {
+      const result = await retryJob(singleJobRunId, singleJobId)
+      setSingleJobId(result.job_id)
+      setSingleJobStatus(null)
+      setBusy(`job:retry`)
+      setNotice({ kind: 'info', text: `Retry job ${result.job_id} started.` })
+    } catch (error: unknown) {
+      setNotice({ kind: 'error', text: error instanceof Error ? error.message : String(error) })
     }
   }
 
@@ -740,19 +772,15 @@ function App() {
         {tab === 'static' && <StaticWorkspace projects={staticProjects} presets={staticPresets} providerChoices={providerChoices} selectedProjectId={selectedStaticId} onProjectChange={setSelectedStaticId} onCreate={(draft) => void handleCreateStatic(draft)} status={staticStatus} assetName={staticAssetName} onAssetChange={setStaticAssetName} prompt={staticPrompt} onPromptChange={setStaticPrompt} outputAsset={staticOutput} wrapPreview={staticWrapPreview} wrapReport={staticWrapReport} report={staticReport} busy={busy} onImport={(file) => void handleStaticImport(file)} onAction={(action) => void handleStaticAction(action)} />}
         {tab === 'workspace' && <><div className="workspace-tools" aria-label="Asset tools">{workspaceTools.map((tool) => <button className={`workspace-tool ${workspaceTool === tool.id ? 'active' : ''}`} type="button" key={tool.id} onClick={() => setWorkspaceTool(tool.id)}><strong>{tool.label}</strong><small>{tool.hint}</small></button>)}</div>{workspaceTool === 'generate' && <GeneratePanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} prompt={prompt} promptSource={promptSource} onPromptChange={setPrompt} onSavePrompt={() => void handleSavePrompt()} rawAsset={rawAsset} busy={busy} onGenerate={() => void handleGenerate()} onNormalize={() => void handleNormalize()} onExtract={() => void handleExtract()} status={runStatus} />}{workspaceTool === 'refine' && <RefinePanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} busy={busy} onRefine={() => void handleRefine()} previewAsset={refinedAsset} summary={refineSummary} />}{workspaceTool === 'review' && <ReviewPanel run={selectedRun} state={activeState} states={selectedRun?.states ?? []} review={review} selectedCandidates={selectedCandidates} onToggleCandidate={(id) => setSelectedCandidates((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id])} busy={busy} onAction={(action) => void handleReviewAction(action)} />}{workspaceTool === 'qa' && <QaPanel run={selectedRun} states={selectedRun?.states ?? []} result={animationQa} busy={busy} onRun={() => void handleAnimationQa()} />}{workspaceTool === 'export' && <ExportPanel run={selectedRun} exportResult={exportResult} curationUrl={curationUrl} busy={busy} onCuration={() => void handleCuration()} onExport={(kind) => void handleExport(kind)} />}</>}
         {tab === 'workspace' && <WorkspaceContextPanel frames={timelineFrames} activeFrame={selectedFrame} fps={activePreset?.states[activeState]?.fps ?? 8} loop={activePreset?.states[activeState]?.loop ?? true} repairedFrames={review?.repaired_frames} rawAsset={rawAsset} state={activeState} onFrameChange={setSelectedFrame} />}
-        {tab === 'workspace' && workspaceTool === 'generate' && <StrategyPlanner value={generationStrategy} plan={motionPlan} sequential={sequential} busy={strategyBusy} sequentialBusy={sequentialBusy} onChange={setGenerationStrategy} onSave={() => void handleSaveStrategy()} onGenerateKeyPoses={() => void handleSequential('key-poses')} onApproveKeyPoses={(indices) => void handleSequential('approve', indices)} onGenerateInbetweens={() => void handleSequential('inbetweens')} />}
+        {tab === 'workspace' && workspaceTool === 'generate' && <StrategyPlanner value={generationStrategy} plan={motionPlan} sequential={sequential} busy={strategyBusy} sequentialBusy={sequentialBusy} onChange={setGenerationStrategy} onSave={() => void handleSaveStrategy()} onGenerateKeyPoses={() => void handleSequential('key-poses')} onApproveKeyPoses={(indices) => void handleSequential('approve', indices)} onGenerateInbetweens={() => void handleSequential('inbetweens')} onPromote={() => void handleSequential('promote')} />}
         {tab === 'workspace' && workspaceTool === 'review' && <VariantsPanel review={review} />}
         {tab === 'jobs' && <section className="panel jobs-page"><p className="eyebrow">GLOBAL JOB CENTER</p><h2>Batch jobs stay available while you work on an asset.</h2><p className="muted">Use the Jobs button in the top bar to open the drawer without leaving the current workspace.</p><button className="primary-button" type="button" onClick={() => setJobDrawerOpen(true)}>Open job drawer</button></section>}
 
       </main>
-      <JobDrawer open={jobDrawerOpen} run={selectedRun} states={selectedRun?.states ?? []} selectedStates={batchStates} status={batchStatus} jobId={batchJobId} busy={busy} onClose={() => setJobDrawerOpen(false)} onToggle={(state) => setBatchStates((current) => current.includes(state) ? current.filter((item) => item !== state) : [...current, state])} onStart={() => void handleStartBatch()} />
+      <JobDrawer open={jobDrawerOpen} run={selectedRun} states={selectedRun?.states ?? []} selectedStates={batchStates} status={batchStatus} jobId={batchJobId} singleJob={singleJobStatus} singleJobId={singleJobId} singleJobRunId={singleJobRunId} busy={busy} onClose={() => setJobDrawerOpen(false)} onToggle={(state) => setBatchStates((current) => current.includes(state) ? current.filter((item) => item !== state) : [...current, state])} onStart={() => void handleStartBatch()} onCancelSingle={() => void handleCancelSingleJob()} onRetrySingle={() => void handleRetrySingleJob()} />
     </div>
     </WorkspaceSelectionProvider>
   )
-}
-
-function WorkspaceContextPanel({ frames, activeFrame, fps, loop, repairedFrames, rawAsset, state, onFrameChange }: { frames: string[]; activeFrame: number; fps: number; loop: boolean; repairedFrames?: string[]; rawAsset: string; state: string; onFrameChange: (index: number) => void }) {
-  return <section className="workspace-context"><CanvasViewer src={(frames[activeFrame] ?? rawAsset) || null} alt={`${state || 'Active'} frame ${activeFrame + 1}`} label="Animation canvas viewer" /><AnimationTimeline frames={frames} activeFrame={activeFrame} fps={fps} loop={loop} repairedFrames={repairedFrames} onFrameChange={onFrameChange} /></section>
 }
 
 function RunCard({ run, selected, onSelect }: { run: RunSummary; selected: boolean; onSelect: () => void }) {
@@ -765,44 +793,5 @@ function AssetFacade({ detail, status }: { detail: RunDetail; status: Record<str
 }
 
 function Stat({ label, value }: { label: string; value: string }) { return <div className="stat"><span>{label}</span><strong>{value}</strong></div> }
-
-function GeneratePanel({ run, state, states, prompt, promptSource, onPromptChange, onSavePrompt, rawAsset, busy, onGenerate, onNormalize, onExtract, status }: { run: RunSummary | null; state: string; states: string[]; prompt: string; promptSource: 'generated' | 'override' | null; onPromptChange: (value: string) => void; onSavePrompt: () => void; rawAsset: string; busy: string; onGenerate: () => void; onNormalize: () => void; onExtract: () => void; status: Record<string, string> }) {
-  if (!run) return <EmptyState text="Select or create an asset in Project first." />
-  return <div className="content-grid work-grid"><section className="panel prompt-panel"><div className="panel-heading"><div><p className="eyebrow">STATE INPUT</p><h2>Generate</h2></div><StatusPill value={status[state] ?? 'not-generated'} /></div><StatePicker states={states} /><div className="prompt-meta"><span>Prompt source: <strong>{promptSource ?? 'loading'}</strong></span><span>Asset: <strong>{run.character_id}</strong></span></div><div className="prompt-preview"><span>Effective prompt</span><p>{prompt || 'Loading the server-assembled prompt…'}</p></div><details className="advanced-options" open={promptSource === 'override'}><summary>Edit prompt override</summary><div className="form-stack compact-stack"><label>Override prompt<textarea value={prompt} onChange={(event) => onPromptChange(event.target.value)} rows={12} /><span className="helper">Use this only for deliberate exceptions. Reset is handled by the server contract.</span></label><button className="secondary-button" disabled={busy === 'prompt' || !prompt.trim()} type="button" onClick={onSavePrompt}>{busy === 'prompt' ? 'Saving…' : 'Save override'}</button></div></details><button className="primary-button" disabled={busy !== ''} type="button" onClick={onGenerate}>{busy === 'generate' ? 'Generating…' : 'Generate row'}</button></section><section className="panel output-panel"><div className="panel-heading"><div><p className="eyebrow">PIPELINE OUTPUT</p><h2>Raw → extracted</h2></div><span className="step-number">02</span></div><p className="muted">Generate is provider-backed. Normalize, Extract, and Refine remain deterministic backend stages.</p><div className="pipeline-actions"><PipelineAction label="Generate" state={status[state]} active={busy === 'generate'} onClick={onGenerate} disabled={busy !== ''} /><PipelineAction label="Normalize" state={status[state]} active={busy === 'normalize'} onClick={onNormalize} disabled={busy !== ''} /><PipelineAction label="Extract" state={status[state]} active={busy === 'extract'} onClick={onExtract} disabled={busy !== ''} /></div>{rawAsset ? <div className="asset-preview"><img src={rawAsset} alt={`Generated raw row for ${labelForState(state)}`} /><span>Latest asset preview</span></div> : <EmptyState text="Generate a row to preview the provider output." />}</section></div>
-}
-function RefinePanel({ run, state, states, busy, onRefine, previewAsset, summary }: { run: RunSummary | null; state: string; states: string[]; busy: string; onRefine: () => void; previewAsset: string; summary: string }) {
-  if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid work-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">DETERMINISTIC REFINEMENT</p><h2>Refine state</h2></div><span className="step-number">03</span></div><StatePicker states={states} /><p className="muted">Refine applies the shared lattice, phase bounds, palette, baseline, scale, and pivot decisions from the existing Studio engine.</p><button className="primary-button" disabled={busy !== ''} type="button" onClick={onRefine}>{busy === 'refine' ? 'Refining…' : 'Run refine'}</button>{summary && <pre className="report-box">{summary}</pre>}</section><section className="panel output-panel"><div className="panel-heading"><div><p className="eyebrow">REFINED PREVIEW</p><h2>{state ? labelForState(state) : 'No state selected'}</h2></div></div>{previewAsset ? <div className="asset-preview refined"><img src={previewAsset} alt={`Refined preview for ${labelForState(state)}`} /><span>Refined preview asset</span></div> : <EmptyState text="Extract the selected state before refining it." />}</section></div>
-}
-
-type ReviewAction = 'load' | 'analyze' | 'safe' | 'undo' | 'adopt' | 'unadopt' | 'accept' | 'reject'
-
-function StatePicker({ states }: { states: string[] }) {
-  const selection = useWorkspaceSelection()
-  return <label>State<select value={selection.activeState} onChange={(event) => selection.setActiveState(event.target.value)}>{states.map((item) => <option key={item} value={item}>{labelForState(item)}</option>)}</select></label>
-}
-
-function AssetStrip({ title, assets, state }: { title: string; assets: string[]; state: string }) {
-  return <div className="asset-group"><div className="asset-group-heading"><h3>{title}</h3><span>{assets.length} files</span></div>{assets.length ? <div className="asset-grid">{assets.map((asset, index) => <img key={asset} src={asset} alt={`${title} ${labelForState(state)} frame ${index + 1}`} loading="lazy" />)}</div> : <EmptyState text={`No ${title.toLowerCase()} available yet.`} />}</div>
-}
-
-function ReviewPanel({ run, state, states, review, selectedCandidates, onToggleCandidate, busy, onAction }: { run: RunSummary | null; state: string; states: string[]; review: ReviewData | null; selectedCandidates: string[]; onToggleCandidate: (id: string) => void; busy: string; onAction: (action: ReviewAction) => void }) {
-  if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid review-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">REPAIR WORKBENCH</p><h2>Review state</h2></div><span className="step-number">04</span></div><StatePicker states={states} /><p className="muted">Analyze refined frames first. Safe repair writes derived outputs only; adopt makes them the curation/export source.</p><div className="button-grid"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('load')}>{busy === 'review-load' ? 'Loading…' : 'Load review'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('analyze')}>{busy === 'review-analyze' ? 'Analyzing…' : 'Analyze candidates'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('safe')}>{busy === 'review-safe' ? 'Repairing…' : 'Apply safe repair'}</button></div>{review && <><div className="summary-stack"><p>{review.repair_summary}</p><p>{review.qa_summary}</p></div><fieldset className="check-list"><legend>Candidate decisions</legend>{review.repair_candidates.length ? review.repair_candidates.map((id) => <label className="check-row" key={id}><input type="checkbox" checked={selectedCandidates.includes(id)} onChange={() => onToggleCandidate(id)} /><code>{id}</code><span className="check-detail">selected for decision</span></label>) : <p className="helper">No repair candidates returned for this state.</p>}</fieldset><div className="button-grid compact"><button className="secondary-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('accept')}>Accept selected</button><button className="secondary-button danger-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('reject')}>Reject selected</button></div><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('adopt')}>Adopt repaired</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('unadopt')}>Use canonical</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('undo')}>Undo repairs</button></div></>}</section><section className="panel review-output"><div className="panel-heading"><div><p className="eyebrow">VISUAL REVIEW</p><h2>{labelForState(state)}</h2></div></div>{review ? <><AssetStrip title="Extracted" assets={review.frames} state={state} /><AssetStrip title="Refined" assets={review.refined_frames} state={state} /><AssetStrip title="Proposals" assets={review.repair_proposals} state={state} /><AssetStrip title="Repaired" assets={review.repaired_frames} state={state} /><AssetStrip title="Diff" assets={review.repair_diff} state={state} /><details className="report-details"><summary>History</summary><pre className="report-box">{review.history_summary}</pre></details></> : <EmptyState text="Load review to compare extracted, refined, proposal, and repaired frames." />}</section></div>
-}
-
-function QaPanel({ run, states, result, busy, onRun }: { run: RunSummary | null; states: string[]; result: AnimationQaResponse | null; busy: string; onRun: () => void }) {
-  if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid single-grid"><section className="panel qa-panel"><div className="panel-heading"><div><p className="eyebrow">ANIMATION QA</p><h2>Continuity checks</h2></div><span className="step-number">05</span></div><StatePicker states={states} /><p className="muted">QA reads refined frames, or the currently adopted repaired frames, through the existing deterministic animation analyzer.</p><button className="primary-button" disabled={busy !== ''} type="button" onClick={onRun}>{busy === 'animation-qa' ? 'Running QA…' : 'Run animation QA'}</button>{result && <div className={`qa-result ${result.ok ? 'pass' : 'fail'}`} role="status"><strong>{result.ok ? 'PASS' : 'ATTENTION REQUIRED'}</strong><p>{result.summary}</p>{result.warnings.length ? <ul>{result.warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul> : <p className="helper">No continuity warnings.</p>}</div>}</section></div>
-}
-
-function ExportPanel({ run, exportResult, curationUrl, busy, onCuration, onExport }: { run: RunSummary | null; exportResult: { kind: 'compose' | 'runtime'; manifest_asset: string; atlas_asset?: string; sprite_sheet_asset?: string; size?: [number, number] } | null; curationUrl: string; busy: string; onCuration: () => void; onExport: (kind: 'compose' | 'runtime') => void }) {
-  if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid single-grid"><section className="panel export-panel"><div className="panel-heading"><div><p className="eyebrow">CURATION / EXPORT</p><h2>Publish runtime assets</h2></div><span className="step-number">06</span></div><p className="muted">Compose creates the canonical atlas and manifest. Runtime export creates a nearest-neighbor fixed-size package for the game runtime.</p><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={onCuration}>{busy === 'curation' ? 'Opening…' : 'Open curation'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('compose')}>{busy === 'export-compose' ? 'Composing…' : 'Compose atlas'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('runtime')}>{busy === 'export-runtime' ? 'Exporting…' : 'Runtime export'}</button></div>{curationUrl && <p className="helper">Curation URL: <a href={curationUrl} target="_blank" rel="noreferrer">{curationUrl}</a></p>}{exportResult && <div className="export-result" role="status"><strong>{exportResult.kind === 'compose' ? 'Compose complete' : 'Runtime export complete'}</strong>{exportResult.size && <span>Sheet size: {exportResult.size[0]} × {exportResult.size[1]} px</span>}<a href={exportResult.sprite_sheet_asset ?? exportResult.atlas_asset} target="_blank" rel="noreferrer">Open atlas image</a><a href={exportResult.manifest_asset} target="_blank" rel="noreferrer">Open manifest JSON</a></div>}</section></div>
-}
-
-function PipelineAction({ label, state, active, onClick, disabled }: { label: string; state?: string; active: boolean; onClick: () => void; disabled: boolean }) { return <button className={`pipeline-action ${active ? 'working' : ''}`} type="button" onClick={onClick} disabled={disabled}><span className={`pipeline-indicator ${state ?? 'not-generated'}`} /> <strong>{label}</strong><small>{active ? 'working…' : state ?? 'ready'}</small></button> }
-function StatusPill({ value }: { value: string }) { return <span className={`status-pill ${value.replaceAll(' ', '-')}`}>{value}</span> }
-function EmptyState({ text }: { text: string }) { return <div className="empty-state"><span className="empty-line" aria-hidden="true" /><p>{text}</p></div> }
 
 export default App

@@ -115,6 +115,26 @@ export interface SequentialGenerationResponse {
   motion_plan: MotionPlan
   key_poses: SequentialAsset[]
   inbetweens: SequentialAsset[]
+  promoted: boolean
+  promoted_assets: string[]
+}
+
+export interface NormalizeFailureDetail {
+  message?: string
+  report?: Record<string, unknown>
+  fallback?: {
+    strategy: GenerationStrategy
+    reason: string
+    motion_plan: MotionPlan
+    motion_plan_asset: string | null
+  }
+}
+
+export class ApiError extends Error {
+  constructor(message: string, public readonly status: number, public readonly payload?: unknown) {
+    super(message)
+    this.name = 'ApiError'
+  }
 }
 
 export interface NormalizeResponse {
@@ -244,6 +264,34 @@ export interface BatchStatus {
   elapsed_seconds?: number | null
 }
 
+export type JobOperation =
+  | 'generate' | 'normalize' | 'extract' | 'refine'
+  | 'repair_analyze' | 'repair_safe' | 'repair_decide' | 'repair_undo'
+  | 'repair_adopt' | 'repair_unadopt' | 'animation_qa'
+  | 'export_compose' | 'export_runtime'
+  | 'sequential_key_poses' | 'sequential_inbetweens' | 'sequential_promote'
+
+export type JobStatusKind = 'running' | 'succeeded' | 'failed' | 'cancel_requested' | 'cancelled' | 'interrupted'
+
+export interface JobStatus {
+  job_id: string
+  operation: JobOperation
+  state: string | null
+  status: JobStatusKind
+  current_stage: string
+  progress_percent: number
+  cancel_requested: boolean
+  attempt: number
+  parent_job_id: string | null
+  result: Record<string, unknown> | null
+  error: string | null
+  created_at: string
+  started_at: string | null
+  updated_at: string
+  finished_at: string | null
+  elapsed_seconds: number | null
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -254,15 +302,17 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   })
   if (!response.ok) {
     let detail = `${response.status} ${response.statusText}`
+    let payload: unknown
     try {
-      const body = await response.json() as { detail?: string | { message?: string } }
+      const body = await response.json() as { detail?: string | NormalizeFailureDetail }
+      payload = body.detail
       if (typeof body.detail === 'string') detail = body.detail
       else if (body.detail?.message) detail = body.detail.message
     } catch {
       // Keep the HTTP status when the server did not return JSON.
     }
     if (response.status === 504) detail = `Image provider timeout: ${detail}. Check the provider session and retry.`
-    throw new Error(detail)
+    throw new ApiError(detail, response.status, payload)
   }
   if (response.status === 204) return undefined as T
   return response.json() as Promise<T>
@@ -345,8 +395,12 @@ export function generateInbetweens(runId: string, state: string): Promise<Sequen
   return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential/inbetweens`, { method: 'POST' })
 }
 
-export function normalize(runId: string, state: string): Promise<NormalizeResponse> {
-  return request<NormalizeResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/normalize`, { method: 'POST' })
+export function promoteSequential(runId: string, state: string): Promise<SequentialGenerationResponse> {
+  return request<SequentialGenerationResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/sequential/promote`, { method: 'POST' })
+}
+
+export function normalize(runId: string, state: string, strategy?: GenerationStrategy): Promise<NormalizeResponse> {
+  return request<NormalizeResponse>(`/runs/${encodeURIComponent(runId)}/states/${encodeURIComponent(state)}/normalize`, { method: 'POST', ...(strategy ? { body: JSON.stringify({ strategy }) } : {}) })
 }
 
 export function extract(runId: string, state: string): Promise<ExtractResponse> {
@@ -474,6 +528,38 @@ export function getCurrentBatch(runId: string): Promise<BatchStatus> {
 
 export function websocketUrl(runId: string, jobId: string): string {
   const path = `${API_BASE}/runs/${encodeURIComponent(runId)}/batches/${encodeURIComponent(jobId)}/events`
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path.replace(/^http/, 'ws')
+  }
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+  return `${protocol}//${window.location.host}${path}`
+}
+
+export function startJob(runId: string, body: { operation: JobOperation; state?: string; options?: Record<string, unknown> }): Promise<{ job_id: string }> {
+  return request<{ job_id: string }>(`/runs/${encodeURIComponent(runId)}/jobs`, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
+}
+
+export function listJobs(runId: string): Promise<{ jobs: JobStatus[] }> {
+  return request<{ jobs: JobStatus[] }>(`/runs/${encodeURIComponent(runId)}/jobs`)
+}
+
+export function getJob(runId: string, jobId: string): Promise<JobStatus> {
+  return request<JobStatus>(`/runs/${encodeURIComponent(runId)}/jobs/${encodeURIComponent(jobId)}`)
+}
+
+export function cancelJob(runId: string, jobId: string): Promise<JobStatus> {
+  return request<JobStatus>(`/runs/${encodeURIComponent(runId)}/jobs/${encodeURIComponent(jobId)}/cancel`, { method: 'POST' })
+}
+
+export function retryJob(runId: string, jobId: string): Promise<{ job_id: string }> {
+  return request<{ job_id: string }>(`/runs/${encodeURIComponent(runId)}/jobs/${encodeURIComponent(jobId)}/retry`, { method: 'POST' })
+}
+
+export function jobWebsocketUrl(runId: string, jobId: string): string {
+  const path = `${API_BASE}/runs/${encodeURIComponent(runId)}/jobs/${encodeURIComponent(jobId)}/events`
   if (path.startsWith('http://') || path.startsWith('https://')) {
     return path.replace(/^http/, 'ws')
   }

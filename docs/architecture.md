@@ -1,8 +1,10 @@
 # sprite-studio — Implemented Architecture
 
-> Status: reference (describes the code as it actually is, v1.56.x, 2026-07-11).
+> Status: reference (describes the code as it actually is, v1.59.0, 2026-09-16).
 > Canonical behavior contract lives in [`../SKILL.md`](../SKILL.md); this doc
-> explains *how* the scripts realize that contract. If this doc and `SKILL.md`
+> explains *how* the scripts realize that contract. The React/FastAPI operator
+> layer is documented in [`studio.md`](studio.md); this document remains the
+> engine and run-directory reference. If this doc and `SKILL.md`
 > ever disagree, `SKILL.md` wins and this doc is the bug.
 
 ## 1. One sentence

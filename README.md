@@ -76,6 +76,7 @@ pip install -e ".[studio,dev]"
 * **🎭 Sprite Mode**: Asset-centric Project/Workspace 흐름에서 캐릭터 다방향 연속 프레임 애니메이션 제작, 스마트 누끼, 픽셀 그리드 잠금 및 정제, 지터 검사 및 애니메이션 QA
 * **🏞️ Static Mode**: 별도 Static 작업공간에서 배경 씬, 타일셋, 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 타일 이음새 검사/복원
 * **⚡ Batch 처리**: 전역 Jobs drawer에서 여러 애니메이션 상태(State)를 일괄 생성·정제하고 WebSocket으로 실시간 진행 상황 모니터링
+* **⏳ 백그라운드 단일 작업**: Generate/Normalize/Extract/Refine/Repair/QA/Export도 `job_id`와 WebSocket으로 실행하며, 실패 작업 재시도와 협력적 취소를 지원
 
 ##### 1) 단일 포트 통합 실행 (권장)
 React 웹 앱을 빌드해 두면 FastAPI 서버 하나로 프론트엔드와 백엔드를 모두 서빙합니다:

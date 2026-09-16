@@ -195,6 +195,8 @@ def test_normalize_quality_failure_is_422_with_report(tmp_path: Path, monkeypatc
     detail = response.json()["detail"]
     assert "report" in detail
     assert detail["report"]["result"] == "fail"
+    assert detail["fallback"]["strategy"] == "KEYPOSE_SEQUENTIAL"
+    assert detail["fallback"]["motion_plan"]["strategy"] == "KEYPOSE_SEQUENTIAL"
 
 
 def test_generate_unknown_run_is_404(tmp_path: Path, monkeypatch) -> None:

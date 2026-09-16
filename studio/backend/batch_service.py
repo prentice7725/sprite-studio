@@ -12,7 +12,7 @@ from uuid import uuid4
 
 from sprite_studio.spec.runio import atomic_write_text
 
-from . import spritegen_bridge
+from . import spritegen_bridge, strategy_service
 
 
 _ACTIVE_THREADS: dict[str, threading.Thread] = {}
@@ -168,6 +168,9 @@ def _execute(run_dir: Path, payload: dict[str, Any], *, normalize: bool, refine:
                         item["status"] = "normalize_failed"
                         item["normalize_error"] = str(exc)
                         item["normalize"] = exc.report
+                        item["normalize_fallback"] = strategy_service.fallback_after_row_quality_failure(
+                            run_dir, request, state
+                        )
                         _update(run_dir, payload, current_state=state, current_stage="normalizing", progress_percent=progress())
                         raise
                     completed_units += 1
@@ -357,6 +360,9 @@ def status_text(run_dir: Path) -> str:
             expected = report.get("expected_subjects")
             if valid is not None and expected is not None:
                 lines.append(f"  - Normalize: {valid} / {expected} valid subjects — Extract blocked, Anchor promotion blocked")
+            fallback = item.get("normalize_fallback") or {}
+            if fallback:
+                lines.append("  - Recovery: AUTO moved to KEYPOSE_SEQUENTIAL; generate and approve key poses before promotion")
             for subject in report.get("subjects") or []:
                 if not subject.get("valid", True):
                     reasons = ", ".join(subject.get("reasons") or []) or "invalid"

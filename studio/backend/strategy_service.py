@@ -147,3 +147,28 @@ def set_override(run_dir: Path, state: str, strategy: str) -> dict[str, str]:
     _overrides_path(run_dir).parent.mkdir(parents=True, exist_ok=True)
     atomic_write_text(_overrides_path(run_dir), json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
     return states
+
+
+def fallback_after_row_quality_failure(
+    run_dir: Path,
+    request: dict[str, Any],
+    state: str,
+    requested: str | None = None,
+) -> dict[str, Any] | None:
+    """Persist the configured AUTO recovery plan without starting provider work."""
+    resolution = resolve(run_dir, request, state, requested)
+    if (
+        resolution["requested"] != "AUTO"
+        or resolution["resolved"] != "ROW_FAST"
+        or policy().get("fallback_on_row_quality_fail") != "KEYPOSE_SEQUENTIAL"
+    ):
+        return None
+    set_override(run_dir, state, "KEYPOSE_SEQUENTIAL")
+    plan = motion_plan(run_dir, request, state, "KEYPOSE_SEQUENTIAL")
+    plan_path = save_motion_plan(run_dir, plan)
+    return {
+        "strategy": "KEYPOSE_SEQUENTIAL",
+        "reason": "Row Normalize quality gate failed; the persisted AUTO strategy was moved to sequential key-pose generation.",
+        "motion_plan": plan,
+        "motion_plan_path": str(plan_path),
+    }

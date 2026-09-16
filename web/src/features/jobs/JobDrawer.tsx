@@ -1,4 +1,4 @@
-import type { BatchStatus, RunSummary } from '../../api'
+import type { BatchStatus, JobStatus, RunSummary } from '../../api'
 
 interface JobDrawerProps {
   open: boolean
@@ -7,17 +7,44 @@ interface JobDrawerProps {
   selectedStates: string[]
   status: BatchStatus | null
   jobId: string
+  singleJob: JobStatus | null
+  singleJobId: string
+  singleJobRunId: string
   busy: string
   onClose: () => void
   onToggle: (state: string) => void
   onStart: () => void
+  onCancelSingle: () => void
+  onRetrySingle: () => void
 }
 
 function labelForState(state: string): string {
   return state.replaceAll('_', ' / ')
 }
 
-export default function JobDrawer({ open, run, states, selectedStates, status, jobId, busy, onClose, onToggle, onStart }: JobDrawerProps) {
+function labelForOperation(operation: string): string {
+  return operation.replaceAll('_', ' ')
+}
+
+function SingleJobCard({ job, jobId, runId, onCancel, onRetry }: { job: JobStatus | null; jobId: string; runId: string; onCancel: () => void; onRetry: () => void }) {
+  if (!job) return null
+  const active = job.status === 'running' || job.status === 'cancel_requested'
+  const retryable = job.status === 'failed' || job.status === 'cancelled' || job.status === 'interrupted'
+  return <section className="job-status-card single-job-card" aria-label="Single operation job">
+    <div className="panel-heading"><div><p className="eyebrow">SINGLE OPERATION</p><h3>{labelForOperation(job.operation)}</h3></div><strong className="progress-value">{job.progress_percent.toFixed(1)}%</strong></div>
+    <p className="helper">Asset {runId}{job.state ? ` · ${labelForState(job.state)}` : ''} · attempt {job.attempt}</p>
+    <div className="progress-track"><span style={{ width: `${Math.min(100, job.progress_percent)}%` }} /></div>
+    <div className="batch-current"><span>Status</span><strong>{job.status}</strong><span>Stage</span><strong>{job.current_stage}</strong></div>
+    {job.error && <div className="error-box">{job.error}</div>}
+    <div className="button-row">
+      {active && <button className="secondary-button danger-button" type="button" onClick={onCancel}>{job.status === 'cancel_requested' ? 'Cancelling…' : 'Cancel'}</button>}
+      {retryable && <button className="secondary-button" type="button" onClick={onRetry}>Retry</button>}
+    </div>
+    <p className="helper">Job ID: <code>{jobId}</code></p>
+  </section>
+}
+
+export default function JobDrawer({ open, run, states, selectedStates, status, jobId, singleJob, singleJobId, singleJobRunId, busy, onClose, onToggle, onStart, onCancelSingle, onRetrySingle }: JobDrawerProps) {
   if (!open) return null
-  return <div className="drawer-layer"><button className="drawer-scrim" type="button" aria-label="Close jobs" onClick={onClose} /><aside className="job-drawer" aria-label="Global job drawer"><div className="panel-heading"><div><p className="eyebrow">JOB CENTER</p><h2>Background jobs</h2></div><button className="icon-button" type="button" aria-label="Close jobs" onClick={onClose}>×</button></div>{!run ? <div className="empty-state"><p>Select an asset to start a batch.</p></div> : <><p className="muted">{run.character_id} · {run.preset}</p><fieldset className="check-list"><legend>Batch states</legend>{states.map((state) => <label className="check-row" key={state}><input type="checkbox" checked={selectedStates.includes(state)} onChange={() => onToggle(state)} />{labelForState(state)}<span className="check-detail">{selectedStates.includes(state) ? 'included' : 'skip'}</span></label>)}</fieldset><button className="primary-button" disabled={busy !== '' || !selectedStates.length} type="button" onClick={onStart}>{busy === 'batch' ? 'Starting…' : 'Start batch'}</button>{jobId && <p className="helper">Job ID: <code>{jobId}</code></p>}<div className="job-status-card"><div className="panel-heading"><div><p className="eyebrow">LIVE PROGRESS</p><h3>{status?.status ?? 'Waiting'}</h3></div><strong className="progress-value">{status?.progress_percent?.toFixed(1) ?? '0.0'}%</strong></div><div className="progress-track"><span style={{ width: `${Math.min(100, status?.progress_percent ?? 0)}%` }} /></div>{status ? <><div className="batch-current"><span>Current state</span><strong>{status.current_state ? labelForState(status.current_state) : '—'}</strong><span>Stage</span><strong>{status.current_stage ?? '—'}</strong></div><div className="batch-items">{status.items.map((item) => <div className="batch-item" key={item.state}><div><strong>{labelForState(item.state)}</strong><small>{item.status}</small></div><span className={`status-pill ${item.status.replaceAll(' ', '-')}`}>{item.status}</span></div>)}</div>{status.error && <div className="error-box">{status.error}</div>}</> : <p className="helper">Start a batch to stream generation and deterministic processing progress.</p>}</div></>}</aside></div>
+  return <div className="drawer-layer"><button className="drawer-scrim" type="button" aria-label="Close jobs" onClick={onClose} /><aside className="job-drawer" aria-label="Global job drawer"><div className="panel-heading"><div><p className="eyebrow">JOB CENTER</p><h2>Background jobs</h2></div><button className="icon-button" type="button" aria-label="Close jobs" onClick={onClose}>×</button></div><SingleJobCard job={singleJob} jobId={singleJobId} runId={singleJobRunId} onCancel={onCancelSingle} onRetry={onRetrySingle} />{!run ? <div className="empty-state"><p>Select an asset to start a batch.</p></div> : <><p className="muted">{run.character_id} · {run.preset}</p><fieldset className="check-list"><legend>Batch states</legend>{states.map((state) => <label className="check-row" key={state}><input type="checkbox" checked={selectedStates.includes(state)} onChange={() => onToggle(state)} />{labelForState(state)}<span className="check-detail">{selectedStates.includes(state) ? 'included' : 'skip'}</span></label>)}</fieldset><button className="primary-button" disabled={busy !== '' || !selectedStates.length} type="button" onClick={onStart}>{busy === 'batch' ? 'Starting…' : 'Start batch'}</button>{jobId && <p className="helper">Batch ID: <code>{jobId}</code></p>}<div className="job-status-card"><div className="panel-heading"><div><p className="eyebrow">BATCH PROGRESS</p><h3>{status?.status ?? 'Waiting'}</h3></div><strong className="progress-value">{status?.progress_percent?.toFixed(1) ?? '0.0'}%</strong></div><div className="progress-track"><span style={{ width: `${Math.min(100, status?.progress_percent ?? 0)}%` }} /></div>{status ? <><div className="batch-current"><span>Current state</span><strong>{status.current_state ? labelForState(status.current_state) : '—'}</strong><span>Stage</span><strong>{status.current_stage ?? '—'}</strong></div><div className="batch-items">{status.items.map((item) => <div className="batch-item" key={item.state}><div><strong>{labelForState(item.state)}</strong><small>{item.status}</small></div><span className={`status-pill ${item.status.replaceAll(' ', '-')}`}>{item.status}</span></div>)}</div>{status.error && <div className="error-box">{status.error}</div>}</> : <p className="helper">Start a batch to stream generation and deterministic processing progress.</p>}</div></>}</aside></div>
 }
