@@ -54,9 +54,11 @@ Open `http://127.0.0.1:5173`.
    scale, baseline, grid, palette, and pivot decision for the selected state and
    writes it below `frames/<direction>/<state>/refined/` without overwriting the
    canonical extracted frames.
-6. **REVIEW** shows extracted and refined frames. Run **ANIMATION QA** to check
-   baseline jitter, scale/weapon jumps, duplicate frames, and handedness flips.
-   **OPEN CURATION** launches the existing non-destructive curation UI for the run.
+6. **REVIEW** shows extracted and refined frames in a central A/B canvas. Choose
+   any two of Extracted, Refined, Proposal, Repaired, or Diff; one shared frame
+   timeline scrubs both views together. Run **ANIMATION QA** to check baseline
+   jitter, scale/weapon jumps, duplicate frames, and handedness flips. **OPEN
+   CURATION** launches the existing non-destructive curation UI for the run.
 7. **MATRIX** shows run progress, and **EXPORT** composes the current engine atlas.
    **EXPORT RUNTIME 48×48** then creates a nearest-neighbor runtime atlas and a
    runtime manifest without changing the working-size atlas.
@@ -66,20 +68,31 @@ Open `http://127.0.0.1:5173`.
    The persisted batch queue and WebSocket status remain backend-owned. Single
    Generate/Normalize/Extract/Refine/Repair/QA/Export actions use the same drawer
    through `<run>/studio/jobs/<job_id>.json`; they support cooperative cancel and
-   retry after failure.
+   retry after failure. The React shell keeps one `activeJob` record for the
+   foreground operation, restores a running/cancel-requested job from
+   `listJobs()` after reload or asset navigation, and reconnects to its WebSocket.
+   Sprite previews are keyed by `{run_id}:{state}` and static previews by
+   `{project_id}:{asset}` so changing selection cannot display another asset's
+   output.
 9. Static projects use the static preset catalog. Tileable projects expose a
-    3×3 wrap context after seam check/repair; non-tileable projects use the same
-    canvas viewer without inventing tile controls.
+   3×3 wrap context after seam check/repair; non-tileable projects use the same
+   canvas viewer without inventing tile controls.
 10. **REVIEW** also shows generation attempt history and engine-owned candidate
-   takes (`reroll`, `tween`, and other declared takes) without rewriting them.
-   Select an approved frame and use **PIN REVIEW FRAME AS ANCHOR**; the engine's
-   directional-anchor resolver validates ownership, generation revision, and frame
-   existence before saving the curation pin. **CLEAR ANCHOR PIN** restores the
-   anchor-row sequence head.
+    takes (`reroll`, `tween`, and other declared takes) without rewriting them.
+    Select an approved frame and use **PIN REVIEW FRAME AS ANCHOR**; the engine's
+    directional-anchor resolver validates ownership, generation revision, and frame
+    existence before saving the curation pin. **CLEAR ANCHOR PIN** restores the
+    anchor-row sequence head.
 11. Attack prompts use the preset's declared action text and automatically add a
     handedness continuity clause. The validator warns when a custom attack
     override removes that clause; post-extract Animation QA remains the visual
     evidence gate.
+12. The Workspace's **NEXT ACTION** card derives one recommended action from
+    the persisted state status. It advances the normal
+    Generate → Normalize → Extract → Refine → QA → Export path and also exposes
+    the sequential fallback path (key poses → approval → inbetweens → promote).
+    The top-bar **Display** menu persists 100%, 125%, or 150% UI scale and a
+    high-contrast token set in the browser.
 
 ## Generation strategy workflow
 
@@ -124,7 +137,13 @@ same Python modules (`prepare`, `gen`, `normalize-grok-row`, `extract`, and
 The current React workflow includes animation continuity QA, the existing
 curation surface, fixed-size runtime export, and the global Jobs drawer. Batch
 state remains persisted in `<run>/studio/batch-queue.json`; take history and
-anchor editing continue to use the existing engine-owned records.
+anchor editing continue to use the existing engine-owned records. The Jobs
+drawer is a modal dialog with keyboard focus restoration/trapping, Escape close,
+ARIA progress bars, and a polite live status announcement. The locale provider
+also keeps the document `lang` attribute synchronized with the selected UI
+language. The web package includes Vitest + Testing Library coverage for the
+Next Action state/job transitions; run `cd web; npm run test` before shipping
+frontend state changes.
 
 ## Asset Studio mode split (v0.2)
 

@@ -42,6 +42,29 @@ call is already running, and failed jobs can be retried. Static projects use
 `/api/static/presets`; tileable outputs show a 3×3 wrap preview
 after seam check/repair.
 
+The shell keeps a single `activeJob` state for foreground operations. On reload
+or asset navigation it asks `listJobs()` for running/cancel-requested work and
+reconnects to the persisted job stream. Sprite preview state is cached under
+`{run_id}:{state}` and static preview state under `{project_id}:{asset}` to
+prevent stale output from crossing selections. The Jobs drawer exposes a modal
+dialog keyboard flow (Escape, focus trap, focus restore), ARIA progress bars,
+and live status updates.
+
+The Workspace also places a single **NEXT ACTION** card beside the persistent
+canvas. It derives the next step from the server-owned state status and handles
+the `KEYPOSE_SEQUENTIAL` fallback sequence (key poses, approval, inbetweens,
+and promotion) through the same Job actions. The top-bar **Display** menu
+persists 100/125/150% UI scale and high-contrast mode locally.
+
+Review mode uses the persistent center workspace for A/B comparison instead of
+stacking every asset in a vertical grid. View A and View B can independently
+select Extracted, Refined, Proposal, Repaired, or Diff, while one timeline keeps
+the selected frame position synchronized across both canvases.
+
+Frontend state regressions are covered by Vitest + Testing Library. Run
+`npm run test` for the one-shot suite or `npm run test:watch` during UI work;
+`npm run build` remains the production type/build check.
+
 When the FastAPI server is running, `npm run api:types` fetches its OpenAPI
 document and writes the generated contract types to `src/api.generated.ts`.
 The hand-written `src/api.ts` client keeps the user-facing helpers and uses the

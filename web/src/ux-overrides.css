@@ -29,10 +29,11 @@
   grid-template-areas:
     "topbar topbar"
     "notice notice"
+    "context next"
     "context tools"
     "context work"
     "context extras";
-  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-rows: auto auto auto auto auto 1fr;
   align-content: start;
   gap: 12px 16px;
 }
@@ -64,6 +65,11 @@
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 5px;
   margin: 0;
+  align-self: start;
+}
+
+.main-content:has(> .workspace-tools) > .next-action-panel {
+  grid-area: next;
   align-self: start;
 }
 
@@ -264,12 +270,22 @@
   overflow: auto;
 }
 
-.main-content:has(> .workspace-tools) .asset-group {
-  margin-top: 12px;
+.main-content:has(> .workspace-tools) .review-context .review-canvases {
+  gap: 8px;
 }
 
-.main-content:has(> .workspace-tools) .asset-grid {
-  grid-template-columns: repeat(3, minmax(64px, 1fr));
+.main-content:has(> .workspace-tools) .review-context .canvas-viewer {
+  padding: 8px;
+}
+
+.main-content:has(> .workspace-tools) .review-context .canvas-stage {
+  min-height: 300px;
+  max-height: calc(100dvh - 390px);
+  padding: 10px;
+}
+
+.main-content:has(> .workspace-tools) .review-counts {
+  gap: 6px;
 }
 
 .main-content:has(> .workspace-tools) .strategy-options {
@@ -356,6 +372,10 @@
     max-height: 70dvh;
   }
 
+  .main-content:has(> .workspace-tools) .review-canvases {
+    grid-template-columns: 1fr;
+  }
+
   .main-content:has(> .workspace-tools) > .workspace-tools {
     position: sticky;
     top: 0;
@@ -378,6 +398,10 @@
   .main-content:has(> .workspace-tools) .canvas-stage {
     min-height: 300px;
     padding: 12px;
+  }
+
+  .main-content:has(> .workspace-tools) .review-context .canvas-stage {
+    min-height: 260px;
   }
 
   .main-content:has(> .workspace-tools) .timeline-controls {

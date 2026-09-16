@@ -77,6 +77,7 @@ pip install -e ".[studio,dev]"
 * **🏞️ Static Mode**: 별도 Static 작업공간에서 배경 씬, 타일셋, 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 타일 이음새 검사/복원
 * **⚡ Batch 처리**: 전역 Jobs drawer에서 여러 애니메이션 상태(State)를 일괄 생성·정제하고 WebSocket으로 실시간 진행 상황 모니터링
 * **⏳ 백그라운드 단일 작업**: Generate/Normalize/Extract/Refine/Repair/QA/Export도 `job_id`와 WebSocket으로 실행하며, 실패 작업 재시도와 협력적 취소를 지원
+* **🧭 작업 안내 및 접근성**: Workspace가 현재 상태에 맞는 다음 작업을 하나의 Next Action으로 안내하고, Display 메뉴에서 UI 배율(100/125/150%)과 고대비 모드를 제공하며, Review는 중앙 A/B 캔버스로 동일 프레임을 비교
 
 ##### 1) 단일 포트 통합 실행 (권장)
 React 웹 앱을 빌드해 두면 FastAPI 서버 하나로 프론트엔드와 백엔드를 모두 서빙합니다:

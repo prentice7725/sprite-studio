@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import type { AnimationQaResponse, ReviewData, RunSummary } from '../../api'
 import AnimationTimeline from './AnimationTimeline'
 import CanvasViewer from './CanvasViewer'
@@ -13,8 +14,65 @@ export function EmptyState({ text }: { text: string }) {
   return <div className="empty-state"><span className="empty-line" aria-hidden="true" /><p>{text}</p></div>
 }
 
-export function WorkspaceContextPanel({ frames, activeFrame, fps, loop, repairedFrames, rawAsset, state, onFrameChange }: { frames: string[]; activeFrame: number; fps: number; loop: boolean; repairedFrames?: string[]; rawAsset: string; state: string; onFrameChange: (index: number) => void }) {
-  return <section className="workspace-context"><CanvasViewer src={(frames[activeFrame] ?? rawAsset) || null} alt={`${state || 'Active'} frame ${activeFrame + 1}`} label="Animation canvas viewer" /><AnimationTimeline frames={frames} activeFrame={activeFrame} fps={fps} loop={loop} repairedFrames={repairedFrames} onFrameChange={onFrameChange} /></section>
+type ReviewSource = 'extracted' | 'refined' | 'proposal' | 'repaired' | 'diff'
+
+const reviewSources: Array<{ key: ReviewSource; label: string }> = [
+  { key: 'extracted', label: 'Extracted' },
+  { key: 'refined', label: 'Refined' },
+  { key: 'proposal', label: 'Proposal' },
+  { key: 'repaired', label: 'Repaired' },
+  { key: 'diff', label: 'Diff' },
+]
+
+function assetsForReviewSource(review: ReviewData, source: ReviewSource): string[] {
+  if (source === 'extracted') return review.frames
+  if (source === 'refined') return review.refined_frames
+  if (source === 'proposal') return review.repair_proposals
+  if (source === 'repaired') return review.repaired_frames
+  return review.repair_diff
+}
+
+function firstAvailableReviewSource(review: ReviewData, order: ReviewSource[]): ReviewSource | null {
+  return order.find((source) => assetsForReviewSource(review, source).length > 0) ?? null
+}
+
+export function WorkspaceContextPanel({ frames, activeFrame, fps, loop, repairedFrames, rawAsset, state, review, onFrameChange }: { frames: string[]; activeFrame: number; fps: number; loop: boolean; repairedFrames?: string[]; rawAsset: string; state: string; review?: ReviewData | null; onFrameChange: (index: number) => void }) {
+  const [sourceA, setSourceA] = useState<ReviewSource>('refined')
+  const [sourceB, setSourceB] = useState<ReviewSource>('repaired')
+
+  useEffect(() => {
+    if (!review) return
+    const preferredA = firstAvailableReviewSource(review, ['refined', 'extracted', 'repaired', 'proposal', 'diff']) ?? 'refined'
+    const preferredB = firstAvailableReviewSource(review, ['repaired', 'proposal', 'diff', 'extracted', 'refined'])
+    const alternateB = reviewSources.map(({ key }) => key).find((source) => source !== preferredA && assetsForReviewSource(review, source).length > 0)
+    setSourceA(preferredA)
+    setSourceB(preferredB && preferredB !== preferredA ? preferredB : alternateB ?? preferredB ?? preferredA)
+  }, [review])
+
+  if (!review) {
+    return <section className="workspace-context"><CanvasViewer src={(frames[activeFrame] ?? rawAsset) || null} alt={`${state || 'Active'} frame ${activeFrame + 1}`} label="Animation canvas viewer" /><AnimationTimeline frames={frames} activeFrame={activeFrame} fps={fps} loop={loop} repairedFrames={repairedFrames} onFrameChange={onFrameChange} /></section>
+  }
+
+  const framesA = assetsForReviewSource(review, sourceA)
+  const framesB = assetsForReviewSource(review, sourceB)
+  const timelineFrames = framesA.length ? framesA : framesB
+  const compareFrame = timelineFrames.length ? Math.min(activeFrame, timelineFrames.length - 1) : 0
+  const sourceLabel = (source: ReviewSource) => reviewSources.find((item) => item.key === source)?.label ?? source
+
+  return <section className="workspace-context review-context" aria-label={`A/B review canvas for ${labelForState(state)}`}>
+    <div className="review-canvas-area">
+      <div className="review-source-controls">
+        <label>View A<select aria-label="Review source A" value={sourceA} onChange={(event) => setSourceA(event.target.value as ReviewSource)}>{reviewSources.map(({ key, label }) => <option key={key} value={key} disabled={!assetsForReviewSource(review, key).length}>{label}</option>)}</select></label>
+        <span className="review-compare-mark" aria-hidden="true">A/B</span>
+        <label>View B<select aria-label="Review source B" value={sourceB} onChange={(event) => setSourceB(event.target.value as ReviewSource)}>{reviewSources.map(({ key, label }) => <option key={key} value={key} disabled={!assetsForReviewSource(review, key).length}>{label}</option>)}</select></label>
+      </div>
+      <div className="review-canvases">
+        <div className="review-canvas-slot"><span className="review-canvas-label">A · {sourceLabel(sourceA)}</span><CanvasViewer src={framesA[compareFrame] ?? null} alt={`${sourceLabel(sourceA)} ${labelForState(state)} frame ${compareFrame + 1}`} label={`Review ${sourceLabel(sourceA)} canvas`} /></div>
+        <div className="review-canvas-slot"><span className="review-canvas-label">B · {sourceLabel(sourceB)}</span><CanvasViewer src={framesB[compareFrame] ?? null} alt={`${sourceLabel(sourceB)} ${labelForState(state)} frame ${compareFrame + 1}`} label={`Review ${sourceLabel(sourceB)} canvas`} /></div>
+      </div>
+    </div>
+    <AnimationTimeline frames={timelineFrames} activeFrame={compareFrame} fps={fps} loop={loop} repairedFrames={review.repaired_frames} onFrameChange={onFrameChange} />
+  </section>
 }
 
 function StatePicker({ states }: { states: string[] }) {
@@ -40,23 +98,19 @@ export function RefinePanel({ run, state, states, busy, onRefine, previewAsset, 
   return <div className="content-grid work-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">DETERMINISTIC REFINEMENT</p><h2>Refine state</h2></div><span className="step-number">03</span></div><StatePicker states={states} /><p className="muted">Refine applies the shared lattice, phase bounds, palette, baseline, scale, and pivot decisions from the existing Studio engine.</p><button className="primary-button" disabled={busy !== ''} type="button" onClick={onRefine}>{busy === 'refine' ? 'Refining…' : 'Run refine'}</button>{summary && <pre className="report-box">{summary}</pre>}</section><section className="panel output-panel"><div className="panel-heading"><div><p className="eyebrow">REFINED PREVIEW</p><h2>{state ? labelForState(state) : 'No state selected'}</h2></div></div>{previewAsset ? <div className="asset-preview refined"><img src={previewAsset} alt={`Refined preview for ${labelForState(state)}`} /><span>Refined preview asset</span></div> : <EmptyState text="Extract the selected state before refining it." />}</section></div>
 }
 
-function AssetStrip({ title, assets, state }: { title: string; assets: string[]; state: string }) {
-  return <div className="asset-group"><div className="asset-group-heading"><h3>{title}</h3><span>{assets.length} files</span></div>{assets.length ? <div className="asset-grid">{assets.map((asset, index) => <img key={asset} src={asset} alt={`${title} ${labelForState(state)} frame ${index + 1}`} loading="lazy" />)}</div> : <EmptyState text={`No ${title.toLowerCase()} available yet.`} />}</div>
-}
-
 export function ReviewPanel({ run, state, states, review, selectedCandidates, onToggleCandidate, busy, onAction }: { run: RunSummary | null; state: string; states: string[]; review: ReviewData | null; selectedCandidates: string[]; onToggleCandidate: (id: string) => void; busy: string; onAction: (action: ReviewAction) => void }) {
   if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid review-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">REPAIR WORKBENCH</p><h2>Review state</h2></div><span className="step-number">04</span></div><StatePicker states={states} /><p className="muted">Analyze refined frames first. Safe repair writes derived outputs only; adopt makes them the curation/export source.</p><div className="button-grid"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('load')}>{busy === 'review-load' ? 'Loading…' : 'Load review'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('analyze')}>{busy === 'review-analyze' ? 'Analyzing…' : 'Analyze candidates'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('safe')}>{busy === 'review-safe' ? 'Repairing…' : 'Apply safe repair'}</button></div>{review && <><div className="summary-stack"><p>{review.repair_summary}</p><p>{review.qa_summary}</p></div><fieldset className="check-list"><legend>Candidate decisions</legend>{review.repair_candidates.length ? review.repair_candidates.map((id) => <label className="check-row" key={id}><input type="checkbox" checked={selectedCandidates.includes(id)} onChange={() => onToggleCandidate(id)} /><code>{id}</code><span className="check-detail">selected for decision</span></label>) : <p className="helper">No repair candidates returned for this state.</p>}</fieldset><div className="button-grid compact"><button className="secondary-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('accept')}>Accept selected</button><button className="secondary-button danger-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('reject')}>Reject selected</button></div><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('adopt')}>Adopt repaired</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('unadopt')}>Use canonical</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('undo')}>Undo repairs</button></div></>}</section><section className="panel review-output"><div className="panel-heading"><div><p className="eyebrow">VISUAL REVIEW</p><h2>{labelForState(state)}</h2></div></div>{review ? <><AssetStrip title="Extracted" assets={review.frames} state={state} /><AssetStrip title="Refined" assets={review.refined_frames} state={state} /><AssetStrip title="Proposals" assets={review.repair_proposals} state={state} /><AssetStrip title="Repaired" assets={review.repaired_frames} state={state} /><AssetStrip title="Diff" assets={review.repair_diff} state={state} /><details className="report-details"><summary>History</summary><pre className="report-box">{review.history_summary}</pre></details></> : <EmptyState text="Load review to compare extracted, refined, proposal, and repaired frames." />}</section></div>
+  return <div className="content-grid review-grid"><section className="panel"><div className="panel-heading"><div><p className="eyebrow">REPAIR WORKBENCH</p><h2>Review state</h2></div><span className="step-number">04</span></div><StatePicker states={states} /><p className="muted">Analyze refined frames first. Safe repair writes derived outputs only; adopt makes them the curation/export source.</p><div className="button-grid"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('load')}>{busy === 'review-load' ? 'Loading…' : 'Load review'}</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('analyze')}>{busy === 'repair_analyze' ? 'Analyzing…' : 'Analyze candidates'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onAction('safe')}>{busy === 'repair_safe' ? 'Repairing…' : 'Apply safe repair'}</button></div>{review && <><div className="summary-stack"><p>{review.repair_summary}</p><p>{review.qa_summary}</p></div><fieldset className="check-list"><legend>Candidate decisions</legend>{review.repair_candidates.length ? review.repair_candidates.map((id) => <label className="check-row" key={id}><input type="checkbox" checked={selectedCandidates.includes(id)} onChange={() => onToggleCandidate(id)} /><code>{id}</code><span className="check-detail">selected for decision</span></label>) : <p className="helper">No repair candidates returned for this state.</p>}</fieldset><div className="button-grid compact"><button className="secondary-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('accept')}>Accept selected</button><button className="secondary-button danger-button" disabled={busy !== '' || !selectedCandidates.length} type="button" onClick={() => onAction('reject')}>Reject selected</button></div><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('adopt')}>Adopt repaired</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('unadopt')}>Use canonical</button><button className="secondary-button" disabled={busy !== ''} type="button" onClick={() => onAction('undo')}>Undo repairs</button></div></>}</section><section className="panel review-output"><div className="panel-heading"><div><p className="eyebrow">VISUAL REVIEW</p><h2>{labelForState(state)}</h2></div></div>{review ? <><p className="muted">Select two sources above to compare the same frame position. The timeline follows View A when available.</p><div className="review-counts" aria-label="Review asset counts">{reviewSources.map(({ key, label }) => <span key={key}><strong>{assetsForReviewSource(review, key).length}</strong>{label}</span>)}</div><details className="report-details"><summary>History</summary><pre className="report-box">{review.history_summary}</pre></details></> : <EmptyState text="Load review to compare extracted, refined, proposal, and repaired frames." />}</section></div>
 }
 
 export function QaPanel({ run, states, result, busy, onRun }: { run: RunSummary | null; states: string[]; result: AnimationQaResponse | null; busy: string; onRun: () => void }) {
   if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid single-grid"><section className="panel qa-panel"><div className="panel-heading"><div><p className="eyebrow">ANIMATION QA</p><h2>Continuity checks</h2></div><span className="step-number">05</span></div><StatePicker states={states} /><p className="muted">QA reads refined frames, or the currently adopted repaired frames, through the existing deterministic animation analyzer.</p><button className="primary-button" disabled={busy !== ''} type="button" onClick={onRun}>{busy === 'animation-qa' ? 'Running QA…' : 'Run animation QA'}</button>{result && <div className={`qa-result ${result.ok ? 'pass' : 'fail'}`} role="status"><strong>{result.ok ? 'PASS' : 'ATTENTION REQUIRED'}</strong><p>{result.summary}</p>{result.warnings.length ? <ul>{result.warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul> : <p className="helper">No continuity warnings.</p>}</div>}</section></div>
+  return <div className="content-grid single-grid"><section className="panel qa-panel"><div className="panel-heading"><div><p className="eyebrow">ANIMATION QA</p><h2>Continuity checks</h2></div><span className="step-number">05</span></div><StatePicker states={states} /><p className="muted">QA reads refined frames, or the currently adopted repaired frames, through the existing deterministic animation analyzer.</p><button className="primary-button" disabled={busy !== ''} type="button" onClick={onRun}>{busy === 'animation_qa' ? 'Running QA…' : 'Run animation QA'}</button>{result && <div className={`qa-result ${result.ok ? 'pass' : 'fail'}`} role="status"><strong>{result.ok ? 'PASS' : 'ATTENTION REQUIRED'}</strong><p>{result.summary}</p>{result.warnings.length ? <ul>{result.warnings.map((warning) => <li key={warning}>{warning}</li>)}</ul> : <p className="helper">No continuity warnings.</p>}</div>}</section></div>
 }
 
 export interface WorkspaceExportResult { kind: 'compose' | 'runtime'; manifest_asset: string; atlas_asset?: string; sprite_sheet_asset?: string; size?: [number, number] }
 
 export function ExportPanel({ run, exportResult, curationUrl, busy, onCuration, onExport }: { run: RunSummary | null; exportResult: WorkspaceExportResult | null; curationUrl: string; busy: string; onCuration: () => void; onExport: (kind: 'compose' | 'runtime') => void }) {
   if (!run) return <EmptyState text="Select or create a run in Project first." />
-  return <div className="content-grid single-grid"><section className="panel export-panel"><div className="panel-heading"><div><p className="eyebrow">CURATION / EXPORT</p><h2>Publish runtime assets</h2></div><span className="step-number">06</span></div><p className="muted">Compose creates the canonical atlas and manifest. Runtime export creates a nearest-neighbor fixed-size package for the game runtime.</p><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={onCuration}>{busy === 'curation' ? 'Opening…' : 'Open curation'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('compose')}>{busy === 'export-compose' ? 'Composing…' : 'Compose atlas'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('runtime')}>{busy === 'export-runtime' ? 'Exporting…' : 'Runtime export'}</button></div>{curationUrl && <p className="helper">Curation URL: <a href={curationUrl} target="_blank" rel="noreferrer">{curationUrl}</a></p>}{exportResult && <div className="export-result" role="status"><strong>{exportResult.kind === 'compose' ? 'Compose complete' : 'Runtime export complete'}</strong>{exportResult.size && <span>Sheet size: {exportResult.size[0]} × {exportResult.size[1]} px</span>}<a href={exportResult.sprite_sheet_asset ?? exportResult.atlas_asset} target="_blank" rel="noreferrer">Open atlas image</a><a href={exportResult.manifest_asset} target="_blank" rel="noreferrer">Open manifest JSON</a></div>}</section></div>
+  return <div className="content-grid single-grid"><section className="panel export-panel"><div className="panel-heading"><div><p className="eyebrow">CURATION / EXPORT</p><h2>Publish runtime assets</h2></div><span className="step-number">06</span></div><p className="muted">Compose creates the canonical atlas and manifest. Runtime export creates a nearest-neighbor fixed-size package for the game runtime.</p><div className="button-row"><button className="secondary-button" disabled={busy !== ''} type="button" onClick={onCuration}>{busy === 'curation' ? 'Opening…' : 'Open curation'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('compose')}>{busy === 'export_compose' ? 'Composing…' : 'Compose atlas'}</button><button className="primary-button" disabled={busy !== ''} type="button" onClick={() => onExport('runtime')}>{busy === 'export_runtime' ? 'Exporting…' : 'Runtime export'}</button></div>{curationUrl && <p className="helper">Curation URL: <a href={curationUrl} target="_blank" rel="noreferrer">{curationUrl}</a></p>}{exportResult && <div className="export-result" role="status"><strong>{exportResult.kind === 'compose' ? 'Compose complete' : 'Runtime export complete'}</strong>{exportResult.size && <span>Sheet size: {exportResult.size[0]} × {exportResult.size[1]} px</span>}<a href={exportResult.sprite_sheet_asset ?? exportResult.atlas_asset} target="_blank" rel="noreferrer">Open atlas image</a><a href={exportResult.manifest_asset} target="_blank" rel="noreferrer">Open manifest JSON</a></div>}</section></div>
 }
