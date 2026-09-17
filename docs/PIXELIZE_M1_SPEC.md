@@ -124,7 +124,7 @@ Response includes URLs for the master PNG, 4x preview, palette, profile, report,
 M1 standalone entrypoint:
 
 ```bash
-python -m sprite_studio.pixelize input.png \
+$SPRITE_STUDIO_ROOT/.venv/bin/python -m sprite_studio.pixelize input.png \
   --out-dir out/pixelize \
   --size 128 \
   --palette 32 \
