@@ -1,0 +1,22 @@
+{
+  "name": "sprite-studio-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Electron desktop shell for Sprite Studio",
+  "main": "src/main.cjs",
+  "scripts": {
+    "dev": "npm run build:web && electron .",
+    "start": "electron .",
+    "build:web": "npm --prefix ../../web run build",
+    "stage": "node scripts/stage-resources.cjs",
+    "package": "npm run build:web && npm run stage && electron-forge package",
+    "make": "npm run build:web && npm run stage && electron-forge make"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "latest",
+    "@electron-forge/maker-squirrel": "latest",
+    "@electron-forge/maker-zip": "latest",
+    "electron": "latest",
+    "electron-squirrel-startup": "latest"
+  }
+}

@@ -97,7 +97,10 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     port = args.port or _pick_free_port(args.host)
-    print(f"[sprite-studio-api] listening on http://{args.host}:{port} (docs: /docs)")
+    # Electron launches this process with stdout piped. Flush the handshake
+    # immediately so the desktop shell can discover the OS-assigned port
+    # without waiting for the Python process to exit.
+    print(f"[sprite-studio-api] listening on http://{args.host}:{port} (docs: /docs)", flush=True)
     uvicorn.run("studio.api.main:app" if args.reload else app, host=args.host, port=port, reload=args.reload)
     return 0
 

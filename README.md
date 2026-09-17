@@ -69,7 +69,7 @@ pip install -e ".[studio,dev]"
 
 `sprite-studio`는 직관적인 **Asset Studio 웹 GUI (React + FastAPI)**, 자동화 및 파이프라인 연동을 위한 **REST API**, 터미널 일괄 처리를 위한 **CLI**를 지원합니다.
 
-#### 🖥️ 방법 A: Asset Studio (올인원 웹 GUI)
+#### 🖥️ 방법 A: Asset Studio (웹 GUI / Electron 데스크톱)
 
 브라우저에서 마우스 클릭만으로 프롬프트 생성, AI 이미지 생성 및 정규화, 크로마키 추출, 픽셀 정제, 애니메이션 QA 및 익스포트까지 전체 과정을 수행할 수 있습니다.
 
@@ -78,6 +78,11 @@ pip install -e ".[studio,dev]"
 * **⚡ Batch 처리**: 전역 Jobs drawer에서 여러 애니메이션 상태(State)를 일괄 생성·정제하고 WebSocket으로 실시간 진행 상황 모니터링
 * **⏳ 백그라운드 단일 작업**: Generate/Normalize/Extract/Refine/Repair/QA/Export도 `job_id`와 WebSocket으로 실행하며, 실패 작업 재시도와 협력적 취소를 지원
 * **🧭 작업 안내 및 접근성**: Workspace가 현재 상태에 맞는 다음 작업을 하나의 Next Action으로 안내하고, Display 메뉴에서 UI 배율(100/125/150%)과 고대비 모드를 제공하며, Review는 중앙 A/B 캔버스로 동일 프레임을 비교
+
+데스크톱 실행은 `desktop/electron` 셸을 사용합니다. Electron 메인 프로세스가
+FastAPI를 자식 프로세스로 실행하고 OS가 할당한 `127.0.0.1:0` 포트를 확인한 뒤
+React 화면을 엽니다. React는 계속 HTTP/WebSocket API만 사용하므로 기존 웹과
+동일한 백엔드 경계를 유지합니다.
 
 ##### 1) 단일 포트 통합 실행 (권장)
 React 웹 앱을 빌드해 두면 FastAPI 서버 하나로 프론트엔드와 백엔드를 모두 서빙합니다:
@@ -90,7 +95,25 @@ python -m studio.api.main --port 8765
 ```
 브라우저에서 `http://127.0.0.1:8765`으로 접속합니다.
 
-##### 2) 프론트엔드 개발 모드 (Vite HMR)
+##### 2) Electron 데스크톱 개발 실행
+
+Python 의존성과 `web` 의존성을 먼저 설치한 뒤 실행합니다:
+
+```powershell
+cd desktop/electron
+npm install
+npm run dev
+```
+
+PyInstaller 백엔드 실행 파일이 준비되면 Windows 설치 파일은 다음처럼 만들 수
+있습니다. 자세한 artifact 계약은 [`desktop/electron/README.md`](desktop/electron/README.md)를 참고하세요.
+
+```powershell
+$env:SPRITE_STUDIO_BACKEND_BIN = 'C:\path\to\sprite-studio-api.exe'
+npm run make
+```
+
+##### 3) 프론트엔드 개발 모드 (Vite HMR)
 UI 코드 수정 시 실시간 핫 리로딩을 사용하려면 두 터미널에서 실행합니다:
 
 * **터미널 1 (FastAPI API)**:

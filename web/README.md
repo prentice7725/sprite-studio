@@ -86,5 +86,5 @@ cd ..
 python -m studio.api.main --port 8765
 ```
 
-Open `http://127.0.0.1:8765`. Tauri packaging is intentionally not part of
-this phase.
+Open `http://127.0.0.1:8765`. The desktop wrapper is Electron-based; see
+`../desktop/electron/README.md` for dynamic-port development and packaging.

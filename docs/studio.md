@@ -33,6 +33,23 @@ npm run dev
 
 Open `http://127.0.0.1:5173`.
 
+### Option 3: Electron Desktop Development
+
+The Electron shell starts FastAPI as a child process, waits for its flushed
+`127.0.0.1:0` port announcement and `/api/health`, then opens the React build.
+React still uses only the FastAPI HTTP/WebSocket contract. From the repository
+root:
+
+```powershell
+cd desktop/electron
+npm install
+npm run dev
+```
+
+Packaging is Windows-first and requires a native backend artifact. Set
+`SPRITE_STUDIO_BACKEND_BIN` to `sprite-studio-api.exe` and run `npm run make`;
+the packaged app keeps run data and uploads in Electron's user-data directory.
+
 ## React workspace workflow
 
 1. In **PROJECT**, choose a data-backed preset, upload the optional base image,
