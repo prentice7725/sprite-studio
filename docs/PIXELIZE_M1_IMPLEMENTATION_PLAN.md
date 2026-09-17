@@ -98,7 +98,7 @@ The result surface contains:
 During M1 validation the command is deliberately standalone:
 
 ```bash
-python -m sprite_studio.pixelize INPUT --out-dir OUTPUT
+$SPRITE_STUDIO_ROOT/.venv/bin/python -m sprite_studio.pixelize INPUT --out-dir OUTPUT
 ```
 
 Once the algorithm has survived visual benchmark work, it can be added to the legacy `sprite-studio` command registry without changing the engine/API contract.
