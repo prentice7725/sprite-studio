@@ -35,6 +35,7 @@ _OPERATIONS = {
     "repair_adopt", "repair_unadopt", "animation_qa",
     "export_compose", "export_runtime",
     "sequential_key_poses", "sequential_inbetweens", "sequential_promote",
+    "quick_make",
 }
 _STATE_OPERATIONS = {
     operation for operation in _OPERATIONS
@@ -155,9 +156,58 @@ def _refine(run_dir: Path, state: str) -> dict[str, Any]:
     }
 
 
-def _execute_operation(run_dir: Path, operation: str, state: str | None, options: dict[str, Any]) -> dict[str, Any]:
+def _quick_make(run_dir: Path, state: str, options: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+    """Run the existing sprite pipeline as one user-facing Quick job."""
+    requested_states = [str(item) for item in (options.get("states") or [state])]
+    stage_order = ("generate", "normalize", "extract", "refine", "animation_qa")
+    total = max(1, len(requested_states) * len(stage_order) + 2)
+    completed = 0
+    state_results: list[dict[str, Any]] = []
+    for current_state in requested_states:
+        state_result: dict[str, Any] = {"state": current_state}
+        for stage in stage_order:
+            _check_cancel(str(payload["job_id"]))
+            progress = min(96.0, (completed / total) * 100.0)
+            _update(run_dir, payload, current_stage=f"{stage}:{current_state}", progress_percent=progress)
+            if stage == "generate":
+                state_result[stage] = _generate(run_dir, current_state)
+            elif stage == "normalize":
+                state_result[stage] = _normalize(run_dir, current_state, options)
+            elif stage == "extract":
+                code = spritegen_bridge.extract_frames(run_dir, current_state)
+                state_result[stage] = {"exit_code": code}
+                if code != 0:
+                    raise RuntimeError(f"extract failed for {current_state} with exit code {code}")
+            elif stage == "refine":
+                state_result[stage] = _refine(run_dir, current_state)
+            else:
+                state_result[stage] = {"qa": spritegen_bridge.animation_qa(run_dir, current_state).to_dict()}
+            completed += 1
+        state_results.append(state_result)
+
+    _check_cancel(str(payload["job_id"]))
+    _update(run_dir, payload, current_stage="preparing_preview", progress_percent=97.0)
+    from sprite_studio.qa import preview as qa_preview
+    qa_preview.run(run_dir=run_dir)
+    code = export_service.compose(run_dir)
+    if code != 0:
+        raise RuntimeError(f"compose failed with exit code {code}")
+    target_state = str(options.get("target_state") or state)
+    result: dict[str, Any] = {
+        "states": state_results,
+        "sprite_sheet_asset_path": "sprite-sheet-alpha.png",
+        "manifest_asset_path": "manifest.json",
+    }
+    preview_path = run_dir / "qa" / f"{target_state}.gif"
+    if preview_path.is_file():
+        result["preview_gif_asset_path"] = _relative(run_dir, preview_path)
+    return result
+
+def _execute_operation(run_dir: Path, operation: str, state: str | None, options: dict[str, Any], payload: dict[str, Any] | None = None) -> dict[str, Any]:
     if operation in _STATE_OPERATIONS and not state:
         raise ValueError(f"operation {operation!r} requires a state")
+    if operation == "quick_make":
+        return _quick_make(run_dir, str(state), options, payload or {"job_id": "unknown"})
     if operation == "generate":
         return _generate(run_dir, str(state))
     if operation == "normalize":
@@ -217,7 +267,7 @@ def _worker(run_dir: Path, payload: dict[str, Any]) -> None:
     try:
         _check_cancel(job_id)
         _update(run_dir, payload, status="running", current_stage=payload["operation"], progress_percent=5.0, started_at=payload["started_at"])
-        result = _execute_operation(run_dir, str(payload["operation"]), payload.get("state"), dict(payload.get("options") or {}))
+        result = _execute_operation(run_dir, str(payload["operation"]), payload.get("state"), dict(payload.get("options") or {}), payload)
         _check_cancel(job_id)
         _update(run_dir, payload, status="succeeded", current_stage="complete", progress_percent=100.0, result=result, finished_at=_now(), error=None)
     except JobCancelled as exc:

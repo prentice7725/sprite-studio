@@ -1,0 +1,114 @@
+{
+  "fingerprint": "bacb91bbefbfb8eded9428e6476a79dc8574a7ad04c03e9c4259c3f4eff3b030",
+  "parameters": {
+    "detail": "balanced",
+    "matrix": {
+      "alpha_threshold": 128,
+      "background": "cleanup",
+      "details": [
+        "balanced"
+      ],
+      "dither": "none",
+      "extra_details": [
+        {
+          "detail": "clean",
+          "palette_size": "auto",
+          "size": 128
+        },
+        {
+          "detail": "detailed",
+          "palette_size": "auto",
+          "size": 128
+        }
+      ],
+      "focus": {
+        "detail": "balanced",
+        "palette_size": "auto",
+        "size": 128
+      },
+      "outline": "preserve",
+      "palette_sizes": [
+        "auto",
+        32,
+        48
+      ],
+      "preview_scales": [
+        4,
+        8
+      ],
+      "sizes": [
+        96,
+        128,
+        192
+      ]
+    },
+    "method": "A1_current_m1_1",
+    "palette_size": 32,
+    "size": 192,
+    "source": "D06",
+    "source_hash": "69cd2226ff958e35435c2267ac09ce3be5dc1d40d26283c73e3dc6d821b5dcda"
+  },
+  "row": {
+    "artifact_dir": "benchmark/outputs/D06/A1_current_m1_1/size-192_palette-32_detail-balanced",
+    "detail": "balanced",
+    "method_id": "A1_current_m1_1",
+    "method_label": "A1 Current M1.1",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 20,
+        "tiny_pixels": 0,
+        "tiny_ratio": 0.0
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "c2896f6cb4fc3965b5b41dddeef516d046494d6feecdc4083373509d7775f33b",
+        "result_sha256": "c2896f6cb4fc3965b5b41dddeef516d046494d6feecdc4083373509d7775f33b"
+      },
+      "heuristic_score": 98.479,
+      "palette": {
+        "actual": 6,
+        "compliant": true,
+        "requested": 32
+      },
+      "runtime_ms": 2176.133,
+      "silhouette": {
+        "extra_pixels": 406,
+        "iou": 0.966209,
+        "missing_pixels": 0
+      },
+      "thin_feature": {
+        "recovered": 1.0,
+        "thin_pixels": 194
+      }
+    },
+    "palette_size": "32",
+    "result_path": "benchmark/outputs/D06/A1_current_m1_1/size-192_palette-32_detail-balanced/result.png",
+    "size": 192,
+    "source_id": "D06",
+    "source_label": "weapon",
+    "source_path": "benchmark/sources/D06_weapon.png",
+    "subject_bbox": [
+      115,
+      33,
+      374,
+      375
+    ],
+    "subject_candidates": [
+      {
+        "area": 36965,
+        "bbox": [
+          115,
+          33,
+          374,
+          375
+        ],
+        "confidence": 1.0,
+        "mode": "alpha-bbox"
+      }
+    ]
+  }
+}

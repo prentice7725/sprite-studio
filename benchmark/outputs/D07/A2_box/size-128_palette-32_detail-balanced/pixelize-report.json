@@ -1,0 +1,307 @@
+{
+  "benchmark": {
+    "fingerprint": "ef6b57a909010bde794a084e38e8cb11ab416b5033625ac3080ab6911822baf8",
+    "method_id": "A2_box",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 289,
+        "tiny_pixels": 277,
+        "tiny_ratio": 0.038086
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "df183e805fdd3c351435b6d7fb25e5b11887ca868be3c61aaf78f92d7b5884f5",
+        "result_sha256": "df183e805fdd3c351435b6d7fb25e5b11887ca868be3c61aaf78f92d7b5884f5"
+      },
+      "heuristic_score": 86.158,
+      "palette": {
+        "actual": 32,
+        "compliant": true,
+        "requested": 32
+      },
+      "runtime_ms": 49.934,
+      "silhouette": {
+        "extra_pixels": 145,
+        "iou": 0.978046,
+        "missing_pixels": 15
+      },
+      "thin_feature": {
+        "recovered": 0.942857,
+        "thin_pixels": 245
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize-benchmark",
+  "logical_size": [
+    134,
+    128
+  ],
+  "palette": {
+    "colors": 32,
+    "entries": [
+      [
+        190,
+        91,
+        70,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        226,
+        249,
+        255,
+        255
+      ],
+      [
+        110,
+        60,
+        56,
+        255
+      ],
+      [
+        245,
+        190,
+        157,
+        255
+      ],
+      [
+        39,
+        33,
+        58,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        136,
+        70,
+        60,
+        255
+      ],
+      [
+        137,
+        109,
+        99,
+        255
+      ],
+      [
+        176,
+        138,
+        124,
+        255
+      ],
+      [
+        240,
+        214,
+        122,
+        255
+      ],
+      [
+        70,
+        44,
+        49,
+        255
+      ],
+      [
+        106,
+        85,
+        89,
+        255
+      ],
+      [
+        163,
+        81,
+        65,
+        255
+      ],
+      [
+        188,
+        168,
+        102,
+        255
+      ],
+      [
+        134,
+        137,
+        148,
+        255
+      ],
+      [
+        168,
+        173,
+        184,
+        255
+      ],
+      [
+        150,
+        76,
+        63,
+        255
+      ],
+      [
+        211,
+        164,
+        141,
+        255
+      ],
+      [
+        162,
+        139,
+        65,
+        255
+      ],
+      [
+        79,
+        70,
+        50,
+        255
+      ],
+      [
+        34,
+        31,
+        50,
+        255
+      ],
+      [
+        135,
+        121,
+        82,
+        255
+      ],
+      [
+        83,
+        49,
+        51,
+        255
+      ],
+      [
+        205,
+        183,
+        109,
+        255
+      ],
+      [
+        179,
+        153,
+        68,
+        255
+      ],
+      [
+        56,
+        39,
+        46,
+        255
+      ],
+      [
+        191,
+        150,
+        128,
+        255
+      ],
+      [
+        72,
+        58,
+        72,
+        255
+      ],
+      [
+        142,
+        112,
+        108,
+        255
+      ],
+      [
+        95,
+        83,
+        53,
+        255
+      ],
+      [
+        86,
+        70,
+        75,
+        255
+      ]
+    ],
+    "requested": 32,
+    "separation": {
+      "closest_pair": [
+        [
+          137,
+          109,
+          99
+        ],
+        [
+          142,
+          112,
+          108
+        ]
+      ],
+      "colors": 32,
+      "min_delta_e": 0.016691
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "detail": "balanced",
+    "dither": "none",
+    "operation_order": "normalize -> subject -> resize:BOX -> palette -> remap",
+    "outline": "preserve",
+    "palette_mode": "fixed",
+    "palette_scope": "resized-subject",
+    "palette_size": 32,
+    "resolved_palette_size": 32,
+    "subject_bbox": [
+      142,
+      74,
+      456,
+      375
+    ],
+    "subject_mode": "auto",
+    "target_size": 128
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    142,
+    74,
+    456,
+    375
+  ],
+  "subject_candidates": [
+    {
+      "area": 39502,
+      "bbox": [
+        142,
+        74,
+        456,
+        375
+      ],
+      "confidence": 1.0,
+      "mode": "alpha-bbox"
+    }
+  ],
+  "subject_size": [
+    314,
+    301
+  ],
+  "version": 1,
+  "warnings": []
+}

@@ -1,0 +1,114 @@
+{
+  "fingerprint": "df117e33c36cf431d619a73201c7e1979e55508ea084a95badf5b327eb858517",
+  "parameters": {
+    "detail": "balanced",
+    "matrix": {
+      "alpha_threshold": 128,
+      "background": "cleanup",
+      "details": [
+        "balanced"
+      ],
+      "dither": "none",
+      "extra_details": [
+        {
+          "detail": "clean",
+          "palette_size": "auto",
+          "size": 128
+        },
+        {
+          "detail": "detailed",
+          "palette_size": "auto",
+          "size": 128
+        }
+      ],
+      "focus": {
+        "detail": "balanced",
+        "palette_size": "auto",
+        "size": 128
+      },
+      "outline": "preserve",
+      "palette_sizes": [
+        "auto",
+        32,
+        48
+      ],
+      "preview_scales": [
+        4,
+        8
+      ],
+      "sizes": [
+        96,
+        128,
+        192
+      ]
+    },
+    "method": "A2_box",
+    "palette_size": "auto",
+    "size": 128,
+    "source": "D01",
+    "source_hash": "59b82bb96c3f04bdcde555ee79b0c30c3a5fb476332c925a15686ac67809dbee"
+  },
+  "row": {
+    "artifact_dir": "benchmark/outputs/D01/A2_box/size-128_palette-auto_detail-balanced",
+    "detail": "balanced",
+    "method_id": "A2_box",
+    "method_label": "A2 Geometry-first + BOX",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 189,
+        "tiny_pixels": 181,
+        "tiny_ratio": 0.025987
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "cbaa7a8f9ebc062972a1a6e1e90227962fbc444ce5dc7ba99f8db8ec5f41b0f4",
+        "result_sha256": "cbaa7a8f9ebc062972a1a6e1e90227962fbc444ce5dc7ba99f8db8ec5f41b0f4"
+      },
+      "heuristic_score": 91.352,
+      "palette": {
+        "actual": 24,
+        "compliant": true,
+        "requested": "auto"
+      },
+      "runtime_ms": 65.774,
+      "silhouette": {
+        "extra_pixels": 46,
+        "iou": 0.992968,
+        "missing_pixels": 3
+      },
+      "thin_feature": {
+        "recovered": 0.978571,
+        "thin_pixels": 140
+      }
+    },
+    "palette_size": "auto",
+    "result_path": "benchmark/outputs/D01/A2_box/size-128_palette-auto_detail-balanced/result.png",
+    "size": 128,
+    "source_id": "D01",
+    "source_label": "front-readable",
+    "source_path": "benchmark/sources/D01_front_readable.png",
+    "subject_bbox": [
+      126,
+      49,
+      388,
+      386
+    ],
+    "subject_candidates": [
+      {
+        "area": 47815,
+        "bbox": [
+          126,
+          49,
+          388,
+          386
+        ],
+        "confidence": 1.0,
+        "mode": "alpha-bbox"
+      }
+    ]
+  }
+}

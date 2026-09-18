@@ -4,8 +4,11 @@
 from .engine import (
     SUPPORTED_PALETTES,
     SUPPORTED_SIZES,
+    DetailMode,
     PixelizeOptions,
     PixelizeResult,
+    SubjectBox,
+    SubjectMode,
     pixelize_file,
     pixelize_image,
 )
@@ -13,8 +16,11 @@ from .engine import (
 __all__ = [
     "SUPPORTED_PALETTES",
     "SUPPORTED_SIZES",
+    "DetailMode",
     "PixelizeOptions",
     "PixelizeResult",
+    "SubjectBox",
+    "SubjectMode",
     "pixelize_file",
     "pixelize_image",
 ]

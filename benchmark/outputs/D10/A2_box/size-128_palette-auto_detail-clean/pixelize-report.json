@@ -1,0 +1,259 @@
+{
+  "benchmark": {
+    "fingerprint": "8fc7e349571b72ebe038175a471c8290ea5b213c12aa039e68b1dcdc56739af3",
+    "method_id": "A2_box",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 316,
+        "tiny_pixels": 315,
+        "tiny_ratio": 0.046722
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "730c141854fad0d25b47d3a5caadaa7093545f469e7fcb8038c8b7e9e65e07ec",
+        "result_sha256": "730c141854fad0d25b47d3a5caadaa7093545f469e7fcb8038c8b7e9e65e07ec"
+      },
+      "heuristic_score": 83.955,
+      "palette": {
+        "actual": 24,
+        "compliant": true,
+        "requested": "auto"
+      },
+      "runtime_ms": 53.298,
+      "silhouette": {
+        "extra_pixels": 37,
+        "iou": 0.992892,
+        "missing_pixels": 11
+      },
+      "thin_feature": {
+        "recovered": 0.931677,
+        "thin_pixels": 161
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize-benchmark",
+  "logical_size": [
+    100,
+    128
+  ],
+  "palette": {
+    "colors": 24,
+    "entries": [
+      [
+        127,
+        139,
+        158,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        86,
+        83,
+        111,
+        255
+      ],
+      [
+        210,
+        176,
+        160,
+        255
+      ],
+      [
+        240,
+        214,
+        122,
+        255
+      ],
+      [
+        58,
+        56,
+        76,
+        255
+      ],
+      [
+        238,
+        245,
+        255,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        78,
+        84,
+        100,
+        255
+      ],
+      [
+        170,
+        152,
+        95,
+        255
+      ],
+      [
+        103,
+        112,
+        129,
+        255
+      ],
+      [
+        169,
+        145,
+        144,
+        255
+      ],
+      [
+        149,
+        129,
+        131,
+        255
+      ],
+      [
+        62,
+        65,
+        80,
+        255
+      ],
+      [
+        44,
+        42,
+        59,
+        255
+      ],
+      [
+        203,
+        209,
+        220,
+        255
+      ],
+      [
+        95,
+        83,
+        53,
+        255
+      ],
+      [
+        120,
+        102,
+        101,
+        255
+      ],
+      [
+        127,
+        114,
+        127,
+        255
+      ],
+      [
+        135,
+        121,
+        82,
+        255
+      ],
+      [
+        95,
+        102,
+        119,
+        255
+      ],
+      [
+        73,
+        71,
+        96,
+        255
+      ],
+      [
+        111,
+        121,
+        139,
+        255
+      ],
+      [
+        62,
+        56,
+        47,
+        255
+      ]
+    ],
+    "requested": 24,
+    "separation": {
+      "closest_pair": [
+        [
+          86,
+          83,
+          111
+        ],
+        [
+          78,
+          84,
+          100
+        ]
+      ],
+      "colors": 24,
+      "min_delta_e": 0.023854
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "detail": "clean",
+    "dither": "none",
+    "operation_order": "normalize -> subject -> resize:BOX -> palette -> remap",
+    "outline": "preserve",
+    "palette_mode": "auto",
+    "palette_scope": "resized-subject",
+    "palette_size": null,
+    "resolved_palette_size": 24,
+    "subject_bbox": [
+      137,
+      68,
+      379,
+      378
+    ],
+    "subject_mode": "auto",
+    "target_size": 128
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    137,
+    68,
+    379,
+    378
+  ],
+  "subject_candidates": [
+    {
+      "area": 39327,
+      "bbox": [
+        137,
+        68,
+        379,
+        378
+      ],
+      "confidence": 1.0,
+      "mode": "alpha-bbox"
+    }
+  ],
+  "subject_size": [
+    242,
+    310
+  ],
+  "version": 1,
+  "warnings": []
+}

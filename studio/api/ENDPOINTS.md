@@ -11,7 +11,7 @@ routers stay thin: parse request → call the backend function → shape the res
 **Implemented so far** (`studio/api/routers/`): Health, Uploads, Assets, Runs
 (list/get/status/create/delete), Presets, Prompt,
 Generate/Normalize/Extract/Refine, Batch (start/poll/WebSocket), Review/Repair,
-Anchor, Animation QA/Curation/Export, and Static Mode.
+Anchor, Animation QA/Curation/Export, Static Mode, and Quick Generate.
 **Not yet implemented**: no planned endpoint groups remain. Review/Repair,
 Anchor, Animation QA/Curation/Export, Presets, and Static Mode are registered
 service-backed routes.
@@ -73,6 +73,22 @@ service-backed routes.
 
 ---
 
+## Quick Generate — source-first front door
+
+| Method | Path | Request | Response | Backend owner |
+|---|---|---|---|---|
+| POST | `/api/quick/sessions` | `QuickSessionCreateRequest` | `QuickSessionResponse` (`201`) | `quick_service.create_session` → upload storage or existing provider service |
+| GET | `/api/quick/sessions/{session_id}` | — | `QuickSessionResponse` | persisted Quick session metadata |
+| GET | `/api/quick/sessions/{session_id}/assets/{path:path}` | — | file stream | contained Quick source/session asset |
+| POST | `/api/quick/sessions/{session_id}/pixelize` | `QuickPixelizeRequest` | `QuickPixelizeResponse` | existing Pixelize M1.1 `pixelize_file` (subject mode/crop, sprite size, detail, advanced options) |
+| PUT | `/api/quick/sessions/{session_id}/source` | `QuickSourceSelectionRequest` | `QuickSessionResponse` | explicit original/pixelized source selection |
+| POST | `/api/quick/sessions/{session_id}/make-sprite` | `QuickMakeSpriteRequest` | `QuickMakeSpriteResponse` (`202`) | auto-created Run + persisted `quick_make` Job |
+
+Quick Pixelize is subject-first: `size` means selected character height, `subject_mode` is `auto` or `manual`, and `detail` is `clean`, `balanced`, or `detailed`. The response includes the subject crop URL and detected candidates for before/after review.
+
+Quick does not return base64 image data. The session API is a user-facing façade;
+Make Sprite automatically builds the internal Run and then delegates the same
+Generate/Normalize/Extract/Refine/QA/Compose services used by Advanced Studio.
 ## Sprite Mode — Project / Runs
 
 | Method | Path | Request | Response | Backend call |

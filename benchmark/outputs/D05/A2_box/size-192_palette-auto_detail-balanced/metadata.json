@@ -1,0 +1,114 @@
+{
+  "fingerprint": "680ca3e9bb3e7acd0eba8e402c22b84cbe97c0d7331089dd4063ca589d485488",
+  "parameters": {
+    "detail": "balanced",
+    "matrix": {
+      "alpha_threshold": 128,
+      "background": "cleanup",
+      "details": [
+        "balanced"
+      ],
+      "dither": "none",
+      "extra_details": [
+        {
+          "detail": "clean",
+          "palette_size": "auto",
+          "size": 128
+        },
+        {
+          "detail": "detailed",
+          "palette_size": "auto",
+          "size": 128
+        }
+      ],
+      "focus": {
+        "detail": "balanced",
+        "palette_size": "auto",
+        "size": 128
+      },
+      "outline": "preserve",
+      "palette_sizes": [
+        "auto",
+        32,
+        48
+      ],
+      "preview_scales": [
+        4,
+        8
+      ],
+      "sizes": [
+        96,
+        128,
+        192
+      ]
+    },
+    "method": "A2_box",
+    "palette_size": "auto",
+    "size": 192,
+    "source": "D05",
+    "source_hash": "d44642b635b1a3f7a8e9e1b6b9acc4bed4328b41174dd5c5e49dc9bbf2043c51"
+  },
+  "row": {
+    "artifact_dir": "benchmark/outputs/D05/A2_box/size-192_palette-auto_detail-balanced",
+    "detail": "balanced",
+    "method_id": "A2_box",
+    "method_label": "A2 Geometry-first + BOX",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 378,
+        "tiny_pixels": 348,
+        "tiny_ratio": 0.022937
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "8b1b764b34e03f57bce71c86ca983fea0eabc06e27211d818bf49f61c79715d6",
+        "result_sha256": "8b1b764b34e03f57bce71c86ca983fea0eabc06e27211d818bf49f61c79715d6"
+      },
+      "heuristic_score": 90.762,
+      "palette": {
+        "actual": 24,
+        "compliant": true,
+        "requested": "auto"
+      },
+      "runtime_ms": 70.315,
+      "silhouette": {
+        "extra_pixels": 153,
+        "iou": 0.988873,
+        "missing_pixels": 16
+      },
+      "thin_feature": {
+        "recovered": 0.925743,
+        "thin_pixels": 202
+      }
+    },
+    "palette_size": "auto",
+    "result_path": "benchmark/outputs/D05/A2_box/size-192_palette-auto_detail-balanced/result.png",
+    "size": 192,
+    "source_id": "D05",
+    "source_label": "long-hair",
+    "source_path": "benchmark/sources/D05_long_hair.png",
+    "subject_bbox": [
+      124,
+      53,
+      378,
+      389
+    ],
+    "subject_candidates": [
+      {
+        "area": 46091,
+        "bbox": [
+          124,
+          53,
+          378,
+          389
+        ],
+        "confidence": 1.0,
+        "mode": "alpha-bbox"
+      }
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "benchmark": {
+    "fingerprint": "15c89ed9edc23fc56f770690768ffa87d2c4ef4c88ee669de1bdb67dde0fbe3c",
+    "method_id": "A1_current_m1_1",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 24,
+        "tiny_pixels": 9,
+        "tiny_ratio": 0.000584
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "55a1447675da978df7a341d08f67d2d9170a6777d9bb75a15350ddfd6960c521",
+        "result_sha256": "55a1447675da978df7a341d08f67d2d9170a6777d9bb75a15350ddfd6960c521"
+      },
+      "heuristic_score": 98.744,
+      "palette": {
+        "actual": 6,
+        "compliant": true,
+        "requested": 48
+      },
+      "runtime_ms": 2761.815,
+      "silhouette": {
+        "extra_pixels": 370,
+        "iou": 0.975982,
+        "missing_pixels": 0
+      },
+      "thin_feature": {
+        "recovered": 1.0,
+        "thin_pixels": 202
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize",
+  "logical_size": [
+    145,
+    192
+  ],
+  "palette": {
+    "colors": 6,
+    "entries": [
+      [
+        102,
+        79,
+        170,
+        255
+      ],
+      [
+        57,
+        35,
+        92,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        245,
+        190,
+        157,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        238,
+        245,
+        255,
+        255
+      ]
+    ],
+    "requested": 48,
+    "separation": {
+      "closest_pair": [
+        [
+          245,
+          190,
+          157
+        ],
+        [
+          228,
+          194,
+          77
+        ]
+      ],
+      "colors": 6,
+      "min_delta_e": 0.096373
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "cell_scoring": "area+edge+contrast+outline",
+    "color_space": "oklab",
+    "detail": "balanced",
+    "dither": "none",
+    "downsample_mode": "dominant-cell",
+    "feature_cells": 3476,
+    "outline": "preserve",
+    "outline_cells": 3036,
+    "palette_mode": "fixed",
+    "palette_scope": "subject",
+    "palette_size": 48,
+    "resolved_palette_size": 6,
+    "subject_bbox": [
+      124,
+      53,
+      378,
+      389
+    ],
+    "subject_mode": "auto",
+    "target_size": 192,
+    "thin_feature_recovered_cells": 194,
+    "thin_feature_recovery": true
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    124,
+    53,
+    378,
+    389
+  ],
+  "subject_candidates": [
+    {
+      "area": 46091,
+      "bbox": [
+        124,
+        53,
+        378,
+        389
+      ],
+      "confidence": 1.0,
+      "mode": "alpha-bbox"
+    }
+  ],
+  "subject_size": [
+    254,
+    336
+  ],
+  "version": 2,
+  "warnings": []
+}

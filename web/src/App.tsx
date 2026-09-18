@@ -62,8 +62,9 @@ import type { ReviewAction } from './features/workspace/WorkspacePanels'
 import StaticWorkspace, { type StaticCreateDraft } from './features/static/StaticWorkspace'
 import { useI18n } from './i18n'
 import DisplaySettings from './features/ui/DisplaySettings'
+import QuickGeneratePage from './features/quick/QuickGeneratePage'
 
-type Tab = 'project' | 'static' | 'workspace' | 'jobs'
+type Tab = 'quick' | 'project' | 'static' | 'workspace' | 'jobs'
 type WorkspaceTool = 'generate' | 'refine' | 'review' | 'qa' | 'export'
 type Notice = { kind: 'success' | 'error' | 'info'; text: string }
 type StaticAction = 'generate' | 'refine' | 'cleanup' | 'seam-check' | 'seam-repair' | 'layers-split' | 'layers-cutout' | 'qa' | 'export'
@@ -74,7 +75,8 @@ type StaticPreviewSnapshot = { output: string; wrapPreview: string; wrapReport: 
 const fallbackProviderChoices: Provider[] = ['grok']
 
 const tabs: Array<{ id: Tab; label: string; hint: string }> = [
-  { id: 'project', label: 'Project', hint: 'Create and select assets' },
+  { id: 'quick', label: 'Quick Generate', hint: 'Source to sprite' },
+  { id: 'project', label: 'Studio', hint: 'Advanced production workflow' },
   { id: 'static', label: 'Static', hint: 'Scene and tile assets' },
   { id: 'workspace', label: 'Workspace', hint: 'Generate, refine, repair, QA' },
   { id: 'jobs', label: 'Jobs', hint: 'Background batch progress' },
@@ -99,8 +101,8 @@ function formatBytes(bytes: number): string {
 }
 
 function App() {
-  const { t, toggleLocale } = useI18n()
-  const [tab, setTab] = useState<Tab>('project')
+  const { locale, t, toggleLocale } = useI18n()
+  const [tab, setTab] = useState<Tab>('quick')
   const [workspaceTool, setWorkspaceTool] = useState<WorkspaceTool>('generate')
   const [runs, setRuns] = useState<RunSummary[]>([])
   const [providers, setProviders] = useState<ProviderStatus[]>([])
@@ -441,6 +443,14 @@ function App() {
     return () => socket.close()
   }, [activeJob?.jobId, activeJob?.runId, selectedRunId, activeState])
 
+  async function openStudio(runId?: string) {
+    if (runId) {
+      await refreshRuns(runId)
+      setSelectedRunId(runId)
+    }
+    setTab('project')
+    setWorkspaceTool('generate')
+  }
   function selectRun(runId: string) {
     setSelectedRunId(runId)
     setSelectedFrame(0)
@@ -826,12 +836,12 @@ function App() {
               onClick={() => { setTab(item.id); if (item.id === 'jobs') setJobDrawerOpen(true); else setJobDrawerOpen(false) }}
               aria-current={tab === item.id ? 'page' : undefined}
             >
-              <span>{t(item.id)}</span>
-              <small>{item.hint}</small>
+              <span>{item.id === 'quick' ? (locale === 'ko' ? '빠른 생성' : item.label) : item.id === 'project' ? t('project') : item.id === 'static' ? t('static') : item.id === 'workspace' ? t('workspace') : t('jobs')}</span>
+              <small>{item.id === 'quick' ? (locale === 'ko' ? '소스에서 스프라이트까지' : item.hint) : item.hint}</small>
             </button>
           ))}
         </nav>
-        <AssetLibrary runs={runs} />
+        {tab !== 'quick' && <AssetLibrary runs={runs} />}
         <div className="sidebar-footer">
           <span className="status-dot" aria-hidden="true" />
           <div><strong>Migration Phase 6</strong><small>React over FastAPI</small></div>
@@ -841,25 +851,27 @@ function App() {
       <main className="main-content">
         <header className="topbar">
           <div>
-            <p className="eyebrow">LOCAL WORKSPACE / {tab === 'workspace' ? workspaceTool.toUpperCase() : tab.toUpperCase()}</p>
-            <h1>{tab === 'project' ? t('createAsset') : tab === 'static' ? t('buildStatic') : tab === 'workspace' ? workspaceTools.find((tool) => tool.id === workspaceTool)?.hint ?? 'Work on the active asset' : t('backgroundJobs')}</h1>
+            <p className="eyebrow">LOCAL WORKSPACE / {tab === 'quick' ? (locale === 'ko' ? '빠른 생성' : 'QUICK GENERATE') : tab === 'workspace' ? workspaceTool.toUpperCase() : tab.toUpperCase()}</p>
+            <h1>{tab === 'quick' ? (locale === 'ko' ? '소스에서 스프라이트까지' : 'Source to sprite') : tab === 'project' ? t('createAsset') : tab === 'static' ? t('buildStatic') : tab === 'workspace' ? workspaceTools.find((tool) => tool.id === workspaceTool)?.hint ?? 'Work on the active asset' : t('backgroundJobs')}</h1>
           </div>
           <div className="topbar-actions">
-          <div className="run-selector">
+          {tab !== 'quick' && <div className="run-selector">
             <label htmlFor="global-run">{t('activeAsset')}</label>
             <select id="global-run" value={selectedRunId} onChange={(event) => selectRun(event.target.value)}>
               <option value="">{t('selectAsset')}</option>
               {runs.map((run) => <option key={run.run_id} value={run.run_id}>{run.character_id} · {run.preset}</option>)}
             </select>
-          </div>
-          {selectedRun && <span className="selection-chip">{activeState || 'No state'} · Frame {selectedFrame + 1}</span>}
+          </div>}
+          {tab !== 'quick' && selectedRun && <span className="selection-chip">{activeState || 'No state'} · Frame {selectedFrame + 1}</span>}
           <button className="tool-button text-button locale-toggle" type="button" onClick={toggleLocale}>{t('language')}</button>
           <DisplaySettings />
-          <button className="job-trigger" type="button" onClick={() => setJobDrawerOpen(true)} aria-expanded={jobDrawerOpen} aria-controls="job-drawer">Jobs{batchStatus?.status === 'running' || activeJobIsActive ? <span className="status-dot" aria-label="job running" /> : null}</button>
+          {tab !== 'quick' && <button className="job-trigger" type="button" onClick={() => setJobDrawerOpen(true)} aria-expanded={jobDrawerOpen} aria-controls="job-drawer">{t('jobs')}{batchStatus?.status === 'running' || activeJobIsActive ? <span className="status-dot" aria-label="job running" /> : null}</button>}
           </div>
         </header>
 
         {notice && <div className={`notice ${notice.kind}`} role={notice.kind === 'error' ? 'alert' : 'status'}>{notice.text}</div>}
+
+        {tab === 'quick' && <QuickGeneratePage providerChoices={providerChoices} onOpenStudio={(runId) => void openStudio(runId)} />}
 
         {tab === 'project' && (
           <div className="content-grid project-grid">

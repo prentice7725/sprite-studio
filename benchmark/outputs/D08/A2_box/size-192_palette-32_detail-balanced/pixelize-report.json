@@ -1,0 +1,351 @@
+{
+  "benchmark": {
+    "fingerprint": "613d17525e2a9358c8a8c439717166316904b58800fdc073b2ca5284df2c7a3c",
+    "method_id": "A2_box",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 491,
+        "tiny_pixels": 462,
+        "tiny_ratio": 0.034527
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "e46b9a336b6a29b4093439f6809256b8778bbffb246e9a62e7bf96d24218e13a",
+        "result_sha256": "e46b9a336b6a29b4093439f6809256b8778bbffb246e9a62e7bf96d24218e13a"
+      },
+      "heuristic_score": 86.594,
+      "palette": {
+        "actual": 32,
+        "compliant": true,
+        "requested": 32
+      },
+      "runtime_ms": 71.337,
+      "silhouette": {
+        "extra_pixels": 87,
+        "iou": 0.992016,
+        "missing_pixels": 20
+      },
+      "thin_feature": {
+        "recovered": 0.892473,
+        "thin_pixels": 186
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize-benchmark",
+  "logical_size": [
+    152,
+    192
+  ],
+  "palette": {
+    "colors": 32,
+    "entries": [
+      [
+        54,
+        115,
+        175,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        245,
+        190,
+        157,
+        255
+      ],
+      [
+        42,
+        72,
+        108,
+        255
+      ],
+      [
+        39,
+        33,
+        58,
+        255
+      ],
+      [
+        142,
+        112,
+        108,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        238,
+        245,
+        255,
+        255
+      ],
+      [
+        240,
+        214,
+        122,
+        255
+      ],
+      [
+        48,
+        94,
+        142,
+        255
+      ],
+      [
+        194,
+        151,
+        133,
+        255
+      ],
+      [
+        36,
+        50,
+        75,
+        255
+      ],
+      [
+        83,
+        69,
+        70,
+        255
+      ],
+      [
+        129,
+        111,
+        59,
+        255
+      ],
+      [
+        134,
+        137,
+        148,
+        255
+      ],
+      [
+        188,
+        168,
+        102,
+        255
+      ],
+      [
+        186,
+        191,
+        202,
+        255
+      ],
+      [
+        34,
+        31,
+        50,
+        255
+      ],
+      [
+        179,
+        153,
+        68,
+        255
+      ],
+      [
+        137,
+        109,
+        99,
+        255
+      ],
+      [
+        79,
+        70,
+        50,
+        255
+      ],
+      [
+        135,
+        121,
+        82,
+        255
+      ],
+      [
+        82,
+        83,
+        95,
+        255
+      ],
+      [
+        29,
+        27,
+        41,
+        255
+      ],
+      [
+        82,
+        75,
+        62,
+        255
+      ],
+      [
+        91,
+        73,
+        83,
+        255
+      ],
+      [
+        32,
+        30,
+        46,
+        255
+      ],
+      [
+        37,
+        32,
+        54,
+        255
+      ],
+      [
+        191,
+        150,
+        128,
+        255
+      ],
+      [
+        88,
+        72,
+        79,
+        255
+      ],
+      [
+        86,
+        70,
+        75,
+        255
+      ],
+      [
+        39,
+        33,
+        57,
+        255
+      ]
+    ],
+    "requested": 32,
+    "separation": {
+      "closest_pair": [
+        [
+          39,
+          33,
+          58
+        ],
+        [
+          39,
+          33,
+          57
+        ]
+      ],
+      "colors": 32,
+      "min_delta_e": 0.001906
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "detail": "balanced",
+    "dither": "none",
+    "operation_order": "normalize -> subject -> resize:BOX -> palette -> remap",
+    "outline": "preserve",
+    "palette_mode": "fixed",
+    "palette_scope": "resized-subject",
+    "palette_size": 32,
+    "resolved_palette_size": 32,
+    "subject_bbox": [
+      123,
+      51,
+      393,
+      393
+    ],
+    "subject_mode": "auto",
+    "target_size": 192
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    123,
+    51,
+    393,
+    393
+  ],
+  "subject_candidates": [
+    {
+      "area": 10478,
+      "bbox": [
+        123,
+        51,
+        393,
+        393
+      ],
+      "confidence": 0.159882
+    },
+    {
+      "area": 3744,
+      "bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "confidence": 0.057129
+    }
+  ],
+  "subject_size": [
+    270,
+    342
+  ],
+  "version": 1,
+  "warnings": [
+    {
+      "code": "cleanup-no-alpha",
+      "message": "background cleanup will use subject detection because the source is fully opaque"
+    },
+    {
+      "candidates": [
+        {
+          "area": 10478,
+          "bbox": [
+            123,
+            51,
+            393,
+            393
+          ],
+          "confidence": 0.159882
+        },
+        {
+          "area": 3744,
+          "bbox": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "confidence": 0.057129
+        }
+      ],
+      "code": "multiple-subject-candidates",
+      "message": "auto detect selected the largest candidate; use manual crop to choose another subject"
+    },
+    {
+      "code": "opaque-background-masked",
+      "message": "auto subject detection masked background pixels outside the selected subject"
+    }
+  ]
+}

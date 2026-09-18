@@ -1,0 +1,114 @@
+{
+  "fingerprint": "860f33bbb7269984bf8eb9abdd24c634db147d1df1b736a9318965fd7094b469",
+  "parameters": {
+    "detail": "balanced",
+    "matrix": {
+      "alpha_threshold": 128,
+      "background": "cleanup",
+      "details": [
+        "balanced"
+      ],
+      "dither": "none",
+      "extra_details": [
+        {
+          "detail": "clean",
+          "palette_size": "auto",
+          "size": 128
+        },
+        {
+          "detail": "detailed",
+          "palette_size": "auto",
+          "size": 128
+        }
+      ],
+      "focus": {
+        "detail": "balanced",
+        "palette_size": "auto",
+        "size": 128
+      },
+      "outline": "preserve",
+      "palette_sizes": [
+        "auto",
+        32,
+        48
+      ],
+      "preview_scales": [
+        4,
+        8
+      ],
+      "sizes": [
+        96,
+        128,
+        192
+      ]
+    },
+    "method": "A3_lanczos",
+    "palette_size": 32,
+    "size": 192,
+    "source": "D06",
+    "source_hash": "69cd2226ff958e35435c2267ac09ce3be5dc1d40d26283c73e3dc6d821b5dcda"
+  },
+  "row": {
+    "artifact_dir": "benchmark/outputs/D06/A3_lanczos/size-192_palette-32_detail-balanced",
+    "detail": "balanced",
+    "method_id": "A3_lanczos",
+    "method_label": "A3 Geometry-first + LANCZOS",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 1019,
+        "tiny_pixels": 982,
+        "tiny_ratio": 0.084466
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "b43199a7978124374389911a5951a04e15717f0c9a04c81eae49a1ca8017ffaa",
+        "result_sha256": "b43199a7978124374389911a5951a04e15717f0c9a04c81eae49a1ca8017ffaa"
+      },
+      "heuristic_score": 82.452,
+      "palette": {
+        "actual": 32,
+        "compliant": true,
+        "requested": 32
+      },
+      "runtime_ms": 76.505,
+      "silhouette": {
+        "extra_pixels": 38,
+        "iou": 0.994934,
+        "missing_pixels": 21
+      },
+      "thin_feature": {
+        "recovered": 0.907216,
+        "thin_pixels": 194
+      }
+    },
+    "palette_size": "32",
+    "result_path": "benchmark/outputs/D06/A3_lanczos/size-192_palette-32_detail-balanced/result.png",
+    "size": 192,
+    "source_id": "D06",
+    "source_label": "weapon",
+    "source_path": "benchmark/sources/D06_weapon.png",
+    "subject_bbox": [
+      115,
+      33,
+      374,
+      375
+    ],
+    "subject_candidates": [
+      {
+        "area": 36965,
+        "bbox": [
+          115,
+          33,
+          374,
+          375
+        ],
+        "confidence": 1.0,
+        "mode": "alpha-bbox"
+      }
+    ]
+  }
+}

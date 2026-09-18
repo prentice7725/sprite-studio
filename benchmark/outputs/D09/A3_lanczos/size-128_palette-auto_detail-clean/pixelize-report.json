@@ -1,0 +1,259 @@
+{
+  "benchmark": {
+    "fingerprint": "87d5dc4fb76561260c0afec23b0b089e74b2e6eaea67ea3ab869f7a3f7d92c7c",
+    "method_id": "A3_lanczos",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 597,
+        "tiny_pixels": 532,
+        "tiny_ratio": 0.052616
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "5ecfc8511b4307e0d865e1244c087858d59c2ff01d50fb712bae5a5699066132",
+        "result_sha256": "5ecfc8511b4307e0d865e1244c087858d59c2ff01d50fb712bae5a5699066132"
+      },
+      "heuristic_score": 82.94,
+      "palette": {
+        "actual": 24,
+        "compliant": true,
+        "requested": "auto"
+      },
+      "runtime_ms": 66.802,
+      "silhouette": {
+        "extra_pixels": 25,
+        "iou": 0.99546,
+        "missing_pixels": 21
+      },
+      "thin_feature": {
+        "recovered": 0.925764,
+        "thin_pixels": 229
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize-benchmark",
+  "logical_size": [
+    186,
+    128
+  ],
+  "palette": {
+    "colors": 24,
+    "entries": [
+      [
+        66,
+        137,
+        183,
+        255
+      ],
+      [
+        39,
+        33,
+        58,
+        255
+      ],
+      [
+        178,
+        84,
+        100,
+        255
+      ],
+      [
+        78,
+        40,
+        49,
+        255
+      ],
+      [
+        29,
+        28,
+        42,
+        255
+      ],
+      [
+        53,
+        100,
+        135,
+        255
+      ],
+      [
+        225,
+        191,
+        76,
+        255
+      ],
+      [
+        129,
+        65,
+        80,
+        255
+      ],
+      [
+        246,
+        249,
+        251,
+        255
+      ],
+      [
+        37,
+        53,
+        74,
+        255
+      ],
+      [
+        110,
+        59,
+        73,
+        255
+      ],
+      [
+        216,
+        168,
+        143,
+        255
+      ],
+      [
+        247,
+        200,
+        164,
+        255
+      ],
+      [
+        69,
+        145,
+        193,
+        255
+      ],
+      [
+        121,
+        97,
+        90,
+        255
+      ],
+      [
+        63,
+        129,
+        173,
+        255
+      ],
+      [
+        33,
+        40,
+        57,
+        255
+      ],
+      [
+        165,
+        79,
+        95,
+        255
+      ],
+      [
+        60,
+        39,
+        49,
+        255
+      ],
+      [
+        189,
+        88,
+        104,
+        255
+      ],
+      [
+        20,
+        21,
+        35,
+        255
+      ],
+      [
+        72,
+        71,
+        83,
+        255
+      ],
+      [
+        243,
+        207,
+        81,
+        255
+      ],
+      [
+        167,
+        134,
+        116,
+        255
+      ]
+    ],
+    "requested": 24,
+    "separation": {
+      "closest_pair": [
+        [
+          178,
+          84,
+          100
+        ],
+        [
+          189,
+          88,
+          104
+        ]
+      ],
+      "colors": 24,
+      "min_delta_e": 0.0241
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "detail": "clean",
+    "dither": "none",
+    "operation_order": "normalize -> subject -> resize:LANCZOS -> palette -> remap",
+    "outline": "preserve",
+    "palette_mode": "auto",
+    "palette_scope": "resized-subject",
+    "palette_size": null,
+    "resolved_palette_size": 24,
+    "subject_bbox": [
+      99,
+      127,
+      432,
+      356
+    ],
+    "subject_mode": "auto",
+    "target_size": 128
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    99,
+    127,
+    432,
+    356
+  ],
+  "subject_candidates": [
+    {
+      "area": 32323,
+      "bbox": [
+        99,
+        127,
+        432,
+        356
+      ],
+      "confidence": 1.0,
+      "mode": "alpha-bbox"
+    }
+  ],
+  "subject_size": [
+    333,
+    229
+  ],
+  "version": 1,
+  "warnings": []
+}

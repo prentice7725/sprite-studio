@@ -144,6 +144,9 @@ export interface NormalizeResponse {
   expected_subjects: number
   valid_subjects: number
   report: Record<string, unknown>
+  raw_source?: string
+  intermediate_source?: string
+  post_source?: string
 }
 
 export interface ExtractResponse {
@@ -269,7 +272,7 @@ export type JobOperation =
   | 'repair_analyze' | 'repair_safe' | 'repair_decide' | 'repair_undo'
   | 'repair_adopt' | 'repair_unadopt' | 'animation_qa'
   | 'export_compose' | 'export_runtime'
-  | 'sequential_key_poses' | 'sequential_inbetweens' | 'sequential_promote'
+  | 'sequential_key_poses' | 'sequential_inbetweens' | 'sequential_promote' | 'quick_make'
 
 export type JobStatusKind = 'running' | 'succeeded' | 'failed' | 'cancel_requested' | 'cancelled' | 'interrupted'
 
@@ -292,6 +295,62 @@ export interface JobStatus {
   elapsed_seconds: number | null
 }
 
+export type QuickSourceKind = 'upload' | 'prompt'
+export type QuickSourceSelection = 'original' | 'pixelized'
+export type QuickMotion = 'idle' | 'walk' | 'run' | 'jump' | 'attack' | 'hurt' | 'custom'
+export type QuickStyle = 'pixel-art' | 'cel-shaded' | 'hand-painted' | '3d-render'
+export type QuickBackground = 'transparent' | 'chroma'
+export type QuickDirectionCount = 1 | 4 | 8
+export type QuickFrameCount = 4 | 6 | 8
+export type QuickPixelSize = 64 | 96 | 128 | 192
+export type QuickPalette = 'auto' | 16 | 24 | 32 | 48
+export type QuickDither = 'none' | 'ordered-low' | 'ordered'
+export type QuickOutline = 'preserve' | 'auto'
+export type QuickPixelMasterStrategy = 'preserve' | 'reference_pixel_master_128'
+
+export interface QuickSession {
+  session_id: string
+  run_id: string | null
+  job_id: string | null
+  source_kind: QuickSourceKind
+  source_status: 'ready' | 'failed'
+  source_selection: QuickSourceSelection
+  original_source: string
+  pixelized_source: string | null
+  pixelized_preview: string | null
+  subject_source: string | null
+  prompt: string
+  motion: string
+  style: QuickStyle
+  background: QuickBackground
+  notes: string
+  provider: Provider
+}
+
+export interface QuickPixelizeResult {
+  session_id: string
+  strategy: QuickPixelMasterStrategy
+  output_source: string
+  preview_source: string
+  subject_source: string
+  subject_bbox: [number, number, number, number]
+  subject_candidates: Array<Record<string, unknown>>
+  logical_size: [number, number]
+  palette_size: number
+  palette: number[][]
+  warnings: Array<{ code?: string; message?: string; [key: string]: unknown }>
+  report: Record<string, unknown>
+  raw_source?: string
+  intermediate_source?: string
+  post_source?: string
+}
+
+export interface QuickMakeResult {
+  session: QuickSession
+  run_id: string
+  target_state: string
+  job_id: string
+}
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
     ...init,
@@ -342,6 +401,25 @@ export function getRunStatus(runId: string): Promise<{ states: Record<string, st
   return request<{ states: Record<string, string> }>(`/runs/${encodeURIComponent(runId)}/status`)
 }
 
+export function createQuickSession(body: Record<string, unknown>): Promise<QuickSession> {
+  return request<QuickSession>('/quick/sessions', { method: 'POST', body: JSON.stringify(body) })
+}
+
+export function getQuickSession(sessionId: string): Promise<QuickSession> {
+  return request<QuickSession>(`/quick/sessions/${encodeURIComponent(sessionId)}`)
+}
+
+export function quickPixelize(sessionId: string, body: Record<string, unknown>): Promise<QuickPixelizeResult> {
+  return request<QuickPixelizeResult>(`/quick/sessions/${encodeURIComponent(sessionId)}/pixelize`, { method: 'POST', body: JSON.stringify(body) })
+}
+
+export function selectQuickSource(sessionId: string, source: QuickSourceSelection): Promise<QuickSession> {
+  return request<QuickSession>(`/quick/sessions/${encodeURIComponent(sessionId)}/source`, { method: 'PUT', body: JSON.stringify({ source }) })
+}
+
+export function makeQuickSprite(sessionId: string, body: Record<string, unknown>): Promise<QuickMakeResult> {
+  return request<QuickMakeResult>(`/quick/sessions/${encodeURIComponent(sessionId)}/make-sprite`, { method: 'POST', body: JSON.stringify(body) })
+}
 export function uploadImage(file: File): Promise<{ upload_id: string; filename: string }> {
   const body = new FormData()
   body.append('file', file)

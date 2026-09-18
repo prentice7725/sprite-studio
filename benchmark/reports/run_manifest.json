@@ -1,0 +1,13 @@
+{
+  "case_count": 330,
+  "config": "benchmark/configs/benchmark_matrix.json",
+  "determinism_failures": 0,
+  "generated_at": "2026-09-17T23:39:19+0900",
+  "kind": "pixelize-phase1-run-manifest",
+  "numpy": "2.4.6",
+  "pillow": "12.2.0",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "repository_revision": "1abe98d",
+  "version": 1
+}

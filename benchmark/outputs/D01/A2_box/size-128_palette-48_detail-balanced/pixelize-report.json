@@ -1,0 +1,403 @@
+{
+  "benchmark": {
+    "fingerprint": "c5e0f66bd7d24db72e0cb63d527ad859dbf4914ac65d31629b2ceba674deb4c0",
+    "method_id": "A2_box",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 355,
+        "tiny_pixels": 349,
+        "tiny_ratio": 0.050108
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "9e62c38dfb922ac7da0283d7da08c2fe2187a902b1645ff04d9833abb7df2a06",
+        "result_sha256": "9e62c38dfb922ac7da0283d7da08c2fe2187a902b1645ff04d9833abb7df2a06"
+      },
+      "heuristic_score": 84.148,
+      "palette": {
+        "actual": 48,
+        "compliant": true,
+        "requested": 48
+      },
+      "runtime_ms": 74.967,
+      "silhouette": {
+        "extra_pixels": 46,
+        "iou": 0.992968,
+        "missing_pixels": 3
+      },
+      "thin_feature": {
+        "recovered": 0.978571,
+        "thin_pixels": 140
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize-benchmark",
+  "logical_size": [
+    100,
+    128
+  ],
+  "palette": {
+    "colors": 48,
+    "entries": [
+      [
+        69,
+        125,
+        192,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        245,
+        190,
+        157,
+        255
+      ],
+      [
+        39,
+        33,
+        58,
+        255
+      ],
+      [
+        56,
+        93,
+        142,
+        255
+      ],
+      [
+        42,
+        60,
+        91,
+        255
+      ],
+      [
+        176,
+        138,
+        124,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        238,
+        245,
+        255,
+        255
+      ],
+      [
+        108,
+        85,
+        91,
+        255
+      ],
+      [
+        137,
+        109,
+        99,
+        255
+      ],
+      [
+        168,
+        173,
+        184,
+        255
+      ],
+      [
+        77,
+        64,
+        67,
+        255
+      ],
+      [
+        134,
+        137,
+        148,
+        255
+      ],
+      [
+        95,
+        83,
+        53,
+        255
+      ],
+      [
+        203,
+        209,
+        220,
+        255
+      ],
+      [
+        36,
+        44,
+        66,
+        255
+      ],
+      [
+        49,
+        77,
+        117,
+        255
+      ],
+      [
+        99,
+        100,
+        112,
+        255
+      ],
+      [
+        63,
+        109,
+        167,
+        255
+      ],
+      [
+        129,
+        111,
+        59,
+        255
+      ],
+      [
+        197,
+        154,
+        131,
+        255
+      ],
+      [
+        221,
+        172,
+        144,
+        255
+      ],
+      [
+        195,
+        166,
+        71,
+        255
+      ],
+      [
+        62,
+        56,
+        47,
+        255
+      ],
+      [
+        162,
+        139,
+        65,
+        255
+      ],
+      [
+        34,
+        31,
+        50,
+        255
+      ],
+      [
+        153,
+        120,
+        113,
+        255
+      ],
+      [
+        59,
+        101,
+        155,
+        255
+      ],
+      [
+        61,
+        50,
+        67,
+        255
+      ],
+      [
+        101,
+        82,
+        80,
+        255
+      ],
+      [
+        145,
+        149,
+        160,
+        255
+      ],
+      [
+        215,
+        221,
+        231,
+        255
+      ],
+      [
+        53,
+        46,
+        54,
+        255
+      ],
+      [
+        179,
+        153,
+        68,
+        255
+      ],
+      [
+        142,
+        112,
+        108,
+        255
+      ],
+      [
+        68,
+        57,
+        66,
+        255
+      ],
+      [
+        47,
+        71,
+        108,
+        255
+      ],
+      [
+        38,
+        50,
+        75,
+        255
+      ],
+      [
+        79,
+        70,
+        50,
+        255
+      ],
+      [
+        131,
+        103,
+        102,
+        255
+      ],
+      [
+        206,
+        176,
+        73,
+        255
+      ],
+      [
+        32,
+        30,
+        46,
+        255
+      ],
+      [
+        33,
+        39,
+        58,
+        255
+      ],
+      [
+        28,
+        28,
+        40,
+        255
+      ],
+      [
+        36,
+        31,
+        52,
+        255
+      ],
+      [
+        83,
+        69,
+        70,
+        255
+      ],
+      [
+        51,
+        82,
+        125,
+        255
+      ]
+    ],
+    "requested": 48,
+    "separation": {
+      "closest_pair": [
+        [
+          29,
+          28,
+          41
+        ],
+        [
+          28,
+          28,
+          40
+        ]
+      ],
+      "colors": 48,
+      "min_delta_e": 0.002816
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "detail": "balanced",
+    "dither": "none",
+    "operation_order": "normalize -> subject -> resize:BOX -> palette -> remap",
+    "outline": "preserve",
+    "palette_mode": "fixed",
+    "palette_scope": "resized-subject",
+    "palette_size": 48,
+    "resolved_palette_size": 48,
+    "subject_bbox": [
+      126,
+      49,
+      388,
+      386
+    ],
+    "subject_mode": "auto",
+    "target_size": 128
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    126,
+    49,
+    388,
+    386
+  ],
+  "subject_candidates": [
+    {
+      "area": 47815,
+      "bbox": [
+        126,
+        49,
+        388,
+        386
+      ],
+      "confidence": 1.0,
+      "mode": "alpha-bbox"
+    }
+  ],
+  "subject_size": [
+    262,
+    337
+  ],
+  "version": 1,
+  "warnings": []
+}

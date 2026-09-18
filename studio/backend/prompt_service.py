@@ -59,7 +59,7 @@ def assemble_for_run(run_dir: Path, request: dict[str, Any], state: str, *, prof
     metadata = json_load(run_dir / "studio" / "studio.json")
     config = metadata.get("config") or {}
     preset = load_preset(str(config.get("preset", "sword")))
-    identity = str(preset.get("identity_prompt") or preset.get("character_description") or config.get("character_id", ""))
+    identity = str(config.get("quick_prompt") or preset.get("identity_prompt") or preset.get("character_description") or config.get("character_id", ""))
     base_name = (request.get("character") or {}).get("base_image")
     base = run_dir / base_name if base_name else None
     # §4: frame count is read from the request SSOT (states[state].frames), never hardcoded.

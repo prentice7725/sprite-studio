@@ -1,29 +1,26 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Illustration -> logical pixel master conversion.
+"""Illustration -> subject-sized logical pixel master conversion.
 
-Pixelize is intentionally different from Static Refine's grid recovery. Refine
-tries to discover a pixel lattice that is already present in a generated raster;
-Pixelize is given a smooth/high-resolution illustration and an explicit logical
-resolution. It therefore owns the target grid and makes one deterministic color
-decision per logical pixel.
-
-The important ordering is:
+Pixelize remains a deterministic M1 path, but M1.1 changes the quality order:
 
     source RGBA
-      -> alpha normalization
-      -> one shared Oklab palette
-      -> palette-map in source space
-      -> dominant-cell sampling onto the declared logical grid
-      -> optional ordered dither on the logical image
+      -> alpha/background normalization
+      -> subject detection or explicit crop
+      -> subject-height sprite sizing
+      -> subject-scoped palette
+      -> feature-aware cell sampling
+      -> optional dither
+      -> thin-feature recovery
 
-This avoids average-color downsampling, which invents fringe colors at edges and
-is the main source of the "small smooth illustration" look that Pixelize exists
-to avoid.
+The old whole-image and dominant-colour behaviour is kept as a report-compatible
+concept, but the actual cell decision now considers area, edges, local contrast,
+and dark outline candidates.
 """
 
 from __future__ import annotations
 
 import json
+from collections import deque
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Literal
@@ -42,11 +39,19 @@ SUPPORTED_PALETTES = (16, 24, 32, 48)
 DitherMode = Literal["none", "ordered-low", "ordered"]
 BackgroundMode = Literal["keep", "cleanup"]
 OutlineMode = Literal["preserve", "auto"]
+SubjectMode = Literal["auto", "manual"]
+DetailMode = Literal["clean", "balanced", "detailed"]
+SubjectBox = tuple[int, int, int, int]
 
 
 @dataclass(frozen=True)
 class PixelizeOptions:
-    """Stable, serializable Pixelize M1 contract."""
+    """Stable, serializable Pixelize M1.1 contract.
+
+    ``target_size`` is now the requested character height, not the longest edge
+    of the input image. ``subject_bbox`` uses source-image pixel coordinates in
+    ``left, top, right, bottom`` order when ``subject_mode`` is ``manual``.
+    """
 
     target_size: int = 128
     palette_size: int | None = 32
@@ -54,6 +59,9 @@ class PixelizeOptions:
     background: BackgroundMode = "keep"
     outline: OutlineMode = "preserve"
     alpha_threshold: int = 128
+    subject_mode: SubjectMode = "auto"
+    subject_bbox: SubjectBox | None = None
+    detail: DetailMode = "balanced"
 
     def __post_init__(self) -> None:
         if self.target_size not in SUPPORTED_SIZES:
@@ -66,8 +74,20 @@ class PixelizeOptions:
             raise ValueError("background must be keep or cleanup")
         if self.outline not in {"preserve", "auto"}:
             raise ValueError("outline must be preserve or auto")
+        if self.subject_mode not in {"auto", "manual"}:
+            raise ValueError("subject_mode must be auto or manual")
+        if self.detail not in {"clean", "balanced", "detailed"}:
+            raise ValueError("detail must be clean, balanced, or detailed")
         if not (1 <= self.alpha_threshold <= 254):
             raise ValueError("alpha_threshold must be between 1 and 254")
+        if self.subject_bbox is not None:
+            if len(self.subject_bbox) != 4:
+                raise ValueError("subject_bbox must contain left, top, right, bottom")
+            left, top, right, bottom = self.subject_bbox
+            if right <= left or bottom <= top:
+                raise ValueError("subject_bbox must have positive width and height")
+        if self.subject_mode == "manual" and self.subject_bbox is None:
+            raise ValueError("manual subject mode requires subject_bbox")
 
 
 @dataclass(frozen=True)
@@ -77,19 +97,20 @@ class PixelizeResult:
     profile_path: Path
     report_path: Path
     preview_path: Path
+    subject_path: Path
     logical_size: tuple[int, int]
     palette: tuple[tuple[int, int, int, int], ...]
     warnings: tuple[dict[str, Any], ...]
     report: dict[str, Any]
+    subject_bbox: SubjectBox
+    subject_candidates: tuple[dict[str, Any], ...]
 
 
-def _logical_size(source_size: tuple[int, int], target: int) -> tuple[int, int]:
-    width, height = source_size
+def _logical_size(subject_size: tuple[int, int], target_height: int) -> tuple[int, int]:
+    width, height = subject_size
     if width <= 0 or height <= 0:
-        raise ValueError(f"source image has invalid size {source_size}")
-    if width >= height:
-        return target, max(1, int(round(height * target / width)))
-    return max(1, int(round(width * target / height))), target
+        raise ValueError(f"subject image has invalid size {subject_size}")
+    return max(1, int(round(width * target_height / height))), target_height
 
 
 def _normalise_alpha(image: Image.Image, options: PixelizeOptions) -> tuple[Image.Image, list[dict[str, Any]]]:
@@ -103,16 +124,13 @@ def _normalise_alpha(image: Image.Image, options: PixelizeOptions) -> tuple[Imag
         if not had_transparency:
             warnings.append({
                 "code": "cleanup-no-alpha",
-                "message": "background cleanup only normalizes an existing alpha mask in M1; the source is fully opaque",
+                "message": "background cleanup will use subject detection because the source is fully opaque",
             })
         source[:, :, 3] = np.where(alpha >= options.alpha_threshold, 255, 0).astype(np.uint8)
     elif had_partial_alpha:
-        # Keep mode preserves source alpha. Palette mapping still considers pixels
-        # opaque from alpha_threshold upward, but the report makes the source state
-        # explicit so a later video-frame profile can choose cleanup deliberately.
         warnings.append({
             "code": "partial-alpha-kept",
-            "message": "source contains partial alpha and background=keep preserved it until palette mapping",
+            "message": "source contains partial alpha and background=keep preserved it until subject mapping",
         })
 
     transparent = source[:, :, 3] < options.alpha_threshold
@@ -122,72 +140,283 @@ def _normalise_alpha(image: Image.Image, options: PixelizeOptions) -> tuple[Imag
     return Image.fromarray(source, mode="RGBA"), warnings
 
 
-def _auto_palette_size(image: Image.Image, alpha_threshold: int) -> int:
+def _bbox(mask: np.ndarray) -> SubjectBox | None:
+    ys, xs = np.where(mask)
+    if len(xs) == 0:
+        return None
+    return int(xs.min()), int(ys.min()), int(xs.max() + 1), int(ys.max() + 1)
+
+
+def _border_foreground_mask(source: np.ndarray, alpha_threshold: int) -> np.ndarray:
+    """Find pixels that differ from the dominant border colour in opaque art."""
+    height, width, _ = source.shape
+    border = np.concatenate((source[0, :, :], source[-1, :, :], source[:, 0, :], source[:, -1, :]), axis=0)
+    valid_border = border[border[:, 3] >= alpha_threshold]
+    if valid_border.size == 0:
+        return source[:, :, 3] >= alpha_threshold
+    quantised = (valid_border[:, :3] // 16).astype(np.uint8)
+    colours, counts = np.unique(quantised, axis=0, return_counts=True)
+    reference = colours[int(np.argmax(counts))].astype(np.float32) * 16.0 + 8.0
+    distance = np.sqrt(np.sum((source[:, :, :3].astype(np.float32) - reference) ** 2, axis=2))
+    mask = (distance >= 28.0) & (source[:, :, 3] >= alpha_threshold)
+    minimum = max(8, int(height * width * 0.001))
+    if int(mask.sum()) < minimum:
+        mask = (distance >= 16.0) & (source[:, :, 3] >= alpha_threshold)
+    return mask
+
+
+def _component_candidates(mask: np.ndarray, *, max_candidates: int = 8) -> list[dict[str, Any]]:
+    """Return deterministic connected-component candidates on a bounded grid."""
+    height, width = mask.shape
+    scale = min(1.0, 256.0 / max(height, width))
+    small_w = max(1, int(round(width * scale)))
+    small_h = max(1, int(round(height * scale)))
+    small = np.asarray(
+        Image.fromarray((mask.astype(np.uint8) * 255), mode="L").resize((small_w, small_h), Image.Resampling.NEAREST),
+        dtype=np.uint8,
+    ) > 0
+    visited = np.zeros_like(small, dtype=bool)
+    candidates: list[dict[str, Any]] = []
+    for sy in range(small_h):
+        for sx in range(small_w):
+            if not small[sy, sx] or visited[sy, sx]:
+                continue
+            queue: deque[tuple[int, int]] = deque([(sx, sy)])
+            visited[sy, sx] = True
+            area = 0
+            left = right = sx
+            top = bottom = sy
+            while queue:
+                x, y = queue.popleft()
+                area += 1
+                left, right = min(left, x), max(right, x)
+                top, bottom = min(top, y), max(bottom, y)
+                for nx, ny in ((x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1), (x - 1, y - 1), (x + 1, y + 1), (x - 1, y + 1), (x + 1, y - 1)):
+                    if 0 <= nx < small_w and 0 <= ny < small_h and small[ny, nx] and not visited[ny, nx]:
+                        visited[ny, nx] = True
+                        queue.append((nx, ny))
+            if area < max(4, int(small_w * small_h * 0.001)):
+                continue
+            box_width = max(1, int(round((right + 1) / scale)) - int(np.floor(left / scale)))
+            box_height = max(1, int(round((bottom + 1) / scale)) - int(np.floor(top / scale)))
+            x0 = max(0, int(np.floor(left / scale)))
+            y0 = max(0, int(np.floor(top / scale)))
+            x1 = min(width, x0 + box_width)
+            y1 = min(height, y0 + box_height)
+            padding = max(2, int(round(max(x1 - x0, y1 - y0) * 0.04)))
+            x0, y0 = max(0, x0 - padding), max(0, y0 - padding)
+            x1, y1 = min(width, x1 + padding), min(height, y1 + padding)
+            candidates.append({"bbox": [x0, y0, x1, y1], "area": int(area), "confidence": round(float(area / max(1, small_w * small_h)), 6)})
+    candidates.sort(key=lambda item: (-int(item["area"]), item["bbox"]))
+    return candidates[:max_candidates]
+
+
+def _subject_selection(source: Image.Image, options: PixelizeOptions) -> tuple[Image.Image, SubjectBox, list[dict[str, Any]], list[dict[str, Any]]]:
+    array = np.asarray(source.convert("RGBA"), dtype=np.uint8)
+    height, width, _ = array.shape
+    warnings: list[dict[str, Any]] = []
+    has_transparency = bool(np.any(array[:, :, 3] < 255))
+    alpha_mask = array[:, :, 3] >= options.alpha_threshold
+    foreground = alpha_mask if has_transparency else _border_foreground_mask(array, options.alpha_threshold)
+
+    if options.subject_mode == "manual":
+        assert options.subject_bbox is not None
+        left, top, right, bottom = options.subject_bbox
+        left, top = max(0, int(left)), max(0, int(top))
+        right, bottom = min(width, int(right)), min(height, int(bottom))
+        selected = (left, top, right, bottom)
+        if right <= left or bottom <= top:
+            raise ValueError(f"subject_bbox {options.subject_bbox} is outside the source image")
+        candidates = [{"bbox": list(selected), "area": int(foreground[top:bottom, left:right].sum()), "confidence": 1.0, "mode": "manual"}]
+        crop = array[top:bottom, left:right].copy()
+        if options.background == "cleanup" and not has_transparency:
+            local_mask = _border_foreground_mask(crop, options.alpha_threshold)
+            crop[:, :, 3] = np.where(local_mask, 255, 0).astype(np.uint8)
+            crop[~local_mask, :3] = 0
+        return Image.fromarray(crop, mode="RGBA"), selected, candidates, warnings
+
+    candidates = _component_candidates(foreground)
+    full_box = _bbox(foreground)
+    if full_box is None:
+        warnings.append({"code": "subject-not-detected", "message": "no subject pixels were detected; using the full source image"})
+        full_box = (0, 0, width, height)
+        foreground = alpha_mask
+    if has_transparency:
+        # Transparent character art commonly has disconnected limbs, hair, and
+        # accessories. The alpha bbox keeps the entire character together.
+        selected = full_box
+        candidates = [{"bbox": list(selected), "area": int(foreground.sum()), "confidence": 1.0, "mode": "alpha-bbox"}]
+    else:
+        selected = tuple(int(value) for value in candidates[0]["bbox"]) if candidates else full_box
+        if len(candidates) > 1:
+            warnings.append({"code": "multiple-subject-candidates", "message": "auto detect selected the largest candidate; use manual crop to choose another subject", "candidates": candidates})
+    left, top, right, bottom = selected
+    crop = array[top:bottom, left:right].copy()
+    local_mask = foreground[top:bottom, left:right]
+    if not has_transparency:
+        crop[:, :, 3] = np.where(local_mask, 255, 0).astype(np.uint8)
+        crop[~local_mask, :3] = 0
+        warnings.append({"code": "opaque-background-masked", "message": "auto subject detection masked background pixels outside the selected subject"})
+    return Image.fromarray(crop, mode="RGBA"), selected, candidates, warnings
+
+
+def _auto_palette_size(image: Image.Image, alpha_threshold: int, detail: DetailMode) -> int:
     array = np.asarray(image.convert("RGBA"), dtype=np.uint8).reshape(-1, 4)
     opaque = array[array[:, 3] >= alpha_threshold]
     if opaque.size == 0:
         return 16
     unique = int(np.unique(opaque[:, :3], axis=0).shape[0])
-    if unique <= 32:
-        return 16
-    if unique <= 128:
-        return 24
-    if unique <= 768:
-        return 32
-    return 48
+    base = 16 if unique <= 32 else 24 if unique <= 128 else 32 if unique <= 768 else 48
+    if detail == "clean":
+        return min(24, max(16, base))
+    if detail == "detailed":
+        return min(48, max(32, base))
+    return base
 
 
-def _dominant_downsample(
+def _feature_maps(image: Image.Image, alpha_threshold: int) -> tuple[np.ndarray, np.ndarray]:
+    source = np.asarray(image.convert("RGBA"), dtype=np.uint8)
+    rgb = source[:, :, :3].astype(np.float32)
+    luma = 0.2126 * rgb[:, :, 0] + 0.7152 * rgb[:, :, 1] + 0.0722 * rgb[:, :, 2]
+    left = np.roll(luma, 1, axis=1)
+    right = np.roll(luma, -1, axis=1)
+    up = np.roll(luma, 1, axis=0)
+    down = np.roll(luma, -1, axis=0)
+    left[:, 0], right[:, -1], up[0, :], down[-1, :] = luma[:, 0], luma[:, -1], luma[0, :], luma[-1, :]
+    edge = (np.abs(luma - left) + np.abs(luma - right) + np.abs(luma - up) + np.abs(luma - down)) / 4.0
+    contrast = np.maximum.reduce((np.abs(luma - left), np.abs(luma - right), np.abs(luma - up), np.abs(luma - down)))
+    opaque = source[:, :, 3] >= alpha_threshold
+    edge[~opaque] = 0.0
+    contrast[~opaque] = 0.0
+    return edge, contrast
+
+
+def _cell_bounds(index: int, source_length: int, output_length: int) -> tuple[int, int]:
+    start = int(np.floor(index * source_length / output_length))
+    end = min(source_length, max(start + 1, int(np.ceil((index + 1) * source_length / output_length))))
+    return start, end
+
+
+def _feature_aware_downsample(
     mapped: Image.Image,
     palette: tuple[tuple[int, int, int, int], ...],
     size: tuple[int, int],
     *,
     outline: OutlineMode,
+    detail: DetailMode,
     alpha_threshold: int,
-) -> Image.Image:
-    """Pick one existing palette color per logical cell; never average colors."""
+) -> tuple[Image.Image, dict[str, int]]:
+    """Pick one palette colour per cell using area + edge + contrast scores."""
     source = np.asarray(mapped.convert("RGBA"), dtype=np.uint8)
     src_h, src_w, _ = source.shape
     out_w, out_h = size
     result = np.zeros((out_h, out_w, 4), dtype=np.uint8)
-
-    # Luma ranks let outline preservation prefer an existing dark palette entry
-    # only when it already occupies a meaningful share of a cell. It never
-    # invents a new outline color.
+    edge_map, contrast_map = _feature_maps(mapped, alpha_threshold)
     palette_rgb = np.asarray([entry[:3] for entry in palette], dtype=np.float64) if palette else np.zeros((0, 3))
     palette_luma = 0.2126 * palette_rgb[:, 0] + 0.7152 * palette_rgb[:, 1] + 0.0722 * palette_rgb[:, 2]
     dark_cutoff = float(np.quantile(palette_luma, 0.30)) if len(palette_luma) else 0.0
+    weights = {"clean": (0.72, 0.18, 0.10), "balanced": (0.56, 0.26, 0.18), "detailed": (0.45, 0.32, 0.23)}[detail]
+    stats = {"feature_cells": 0, "outline_cells": 0}
 
     for oy in range(out_h):
-        y0 = int(np.floor(oy * src_h / out_h))
-        y1 = max(y0 + 1, int(np.ceil((oy + 1) * src_h / out_h)))
-        y1 = min(src_h, y1)
+        y0, y1 = _cell_bounds(oy, src_h, out_h)
         for ox in range(out_w):
-            x0 = int(np.floor(ox * src_w / out_w))
-            x1 = max(x0 + 1, int(np.ceil((ox + 1) * src_w / out_w)))
-            x1 = min(src_w, x1)
+            x0, x1 = _cell_bounds(ox, src_w, out_w)
             block = source[y0:y1, x0:x1].reshape(-1, 4)
-            opaque = block[block[:, 3] >= alpha_threshold]
-            if opaque.size == 0:
+            opaque_mask = block[:, 3] >= alpha_threshold
+            if not opaque_mask.any():
                 continue
-            colors, counts = np.unique(opaque[:, :3], axis=0, return_counts=True)
-            modal_index = int(np.argmax(counts))
-            choice = colors[modal_index]
-
-            if outline == "preserve" and len(colors) > 1:
-                luma = 0.2126 * colors[:, 0] + 0.7152 * colors[:, 1] + 0.0722 * colors[:, 2]
-                darkest = int(np.argmin(luma))
-                share = float(counts[darkest]) / float(counts.sum())
-                modal_luma = float(luma[modal_index])
-                # A quarter-cell floor prevents a one-pixel speck from turning a
-                # whole logical pixel into outline. The 24-level separation is
-                # large enough to distinguish a contour from normal tone noise.
-                if share >= 0.25 and float(luma[darkest]) <= dark_cutoff and modal_luma - float(luma[darkest]) >= 24.0:
-                    choice = colors[darkest]
-
-            result[oy, ox, :3] = choice
+            opaque = block[opaque_mask]
+            colours, counts = np.unique(opaque[:, :3], axis=0, return_counts=True)
+            area_score = counts.astype(np.float64) / max(1, counts.sum())
+            edge_values = edge_map[y0:y1, x0:x1].reshape(-1)[opaque_mask]
+            contrast_values = contrast_map[y0:y1, x0:x1].reshape(-1)[opaque_mask]
+            edge_score = np.zeros(len(colours), dtype=np.float64)
+            contrast_score = np.zeros(len(colours), dtype=np.float64)
+            for index, colour in enumerate(colours):
+                matching = np.all(opaque[:, :3] == colour, axis=1)
+                edge_score[index] = float(edge_values[matching].sum())
+                contrast_score[index] = float(contrast_values[matching].sum())
+            if edge_score.sum() > 0:
+                edge_score /= edge_score.sum()
+            if contrast_score.sum() > 0:
+                contrast_score /= contrast_score.sum()
+            scores = weights[0] * area_score + weights[1] * edge_score + weights[2] * contrast_score
+            luma = 0.2126 * colours[:, 0] + 0.7152 * colours[:, 1] + 0.0722 * colours[:, 2]
+            dark_candidates = np.where((luma <= dark_cutoff) & (edge_score >= 0.08) & (contrast_score >= 0.04) & (area_score >= 0.04))[0]
+            if outline in {"preserve", "auto"} and len(dark_candidates):
+                scores[dark_candidates] += 0.12 if detail == "clean" else 0.18
+                stats["outline_cells"] += 1
+            choice_index = int(np.argmax(scores))
+            result[oy, ox, :3] = colours[choice_index]
             result[oy, ox, 3] = 255
-    return Image.fromarray(result, mode="RGBA")
+            if edge_score[choice_index] >= 0.08 or contrast_score[choice_index] >= 0.08:
+                stats["feature_cells"] += 1
+    return Image.fromarray(result, mode="RGBA"), stats
+
+
+def _thin_feature_recovery(
+    logical: Image.Image,
+    mapped: Image.Image,
+    palette: tuple[tuple[int, int, int, int], ...],
+    *,
+    outline: OutlineMode,
+    detail: DetailMode,
+    alpha_threshold: int,
+) -> tuple[Image.Image, int]:
+    """Restore strong dark one/two-pixel features without reintroducing noise."""
+    if outline not in {"preserve", "auto"} or not palette:
+        return logical, 0
+    result = np.asarray(logical.convert("RGBA"), dtype=np.uint8).copy()
+    source = np.asarray(mapped.convert("RGBA"), dtype=np.uint8)
+    edge_map, contrast_map = _feature_maps(mapped, alpha_threshold)
+    palette_rgb = np.asarray([entry[:3] for entry in palette], dtype=np.float64)
+    palette_luma = 0.2126 * palette_rgb[:, 0] + 0.7152 * palette_rgb[:, 1] + 0.0722 * palette_rgb[:, 2]
+    dark_cutoff = float(np.quantile(palette_luma, 0.30))
+    recovered = 0
+    out_h, out_w, _ = result.shape
+    src_h, src_w, _ = source.shape
+
+    for oy in range(out_h):
+        y0, y1 = _cell_bounds(oy, src_h, out_h)
+        for ox in range(out_w):
+            x0, x1 = _cell_bounds(ox, src_w, out_w)
+            block = source[y0:y1, x0:x1].reshape(-1, 4)
+            opaque_mask = block[:, 3] >= alpha_threshold
+            if not opaque_mask.any():
+                continue
+            colours, counts = np.unique(block[opaque_mask, :3], axis=0, return_counts=True)
+            luma = 0.2126 * colours[:, 0] + 0.7152 * colours[:, 1] + 0.0722 * colours[:, 2]
+            dark = np.where(luma <= dark_cutoff)[0]
+            if not len(dark):
+                continue
+            edge_values = edge_map[y0:y1, x0:x1].reshape(-1)[opaque_mask]
+            contrast_values = contrast_map[y0:y1, x0:x1].reshape(-1)[opaque_mask]
+            total_edge = float(edge_values.sum())
+            total_contrast = float(contrast_values.sum())
+            candidate = None
+            for index in dark[np.argsort(-counts[dark])]:
+                matching = np.all(block[opaque_mask, :3] == colours[index], axis=1)
+                edge_share = float(edge_values[matching].sum()) / max(total_edge, 1.0)
+                contrast_share = float(contrast_values[matching].sum()) / max(total_contrast, 1.0)
+                if edge_share >= 0.10 and contrast_share >= 0.06 and float(contrast_values[matching].max(initial=0.0)) >= 18.0:
+                    candidate = colours[index]
+                    break
+            if candidate is None:
+                continue
+            current = result[oy, ox, :3]
+            if np.array_equal(current, candidate):
+                continue
+            neighbours = 0
+            for ny in range(max(0, oy - 1), min(out_h, oy + 2)):
+                for nx in range(max(0, ox - 1), min(out_w, ox + 2)):
+                    if (ny != oy or nx != ox) and result[ny, nx, 3] >= 255:
+                        neighbours += 1
+            if neighbours >= 2 or detail == "detailed":
+                result[oy, ox, :3] = candidate
+                result[oy, ox, 3] = 255
+                recovered += 1
+    return Image.fromarray(result, mode="RGBA"), recovered
 
 
 def _dither_settings(mode: DitherMode) -> DitherSettings:
@@ -200,35 +429,58 @@ def _dither_settings(mode: DitherMode) -> DitherSettings:
 
 def pixelize_image(image: Image.Image, options: PixelizeOptions) -> tuple[Image.Image, tuple[tuple[int, int, int, int], ...], dict[str, Any]]:
     source, warnings = _normalise_alpha(image, options)
-    logical_size = _logical_size(source.size, options.target_size)
-    palette_size = options.palette_size or _auto_palette_size(source, options.alpha_threshold)
-    palette = build_palette([source], palette_size, alpha_threshold=options.alpha_threshold, iterations=6)
+    subject, subject_bbox, candidates, subject_warnings = _subject_selection(source, options)
+    warnings.extend(subject_warnings)
+    logical_size = _logical_size(subject.size, options.target_size)
+    palette_size = options.palette_size or _auto_palette_size(subject, options.alpha_threshold, options.detail)
+    palette = build_palette([subject], palette_size, alpha_threshold=options.alpha_threshold, iterations=6)
+    recovery_count = 0
+    scoring_stats = {"feature_cells": 0, "outline_cells": 0}
     if not palette:
-        warnings.append({"code": "empty-source", "message": "no opaque pixels remain after alpha normalization"})
+        warnings.append({"code": "empty-source", "message": "no opaque pixels remain after subject selection"})
         logical = Image.new("RGBA", logical_size, (0, 0, 0, 0))
     else:
-        mapped = apply_palette(source, palette, alpha_threshold=options.alpha_threshold)
-        logical = _dominant_downsample(
+        mapped = apply_palette(subject, palette, alpha_threshold=options.alpha_threshold)
+        logical, scoring_stats = _feature_aware_downsample(
             mapped,
             palette,
             logical_size,
             outline=options.outline,
+            detail=options.detail,
             alpha_threshold=options.alpha_threshold,
         )
         if options.dither != "none":
             logical = apply_dither(logical, palette, _dither_settings(options.dither), alpha_threshold=options.alpha_threshold)
+        logical, recovery_count = _thin_feature_recovery(
+            logical,
+            mapped,
+            palette,
+            outline=options.outline,
+            detail=options.detail,
+            alpha_threshold=options.alpha_threshold,
+        )
 
     report: dict[str, Any] = {
         "kind": "sprite-studio-pixelize",
-        "version": 1,
+        "version": 2,
         "source_size": list(image.size),
+        "subject_size": list(subject.size),
+        "subject_bbox": list(subject_bbox),
+        "subject_candidates": candidates,
         "logical_size": list(logical_size),
         "profile": {
             **asdict(options),
+            "subject_bbox": list(subject_bbox),
             "palette_mode": "auto" if options.palette_size is None else "fixed",
             "resolved_palette_size": len(palette),
+            "palette_scope": "subject",
             "color_space": "oklab",
             "downsample_mode": "dominant-cell",
+            "cell_scoring": "area+edge+contrast+outline",
+            "thin_feature_recovery": True,
+            "thin_feature_recovered_cells": recovery_count,
+            "feature_cells": scoring_stats["feature_cells"],
+            "outline_cells": scoring_stats["outline_cells"],
             "alpha_mode": "binary" if options.background == "cleanup" else "thresholded-on-output",
         },
         "palette": {
@@ -255,26 +507,26 @@ def pixelize_file(
     with Image.open(input_path) as opened:
         source = opened.convert("RGBA")
     logical, palette, report = pixelize_image(source, options)
+    normalized, _ = _normalise_alpha(source, options)
+    subject, selected_bbox, candidates, _ = _subject_selection(normalized, options)
+    subject_bbox = tuple(int(value) for value in selected_bbox)
+    subject_candidates = tuple(candidates)
 
     output_path = output_dir / f"{stem}.png"
     palette_path = output_dir / f"{stem}.palette.json"
     profile_path = output_dir / f"{stem}.pixel-profile.json"
     report_path = output_dir / f"{stem}.pixelize-report.json"
     preview_path = output_dir / f"{stem}.preview-4x.png"
+    subject_path = output_dir / f"{stem}.subject.png"
 
     atomic_save_image(logical, output_path)
-    atomic_save_image(
-        logical.resize((logical.width * 4, logical.height * 4), Image.Resampling.NEAREST),
-        preview_path,
-    )
+    atomic_save_image(logical.resize((logical.width * 4, logical.height * 4), Image.Resampling.NEAREST), preview_path)
+    atomic_save_image(subject, subject_path)
     atomic_write_text(
         palette_path,
         json.dumps({"kind": "sprite-studio-pixel-palette", "entries": [list(entry) for entry in palette]}, ensure_ascii=False, indent=2) + "\n",
     )
-    atomic_write_text(
-        profile_path,
-        json.dumps(report["profile"], ensure_ascii=False, indent=2) + "\n",
-    )
+    atomic_write_text(profile_path, json.dumps(report["profile"], ensure_ascii=False, indent=2) + "\n")
     atomic_write_text(report_path, json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     return PixelizeResult(
         output_path=output_path,
@@ -282,8 +534,11 @@ def pixelize_file(
         profile_path=profile_path,
         report_path=report_path,
         preview_path=preview_path,
+        subject_path=subject_path,
         logical_size=logical.size,
         palette=palette,
         warnings=tuple(report["warnings"]),
         report=report,
+        subject_bbox=subject_bbox,
+        subject_candidates=subject_candidates,
     )

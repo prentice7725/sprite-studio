@@ -50,6 +50,25 @@ Packaging is Windows-first and requires a native backend artifact. Set
 `SPRITE_STUDIO_BACKEND_BIN` to `sprite-studio-api.exe` and run `npm run make`;
 the packaged app keeps run data and uploads in Electron's user-data directory.
 
+## Quick Generate front door
+
+The default React entry point is **Quick Generate**. It keeps the user-facing
+workflow source-first and hides internal Project/Asset/State/Preset/Job details:
+
+1. Upload an image or enter a Character prompt with motion, style, background,
+   optional reference, and notes.
+2. Review the original source. Pixelize is an explicit M1 wrapper; Original and
+   Pixelized are separate selectable sources and are never silently switched.
+3. Make Sprite chooses the internal run/state/motion-plan defaults and starts a
+   persisted `quick_make` Job. Its progress uses the existing Job WebSocket and
+   retry contract.
+4. The result exposes supported PNG/GIF/manifest URLs and an **Open in Studio**
+   handoff for repair, QA, curation, and advanced export.
+
+The implementation lives in `studio/backend/quick_service.py`,
+`studio/api/routers/quick.py`, and `web/src/features/quick/`. It delegates to
+existing provider, Pixelize M1, run, job, extraction, refine, QA, and export
+services; it does not remove or fork the existing Studio pipeline.
 ## React workspace workflow
 
 1. In **PROJECT**, choose a data-backed preset, upload the optional base image,

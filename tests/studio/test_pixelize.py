@@ -35,7 +35,10 @@ def test_pixelize_is_deterministic_and_uses_declared_logical_size(tmp_path: Path
     first = pixelize_file(source, tmp_path / "a", options)
     second = pixelize_file(source, tmp_path / "b", options)
 
-    assert first.logical_size == (96, 72)
+    assert first.logical_size == (92, 96)
+    assert first.report["profile"]["palette_scope"] == "subject"
+    assert first.report["profile"]["cell_scoring"] == "area+edge+contrast+outline"
+    assert first.subject_path.is_file()
     assert first.output_path.read_bytes() == second.output_path.read_bytes()
     assert first.palette_path.read_text(encoding="utf-8") == second.palette_path.read_text(encoding="utf-8")
     assert len(first.palette) <= 16
@@ -88,7 +91,10 @@ def test_pixelize_api_persists_profile_palette_and_preview(tmp_path: Path, monke
 
     assert response.status_code == 200
     body = response.json()
-    assert body["logical_size"] == [128, 96]
+    assert body["logical_size"] == [123, 128]
+    assert body["subject_bbox"][:2] == [64, 24]
+    assert body["subject_bbox"][2] >= 256 and body["subject_bbox"][3] >= 224
+    assert client.get(body["subject_asset"]).status_code == 200
     assert body["palette_size"] <= 24
     for key in ("output_asset", "preview_asset", "palette_asset", "profile_asset", "report_asset"):
         assert client.get(body[key]).status_code == 200
@@ -102,3 +108,23 @@ def test_pixelize_api_rejects_missing_raw_asset(tmp_path: Path, monkeypatch) -> 
 
     assert response.status_code == 400
     assert "no raw asset to pixelize" in response.json()["detail"]
+
+def test_manual_subject_crop_scales_character_height_and_keeps_features() -> None:
+    source = _illustration((320, 240))
+    logical, palette, report = pixelize_image(
+        source,
+        PixelizeOptions(
+            target_size=64,
+            palette_size=16,
+            subject_mode="manual",
+            subject_bbox=(64, 24, 256, 224),
+            detail="detailed",
+            outline="preserve",
+        ),
+    )
+
+    assert logical.size == (61, 64)
+    assert palette
+    assert report["subject_bbox"] == [64, 24, 256, 224]
+    assert report["profile"]["thin_feature_recovery"] is True
+    assert report["profile"]["palette_scope"] == "subject"

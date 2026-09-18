@@ -25,6 +25,14 @@ example `http://127.0.0.1:8765/api`. The default is `/api`, which uses the Vite
 development proxy and also keeps asset URLs same-origin in the browser.
 
 This front end implements an asset-centric Project/Static/Workspace layout.
+The default entry point is **Quick Generate**. It supports Upload → Make Sprite,
+Upload → Pixelize → Make Sprite, Prompt → Generate Source → Make Sprite, and the
+corresponding Pixelize-first path. Quick sessions expose only source, motion,
+style, background, Pixelize, Make Sprite, progress, and result concepts; the
+existing Project/Workspace/Static/Jobs screens remain available under **Studio**.
+The Quick API persists source files under its session root, serves them as URLs,
+and delegates Pixelize M1 and the full Generate → Normalize → Extract → Refine →
+QA → Compose pipeline to the existing backend services.
 Generate, Refine, Repair, Animation QA, and Export are tools inside the active
 Workspace; Batch is available from the global Jobs drawer. Sprite preset details
 are loaded from FastAPI rather than duplicated in React.

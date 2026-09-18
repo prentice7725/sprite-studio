@@ -74,6 +74,7 @@ pip install -e ".[studio,dev]"
 브라우저에서 마우스 클릭만으로 프롬프트 생성, AI 이미지 생성 및 정규화, 크로마키 추출, 픽셀 정제, 애니메이션 QA 및 익스포트까지 전체 과정을 수행할 수 있습니다.
 
 * **🎭 Sprite Mode**: Asset-centric Project/Workspace 흐름에서 캐릭터 다방향 연속 프레임 애니메이션 제작, 스마트 누끼, 픽셀 그리드 잠금 및 정제, 지터 검사 및 애니메이션 QA
+* **⚡ Quick Generate**: 이미지 업로드 또는 Character prompt에서 시작해 원본/Pixelized Source를 명시적으로 선택하고, 기존 Sprite pipeline을 한 번에 실행합니다. 상세 제어가 필요할 때는 **Studio**로 엽니다.
 * **🏞️ Static Mode**: 별도 Static 작업공간에서 배경 씬, 타일셋, 아이콘, 오브젝트 컷아웃 및 심리스(Seamless) 타일 이음새 검사/복원
 * **⚡ Batch 처리**: 전역 Jobs drawer에서 여러 애니메이션 상태(State)를 일괄 생성·정제하고 WebSocket으로 실시간 진행 상황 모니터링
 * **⏳ 백그라운드 단일 작업**: Generate/Normalize/Extract/Refine/Repair/QA/Export도 `job_id`와 WebSocket으로 실행하며, 실패 작업 재시도와 협력적 취소를 지원

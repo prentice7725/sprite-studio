@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "phase": "phase2A",
+  "description": "Pixel Master V2 execution plan. Tier B sources are immutable fixtures.",
+  "dataset": {
+    "tier_a_root": "benchmark/sources",
+    "tier_b_root": "benchmark_v2/sources/tier_b",
+    "tier_a_sources": ["D01", "D03", "D06", "D10"],
+    "tier_b_sources": ["R01", "R03", "R04", "R06"]
+  },
+  "methods": ["A1", "A2", "B1", "C1", "C2"],
+  "matrix": {
+    "size": 128,
+    "palette": "auto",
+    "detail": "balanced",
+    "states": ["raw", "post"]
+  }
+}

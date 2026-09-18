@@ -1,0 +1,49 @@
+{
+  "kind": "pixel-master-benchmark-v2-run",
+  "version": 1,
+  "config": "C:\\workspace\\sprite-studio\\benchmark_v2\\configs\\benchmark_matrix.json",
+  "methods": [
+    "A1",
+    "A2",
+    "B1",
+    "C1",
+    "C2"
+  ],
+  "tier_a_sources": [
+    "D01",
+    "D03",
+    "D06",
+    "D10"
+  ],
+  "tier_b_sources": [
+    {
+      "id": "R01",
+      "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+      "sha256": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+      "c1_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+      "c2_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png"
+    },
+    {
+      "id": "R03",
+      "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+      "sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+      "c1_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+      "c2_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png"
+    },
+    {
+      "id": "R04",
+      "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R04.png",
+      "sha256": "338f7545215398277dbdd64642c747e80d7c14ad3c152fa66564f4537433e466",
+      "c1_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R04.png",
+      "c2_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R04.png"
+    },
+    {
+      "id": "R06",
+      "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+      "sha256": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+      "c1_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+      "c2_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png"
+    }
+  ],
+  "fixture_policy": "immutable-existing-files-only"
+}

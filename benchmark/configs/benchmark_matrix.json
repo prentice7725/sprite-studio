@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "phase": "phase1",
+  "description": "Pixelize Phase 1 comparison: current M1.1 versus geometry-first BOX/LANCZOS quantization.",
+  "dataset": {
+    "kind": "synthetic-proxy-v1",
+    "source_root": "benchmark/sources",
+    "minimum_sources": 10,
+    "sources": [
+      {"id": "D01", "label": "front-readable", "file": "D01_front_readable.png", "notes": "transparent front-facing character with eyes, outline, and torso blocks"},
+      {"id": "D02", "label": "three-quarter", "file": "D02_three_quarter.png", "notes": "transparent three-quarter character with offset face and arm"},
+      {"id": "D03", "label": "mascot", "file": "D03_mascot.png", "notes": "compact mascot with high-contrast interior marks"},
+      {"id": "D04", "label": "detailed-costume", "file": "D04_detailed_costume.png", "notes": "layered costume, belts, folds, and buttons"},
+      {"id": "D05", "label": "long-hair", "file": "D05_long_hair.png", "notes": "long hair and narrow strands that exercise thin-feature retention"},
+      {"id": "D06", "label": "weapon", "file": "D06_weapon.png", "notes": "character with a long narrow weapon and guard"},
+      {"id": "D07", "label": "transparent-accessory", "file": "D07_transparent_accessory.png", "notes": "transparent source with detached accessory and partial alpha"},
+      {"id": "D08", "label": "opaque-background", "file": "D08_opaque_background.png", "notes": "opaque flat background requiring subject cleanup"},
+      {"id": "D09", "label": "multiple-subjects", "file": "D09_multiple_subjects.png", "notes": "two subjects; auto mode should surface largest-candidate behavior"},
+      {"id": "D10", "label": "low-contrast", "file": "D10_low_contrast.png", "notes": "soft low-contrast illustration proxy with interior color bands"}
+    ]
+  },
+  "methods": [
+    {"id": "A1_current_m1_1", "label": "A1 Current M1.1", "kind": "current_m1_1"},
+    {"id": "A2_box", "label": "A2 Geometry-first + BOX", "kind": "geometry_first", "resample": "BOX"},
+    {"id": "A3_lanczos", "label": "A3 Geometry-first + LANCZOS", "kind": "geometry_first", "resample": "LANCZOS"}
+  ],
+  "matrix": {
+    "sizes": [96, 128, 192],
+    "palette_sizes": ["auto", 32, 48],
+    "details": ["balanced"],
+    "extra_details": [
+      {"size": 128, "palette_size": "auto", "detail": "clean"},
+      {"size": 128, "palette_size": "auto", "detail": "detailed"}
+    ],
+    "background": "cleanup",
+    "dither": "none",
+    "outline": "preserve",
+    "alpha_threshold": 128,
+    "preview_scales": [4, 8],
+    "focus": {"size": 128, "palette_size": "auto", "detail": "balanced"}
+  },
+  "human_rubric": {
+    "scale": "1-5",
+    "weights_percent": {
+      "face_readability": 20,
+      "silhouette_readability": 20,
+      "interior_detail": 15,
+      "outline_quality": 15,
+      "pixel_art_plausibility": 20,
+      "style_faithfulness": 5,
+      "production_usefulness": 5
+    },
+    "status": "template-generated; manual review required"
+  }
+}

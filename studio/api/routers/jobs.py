@@ -31,6 +31,7 @@ def _public_result(run_id: str, run_dir, result: dict[str, Any] | None) -> dict[
         "manifest_asset_path": "manifest_asset",
         "atlas_asset_path": "atlas_asset",
         "motion_plan_asset_path": "motion_plan_asset",
+        "preview_gif_asset_path": "preview_gif_asset",
     }
     for source, target in path_keys.items():
         value = result.pop(source, None)

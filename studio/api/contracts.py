@@ -38,6 +38,7 @@ JobOperation = Literal[
     "repair_adopt", "repair_unadopt", "animation_qa",
     "export_compose", "export_runtime",
     "sequential_key_poses", "sequential_inbetweens", "sequential_promote",
+    "quick_make",
 ]
 JobStatusKind = Literal[
     "running", "succeeded", "failed", "cancel_requested", "cancelled", "interrupted",
@@ -62,10 +63,121 @@ class ProviderStatusModel(BaseModel):
 class UploadResponse(BaseModel):
     """POST /api/uploads — stages an uploaded file.
     `upload_id` is redeemed by a create/import/apply request below."""
-
     upload_id: str
     filename: str
 
+
+# --------------------------------------------------------------------------
+# Quick Generate — source-first front door
+# --------------------------------------------------------------------------
+
+QuickSourceKind = Literal["upload", "prompt"]
+QuickSourceSelection = Literal["original", "pixelized"]
+QuickMotion = Literal["idle", "walk", "run", "jump", "attack", "hurt", "custom"]
+QuickStyle = Literal["pixel-art", "cel-shaded", "hand-painted", "3d-render"]
+QuickBackground = Literal["transparent", "chroma"]
+QuickDirectionCount = Literal[1, 4, 8]
+QuickFrameCount = Literal[4, 6, 8]
+QuickPixelSize = Literal[64, 96, 128, 192]
+QuickPalette = Literal["auto", 16, 24, 32, 48]
+QuickDither = Literal["none", "ordered-low", "ordered"]
+QuickOutline = Literal["preserve", "auto"]
+QuickSubjectMode = Literal["auto", "manual"]
+QuickDetail = Literal["clean", "balanced", "detailed"]
+QuickPixelMasterStrategy = Literal["preserve", "reference_pixel_master_128"]
+
+
+class QuickSessionCreateRequest(BaseModel):
+    source_kind: QuickSourceKind
+    upload_id: str | None = None
+    reference_upload_id: str | None = None
+    prompt: str = ""
+    motion: QuickMotion = "idle"
+    custom_motion: str = ""
+    style: QuickStyle = "pixel-art"
+    background: QuickBackground = "transparent"
+    notes: str = ""
+    provider: Provider = "grok"
+
+
+class QuickSessionResponse(BaseModel):
+    session_id: str
+    run_id: str | None = None
+    job_id: str | None = None
+    source_kind: QuickSourceKind
+    source_status: Literal["ready", "failed"]
+    source_selection: QuickSourceSelection
+    original_source: str
+    pixelized_source: str | None = None
+    pixelized_preview: str | None = None
+    subject_source: str | None = None
+    prompt: str
+    motion: str
+    style: QuickStyle
+    background: QuickBackground
+    notes: str
+    provider: Provider
+
+
+class QuickPixelizeRequest(BaseModel):
+    strategy: QuickPixelMasterStrategy = "preserve"
+    size: QuickPixelSize = 128
+    palette: QuickPalette = "auto"
+    dither: QuickDither = "none"
+    background: Literal["keep", "cleanup"] = "keep"
+    outline: QuickOutline = "preserve"
+    subject_mode: QuickSubjectMode = "auto"
+    subject_bbox: tuple[int, int, int, int] | None = None
+    detail: QuickDetail = "balanced"
+    alpha_threshold: int = Field(default=128, ge=1, le=254)
+
+
+class QuickPixelizeResponse(BaseModel):
+    session_id: str
+    strategy: QuickPixelMasterStrategy = "preserve"
+    output_source: str
+    preview_source: str
+    subject_source: str
+    subject_bbox: tuple[int, int, int, int]
+    subject_candidates: list[dict[str, Any]]
+    logical_size: tuple[int, int]
+    palette_size: int
+    palette: list[list[int]]
+    warnings: list[dict[str, Any]]
+    report: dict[str, Any]
+    raw_source: str | None = None
+    intermediate_source: str | None = None
+    post_source: str | None = None
+
+class QuickSourceSelectionRequest(BaseModel):
+    source: QuickSourceSelection
+
+
+class QuickMakeSpriteRequest(BaseModel):
+    strategy: QuickPixelMasterStrategy = "preserve"
+    motion: QuickMotion = "idle"
+    custom_motion: str = ""
+    directions: QuickDirectionCount = 1
+    frames: QuickFrameCount = 6
+    pixelize: bool = False
+    pixel_size: QuickPixelSize = 128
+    palette: QuickPalette = "auto"
+    dither: QuickDither = "none"
+    background_cleanup: bool = False
+    outline: QuickOutline = "preserve"
+    subject_mode: QuickSubjectMode = "auto"
+    subject_bbox: tuple[int, int, int, int] | None = None
+    detail: QuickDetail = "balanced"
+    alpha_threshold: int = Field(default=128, ge=1, le=254)
+    sprite_source: QuickSourceSelection | None = None
+    strategy: GenerationStrategy = "AUTO"
+
+
+class QuickMakeSpriteResponse(BaseModel):
+    session: QuickSessionResponse
+    run_id: str
+    target_state: str
+    job_id: str
 
 # --------------------------------------------------------------------------
 # Sprite Mode — Project / Runs (run_manager)

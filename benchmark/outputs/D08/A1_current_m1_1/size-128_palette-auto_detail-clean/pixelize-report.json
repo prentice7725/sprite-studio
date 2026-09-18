@@ -1,0 +1,207 @@
+{
+  "benchmark": {
+    "fingerprint": "ef2bff0e7b850a3b485ae2423079aa5edc957034705a28a26ef03bd90a573472",
+    "method_id": "A1_current_m1_1",
+    "metrics": {
+      "alpha": {
+        "binary": true,
+        "soft_pixels": 0
+      },
+      "color_fragmentation": {
+        "components": 21,
+        "tiny_pixels": 3,
+        "tiny_ratio": 0.000486
+      },
+      "determinism": {
+        "pass": true,
+        "repeat_sha256": "62a7a83737cddbf72659a434ec72c439f47914096868273f1f304ee67d0abc53",
+        "result_sha256": "62a7a83737cddbf72659a434ec72c439f47914096868273f1f304ee67d0abc53"
+      },
+      "heuristic_score": 97.586,
+      "palette": {
+        "actual": 7,
+        "compliant": true,
+        "requested": "auto"
+      },
+      "runtime_ms": 1253.637,
+      "silhouette": {
+        "extra_pixels": 311,
+        "iou": 0.949603,
+        "missing_pixels": 0
+      },
+      "thin_feature": {
+        "recovered": 1.0,
+        "thin_pixels": 128
+      }
+    }
+  },
+  "kind": "sprite-studio-pixelize",
+  "logical_size": [
+    101,
+    128
+  ],
+  "palette": {
+    "colors": 7,
+    "entries": [
+      [
+        54,
+        115,
+        175,
+        255
+      ],
+      [
+        29,
+        28,
+        41,
+        255
+      ],
+      [
+        39,
+        33,
+        58,
+        255
+      ],
+      [
+        245,
+        190,
+        157,
+        255
+      ],
+      [
+        228,
+        194,
+        77,
+        255
+      ],
+      [
+        240,
+        214,
+        122,
+        255
+      ],
+      [
+        238,
+        245,
+        255,
+        255
+      ]
+    ],
+    "requested": 16,
+    "separation": {
+      "closest_pair": [
+        [
+          29,
+          28,
+          41
+        ],
+        [
+          39,
+          33,
+          58
+        ]
+      ],
+      "colors": 7,
+      "min_delta_e": 0.039733
+    }
+  },
+  "profile": {
+    "alpha_mode": "binary",
+    "alpha_threshold": 128,
+    "background": "cleanup",
+    "cell_scoring": "area+edge+contrast+outline",
+    "color_space": "oklab",
+    "detail": "clean",
+    "dither": "none",
+    "downsample_mode": "dominant-cell",
+    "feature_cells": 1903,
+    "outline": "preserve",
+    "outline_cells": 1784,
+    "palette_mode": "auto",
+    "palette_scope": "subject",
+    "palette_size": null,
+    "resolved_palette_size": 7,
+    "subject_bbox": [
+      123,
+      51,
+      393,
+      393
+    ],
+    "subject_mode": "auto",
+    "target_size": 128,
+    "thin_feature_recovered_cells": 324,
+    "thin_feature_recovery": true
+  },
+  "source_size": [
+    512,
+    512
+  ],
+  "subject_bbox": [
+    123,
+    51,
+    393,
+    393
+  ],
+  "subject_candidates": [
+    {
+      "area": 10478,
+      "bbox": [
+        123,
+        51,
+        393,
+        393
+      ],
+      "confidence": 0.159882
+    },
+    {
+      "area": 3744,
+      "bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "confidence": 0.057129
+    }
+  ],
+  "subject_size": [
+    270,
+    342
+  ],
+  "version": 2,
+  "warnings": [
+    {
+      "code": "cleanup-no-alpha",
+      "message": "background cleanup will use subject detection because the source is fully opaque"
+    },
+    {
+      "candidates": [
+        {
+          "area": 10478,
+          "bbox": [
+            123,
+            51,
+            393,
+            393
+          ],
+          "confidence": 0.159882
+        },
+        {
+          "area": 3744,
+          "bbox": [
+            0,
+            0,
+            512,
+            512
+          ],
+          "confidence": 0.057129
+        }
+      ],
+      "code": "multiple-subject-candidates",
+      "message": "auto detect selected the largest candidate; use manual crop to choose another subject"
+    },
+    {
+      "code": "opaque-background-masked",
+      "message": "auto subject detection masked background pixels outside the selected subject"
+    }
+  ]
+}
