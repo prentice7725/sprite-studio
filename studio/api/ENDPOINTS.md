@@ -80,11 +80,11 @@ service-backed routes.
 | POST | `/api/quick/sessions` | `QuickSessionCreateRequest` | `QuickSessionResponse` (`201`) | `quick_service.create_session` → upload storage or existing provider service |
 | GET | `/api/quick/sessions/{session_id}` | — | `QuickSessionResponse` | persisted Quick session metadata |
 | GET | `/api/quick/sessions/{session_id}/assets/{path:path}` | — | file stream | contained Quick source/session asset |
-| POST | `/api/quick/sessions/{session_id}/pixelize` | `QuickPixelizeRequest` | `QuickPixelizeResponse` | existing Pixelize M1.1 `pixelize_file` (subject mode/crop, sprite size, detail, advanced options) |
+| POST | `/api/quick/sessions/{session_id}/pixelize` | `QuickPixelizeRequest` | `QuickPixelizeResponse` | `preserve` → deterministic Pixelize M1.1; `reference_pixel_master_128` → reference-guided C2 with raw/intermediate/post artifacts |
 | PUT | `/api/quick/sessions/{session_id}/source` | `QuickSourceSelectionRequest` | `QuickSessionResponse` | explicit original/pixelized source selection |
 | POST | `/api/quick/sessions/{session_id}/make-sprite` | `QuickMakeSpriteRequest` | `QuickMakeSpriteResponse` (`202`) | auto-created Run + persisted `quick_make` Job |
 
-Quick Pixelize is subject-first: `size` means selected character height, `subject_mode` is `auto` or `manual`, and `detail` is `clean`, `balanced`, or `detailed`. The response includes the subject crop URL and detected candidates for before/after review.
+Quick Pixelize defaults to `reference_pixel_master_128` at 128px. `preserve` remains available for the deterministic M1.1 route. C2 accepts only the validator-approved logical post-cleanup master; raw transport and intermediate artifacts remain available for audit. Preserve uses the subject-first `size`, `subject_mode`, and `detail` options.
 
 Quick does not return base64 image data. The session API is a user-facing façade;
 Make Sprite automatically builds the internal Run and then delegates the same

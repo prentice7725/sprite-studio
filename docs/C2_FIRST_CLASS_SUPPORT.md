@@ -2,7 +2,7 @@
 
 ## Scope
 
-`reference_pixel_master_128` is the first-class C2 strategy for reference-guided AI pixel-style redraws. It is available from both the Quick workflow and the Static Pixelize API/UI.
+`reference_pixel_master_128` is the first-class C2 strategy for reference-guided AI pixel-style redraws. It is available from both the Quick workflow and the Static Pixelize API/UI, and is the default Quick Pixelize strategy.
 
 The strategy is deliberately separate from the deterministic `preserve` path. Existing Preserve behavior remains unchanged; C2 uses an AI-aware cleanup pipeline that protects pixel clusters and avoids the destructive smoothing behavior of the shared legacy cleanup path.
 
@@ -12,6 +12,7 @@ The strategy is deliberately separate from the deterministic `preserve` path. Ex
 - The target size is fixed at 128 logical pixels.
 - The provider receives the frozen source reference in both generation stages.
 - There is no deterministic or synthetic fallback when a C2 provider call or required reference is unavailable.
+- Only a validator-approved logical post-cleanup master can be accepted; raw transport and intermediate files remain audit artifacts.
 - Tier B benchmark fixtures remain immutable. Benchmark runs may consume only files already present under `benchmark_v2/sources/tier_b`; required `R00`–`R08` files must pass SHA-256 verification before each run.
 
 ## C2 pipeline
@@ -23,7 +24,7 @@ The strategy is deliberately separate from the deterministic `preserve` path. Ex
 5. Preserve palette clusters and apply binary alpha; only obvious isolated noise is eligible for removal.
 6. Emit the post-cleanup Pixel Master artifact and audit metadata.
 
-When cleanup is uncertain, the raw candidate remains available for visual review. The current default accepted artifact is the post-cleanup output.
+When validation or cleanup is uncertain, the raw transport candidate remains available for visual review but cannot be accepted. Color-rich or painterly-risk candidates receive an explicit warning instead of silent success.
 
 ## Artifacts
 

@@ -313,7 +313,7 @@ def make_sprite(session_id: str, body: Any) -> tuple[dict[str, Any], str, str, s
         info.path,
         "quick_make",
         state=target_state,
-        options={"states": list(info.states), "strategy": body.strategy, "target_state": target_state},
+        options={"states": list(info.states), "strategy": body.generation_strategy, "target_state": target_state},
     )
     payload["run_id"] = run_id
     payload["job_id"] = job_id

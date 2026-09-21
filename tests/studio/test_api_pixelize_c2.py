@@ -30,9 +30,9 @@ def test_static_pixelize_exposes_c2_artifacts(tmp_path: Path, monkeypatch) -> No
 
     def fake_generate(provider: str, prompt: str, out: Path, *, refs=None, **kwargs):
         out.parent.mkdir(parents=True, exist_ok=True)
-        image = Image.new("RGBA", (256, 256), (255, 0, 255, 255))
-        ImageDraw.Draw(image).rectangle((64, 32, 191, 223), fill=(50, 110, 210, 255))
-        image.save(out)
+        logical = Image.new("RGBA", (64, 128), (0, 0, 0, 0))
+        ImageDraw.Draw(logical).rectangle((18, 0, 45, 127), fill=(50, 110, 210, 255))
+        logical.resize((512, 1024), Image.Resampling.NEAREST).save(out)
         return SimpleNamespace(to_dict=lambda: {"provider": provider, "prompt": prompt, "refs": [str(p) for p in refs or []]})
 
     monkeypatch.setattr(provider_service, "generate_image", fake_generate)

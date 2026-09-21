@@ -54,6 +54,7 @@ def c2_pixelize_asset(
     target_size: int = 128,
     palette_size: int | None = None,
     alpha_threshold: int = 128,
+    accepted: str = "post",
 ) -> C2Result:
     if not _SAFE_ASSET.fullmatch(asset):
         raise ValueError(f"invalid asset name: {asset!r}")
@@ -64,12 +65,15 @@ def c2_pixelize_asset(
         source,
         info.path / "pixelized" / asset,
         provider=info.provider,
-        options=C2Options(target_size=target_size, palette_size=palette_size, alpha_threshold=alpha_threshold),
+        options=C2Options(target_size=target_size, palette_size=palette_size, alpha_threshold=alpha_threshold, accepted=accepted),
         stem=asset,
         workdir=info.path / "static" / "work" / asset / "c2",
     )
 
 def c2_result_payload(result: C2Result) -> dict[str, Any]:
+    if result.accepted_path is None or result.post_path is None or result.preview_path is None or result.palette_path is None or result.profile_path is None:
+        status = str(result.report.get("status") or "FAIL_LOGICAL_GRID")
+        raise ValueError(status)
     return {
         "logical_size": list(result.logical_size),
         "subject_asset": result.post_path,

@@ -1,0 +1,16 @@
+source_id,method_id,status,provenance_status,transport_path,intermediate_path,logical_path,logical_grid_pass,logical_width,logical_height,inferred_scale_x,inferred_scale_y,grid_confidence,within_cell_variance,edge_alignment_score,alpha_consistency,warnings
+R00,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A1\R00.png,,128,128,,,,,,,[]
+R00,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A2\R00.png,,128,128,,,,,,,[]
+R00,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\B1\R00.png,,128,128,,,,,,,[]
+R00,C1,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C1\R00.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"
+R00,C2,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C2\R00.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"
+R03,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A1\R03.png,,128,128,,,,,,,[]
+R03,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A2\R03.png,,128,128,,,,,,,[]
+R03,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\B1\R03.png,,128,128,,,,,,,[]
+R03,C1,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C1\R03.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"
+R03,C2,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C2\R03.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"
+R06,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A1\R06.png,,128,128,,,,,,,[]
+R06,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\A2\R06.png,,128,128,,,,,,,[]
+R06,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\logical\B1\R06.png,,128,128,,,,,,,[]
+R06,C1,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C1\R06.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"
+R06,C2,FAIL_PROVENANCE,FAIL_PROVENANCE,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke\transport\C2\R06.png,,,,,,,,,,,,"[{'code': 'FAIL_PROVENANCE', 'message': 'AI transport sidecar is missing or does not match its source/artifact hashes.'}]"

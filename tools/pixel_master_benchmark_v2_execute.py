@@ -14,6 +14,7 @@ import argparse
 import csv
 import hashlib
 import json
+import shutil
 import statistics
 import sys
 from collections import deque
@@ -30,6 +31,8 @@ if str(ROOT) not in sys.path:
 from studio.shared.palette import apply_palette, build_palette, opaque_colors
 from studio.static_mode.pixelize import PixelizeOptions
 from studio.static_mode.pixelize import engine as pixelize_engine
+from studio.static_mode.pixelize.ai_cleanup import AiPixelMasterCleanupOptions, ai_pixel_master_cleanup
+from studio.static_mode.pixelize.logical_grid import validate_and_unzoom
 from tools.pixel_master_benchmark_v2 import DEFAULT_CONFIG, V2RunContext, prepare_run
 from tools.pixelize_benchmark import _prepare_subject, _run_method
 
@@ -96,6 +99,61 @@ def _preflight_ai_inputs(context: V2RunContext, ai_root: Path) -> None:
         raise FileNotFoundError(
             "Phase 2A AI candidate inputs are missing; no AI fallback is allowed:\n" + "\n".join(missing)
         )
+
+
+def _provenance_path(image_path: Path) -> Path:
+    return image_path.with_suffix(".json")
+
+
+def _read_json(path: Path) -> dict[str, Any] | None:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    return payload if isinstance(payload, dict) else None
+
+
+def _load_ai_provenance(
+    *,
+    ai_root: Path,
+    method_id: str,
+    source_id: str,
+    source_path: Path,
+    transport_path: Path,
+) -> tuple[dict[str, Any] | None, Path | None, str | None]:
+    """Return imported AI provenance or a contract failure reason."""
+
+    manifest_path = _provenance_path(transport_path)
+    if not manifest_path.is_file():
+        return None, None, "FAIL_PROVENANCE"
+    payload = _read_json(manifest_path)
+    if payload is None:
+        return None, None, "FAIL_PROVENANCE"
+    required = ("source_id", "method", "stage", "provider", "model", "prompt_sha256", "source_sha256", "transport_sha256")
+    if any(field not in payload or payload[field] in (None, "") for field in required):
+        return None, None, "FAIL_PROVENANCE"
+    if payload["source_id"] != source_id or payload["method"] != method_id:
+        return None, None, "FAIL_PROVENANCE"
+    expected_stage = "final-128-logical-transport"
+    if payload["stage"] != expected_stage:
+        return None, None, "FAIL_PROVENANCE"
+    if payload["source_sha256"] != _sha256(source_path) or payload["transport_sha256"] != _sha256(transport_path):
+        return None, None, "FAIL_PROVENANCE"
+
+    intermediate_path: Path | None = None
+    if method_id == "C2":
+        raw_intermediate = payload.get("intermediate_path")
+        if raw_intermediate:
+            intermediate_path = Path(raw_intermediate)
+            if not intermediate_path.is_absolute():
+                intermediate_path = manifest_path.parent / intermediate_path
+        else:
+            intermediate_path = ai_root.parent / "intermediate" / method_id / f"{source_id}.png"
+        if not intermediate_path.is_file() or not payload.get("intermediate_sha256"):
+            return None, None, "FAIL_PROVENANCE"
+        if payload["intermediate_sha256"] != _sha256(intermediate_path):
+            return None, None, "FAIL_PROVENANCE"
+    return payload, intermediate_path, None
 
 
 def _palette_post(image: Image.Image) -> Image.Image:
@@ -242,89 +300,161 @@ def _tile(path: Path, label: str, size: tuple[int, int] = (220, 260)) -> Image.I
     return tile
 
 
+def _logical_tile(row: dict[str, Any], size: tuple[int, int] = (560, 560)) -> Image.Image:
+    tile = Image.new("RGBA", size, (250, 250, 250, 255))
+    path = Path(row["path"]) if row.get("path") else None
+    status = str(row.get("status") or "FAIL")
+    if path and path.is_file():
+        with Image.open(path) as opened:
+            logical = opened.convert("RGBA")
+        preview = logical.resize((logical.width * 4, logical.height * 4), Image.Resampling.NEAREST)
+        x = max(0, (size[0] - preview.width) // 2)
+        y = max(0, (size[1] - 36 - preview.height) // 2)
+        tile.alpha_composite(preview, (x, y))
+    else:
+        draw = ImageDraw.Draw(tile)
+        draw.rectangle((16, 16, size[0] - 16, size[1] - 48), fill=(255, 232, 232, 255), outline=(180, 40, 40, 255), width=3)
+        draw.text((32, size[1] // 2 - 8), status, fill=(150, 20, 20, 255))
+    ImageDraw.Draw(tile).text((16, size[1] - 30), f"{row['method_id']} {status}", fill=(20, 20, 24, 255))
+    return tile
+
+
 def _write_sheets(rows: list[dict[str, Any]], sheets_root: Path, source_ids: list[str], method_ids: list[str]) -> None:
     by_source = sheets_root / "by_source"
     by_method = sheets_root / "by_method"
-    by_source.mkdir(parents=True, exist_ok=True)
-    by_method.mkdir(parents=True, exist_ok=True)
+    ai_audit = sheets_root / "ai_audit"
+    for folder in (by_source, by_method, ai_audit):
+        folder.mkdir(parents=True, exist_ok=True)
+
+    row_map = {(row["source_id"], row["method_id"]): row for row in rows}
+    tile_width, tile_height = 560, 560
     for source_id in source_ids:
+        tiles = [_logical_tile(row_map[(source_id, method_id)]) for method_id in method_ids]
+        columns = 3
+        rows_count = max(1, (len(tiles) + columns - 1) // columns)
+        sheet = Image.new("RGBA", (columns * tile_width, rows_count * tile_height), (250, 250, 250, 255))
+        for index, tile in enumerate(tiles):
+            sheet.alpha_composite(tile, ((index % columns) * tile_width, (index // columns) * tile_height))
+        sheet.save(by_source / f"{source_id}.png", format="PNG", optimize=False)
+
+    for method_id in method_ids:
+        tiles = [_logical_tile(row_map[(source_id, method_id)]) for source_id in source_ids]
+        columns = 3
+        rows_count = max(1, (len(tiles) + columns - 1) // columns)
+        sheet = Image.new("RGBA", (columns * tile_width, rows_count * tile_height), (250, 250, 250, 255))
+        for index, tile in enumerate(tiles):
+            sheet.alpha_composite(tile, ((index % columns) * tile_width, (index // columns) * tile_height))
+        sheet.save(by_method / f"{method_id}.png", format="PNG", optimize=False)
+
+    for method_id in (method_id for method_id in method_ids if method_id in ("C1", "C2")):
         tiles: list[Image.Image] = []
-        for method_id in method_ids:
-            pair = [row for row in rows if row["source_id"] == source_id and row["method_id"] == method_id]
-            paths = {row["state"]: Path(row["path"]) for row in pair}
-            if paths.get("raw") and paths.get("post"):
-                tiles.extend([_tile(paths["raw"], f"{method_id} raw"), _tile(paths["post"], f"{method_id} post")])
+        for source_id in source_ids:
+            row = row_map[(source_id, method_id)]
+            transport = Path(row["transport_path"]) if row.get("transport_path") else None
+            if transport and transport.is_file():
+                tiles.append(_tile(transport, f"{method_id} {source_id} transport"))
+            intermediate = Path(row["intermediate_path"]) if row.get("intermediate_path") else None
+            if intermediate and intermediate.is_file():
+                tiles.append(_tile(intermediate, f"{method_id} {source_id} intermediate"))
         columns = 4
         rows_count = max(1, (len(tiles) + columns - 1) // columns)
         sheet = Image.new("RGBA", (columns * 220, rows_count * 260), (250, 250, 250, 255))
         for index, tile in enumerate(tiles):
             sheet.alpha_composite(tile, ((index % columns) * 220, (index // columns) * 260))
-        sheet.save(by_source / f"{source_id}.png", format="PNG", optimize=False)
-    for method_id in method_ids:
-        tiles = []
-        for source_id in source_ids:
-            post = next((row for row in rows if row["source_id"] == source_id and row["method_id"] == method_id and row["state"] == "post"), None)
-            if post:
-                tiles.append(_tile(Path(post["path"]), source_id, (180, 220)))
-        columns = 4
-        rows_count = max(1, (len(tiles) + columns - 1) // columns)
-        sheet = Image.new("RGBA", (columns * 180, rows_count * 220), (250, 250, 250, 255))
-        for index, tile in enumerate(tiles):
-            sheet.alpha_composite(tile, ((index % columns) * 180, (index // columns) * 220))
-        sheet.save(by_method / f"{method_id}.png", format="PNG", optimize=False)
+        sheet.save(ai_audit / f"{method_id}.png", format="PNG", optimize=False)
 
 
-def _write_reports(rows: list[dict[str, Any]], reports_root: Path, context: V2RunContext) -> None:
+def _write_reports(
+    rows: list[dict[str, Any]],
+    reports_root: Path,
+    context: V2RunContext,
+    source_ids: list[str],
+    method_ids: list[str],
+) -> None:
     reports_root.mkdir(parents=True, exist_ok=True)
-    (reports_root / "objective_scores.json").write_text(json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    fields = ["source_id", "method_id", "state", "path", "width", "height", "palette_size", "alpha_fringe_pixels", "isolated_pixel_count", "occupied_bbox_ratio", "target_height_error", "sha256"]
-    with (reports_root / "objective_scores.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
+    (reports_root / "logical_grid_results.json").write_text(
+        json.dumps(rows, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+    grid_fields = [
+        "source_id", "method_id", "status", "provenance_status", "transport_path", "intermediate_path",
+        "logical_path", "logical_grid_pass", "logical_width", "logical_height", "inferred_scale_x",
+        "inferred_scale_y", "grid_confidence", "within_cell_variance", "edge_alignment_score",
+        "alpha_consistency", "warnings",
+    ]
+    with (reports_root / "logical_grid_results.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=grid_fields)
         writer.writeheader()
-        writer.writerows({field: row.get(field) for field in fields} for row in rows)
-    human_fields = ["source_id", "method_id", "identity_fidelity", "silhouette_readability", "face_readability", "costume_readability", "asymmetric_feature_preservation", "pixel_cluster_quality", "palette_cleanliness", "outline_quality", "cleanup_burden", "production_readiness", "notes"]
+        writer.writerows({field: row.get(field) for field in grid_fields} for row in rows)
+
+    objective_fields = [
+        "source_id", "method_id", "status", "path", "width", "height", "palette_size",
+        "alpha_fringe_pixels", "isolated_pixel_count", "occupied_bbox_ratio", "target_height_error", "sha256",
+    ]
+    with (reports_root / "objective_scores.csv").open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=objective_fields)
+        writer.writeheader()
+        writer.writerows({field: row.get(field) for field in objective_fields} for row in rows)
+
+    human_fields = [
+        "source_id", "method_id", "identity_fidelity", "silhouette_readability", "face_readability",
+        "costume_readability", "asymmetric_feature_preservation", "pixel_cluster_quality", "palette_cleanliness",
+        "outline_quality", "cleanup_burden", "production_readiness", "notes",
+    ]
     with (reports_root / "human_scores.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=human_fields)
         writer.writeheader()
-        for source_id in (*context.tier_a_sources, *context.tier_b_sources):
-            for method_id in context.methods:
+        for source_id in source_ids:
+            for method_id in method_ids:
                 writer.writerow({"source_id": source_id, "method_id": method_id})
-    focus = [row for row in rows if row["state"] == "post"]
+
+    valid = [row for row in rows if row.get("status") == "PASS" and row.get("palette_size") is not None]
     means: dict[str, float] = {}
-    for method_id in context.methods:
-        values = [float(row["palette_size"]) for row in focus if row["method_id"] == method_id]
+    for method_id in method_ids:
+        values = [float(row["palette_size"]) for row in valid if row["method_id"] == method_id]
         if values:
             means[method_id] = round(statistics.mean(values), 3)
-    best = min(means, key=means.get) if means else None
+    if means:
+        best_value = min(means.values())
+        tied = [method_id for method_id in method_ids if means.get(method_id) == best_value]
+        if len(tied) == 1:
+            proxy_line = f"- Objective palette-size proxy: {tied[0]} ({best_value})"
+        else:
+            proxy_line = f"- Objective palette-size proxy: TIE — {', '.join(tied)} ({best_value})"
+    else:
+        proxy_line = "- Objective palette-size proxy: unavailable (no valid logical outputs)"
+
+    status_counts: dict[str, int] = {}
+    for row in rows:
+        status_counts[row["status"]] = status_counts.get(row["status"], 0) + 1
+    status_text = ", ".join(f"{key}={value}" for key, value in sorted(status_counts.items()))
     lines = [
-        "# Pixel Master Benchmark V2 — Phase 2A Summary",
+        "# Pixel Master Benchmark V2 — Phase 2A Logical Rebenchmark",
         "",
         "## Scope",
         "",
-        f"- Sources: {len(context.tier_a_sources) + len(context.tier_b_sources)} (Tier A: {', '.join(context.tier_a_sources)}; Tier B: {', '.join(context.tier_b_sources)})",
-        f"- Methods: {', '.join(context.methods)}",
-        "- Target: 128 logical pixels, Auto palette, Balanced detail",
-        "- States: raw and post",
-        "- Tier B policy: immutable existing files only; SHA-256 verified before run",
+        f"- Sources: {len(source_ids)} ({', '.join(source_ids)})",
+        f"- Methods: {len(method_ids)} ({', '.join(method_ids)})",
+        "- Compared artifact: validated logical master only",
+        "- Preview: 4× nearest-neighbor for every logical tile",
         "",
         "## Execution result",
         "",
-        f"- Completed artifacts: {len(rows)} (8 sources × 5 methods × 2 states)",
-        f"- Objective post palette-size proxy winner: **{METHOD_LABELS.get(best, best or 'pending human review')}**",
-        "- Human review: pending; fill `human_scores.csv` before making a visual-quality promotion decision.",
-        "",
-        "## Interpretation",
-        "",
-        "Objective metrics are supporting signals only. The final Preserve and Pixel Master creation recommendations require the human rubric, especially identity, face readability, asymmetric feature preservation, cluster quality, and cleanup burden.",
+        f"- Logical comparisons: {len(source_ids)} sources × {len(method_ids)} methods = {len(rows)} method results",
+        f"- Status: {status_text}",
+        proxy_line,
+        "- Objective palette-size proxy is not a visual-quality decision; no visual ranking is emitted.",
+        "- Human review: pending; `human_scores.csv` intentionally remains blank.",
         "",
         "## Artifacts",
         "",
-        "- `raw/<method>/<source>.png` — direct method output",
-        "- `post/<method>/<source>.png` — shared normalization, palette, alpha, and isolated-pixel cleanup",
-        "- `reports/objective_scores.csv` / `.json` — machine-readable metrics",
-        "- `reports/human_scores.csv` — 1–5 review template",
-        "- `sheets/by_source/` and `sheets/by_method/` — contact sheets",
+        "- `logical/` — only accepted logical masters",
+        "- `transport/` and `intermediate/` — AI audit artifacts only",
+        "- `validation/` — logical-grid and provenance records",
+        "- `sheets/by_source/` and `sheets/by_method/` — logical-only contact sheets",
+        "- `sheets/ai_audit/` — transport/intermediate audit sheets",
+        "- `reports/logical_grid_results.csv` — validation and failure records",
     ]
+    (reports_root / "smoke_summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (reports_root / "benchmark_summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -335,38 +465,174 @@ def run_phase_2a(
     ai_input_root: Path = AI_INPUT_ROOT,
     force: bool = False,
 ) -> list[dict[str, Any]]:
-    """Run all selected Phase 2A methods after immutable preflight."""
+    """Run the logical-only Phase 2A benchmark.
+
+    A1/A2/B1 use the deterministic Preserve candidates. C1/C2 are treated as
+    imported transport and must pass both provenance and logical-grid gates.
+    No failed AI transport is resized or promoted.
+    """
 
     output_root = output_root.resolve()
     ai_input_root = ai_input_root.resolve()
-    _preflight_ai_inputs(context, ai_input_root)
     options = _options(context)
     source_ids = [*context.tier_a_sources, *context.tier_b_sources]
+    method_ids = list(context.methods)
     rows: list[dict[str, Any]] = []
-    for method_id in context.methods:
-        (output_root / "raw" / method_id).mkdir(parents=True, exist_ok=True)
-        (output_root / "post" / method_id).mkdir(parents=True, exist_ok=True)
+    for folder in ("logical", "transport", "intermediate", "validation"):
+        for method_id in method_ids:
+            (output_root / folder / method_id).mkdir(parents=True, exist_ok=True)
+    manifest = {
+        "kind": "pixel-master-phase2a-rebench-128logical",
+        "version": 1,
+        "config": str(context.config_path),
+        "sources": source_ids,
+        "methods": method_ids,
+        "fixture_policy": "immutable-existing-files-only",
+        "ai_input_policy": "transport-sidecar-required",
+        "logical_preview_scale": 4,
+    }
+    (output_root / "run_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     for source_id in source_ids:
         source_path = _source_path(context, source_id)
         with Image.open(source_path) as opened:
             source = opened.convert("RGBA")
-        for method_id in context.methods:
-            raw_path = output_root / "raw" / method_id / f"{source_id}.png"
-            post_path = output_root / "post" / method_id / f"{source_id}.png"
+        for method_id in method_ids:
+            logical_path = output_root / "logical" / method_id / f"{source_id}.png"
+            transport_output = output_root / "transport" / method_id / f"{source_id}.png"
+            intermediate_output = output_root / "intermediate" / method_id / f"{source_id}.png"
+            validation_path = output_root / "validation" / method_id / f"{source_id}.json"
+            row: dict[str, Any] = {
+                "source_id": source_id,
+                "method_id": method_id,
+                "method_label": METHOD_LABELS[method_id],
+                "state": "logical",
+                "status": "PASS",
+                "provenance_status": "not_applicable",
+                "path": "",
+                "logical_path": "",
+                "transport_path": "",
+                "intermediate_path": "",
+                "logical_grid_pass": None,
+                "logical_width": None,
+                "logical_height": None,
+                "inferred_scale_x": None,
+                "inferred_scale_y": None,
+                "grid_confidence": None,
+                "within_cell_variance": None,
+                "edge_alignment_score": None,
+                "alpha_consistency": None,
+                "warnings": [],
+            }
             if method_id in ("A1", "A2", "B1"):
                 raw = _run_local_method(method_id, source, options)
+                logical = shared_post_process(raw)
+                if force or not logical_path.exists():
+                    logical.save(logical_path, format="PNG", optimize=False)
+                row.update({
+                    "path": str(logical_path),
+                    "logical_path": str(logical_path),
+                    "logical_width": logical.width,
+                    "logical_height": logical.height,
+                })
+                row.update(objective_metrics(logical))
             else:
-                with Image.open(_ai_input_path(ai_input_root, method_id, source_id)) as opened:
-                    raw = opened.convert("RGBA")
-            if force or not raw_path.exists():
-                raw.save(raw_path, format="PNG", optimize=False)
-            post = shared_post_process(raw)
-            if force or not post_path.exists():
-                post.save(post_path, format="PNG", optimize=False)
-            for state, image, path in (("raw", raw, raw_path), ("post", post, post_path)):
-                rows.append({"source_id": source_id, "method_id": method_id, "method_label": METHOD_LABELS[method_id], "state": state, "path": str(path), **objective_metrics(image)})
-    _write_sheets(rows, output_root / "sheets", source_ids, list(context.methods))
-    _write_reports(rows, output_root / "reports", context)
+                input_path = _ai_input_path(ai_input_root, method_id, source_id)
+                # A rerun must not leave a prior accepted logical master in
+                # place when the new transport fails provenance or grid gates.
+                logical_path.unlink(missing_ok=True)
+                validation_path.unlink(missing_ok=True)
+                row["provenance_status"] = "pending"
+                if input_path.is_file():
+                    if force or not transport_output.exists():
+                        shutil.copyfile(input_path, transport_output)
+                    row["transport_path"] = str(transport_output)
+                else:
+                    row["status"] = "FAIL_PROVENANCE"
+                    row["provenance_status"] = "FAIL_PROVENANCE"
+                    row["warnings"] = [{"code": "FAIL_PROVENANCE", "message": "AI transport input is missing."}]
+                if row["status"] == "PASS":
+                    provenance, intermediate_path, provenance_error = _load_ai_provenance(
+                        ai_root=ai_input_root,
+                        method_id=method_id,
+                        source_id=source_id,
+                        source_path=source_path,
+                        transport_path=input_path,
+                    )
+                    if provenance_error:
+                        row["status"] = provenance_error
+                        row["provenance_status"] = provenance_error
+                        row["warnings"] = [{"code": provenance_error, "message": "AI transport sidecar is missing or does not match its source/artifact hashes."}]
+                    else:
+                        row["provenance_status"] = "PASS"
+                        if intermediate_path and intermediate_path.is_file():
+                            if force or not intermediate_output.exists():
+                                shutil.copyfile(intermediate_path, intermediate_output)
+                            row["intermediate_path"] = str(intermediate_output)
+                        with Image.open(input_path) as opened:
+                            transport = opened.convert("RGBA")
+                        validation = validate_and_unzoom(transport, alpha_threshold=options.alpha_threshold)
+                        validation_payload = validation.to_dict()
+                        validation_payload["provenance"] = provenance
+                        validation_path.write_text(json.dumps(validation_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                        row.update({
+                            "logical_grid_pass": validation.pass_,
+                            "logical_width": validation.logical_width,
+                            "logical_height": validation.logical_height,
+                            "inferred_scale_x": validation.inferred_scale_x,
+                            "inferred_scale_y": validation.inferred_scale_y,
+                            "grid_confidence": validation.grid_confidence,
+                            "within_cell_variance": validation.within_cell_variance,
+                            "edge_alignment_score": validation.edge_alignment_score,
+                            "alpha_consistency": validation.alpha_consistency,
+                            "warnings": list(validation.warnings),
+                        })
+                        if not validation.pass_ or validation.logical_image is None:
+                            row["status"] = "FAIL_LOGICAL_GRID"
+                        else:
+                            cleaned = ai_pixel_master_cleanup(
+                                validation.logical_image,
+                                AiPixelMasterCleanupOptions(
+                                    target_size=options.target_size,
+                                    palette_size=options.palette_size,
+                                    alpha_threshold=options.alpha_threshold,
+                                    geometry_resize=False,
+                                ),
+                            )
+                            logical = cleaned.image
+                            if force or not logical_path.exists():
+                                logical.save(logical_path, format="PNG", optimize=False)
+                            row["path"] = str(logical_path)
+                            row["logical_path"] = str(logical_path)
+                            row.update(objective_metrics(logical))
+            if method_id in ("C1", "C2") and row["status"] != "PASS" and not validation_path.exists():
+                validation_path.write_text(
+                    json.dumps(
+                        {
+                            "pass": False,
+                            "status": row["status"],
+                            "provenance_status": row["provenance_status"],
+                            "warnings": row["warnings"],
+                        },
+                        ensure_ascii=False,
+                        indent=2,
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+            if row["status"] != "PASS":
+                row.update({
+                    "width": None,
+                    "height": None,
+                    "palette_size": None,
+                    "alpha_fringe_pixels": None,
+                    "isolated_pixel_count": None,
+                    "occupied_bbox_ratio": None,
+                    "target_height_error": None,
+                    "sha256": None,
+                })
+            rows.append(row)
+    _write_sheets(rows, output_root / "sheets", source_ids, method_ids)
+    _write_reports(rows, output_root / "reports", context, source_ids, method_ids)
     return rows
 
 
@@ -397,7 +663,7 @@ def main() -> int:
         ai_input_root=args.ai_input_root if args.ai_input_root.is_absolute() else ROOT / args.ai_input_root,
         force=args.force,
     )
-    print(f"phase2A complete: {len(rows)} raw/post records")
+    print(f"phase2A logical benchmark complete: {len(rows)} method results")
     print(f"summary: {(args.out if args.out.is_absolute() else ROOT / args.out) / 'reports' / 'benchmark_summary.md'}")
     return 0
 

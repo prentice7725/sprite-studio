@@ -307,6 +307,7 @@ export type QuickPalette = 'auto' | 16 | 24 | 32 | 48
 export type QuickDither = 'none' | 'ordered-low' | 'ordered'
 export type QuickOutline = 'preserve' | 'auto'
 export type QuickPixelMasterStrategy = 'preserve' | 'reference_pixel_master_128'
+export type QuickAcceptedArtifact = 'post'
 
 export interface QuickSession {
   session_id: string
@@ -330,6 +331,7 @@ export interface QuickSession {
 export interface QuickPixelizeResult {
   session_id: string
   strategy: QuickPixelMasterStrategy
+  accepted: QuickAcceptedArtifact
   output_source: string
   preview_source: string
   subject_source: string

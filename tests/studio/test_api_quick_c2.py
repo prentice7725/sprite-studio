@@ -8,12 +8,20 @@ from fastapi.testclient import TestClient
 from PIL import Image, ImageDraw
 
 from studio.api.main import app
+from studio.api.contracts import QuickMakeSpriteRequest
 from studio.api.uploads import UPLOADS_ROOT_ENV
 from studio.backend import provider_service, quick_service
 from studio.backend.run_manager import RUNS_ROOT_ENV
 
 
 client = TestClient(app)
+
+
+def test_quick_make_contract_separates_pixel_master_and_generation_strategies() -> None:
+    request = QuickMakeSpriteRequest(pixelize=True)
+    assert request.strategy == "reference_pixel_master_128"
+    assert request.generation_strategy == "AUTO"
+    assert "strategy" not in QuickMakeSpriteRequest.model_fields or list(QuickMakeSpriteRequest.model_fields).count("strategy") == 1
 
 
 def _source_bytes() -> bytes:
@@ -31,9 +39,9 @@ def test_quick_c2_is_first_class_and_keeps_all_artifacts(tmp_path: Path, monkeyp
 
     def fake_generate(provider: str, prompt: str, out: Path, *, refs=None, **kwargs):
         out.parent.mkdir(parents=True, exist_ok=True)
-        image = Image.new("RGBA", (256, 256), (255, 0, 255, 255))
-        ImageDraw.Draw(image).rectangle((64, 32, 191, 223), fill=(50, 110, 210, 255))
-        image.save(out)
+        logical = Image.new("RGBA", (64, 128), (0, 0, 0, 0))
+        ImageDraw.Draw(logical).rectangle((18, 0, 45, 127), fill=(50, 110, 210, 255))
+        logical.resize((512, 1024), Image.Resampling.NEAREST).save(out)
         return SimpleNamespace(to_dict=lambda: {"provider": provider, "prompt": prompt, "refs": [str(p) for p in refs or []]})
 
     monkeypatch.setattr(provider_service, "generate_image", fake_generate)

@@ -1,0 +1,20 @@
+{
+  "kind": "pixel-master-phase2a-rebench-128logical",
+  "version": 1,
+  "config": "C:\\workspace\\sprite-studio\\benchmark_v2\\configs\\benchmark_matrix_r00_r08.json",
+  "sources": [
+    "R00",
+    "R03",
+    "R06"
+  ],
+  "methods": [
+    "A1",
+    "A2",
+    "B1",
+    "C1",
+    "C2"
+  ],
+  "fixture_policy": "immutable-existing-files-only",
+  "ai_input_policy": "transport-sidecar-required",
+  "logical_preview_scale": 4
+}

@@ -48,6 +48,7 @@ def test_quick_upload_pixelize_and_explicit_source_selection(tmp_path: Path, mon
     assert client.get(session["original_source"]).status_code == 200
 
     pixelized = client.post(f"/api/quick/sessions/{session['session_id']}/pixelize", json={
+        "strategy": "preserve",
         "size": 64,
         "palette": "auto",
         "dither": "none",

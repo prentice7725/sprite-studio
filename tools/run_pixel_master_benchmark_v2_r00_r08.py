@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the corrected Tier B-only R00-R08 Phase 2A benchmark."""
+"""Run the gated Tier B-only R00-R08 Phase 2A logical rebenchmark."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from tools import pixel_master_benchmark_v2_execute as executor  # noqa: E402
 DEFAULT_CONFIG = ROOT / "benchmark_v2" / "configs" / "benchmark_matrix_r00_r08.json"
 DEFAULT_MANIFEST = ROOT / "benchmark_v2" / "configs" / "tier_b_fixtures_r00_r08.json"
 DEFAULT_SOURCE_ROOT = ROOT / "benchmark_v2" / "sources" / "tier_b"
-DEFAULT_OUT = ROOT / "benchmark_v2" / "phase2A_r00_r08"
+DEFAULT_OUT = ROOT / "benchmark_v2" / "phase2A_rebench_128logical" / "full"
 DEFAULT_AI_INPUT_ROOT = ROOT / "benchmark_v2" / "ai_inputs"
 
 
@@ -49,7 +49,7 @@ def main() -> int:
         ai_input_root=ai_input_root,
         force=args.force,
     )
-    print(f"phase2A corrected R00-R08 complete: {len(rows)} raw/post records")
+    print(f"phase2A logical R00-R08 complete: {len(rows)} method results")
     print(f"summary: {output_root / 'reports' / 'benchmark_summary.md'}")
     return 0
 

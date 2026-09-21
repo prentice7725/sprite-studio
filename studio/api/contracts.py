@@ -85,6 +85,7 @@ QuickOutline = Literal["preserve", "auto"]
 QuickSubjectMode = Literal["auto", "manual"]
 QuickDetail = Literal["clean", "balanced", "detailed"]
 QuickPixelMasterStrategy = Literal["preserve", "reference_pixel_master_128"]
+QuickAcceptedArtifact = Literal["post"]
 
 
 class QuickSessionCreateRequest(BaseModel):
@@ -120,7 +121,8 @@ class QuickSessionResponse(BaseModel):
 
 
 class QuickPixelizeRequest(BaseModel):
-    strategy: QuickPixelMasterStrategy = "preserve"
+    strategy: QuickPixelMasterStrategy = "reference_pixel_master_128"
+    accepted: QuickAcceptedArtifact = "post"
     size: QuickPixelSize = 128
     palette: QuickPalette = "auto"
     dither: QuickDither = "none"
@@ -135,6 +137,7 @@ class QuickPixelizeRequest(BaseModel):
 class QuickPixelizeResponse(BaseModel):
     session_id: str
     strategy: QuickPixelMasterStrategy = "preserve"
+    accepted: QuickAcceptedArtifact = "post"
     output_source: str
     preview_source: str
     subject_source: str
@@ -154,7 +157,8 @@ class QuickSourceSelectionRequest(BaseModel):
 
 
 class QuickMakeSpriteRequest(BaseModel):
-    strategy: QuickPixelMasterStrategy = "preserve"
+    strategy: QuickPixelMasterStrategy = "reference_pixel_master_128"
+    accepted: QuickAcceptedArtifact = "post"
     motion: QuickMotion = "idle"
     custom_motion: str = ""
     directions: QuickDirectionCount = 1
@@ -170,7 +174,7 @@ class QuickMakeSpriteRequest(BaseModel):
     detail: QuickDetail = "balanced"
     alpha_threshold: int = Field(default=128, ge=1, le=254)
     sprite_source: QuickSourceSelection | None = None
-    strategy: GenerationStrategy = "AUTO"
+    generation_strategy: GenerationStrategy = "AUTO"
 
 
 class QuickMakeSpriteResponse(BaseModel):

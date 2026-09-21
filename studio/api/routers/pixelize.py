@@ -17,6 +17,7 @@ router = APIRouter(prefix="/static", tags=["pixelize"])
 
 class PixelizeRequest(BaseModel):
     strategy: Literal["preserve", "reference_pixel_master_128"] = "preserve"
+    accepted: Literal["post"] = "post"
     asset: str = "scene"
     size: Literal[64, 96, 128, 192] = 128
     palette: Literal["auto", 16, 24, 32, 48] = 32
@@ -31,6 +32,7 @@ class PixelizeRequest(BaseModel):
 
 class PixelizeResponse(BaseModel):
     strategy: Literal["preserve", "reference_pixel_master_128"] = "preserve"
+    accepted: Literal["post"] = "post"
     output_asset: str
     preview_asset: str
     subject_asset: str
@@ -81,6 +83,7 @@ def pixelize_static_asset(project_id: str, body: PixelizeRequest) -> PixelizeRes
                 target_size=128,
                 palette_size=None if body.palette == "auto" else int(body.palette),
                 alpha_threshold=body.alpha_threshold,
+                accepted=body.accepted,
             ))
         else:
             result_payload = pixelize_service.result_payload(pixelize_service.pixelize_asset(
@@ -102,6 +105,7 @@ def pixelize_static_asset(project_id: str, body: PixelizeRequest) -> PixelizeRes
     paths = payload["paths"]
     return PixelizeResponse(
         strategy=body.strategy,
+        accepted=body.accepted,
         output_asset=_asset_url(project_id, info.path, paths["output"]),
         preview_asset=_asset_url(project_id, info.path, paths["preview"]),
         subject_asset=_asset_url(project_id, info.path, paths["subject"]),

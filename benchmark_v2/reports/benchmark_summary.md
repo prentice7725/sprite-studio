@@ -1,27 +1,16 @@
-# Pixel Master Benchmark V2 — Phase 2A Summary
+# Pixel Master Benchmark V2 — Phase 2A Summary Index
 
-## Scope
+The original eight-source run in this directory is retained for historical comparison. The authoritative Phase 2A run is:
 
-- Sources: 8 (Tier A: D01, D03, D06, D10; Tier B: R01, R03, R04, R06)
+- `benchmark_v2/phase2A_r00_r08/`
+- Sources: Tier B `R00`–`R08` only (9 immutable fixtures)
 - Methods: A1, A2, B1, C1, C2
 - Target: 128 logical pixels, Auto palette, Balanced detail
 - States: raw and post
-- Tier B policy: immutable existing files only; SHA-256 verified before run
+- Completed artifacts: 90 (9 sources × 5 methods × 2 states)
+- Tier B policy: existing files only; SHA-256 verified before the run
+- C1/C2 reference policy: both use the exact frozen `Rxx` source path recorded in `run_manifest.json`
 
-## Execution result
+Human review remains pending. `phase2A_r00_r08/reports/human_scores.csv` is a blank 1–5 rubric sheet; no human scores are inferred from objective metrics.
 
-- Completed artifacts: 80 (8 sources × 5 methods × 2 states)
-- Objective post palette-size proxy winner: **A1 deterministic M1.1**
-- Human review: pending; fill `human_scores.csv` before making a visual-quality promotion decision.
-
-## Interpretation
-
-Objective metrics are supporting signals only. The final Preserve and Pixel Master creation recommendations require the human rubric, especially identity, face readability, asymmetric feature preservation, cluster quality, and cleanup burden.
-
-## Artifacts
-
-- `raw/<method>/<source>.png` — direct method output
-- `post/<method>/<source>.png` — shared normalization, palette, alpha, and isolated-pixel cleanup
-- `reports/objective_scores.csv` / `.json` — machine-readable metrics
-- `reports/human_scores.csv` — 1–5 review template
-- `sheets/by_source/` and `sheets/by_method/` — contact sheets
+See the authoritative [Phase 2A summary](../phase2A_r00_r08/reports/benchmark_summary.md) and [run manifest](../phase2A_r00_r08/run_manifest.json).

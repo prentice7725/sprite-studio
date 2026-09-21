@@ -47,9 +47,9 @@ def test_c2_keeps_intermediate_raw_post_and_provider_provenance(tmp_path: Path, 
         references = list(refs or [])
         calls.append((out, references))
         out.parent.mkdir(parents=True, exist_ok=True)
-        image = Image.new("RGBA", (256, 256), (255, 0, 255, 255))
-        ImageDraw.Draw(image).rectangle((64, 32, 191, 223), fill=(50, 110, 210, 255))
-        image.save(out)
+        logical = Image.new("RGBA", (64, 128), (0, 0, 0, 0))
+        ImageDraw.Draw(logical).rectangle((18, 0, 45, 127), fill=(50, 110, 210, 255))
+        logical.resize((512, 1024), Image.Resampling.NEAREST).save(out)
         return SimpleNamespace(to_dict=lambda: {"provider": provider, "prompt": prompt, "refs": [str(p) for p in references]})
 
     monkeypatch.setattr(provider_service, "generate_image", fake_generate)
@@ -63,5 +63,35 @@ def test_c2_keeps_intermediate_raw_post_and_provider_provenance(tmp_path: Path, 
     assert result.post_path.is_file()
     assert result.report_path.is_file()
     assert result.report["strategy"] == "reference_pixel_master_128"
-    assert result.report["accepted"] == "post"
-    assert Image.open(result.post_path).size == (85, 128)
+    assert result.report["accepted"] == "logical_post"
+    assert result.report["logical_validation"]["pass"] is True
+    assert Image.open(result.post_path).size == (64, 128)
+    assert result.report["cleanup"]["geometry"]["resize"] is False
+
+
+def test_c2_rejects_raw_transport_as_an_accepted_candidate() -> None:
+    try:
+        C2Options(accepted="raw")
+    except ValueError as exc:
+        assert "raw transport cannot be accepted" in str(exc)
+    else:  # pragma: no cover - assertion branch
+        raise AssertionError("C2 accepted a raw transport candidate")
+
+
+def test_c2_failed_grid_writes_report_without_accepted_output(tmp_path: Path, monkeypatch) -> None:
+    source = tmp_path / "source.png"
+    Image.new("RGBA", (64, 64), (20, 20, 20, 255)).save(source)
+
+    def fake_generate(provider: str, prompt: str, out: Path, *, refs=None, **kwargs):
+        out.parent.mkdir(parents=True, exist_ok=True)
+        Image.new("RGBA", (256, 256), (255, 0, 255, 255)).save(out)
+        return SimpleNamespace(to_dict=lambda: {"provider": provider, "refs": [str(p) for p in refs or []]})
+
+    monkeypatch.setattr(provider_service, "generate_image", fake_generate)
+    result = c2_pixel_master_file(source, tmp_path / "pixelized", provider="grok")
+
+    assert result.accepted_path is None
+    assert result.post_path is None
+    assert result.report["status"] == "FAIL_LOGICAL_GRID"
+    assert result.report["logical_validation"]["pass"] is False
+    assert not (tmp_path / "pixelized" / "post" / "source.png").exists()

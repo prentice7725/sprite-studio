@@ -12,6 +12,7 @@ from .engine import (
     pixelize_file,
     pixelize_image,
 )
+from .logical_grid import LogicalGridResult, validate_and_unzoom
 
 __all__ = [
     "SUPPORTED_PALETTES",
@@ -23,4 +24,6 @@ __all__ = [
     "SubjectMode",
     "pixelize_file",
     "pixelize_image",
+    "LogicalGridResult",
+    "validate_and_unzoom",
 ]

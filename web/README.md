@@ -31,7 +31,7 @@ corresponding Pixelize-first path. Quick sessions expose only source, motion,
 style, background, Pixelize, Make Sprite, progress, and result concepts; the
 existing Project/Workspace/Static/Jobs screens remain available under **Studio**.
 The Quick API persists source files under its session root, serves them as URLs,
-and delegates Pixelize M1 and the full Generate → Normalize → Extract → Refine →
+and delegates reference-guided C2 or deterministic Preserve Pixelize plus the full Generate → Normalize → Extract → Refine →
 QA → Compose pipeline to the existing backend services.
 Generate, Refine, Repair, Animation QA, and Export are tools inside the active
 Workspace; Batch is available from the global Jobs drawer. Sprite preset details

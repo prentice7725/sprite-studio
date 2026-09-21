@@ -27,6 +27,7 @@ class AiPixelMasterCleanupOptions:
     alpha_threshold: int = 128
     background_tolerance: float = 28.0
     remove_isolated_area: int = 1
+    geometry_resize: bool = True
 
     def __post_init__(self) -> None:
         if self.target_size not in {64, 96, 128, 192}:
@@ -119,6 +120,20 @@ def _subject_bbox(alpha: np.ndarray) -> tuple[int, int, int, int] | None:
     return int(xs.min()), int(ys.min()), int(xs.max() + 1), int(ys.max() + 1)
 
 
+def _painterly_risk(array: np.ndarray) -> tuple[bool, int, float]:
+    """Flag unusually color-rich candidates without altering their pixels."""
+
+    opaque = array[:, :, 3] >= 128
+    if not opaque.any():
+        return False, 0, 0.0
+    colours = np.unique(array[:, :, :3][opaque], axis=0)
+    area = max(1, int(np.count_nonzero(opaque)))
+    colour_count = int(len(colours))
+    colour_ratio = colour_count / area
+    risk = colour_count >= 256 or (colour_count >= 96 and colour_ratio >= 0.05)
+    return risk, colour_count, colour_ratio
+
+
 def _remove_isolated(image: Image.Image, max_area: int) -> tuple[Image.Image, dict[str, int]]:
     if max_area <= 0:
         return image, {"removed_components": 0, "removed_pixels": 0}
@@ -167,6 +182,9 @@ def ai_pixel_master_cleanup(image: Image.Image, options: AiPixelMasterCleanupOpt
 
     source = np.asarray(image.convert("RGBA"), dtype=np.uint8).copy()
     warnings: list[dict[str, Any]] = []
+    painterly_risk, opaque_colors, color_ratio = _painterly_risk(source)
+    if painterly_risk:
+        warnings.append({"code": "ai-painterly-risk", "message": "Candidate is unusually color-rich for authored pixel clusters; review raw/post before accepting cleanup."})
     background, background_mode, background_stats = _background_mask(source, options.background_tolerance)
     if background.any():
         source[background, 3] = 0
@@ -186,9 +204,16 @@ def ai_pixel_master_cleanup(image: Image.Image, options: AiPixelMasterCleanupOpt
         left, top, right, bottom = bbox
         cropped = Image.fromarray(source[top:bottom, left:right], mode="RGBA")
 
-    target_width = max(1, int(round(cropped.width * options.target_size / max(1, cropped.height))))
-    if cropped.size != (target_width, options.target_size):
-        cropped = cropped.resize((target_width, options.target_size), Image.Resampling.NEAREST)
+    if not options.geometry_resize:
+        # The logical-grid validator already owns geometry and canonical
+        # height. Cleanup may remove background/noise and lock a palette, but
+        # it must not crop, resample, or otherwise reinterpret the sprite.
+        cropped = Image.fromarray(source, mode="RGBA")
+        target_width = cropped.width
+    else:
+        target_width = max(1, int(round(cropped.width * options.target_size / max(1, cropped.height))))
+        if cropped.size != (target_width, options.target_size):
+            cropped = cropped.resize((target_width, options.target_size), Image.Resampling.NEAREST)
 
     if options.palette_size is None:
         palette = tuple(
@@ -216,8 +241,16 @@ def ai_pixel_master_cleanup(image: Image.Image, options: AiPixelMasterCleanupOpt
         "input_size": list(image.size),
         "output_size": list(result.size),
         "background": {"mode": background_mode, **background_stats},
+        "style_risk": {"painterly": painterly_risk, "opaque_colors": opaque_colors, "color_ratio": color_ratio},
         "subject_bbox": list(bbox),
-        "scale": {"resampling": "nearest", "target_height": options.target_size},
+        "scale": {
+            "resampling": "nearest" if options.geometry_resize else None,
+            "target_height": options.target_size if options.geometry_resize else None,
+        },
+        "geometry": {
+            "resize": options.geometry_resize,
+            "input_size_preserved": not options.geometry_resize,
+        },
         "palette": {
             "mode": palette_mode,
             "requested": options.palette_size,

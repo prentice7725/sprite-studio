@@ -29,10 +29,14 @@ def pixelize_c2_session(session_id: str, body: Any) -> tuple[dict[str, Any], dic
             target_size=128,
             palette_size=None if body.palette == "auto" else int(body.palette),
             alpha_threshold=int(body.alpha_threshold),
+            accepted=str(getattr(body, "accepted", "post")),
         ),
         stem="source",
         workdir=root / "work" / "c2",
     )
+    if result.accepted_path is None or result.post_path is None:
+        status = str(result.report.get("status") or "FAIL_LOGICAL_GRID")
+        raise ValueError(status)
     relative = {
         "raw": "pixelized/raw/source.png",
         "intermediate": "pixelized/intermediate/source.png",
@@ -42,6 +46,7 @@ def pixelize_c2_session(session_id: str, body: Any) -> tuple[dict[str, Any], dic
     }
     payload.update({
         "pixelize_strategy": "reference_pixel_master_128",
+        "pixelize_accepted": str(getattr(body, "accepted", "post")),
         "pixelized_source": relative["post"],
         "pixelized_preview": relative["preview"],
         "subject_source": relative["post"],
@@ -53,10 +58,12 @@ def pixelize_c2_session(session_id: str, body: Any) -> tuple[dict[str, Any], dic
     })
     quick_service._write(session_id, payload)
     base_url = f"/api/quick/sessions/{session_id}/assets/"
+    accepted = str(getattr(body, "accepted", "post"))
     return payload, {
         "session_id": session_id,
         "strategy": "reference_pixel_master_128",
-        "output_source": base_url + relative["post"],
+        "accepted": accepted,
+        "output_source": base_url + relative[accepted],
         "preview_source": base_url + relative["preview"],
         "subject_source": base_url + relative["post"],
         "raw_source": base_url + relative["raw"],

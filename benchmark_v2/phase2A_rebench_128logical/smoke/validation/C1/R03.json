@@ -1,0 +1,11 @@
+{
+  "pass": false,
+  "status": "FAIL_PROVENANCE",
+  "provenance_status": "FAIL_PROVENANCE",
+  "warnings": [
+    {
+      "code": "FAIL_PROVENANCE",
+      "message": "AI transport sidecar is missing or does not match its source/artifact hashes."
+    }
+  ]
+}
