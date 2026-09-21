@@ -102,7 +102,13 @@ def _background_mask(array: np.ndarray, tolerance: float) -> tuple[np.ndarray, s
     for key, mask in chroma.items():
         count = int(np.count_nonzero(mask & opaque))
         if count >= max(16, int(total * 0.005)):
-            return mask & opaque, f"chroma:{key}", {"keyed_pixels": count}
+            connected = _border_connected(mask & opaque)
+            connected_count = int(np.count_nonzero(connected))
+            if connected_count:
+                return connected, f"chroma:{key}", {
+                    "keyed_pixels": count,
+                    "background_pixels": connected_count,
+                }
 
     reference = _border_reference(rgb)
     distance = np.sqrt(np.sum((rgb.astype(np.float32) - reference) ** 2, axis=2))

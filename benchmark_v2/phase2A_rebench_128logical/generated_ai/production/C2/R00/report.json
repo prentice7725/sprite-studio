@@ -1,0 +1,161 @@
+{
+  "kind": "sprite-studio-c2-pixel-master",
+  "version": 2,
+  "strategy": "reference_pixel_master_128",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Reference-guided C2 stage 1: translate the supplied character reference into a clear authored pixel-art style. Keep the exact character identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Prepare a high-resolution pixel-style intermediate for a 128px final redraw; use intentional hair clusters, readable face landmarks, flat readable regions, and a coherent limited-palette hierarchy. Preserve thin important equipment as at least a readable 1px feature at final size, while merging tiny costume details into readable patterns. Do not add text, UI, or extra characters, and use a solid magenta background for reliable removal.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png.raw.png",
+      "raw_bytes": 534985,
+      "elapsed_seconds": 28.592,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png",
+        "mode": "RGBA",
+        "size": "1024x1024",
+        "key": "magenta",
+        "keyed_pixels": 502868,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 47.96,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll generate the single reference-guided pixel-art image, then copy it to the exact output path.Calling `image_edit` once with the character reference and the given pixel-art instruction.Converting the generated file to PNG at the exact destination path, without resizing.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\work\\C2\\R00\\stage1\\raw.png"
+      }
+    }
+  },
+  "transport": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Reference-guided C2 stage 2: redraw the supplied pixel-style intermediate into a production-ready logical 128px pixel master. Preserve the original reference identity and the intermediate's intentional pixel clusters, face readability, silhouette, costume hierarchy, weapon/accessory details, and asymmetry. At 128px, redistribute tiny eyes and facial landmarks when necessary for readability instead of shrinking high-resolution geometry literally. Simplify hair into intentional clusters, merge tiny costume details into readable patterns, and preserve important thin equipment as at least a readable 1px feature. Do not blur, smooth, thicken outlines, add text, or redesign the character. Avoid painterly gradients and soft brush texture; use crisp authored pixel clusters. If the provider returns a larger canvas, it must be a pure INTEGER nearest-neighbor magnification of the underlying logical sprite, never a high-resolution illustration intended for later downscaling. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png.raw.png",
+      "raw_bytes": 722233,
+      "elapsed_seconds": 27.645,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+        "mode": "RGBA",
+        "size": "1024x1024",
+        "key": "magenta",
+        "keyed_pixels": 503177,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 47.99,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll generate the single edited image from the two references, then copy it to the requested path.Calling `image_edit` once with both references, then I'll copy the result to the exact output path.Converting the generated file to PNG and writing it to the exact destination path.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\work\\C2\\R00\\stage2\\raw.png"
+      }
+    },
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "raw": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Reference-guided C2 stage 2: redraw the supplied pixel-style intermediate into a production-ready logical 128px pixel master. Preserve the original reference identity and the intermediate's intentional pixel clusters, face readability, silhouette, costume hierarchy, weapon/accessory details, and asymmetry. At 128px, redistribute tiny eyes and facial landmarks when necessary for readability instead of shrinking high-resolution geometry literally. Simplify hair into intentional clusters, merge tiny costume details into readable patterns, and preserve important thin equipment as at least a readable 1px feature. Do not blur, smooth, thicken outlines, add text, or redesign the character. Avoid painterly gradients and soft brush texture; use crisp authored pixel clusters. If the provider returns a larger canvas, it must be a pure INTEGER nearest-neighbor magnification of the underlying logical sprite, never a high-resolution illustration intended for later downscaling. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png.raw.png",
+      "raw_bytes": 722233,
+      "elapsed_seconds": 27.645,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\intermediate\\R00.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\raw\\R00.png",
+        "mode": "RGBA",
+        "size": "1024x1024",
+        "key": "magenta",
+        "keyed_pixels": 503177,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 47.99,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll generate the single edited image from the two references, then copy it to the requested path.Calling `image_edit` once with both references, then I'll copy the result to the exact output path.Converting the generated file to PNG and writing it to the exact destination path.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\work\\C2\\R00\\stage2\\raw.png"
+      }
+    }
+  },
+  "logical_validation": {
+    "pass": false,
+    "inferred_scale_x": 2,
+    "inferred_scale_y": 2,
+    "logical_width": 512,
+    "logical_height": 512,
+    "grid_confidence": 0.597603,
+    "within_cell_variance": 0.0067,
+    "edge_alignment_score": 0.547798,
+    "alpha_consistency": 0.994099,
+    "warnings": [
+      {
+        "code": "logical-subject-height-not-exact",
+        "message": "Detected logical subject height 507px; expected exactly 128px."
+      },
+      {
+        "code": "low-grid-confidence",
+        "message": "Grid confidence 0.598 is below 0.900."
+      },
+      {
+        "code": "low-edge-alignment",
+        "message": "Edge alignment 0.548 is below 0.850."
+      },
+      {
+        "code": "FAIL_LOGICAL_GRID",
+        "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+      }
+    ]
+  },
+  "status": "FAIL_LOGICAL_GRID",
+  "logical": null,
+  "cleanup": null,
+  "accepted": null,
+  "accepted_path": null,
+  "accepted_size": null,
+  "warnings": [
+    {
+      "code": "logical-subject-height-not-exact",
+      "message": "Detected logical subject height 507px; expected exactly 128px."
+    },
+    {
+      "code": "low-grid-confidence",
+      "message": "Grid confidence 0.598 is below 0.900."
+    },
+    {
+      "code": "low-edge-alignment",
+      "message": "Edge alignment 0.548 is below 0.850."
+    },
+    {
+      "code": "FAIL_LOGICAL_GRID",
+      "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+    }
+  ]
+}

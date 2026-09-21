@@ -1,0 +1,37 @@
+{
+  "pass": false,
+  "inferred_scale_x": 8,
+  "inferred_scale_y": 8,
+  "logical_width": 128,
+  "logical_height": 128,
+  "grid_confidence": 0.38084,
+  "within_cell_variance": 0.013669,
+  "edge_alignment_score": 0.196069,
+  "alpha_consistency": 1.0,
+  "warnings": [
+    {
+      "code": "low-grid-confidence",
+      "message": "Grid confidence 0.381 is below 0.900."
+    },
+    {
+      "code": "low-edge-alignment",
+      "message": "Edge alignment 0.196 is below 0.850."
+    },
+    {
+      "code": "FAIL_LOGICAL_GRID",
+      "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+    }
+  ],
+  "provenance": {
+    "source_id": "R03",
+    "method": "C2",
+    "stage": "final-128-logical-transport",
+    "provider": "grok",
+    "model": "grok-build",
+    "prompt_sha256": "f1a7a889c13be33054101102c82356d045a65a975fc01426c0bc1e6d50ff5b43",
+    "source_sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+    "transport_sha256": "2211c1ca4892c17daf352f33274597c9e4902feb629c6353766654edf625d1ae",
+    "intermediate_sha256": "08072b271924af14fffcca36c754404c4adae18bc908da6066c2b4f23bd0bcbf",
+    "intermediate_path": "..\\intermediate\\C2\\R03.png"
+  }
+}

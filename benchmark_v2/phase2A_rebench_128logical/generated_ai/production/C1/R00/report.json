@@ -1,0 +1,95 @@
+{
+  "kind": "sprite-studio-c1-pixel-master",
+  "version": 2,
+  "strategy": "direct_ai_pixel_master_128",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+  "transport": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R00\\transport\\R00.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Direct C1 generation: design the final character as a true 128-logical-pixel game sprite. The character itself must be approximately 128 logical pixels tall. Do not create a high-resolution illustration that will later be downscaled. Allocate the logical pixel budget intentionally: enlarge important facial landmarks, group hair into deliberate pixel clusters, merge tiny costume details into readable shapes, preserve silhouette and asymmetric identity features, and keep thin identity-defining features at least one logical pixel where possible. Use hard square pixel clusters, no soft antialiasing, no smooth gradients, and no painterly micro-detail. If the provider returns a large canvas, render only an INTEGER nearest-neighbor magnification of the underlying logical sprite. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R00\\transport\\R00.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R00\\transport\\R00.png.raw.png",
+      "raw_bytes": 371069,
+      "elapsed_seconds": 39.567,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R00\\transport\\R00.png",
+        "mode": "RGBA",
+        "size": "1024x1024",
+        "key": "magenta",
+        "keyed_pixels": 489244,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 46.66,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll generate the sprite from the reference image and save it to the requested path.I'll edit the reference into a 128-logical-pixel sprite and save it to the target path.Copying the generated file to the exact PNG path without resizing.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\work\\C1\\R00\\raw.png"
+      }
+    },
+    "size": [
+      1024,
+      1024
+    ]
+  },
+  "logical_validation": {
+    "pass": false,
+    "inferred_scale_x": 2,
+    "inferred_scale_y": 2,
+    "logical_width": 512,
+    "logical_height": 512,
+    "grid_confidence": 0.736433,
+    "within_cell_variance": 0.007156,
+    "edge_alignment_score": 0.568227,
+    "alpha_consistency": 0.994551,
+    "warnings": [
+      {
+        "code": "logical-subject-height-not-exact",
+        "message": "Detected logical subject height 507px; expected exactly 128px."
+      },
+      {
+        "code": "low-grid-confidence",
+        "message": "Grid confidence 0.736 is below 0.900."
+      },
+      {
+        "code": "low-edge-alignment",
+        "message": "Edge alignment 0.568 is below 0.850."
+      },
+      {
+        "code": "FAIL_LOGICAL_GRID",
+        "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+      }
+    ]
+  },
+  "status": "FAIL_LOGICAL_GRID",
+  "logical": null,
+  "cleanup": null,
+  "accepted": null,
+  "accepted_path": null,
+  "accepted_size": null,
+  "warnings": [
+    {
+      "code": "logical-subject-height-not-exact",
+      "message": "Detected logical subject height 507px; expected exactly 128px."
+    },
+    {
+      "code": "low-grid-confidence",
+      "message": "Grid confidence 0.736 is below 0.900."
+    },
+    {
+      "code": "low-edge-alignment",
+      "message": "Edge alignment 0.568 is below 0.850."
+    },
+    {
+      "code": "FAIL_LOGICAL_GRID",
+      "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+    }
+  ]
+}

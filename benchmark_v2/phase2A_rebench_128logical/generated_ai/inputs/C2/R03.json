@@ -1,0 +1,12 @@
+{
+  "source_id": "R03",
+  "method": "C2",
+  "stage": "final-128-logical-transport",
+  "provider": "grok",
+  "model": "grok-build",
+  "prompt_sha256": "f1a7a889c13be33054101102c82356d045a65a975fc01426c0bc1e6d50ff5b43",
+  "source_sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+  "transport_sha256": "2211c1ca4892c17daf352f33274597c9e4902feb629c6353766654edf625d1ae",
+  "intermediate_sha256": "08072b271924af14fffcca36c754404c4adae18bc908da6066c2b4f23bd0bcbf",
+  "intermediate_path": "..\\intermediate\\C2\\R03.png"
+}

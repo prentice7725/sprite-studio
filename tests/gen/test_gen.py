@@ -170,6 +170,27 @@ def test_provider_commands_use_the_single_resolved_binary(tmp_path: Path, monkey
     assert seen["grok"][0] == "C:/bin/grok.CMD"
 
 
+def test_grok_provider_normalizes_mislabeled_jpeg_to_png(tmp_path: Path, monkeypatch) -> None:
+    import sprite_studio.gen.grok_provider as grok_provider
+
+    output = tmp_path / "grok.png"
+
+    class _Completed:
+        returncode = 0
+        stdout = "ok"
+        stderr = ""
+
+    def fake_grok(_cmd, **_kwargs):
+        Image.new("RGB", (7, 11), (1, 2, 3)).save(output, format="JPEG")
+        return _Completed()
+
+    monkeypatch.setattr(grok_provider.subprocess, "run", fake_grok)
+    grok_provider.GrokProvider().generate(GenRequest(prompt="format test", raw=output), tmp_path)
+
+    assert output.read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
+    assert Image.open(output).size == (7, 11)
+
+
 def test_json_report_writes_utf8_bytes_without_reconfiguring_stdout(monkeypatch) -> None:
     import io
     import sys

@@ -19,6 +19,8 @@ import subprocess
 import time
 from pathlib import Path
 
+from PIL import Image
+
 from .base import GEN_TIMEOUT_SECONDS, GenRequest, GenTimeoutError, ProviderRun, provider_binary, provider_subprocess_env, verify_png
 
 
@@ -49,6 +51,19 @@ def _build_prompt(request: GenRequest) -> str:
         "   images, no edits, no commentary, no other files.",
     ]
     return "\n".join(lines)
+
+
+def _normalize_output_format(path: Path) -> None:
+    """Normalize a provider-mislabeled image to PNG without changing geometry."""
+
+    try:
+        with Image.open(path) as opened:
+            if opened.format == "PNG":
+                return
+            image = opened.convert("RGBA")
+            image.save(path, format="PNG", optimize=False)
+    except (OSError, ValueError) as exc:
+        raise SystemExit(f"grok-gen: provider output is not a readable image: {path}: {exc}") from exc
 
 
 class GrokProvider:
@@ -92,6 +107,10 @@ class GrokProvider:
                 f"grok-gen: grok exited {completed.returncode} (empty answer + non-zero = blocked exec or login).\n"
                 + "\n".join(tail)
             )
+        # Grok occasionally writes JPEG bytes to the requested .png path. A
+        # format-only conversion is safe at this boundary; geometry and pixels
+        # are otherwise left untouched before the PNG contract is verified.
+        _normalize_output_format(request.raw)
         # Verify the real file grok wrote, not its text. Missing/not-a-PNG fails loudly.
         verify_png(request.raw)
 

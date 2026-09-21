@@ -1,0 +1,10 @@
+{
+  "source_id": "R06",
+  "method": "C1",
+  "stage": "final-128-logical-transport",
+  "provider": "grok",
+  "model": "grok-build",
+  "prompt_sha256": "4e6531da391f924083ff3d78eb70874e34a6a4af11cf3d11d71c2d4a3e1d3a63",
+  "source_sha256": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+  "transport_sha256": "6b407d119cd7e8f3d4006861c3060e1cd3cfac40789f3af8098fff9806dbd35c"
+}

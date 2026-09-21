@@ -186,10 +186,10 @@ def _candidate(array: np.ndarray, subject: np.ndarray, scale_x: int, scale_y: in
 
 
 def _candidate_key(candidate: _Candidate, target_height: int) -> tuple[int, int, float, float, int]:
-    in_height_window = int(120 <= candidate.subject_height <= 136)
+    exact_subject_height = int(candidate.subject_height == target_height)
     height_distance = abs(candidate.subject_height - target_height)
     return (
-        in_height_window,
+        exact_subject_height,
         int(candidate.scale_x == candidate.scale_y),
         candidate.grid_confidence,
         -float(height_distance),
@@ -241,10 +241,10 @@ def validate_and_unzoom(
 
     best = max(candidates, key=lambda candidate: _candidate_key(candidate, target_height))
     warnings: list[dict[str, Any]] = []
-    if not 120 <= best.subject_height <= 136:
+    if best.subject_height != target_height:
         warnings.append({
-            "code": "logical-subject-height-out-of-range",
-            "message": f"Detected logical subject height {best.subject_height}px; expected 120–136px.",
+            "code": "logical-subject-height-not-exact",
+            "message": f"Detected logical subject height {best.subject_height}px; expected exactly {target_height}px.",
         })
     if best.scale_x != best.scale_y:
         warnings.append({
@@ -268,7 +268,7 @@ def validate_and_unzoom(
         })
 
     passed = (
-        120 <= best.subject_height <= 136
+        best.subject_height == target_height
         and best.scale_x == best.scale_y
         and best.grid_confidence >= 0.90
         and best.edge_alignment_score >= 0.85
@@ -276,12 +276,10 @@ def validate_and_unzoom(
     )
     logical_image = None
     if passed:
+        # The validator owns acceptance, not geometry reinterpretation. Keep
+        # the logical canvas exactly as authored; resizing it could change a
+        # validated 128px subject into a non-128px subject.
         logical_image = Image.fromarray(best.logical, mode="RGBA")
-        if logical_image.height != target_height:
-            canonical_width = max(1, round(logical_image.width * target_height / logical_image.height))
-            logical_image = logical_image.resize(
-                (canonical_width, target_height), Image.Resampling.NEAREST
-            )
     if not passed:
         warnings.append({
             "code": "FAIL_LOGICAL_GRID",

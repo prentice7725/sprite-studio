@@ -29,6 +29,21 @@ def test_ai_cleanup_removes_chroma_preserves_clusters_and_normalizes_height() ->
     assert result.image.getpixel((0, 0))[:3] != (0, 255, 0)
 
 
+def test_ai_cleanup_only_removes_border_connected_chroma() -> None:
+    image = Image.new("RGBA", (32, 32), (255, 0, 255, 255))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((4, 4, 27, 27), fill=(54, 93, 174, 255))
+    draw.rectangle((15, 15, 16, 16), fill=(255, 0, 255, 255))
+
+    result = ai_pixel_master_cleanup(
+        image,
+        AiPixelMasterCleanupOptions(target_size=128, geometry_resize=False),
+    )
+
+    assert result.report["background"]["mode"] == "chroma:magenta"
+    assert result.image.getpixel((15, 15))[3] == 255
+
+
 def test_c2_requires_the_128px_profile() -> None:
     try:
         C2Options(target_size=96)

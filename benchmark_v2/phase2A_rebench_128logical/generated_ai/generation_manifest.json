@@ -1,0 +1,68 @@
+{
+  "kind": "phase2a-rebench-generated-ai-inputs",
+  "version": 1,
+  "provider": "grok",
+  "sources": [
+    "R00",
+    "R03",
+    "R06"
+  ],
+  "methods": [
+    "C1",
+    "C2"
+  ],
+  "input_root": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs",
+  "records": [
+    {
+      "source_id": "R00",
+      "method": "C1",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R00.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R00.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R00\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    },
+    {
+      "source_id": "R00",
+      "method": "C2",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R00.png",
+      "intermediate": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\intermediate\\C2\\R00.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R00.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R00\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    },
+    {
+      "source_id": "R03",
+      "method": "C1",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R03.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R03.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R03\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    },
+    {
+      "source_id": "R03",
+      "method": "C2",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R03.png",
+      "intermediate": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\intermediate\\C2\\R03.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R03.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R03\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    },
+    {
+      "source_id": "R06",
+      "method": "C1",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R06.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C1\\R06.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C1\\R06\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    },
+    {
+      "source_id": "R06",
+      "method": "C2",
+      "transport": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R06.png",
+      "intermediate": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\intermediate\\C2\\R06.png",
+      "sidecar": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\inputs\\C2\\R06.json",
+      "production_report": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2A_rebench_128logical\\generated_ai\\production\\C2\\R06\\report.json",
+      "logical_gate_status": "FAIL_LOGICAL_GRID"
+    }
+  ]
+}

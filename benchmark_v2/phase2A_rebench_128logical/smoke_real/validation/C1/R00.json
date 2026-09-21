@@ -1,0 +1,39 @@
+{
+  "pass": false,
+  "inferred_scale_x": 2,
+  "inferred_scale_y": 2,
+  "logical_width": 512,
+  "logical_height": 512,
+  "grid_confidence": 0.736433,
+  "within_cell_variance": 0.007156,
+  "edge_alignment_score": 0.568227,
+  "alpha_consistency": 0.994551,
+  "warnings": [
+    {
+      "code": "logical-subject-height-not-exact",
+      "message": "Detected logical subject height 507px; expected exactly 128px."
+    },
+    {
+      "code": "low-grid-confidence",
+      "message": "Grid confidence 0.736 is below 0.900."
+    },
+    {
+      "code": "low-edge-alignment",
+      "message": "Edge alignment 0.568 is below 0.850."
+    },
+    {
+      "code": "FAIL_LOGICAL_GRID",
+      "message": "Transport was not accepted as a validated 128-logical-pixel master; no logical image was emitted."
+    }
+  ],
+  "provenance": {
+    "source_id": "R00",
+    "method": "C1",
+    "stage": "final-128-logical-transport",
+    "provider": "grok",
+    "model": "grok-build",
+    "prompt_sha256": "4e6531da391f924083ff3d78eb70874e34a6a4af11cf3d11d71c2d4a3e1d3a63",
+    "source_sha256": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+    "transport_sha256": "25aedd16a790775e686141437513ee621f6123abb12d11ed3cb6283a305e8293"
+  }
+}

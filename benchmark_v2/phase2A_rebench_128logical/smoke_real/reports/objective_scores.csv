@@ -1,0 +1,16 @@
+source_id,method_id,status,path,width,height,palette_size,alpha_fringe_pixels,isolated_pixel_count,occupied_bbox_ratio,target_height_error,sha256
+R00,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A1\R00.png,128,128,48,0,2888,1.0,0,c1b82251e2b6ba4d85fcd391ccfa9f0f94ba16a367f2910cc304ab43f6467408
+R00,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A2\R00.png,128,128,48,0,2731,1.0,0,e754ff1cbe1fa6e11ad69f53a7df27112cc437f358cacb32b81452a671c1e710
+R00,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\B1\R00.png,128,128,48,0,2549,1.0,0,fca41ffb3e9252ee4084c7616ef392e7621a8579c4198c05275c5a05ec0af8cc
+R00,C1,FAIL_LOGICAL_GRID,,,,,,,,,
+R00,C2,FAIL_LOGICAL_GRID,,,,,,,,,
+R03,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A1\R03.png,128,128,48,0,3027,0.625,0,5e324e1606018ff6568502e79948962b0ace8332eb55a49f5a7a1877e4f36478
+R03,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A2\R03.png,128,128,48,0,2292,0.625,0,0f5d85743282a27d6d29624510778459bd0ca1f861ab988420ad5d938eaa355b
+R03,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\B1\R03.png,128,128,48,0,2236,0.625,0,1b7a4305c59aa70e07d8848ed7bb054d1b95ab15f0bbf0d15514962200180837
+R03,C1,FAIL_LOGICAL_GRID,,,,,,,,,
+R03,C2,FAIL_LOGICAL_GRID,,,,,,,,,
+R06,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A1\R06.png,128,128,48,0,3045,0.507812,0,db0f079505df8242c2d7e21f068a2d725e5a152311ddd589edf772ed18cefc25
+R06,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\A2\R06.png,128,128,48,0,2396,0.5,0,cf5038caa5c590ec10e49ec96031813a555f456cbad4bc108b0d488a5a88a4f0
+R06,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2A_rebench_128logical\smoke_real\logical\B1\R06.png,128,128,48,0,2474,0.492188,0,764e310a16df09624c8ec35175d9278cd6292f49600e4b93d27c75275352b31d
+R06,C1,FAIL_LOGICAL_GRID,,,,,,,,,
+R06,C2,FAIL_LOGICAL_GRID,,,,,,,,,
