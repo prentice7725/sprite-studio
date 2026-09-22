@@ -1,0 +1,46 @@
+source_id,method_id,status,semantic_status,pse_status,logical_validation_status,logical_path,width,height,palette_size,subject_height,binary_alpha,isolated_ratio,warnings
+R00,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R00.png,128,128,48,,,,[]
+R00,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R00.png,128,128,48,,,,[]
+R00,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R00.png,128,128,48,,,,[]
+R00,D1,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R00.png,129,128,45,128,True,0.0,[]
+R00,D2,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R00.png,87,128,41,128,True,0.0,[]
+R01,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R01.png,128,128,48,,,,[]
+R01,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R01.png,128,128,48,,,,[]
+R01,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R01.png,128,128,48,,,,[]
+R01,D1,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R01.png,56,128,43,128,True,0.0,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R01,D2,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R01.png,51,128,46,128,True,0.00029,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R02,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R02.png,128,128,48,,,,[]
+R02,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R02.png,128,128,48,,,,[]
+R02,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R02.png,128,128,48,,,,[]
+R02,D1,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R02.png,103,128,42,128,True,0.0,[]
+R02,D2,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R02.png,70,128,40,128,True,0.0,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R03,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R03.png,128,128,48,,,,[]
+R03,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R03.png,128,128,48,,,,[]
+R03,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R03.png,128,128,48,,,,[]
+R03,D1,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R03.png,83,128,44,128,True,0.0,[]
+R03,D2,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R03.png,83,128,41,128,True,0.0,[]
+R04,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R04.png,128,128,48,,,,[]
+R04,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R04.png,128,128,48,,,,[]
+R04,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R04.png,128,128,48,,,,[]
+R04,D1,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R04.png,63,128,48,128,True,0.000223,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R04,D2,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R04.png,62,128,45,128,True,0.000227,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R05,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R05.png,128,128,48,,,,[]
+R05,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R05.png,128,128,48,,,,[]
+R05,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R05.png,128,128,48,,,,[]
+R05,D1,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R05.png,97,128,47,128,True,0.0,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R05,D2,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R05.png,96,128,46,128,True,0.001821,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R06,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R06.png,128,128,48,,,,[]
+R06,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R06.png,128,128,48,,,,[]
+R06,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R06.png,128,128,48,,,,[]
+R06,D1,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R06.png,69,128,47,128,True,0.000205,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R06,D2,FAIL_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,FAIL_LOGICAL_MASTER,,,,47,127,True,0.000215,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}, {'code': 'subject-height-invalid', 'message': 'Logical subject height is 127; expected 128.'}]"
+R07,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R07.png,128,128,48,,,,[]
+R07,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R07.png,128,128,48,,,,[]
+R07,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R07.png,128,128,48,,,,[]
+R07,D1,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R07.png,80,128,47,128,True,0.000163,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R07,D2,PASS_LOGICAL_MASTER,WARN_PAINTERLY,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R07.png,79,128,46,128,True,0.000167,"[{'code': 'WARN_PAINTERLY', 'message': 'Semantic source retains unusually soft or color-rich detail.'}]"
+R08,A1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A1\R08.png,128,128,48,,,,[]
+R08,A2,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\A2\R08.png,128,128,48,,,,[]
+R08,B1,PASS,not_applicable,,,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\B1\R08.png,128,128,48,,,,[]
+R08,D1,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D1\R08.png,56,128,45,128,True,0.0,[]
+R08,D2,PASS_LOGICAL_MASTER,PASS_SEMANTIC_SOURCE,PASS_PSE,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\full_r00_r08\logical\D2\R08.png,55,128,46,128,True,0.000466,[]

@@ -302,12 +302,12 @@ export type QuickStyle = 'pixel-art' | 'cel-shaded' | 'hand-painted' | '3d-rende
 export type QuickBackground = 'transparent' | 'chroma'
 export type QuickDirectionCount = 1 | 4 | 8
 export type QuickFrameCount = 4 | 6 | 8
-export type QuickPixelSize = 64 | 96 | 128 | 192
+export type QuickPixelSize = 64 | 96 | 128 | 160 | 192 | 256
 export type QuickPalette = 'auto' | 16 | 24 | 32 | 48
 export type QuickDither = 'none' | 'ordered-low' | 'ordered'
 export type QuickOutline = 'preserve' | 'auto'
-export type QuickPixelMasterStrategy = 'preserve' | 'reference_pixel_master_128'
-export type QuickAcceptedArtifact = 'post'
+export type QuickPixelMasterStrategy = 'preserve' | 'reference_pixel_master_128' | 'identity_preserving_auto'
+export type QuickAcceptedArtifact = 'post' | 'logical_master'
 
 export interface QuickSession {
   session_id: string
@@ -345,6 +345,7 @@ export interface QuickPixelizeResult {
   raw_source?: string
   intermediate_source?: string
   post_source?: string
+  resolution?: Record<string, unknown>
 }
 
 export interface QuickMakeResult {

@@ -1,0 +1,268 @@
+{
+  "kind": "sprite-studio-semantic-pse",
+  "version": 1,
+  "strategy": "semantic_d2_pse",
+  "pse_version": "v0",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\semantic\\R03.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Using the original character reference and the stage-1 semantic pixel-art intermediate, redraw a compact pixel-art design intended to survive conversion to approximately 128 logical pixels of character height. Spend visual detail only on identity-critical features. Increase the relative size of eyes and facial landmarks when necessary. Merge tiny regions that would disappear at 128px. Keep thin identity-defining equipment visually separable. Preserve silhouette, asymmetric identity details and readable costume hierarchy. Do not merely apply a pixel filter, and do not require an exact logical grid or integer transport. Avoid painterly texture, soft gradients, blur, bloom, text, UI, and extra characters. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\semantic\\R03.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\semantic\\R03.png.raw.png",
+      "raw_bytes": 911215,
+      "elapsed_seconds": 38.843,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\intermediate\\R03.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\semantic\\R03.png",
+        "mode": "RGBA",
+        "size": "832x1248",
+        "key": "magenta",
+        "keyed_pixels": 399947,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 38.52,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll edit the two reference images once, then copy the result to the required PNG path.The edit landed as a JPEG, so I’m converting it to PNG at the required path without resizing.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_work\\D2\\R03\\stage2\\raw.png"
+      }
+    },
+    "size": [
+      832,
+      1248
+    ]
+  },
+  "semantic_quality": {
+    "status": "PASS_SEMANTIC_SOURCE",
+    "metrics": {
+      "input_size": [
+        832,
+        1248
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 399947
+      },
+      "subject_bbox": [
+        23,
+        11,
+        821,
+        1248
+      ],
+      "subject_area_ratio": 0.950681,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.483405,
+      "cluster_size_distribution": {
+        "opaque_pixels": 638389,
+        "opaque_color_count": 27320,
+        "color_ratio": 0.042795,
+        "median_quantized_cluster": 25.0,
+        "small_quantized_cluster_fraction": 0.255583
+      }
+    },
+    "warnings": []
+  },
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\intermediate\\R03.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Translate the attached character into a clear authored pixel-art design language while preserving exact identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Simplify hair into intentional masses, group facial landmarks into readable shapes, merge tiny costume details into larger motifs, and use flat coherent color regions with crisp stepped contours. This is a high-resolution semantic intermediate; do not require an exact logical grid yet. Avoid painterly texture, blur, bloom, soft gradients, text, UI, and extra characters. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\intermediate\\R03.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\intermediate\\R03.png.raw.png",
+      "raw_bytes": 613969,
+      "elapsed_seconds": 31.438,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\intermediate\\R03.png",
+        "mode": "RGBA",
+        "size": "912x1136",
+        "key": "magenta",
+        "keyed_pixels": 559541,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 54.01,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_work\\D2\\R03\\stage1\\raw.png"
+      }
+    }
+  },
+  "status": "PASS_LOGICAL_MASTER",
+  "pse": {
+    "kind": "pixel-structure-extractor",
+    "version": "v0",
+    "status": "PASS_PSE",
+    "input_size": [
+      832,
+      1248
+    ],
+    "input_subject_bbox": [
+      23,
+      11,
+      821,
+      1248
+    ],
+    "logical_size": [
+      83,
+      128
+    ],
+    "background": {
+      "mode": "transparent",
+      "background_pixels": 399947
+    },
+    "palette": {
+      "requested": 48,
+      "colors": 48
+    },
+    "projection": {
+      "mode": "palette-cluster-weighted-mode",
+      "opaque_coverage_threshold": 0.18,
+      "coverage_min": 0.0,
+      "coverage_mean": 0.646529,
+      "resampling": null
+    },
+    "warnings": []
+  },
+  "cleanup": {
+    "kind": "ai-pixel-master-cleanup",
+    "version": 1,
+    "input_size": [
+      83,
+      128
+    ],
+    "output_size": [
+      83,
+      128
+    ],
+    "background": {
+      "mode": "disabled",
+      "background_pixels": 0
+    },
+    "style_risk": {
+      "painterly": false,
+      "opaque_colors": 41,
+      "color_ratio": 0.005829660173467937
+    },
+    "subject_bbox": [
+      0,
+      0,
+      83,
+      128
+    ],
+    "scale": {
+      "resampling": null,
+      "target_height": null
+    },
+    "geometry": {
+      "resize": false,
+      "input_size_preserved": true
+    },
+    "background_policy": {
+      "remove_background": false
+    },
+    "palette": {
+      "mode": "preserved",
+      "requested": null,
+      "colors": 41,
+      "separation": {
+        "colors": 41,
+        "min_delta_e": 0.006276,
+        "closest_pair": [
+          [
+            214,
+            167,
+            115
+          ],
+          [
+            216,
+            169,
+            117
+          ]
+        ]
+      }
+    },
+    "alpha": {
+      "mode": "binary",
+      "threshold": 128
+    },
+    "isolated_noise": {
+      "removed_components": 0,
+      "removed_pixels": 0,
+      "pre_crop": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      },
+      "post_scale": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      }
+    },
+    "outline": {
+      "mode": "preserve",
+      "thickening": false
+    },
+    "warnings": [
+      {
+        "code": "ai-background-not-detected",
+        "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+      }
+    ]
+  },
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\logical\\R03.png",
+    "size": [
+      83,
+      128
+    ]
+  },
+  "preview": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\logical\\R03.preview-4x.png",
+    "scale": 4,
+    "resampling": "nearest"
+  },
+  "palette": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\logical\\R03.palette.json",
+    "colors": 48
+  },
+  "logical_validation": {
+    "pass": true,
+    "status": "PASS_LOGICAL_MASTER",
+    "metrics": {
+      "size": [
+        83,
+        128
+      ],
+      "bbox": [
+        0,
+        0,
+        83,
+        128
+      ],
+      "subject_height": 128,
+      "binary_alpha": true,
+      "palette_size": 41,
+      "max_palette_size": 48,
+      "isolated_pixels": 0,
+      "isolated_ratio": 0.0
+    },
+    "warnings": []
+  },
+  "accepted": "logical_post",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R03\\logical\\R03.png"
+}

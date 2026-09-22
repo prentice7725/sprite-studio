@@ -1,0 +1,21 @@
+{
+  "kind": "pixel-master-phase2b-semantic-pse",
+  "version": 1,
+  "config": "C:\\workspace\\sprite-studio\\benchmark_v2\\configs\\benchmark_matrix_r00_r08.json",
+  "sources": [
+    "R00",
+    "R03",
+    "R06"
+  ],
+  "methods": [
+    "A1",
+    "A2",
+    "B1",
+    "D1",
+    "D2"
+  ],
+  "provider": "grok",
+  "fixture_policy": "immutable-existing-files-only",
+  "logical_preview_scale": 4,
+  "strict_capability_appendix": "benchmark_v2/phase2A_rebench_128logical"
+}

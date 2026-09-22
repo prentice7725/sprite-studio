@@ -1,0 +1,16 @@
+{
+  "method": "D2",
+  "source_id": "R00",
+  "source_sha256": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+  "semantic_image_sha256": "ddf82f5497f2441753f106b934eda3b835bce4d63bb7add7c0fcc38575a91e03",
+  "provider": "grok",
+  "model": "grok-build",
+  "prompt_sha256": "2d97bf4171deeb9d584ab5b0249e2620b02acbf136f9f164b0c7b7294162aaf8",
+  "pse_version": "v0",
+  "accepted": true,
+  "logical_master_sha256": "3254f2e685d5c36c2e33533b963a98aa76ff69854c18f8bfcfbb608b4973d02f",
+  "intermediate_sha256": "e3b0c76326143d25365f39e386a42e613fc92c06b89cd4a9dab1fbf9845b8330",
+  "intermediate_path": "..\\..\\intermediate\\D2\\R00.png",
+  "stage1_prompt_sha256": "3990c8e8ec5bdfaa547223658bc48c21298cd8cf4483d8fcf0c23f5ffd65770d",
+  "stage2_prompt_sha256": "2d97bf4171deeb9d584ab5b0249e2620b02acbf136f9f164b0c7b7294162aaf8"
+}

@@ -1,0 +1,25 @@
+{
+  "method": "D1",
+  "source_id": "R03",
+  "source_sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+  "semantic_image_sha256": "fd3f30622e14f647f95b8f75f1861199da8becb5b677307d552b1c57312a6d6d",
+  "provider": "gpt-image",
+  "model": "gpt-image",
+  "prompt_sha256": "611230992223aa750c381e66c1e28d92712e539c7a9574e2aab3a681185f5e03",
+  "pse_version": "v0",
+  "accepted": true,
+  "logical_master_sha256": "b985c8f2185d97dce7fab03b0c417c6bb0114a6c27337de1c521f5eae2dc28d4",
+  "semantic_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image",
+    "prompt": "GPT Image D1 semantic redraw",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D1\\R03\\raw.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D1\\R03\\raw.png",
+    "raw_sha256": "fd3f30622e14f647f95b8f75f1861199da8becb5b677307d552b1c57312a6d6d",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png"
+    ],
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool"
+  }
+}

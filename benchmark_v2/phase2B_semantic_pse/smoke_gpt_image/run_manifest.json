@@ -1,0 +1,33 @@
+{
+  "kind": "pixel-master-phase2b-semantic-pse",
+  "version": 1,
+  "config": "C:\\workspace\\sprite-studio\\benchmark_v2\\configs\\benchmark_matrix_r00_r08.json",
+  "sources": [
+    "R00",
+    "R03",
+    "R06"
+  ],
+  "methods": [
+    "A1",
+    "A2",
+    "B1",
+    "D1",
+    "D2"
+  ],
+  "provider": "gpt-image",
+  "model": "gpt-image",
+  "semantic_provider": "OpenAI GPT Image via built-in image_gen",
+  "fixture_policy": "immutable-existing-files-only",
+  "logical_preview_scale": 4,
+  "fixture_sha256": {
+    "R00": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+    "R03": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+    "R06": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf"
+  },
+  "fixture_paths": {
+    "R00": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+    "R03": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+    "R06": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png"
+  },
+  "run_label": "GPT Image smoke R00/R03/R06"
+}

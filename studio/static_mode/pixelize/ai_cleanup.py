@@ -19,6 +19,8 @@ from PIL import Image
 
 from studio.shared.palette import apply_palette, build_palette, palette_distance_report
 
+from .resolution import AUTO_LOGICAL_HEIGHTS
+
 
 @dataclass(frozen=True)
 class AiPixelMasterCleanupOptions:
@@ -28,10 +30,11 @@ class AiPixelMasterCleanupOptions:
     background_tolerance: float = 28.0
     remove_isolated_area: int = 1
     geometry_resize: bool = True
+    remove_background: bool = True
 
     def __post_init__(self) -> None:
-        if self.target_size not in {64, 96, 128, 192}:
-            raise ValueError("target_size must be one of 64, 96, 128, or 192")
+        if self.target_size not in {64, 96, *AUTO_LOGICAL_HEIGHTS}:
+            raise ValueError("target_size must be one of 64, 96, 128, 160, 192, or 256")
         if self.palette_size is not None and self.palette_size not in {16, 24, 32, 48}:
             raise ValueError("palette_size must be auto/None or one of 16, 24, 32, 48")
         if not 1 <= self.alpha_threshold <= 254:
@@ -104,6 +107,12 @@ def _background_mask(array: np.ndarray, tolerance: float) -> tuple[np.ndarray, s
         if count >= max(16, int(total * 0.005)):
             connected = _border_connected(mask & opaque)
             connected_count = int(np.count_nonzero(connected))
+            # A PSE logical crop can be fully opaque and touch every canvas
+            # edge.  In that case a uniform subject is not evidence of a
+            # removable background; deleting the border-connected pixels
+            # would delete the entire accepted sprite.
+            if connected_count == int(np.count_nonzero(opaque)) == total:
+                continue
             if connected_count:
                 return connected, f"chroma:{key}", {
                     "keyed_pixels": count,
@@ -116,6 +125,8 @@ def _background_mask(array: np.ndarray, tolerance: float) -> tuple[np.ndarray, s
     if np.count_nonzero(candidate) < max(16, int(total * 0.05)):
         return np.zeros_like(opaque), "none", {"keyed_pixels": 0}
     connected = _border_connected(candidate)
+    if int(np.count_nonzero(connected)) == int(np.count_nonzero(opaque)) == total:
+        return np.zeros_like(opaque), "none", {"keyed_pixels": 0}
     return connected, "border-flood", {"background_pixels": int(np.count_nonzero(connected))}
 
 
@@ -191,7 +202,12 @@ def ai_pixel_master_cleanup(image: Image.Image, options: AiPixelMasterCleanupOpt
     painterly_risk, opaque_colors, color_ratio = _painterly_risk(source)
     if painterly_risk:
         warnings.append({"code": "ai-painterly-risk", "message": "Candidate is unusually color-rich for authored pixel clusters; review raw/post before accepting cleanup."})
-    background, background_mode, background_stats = _background_mask(source, options.background_tolerance)
+    if options.remove_background:
+        background, background_mode, background_stats = _background_mask(source, options.background_tolerance)
+    else:
+        background = np.zeros(source.shape[:2], dtype=bool)
+        background_mode = "disabled"
+        background_stats = {"background_pixels": 0}
     if background.any():
         source[background, 3] = 0
         source[background, :3] = 0
@@ -256,6 +272,9 @@ def ai_pixel_master_cleanup(image: Image.Image, options: AiPixelMasterCleanupOpt
         "geometry": {
             "resize": options.geometry_resize,
             "input_size_preserved": not options.geometry_resize,
+        },
+        "background_policy": {
+            "remove_background": options.remove_background,
         },
         "palette": {
             "mode": palette_mode,

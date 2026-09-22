@@ -23,7 +23,7 @@ from studio.api.contracts import (
     QuickSessionResponse,
     QuickSourceSelectionRequest,
 )
-from studio.backend import quick_c2_service, quick_service
+from studio.backend import quick_auto_service, quick_c2_service, quick_service
 
 
 router = APIRouter(prefix="/quick", tags=["quick-generate"])
@@ -66,7 +66,13 @@ def get_session(session_id: str) -> QuickSessionResponse:
 
 @router.post("/sessions/{session_id}/pixelize", response_model=QuickPixelizeResponse)
 def pixelize(session_id: str, body: QuickPixelizeRequest) -> QuickPixelizeResponse:
-    payload, detail = _action(lambda: quick_c2_service.pixelize_c2_session(session_id, body) if body.strategy == "reference_pixel_master_128" else quick_service.pixelize_session(session_id, body))
+    payload, detail = _action(
+        lambda: quick_c2_service.pixelize_c2_session(session_id, body)
+        if body.strategy == "reference_pixel_master_128"
+        else quick_auto_service.pixelize_auto_session(session_id, body)
+        if body.strategy == "identity_preserving_auto"
+        else quick_service.pixelize_session(session_id, body)
+    )
     del payload
     return QuickPixelizeResponse.model_validate(detail)
 

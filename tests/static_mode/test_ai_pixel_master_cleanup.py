@@ -44,6 +44,50 @@ def test_ai_cleanup_only_removes_border_connected_chroma() -> None:
     assert result.image.getpixel((15, 15))[3] == 255
 
 
+def test_ai_cleanup_can_preserve_pse_owned_logical_edges() -> None:
+    image = Image.new("RGBA", (32, 128), (0, 0, 0, 0))
+    ImageDraw.Draw(image).rectangle((1, 0, 30, 127), fill=(54, 93, 174, 255))
+
+    result = ai_pixel_master_cleanup(
+        image,
+        AiPixelMasterCleanupOptions(
+            target_size=128,
+            geometry_resize=False,
+            remove_background=False,
+        ),
+    )
+
+    assert result.report["background"]["mode"] == "disabled"
+    assert result.report["background_policy"]["remove_background"] is False
+    assert result.image.height == 128
+    alpha = np.asarray(result.image)[:, :, 3]
+    opaque_y = np.where(alpha >= 128)[0]
+    assert alpha.max() == 255
+    assert opaque_y.max() - opaque_y.min() + 1 == 128
+
+
+def test_ai_cleanup_does_not_remove_pse_owned_edge_singletons() -> None:
+    image = Image.new("RGBA", (32, 128), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((1, 1, 30, 127), fill=(54, 93, 174, 255))
+    draw.point((16, 0), fill=(240, 220, 180, 255))
+
+    result = ai_pixel_master_cleanup(
+        image,
+        AiPixelMasterCleanupOptions(
+            target_size=128,
+            geometry_resize=False,
+            remove_background=False,
+            remove_isolated_area=0,
+        ),
+    )
+
+    alpha = np.asarray(result.image)[:, :, 3]
+    assert alpha[0, 16] == 255
+    opaque_y = np.where(alpha >= 128)[0]
+    assert opaque_y.max() - opaque_y.min() + 1 == 128
+
+
 def test_c2_requires_the_128px_profile() -> None:
     try:
         C2Options(target_size=96)

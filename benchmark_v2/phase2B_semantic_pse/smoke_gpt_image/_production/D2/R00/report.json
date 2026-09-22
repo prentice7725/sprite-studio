@@ -1,0 +1,240 @@
+{
+  "kind": "sprite-studio-semantic-pse",
+  "version": 1,
+  "strategy": "semantic_d2_pse",
+  "pse_version": "v0",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\semantic\\R00.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D2 stage2 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R00\\stage2.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R00\\stage2.png",
+      "raw_sha256": "3271d2565d03b1eb8c6abcf6978fa6ca6762bcc90bd6bde84d2fb08e75d0aaef",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R00\\stage1.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    },
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "semantic_quality": {
+    "status": "PASS_SEMANTIC_SOURCE",
+    "metrics": {
+      "input_size": [
+        1254,
+        1254
+      ],
+      "background": {
+        "mode": "chroma:magenta",
+        "keyed_pixels": 749648,
+        "transparent_pixels": 0,
+        "background_pixels": 749648
+      },
+      "subject_bbox": [
+        0,
+        16,
+        1254,
+        1254
+      ],
+      "subject_area_ratio": 0.987241,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.678658,
+      "cluster_size_distribution": {
+        "opaque_pixels": 822868,
+        "opaque_color_count": 36337,
+        "color_ratio": 0.044159,
+        "median_quantized_cluster": 21.0,
+        "small_quantized_cluster_fraction": 0.326241
+      }
+    },
+    "warnings": []
+  },
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\intermediate\\R00.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D2 stage1 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R00\\stage1.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R00\\stage1.png",
+      "raw_sha256": "134a9c1bafd27aeeb0a8b5c2a2b4ebfc91d72e6e5f2f91f4ae6ade047d4c3994",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    }
+  },
+  "status": "PASS_LOGICAL_MASTER",
+  "pse": {
+    "kind": "pixel-structure-extractor",
+    "version": "v0",
+    "status": "PASS_PSE",
+    "input_size": [
+      1254,
+      1254
+    ],
+    "input_subject_bbox": [
+      0,
+      16,
+      1254,
+      1254
+    ],
+    "logical_size": [
+      130,
+      128
+    ],
+    "background": {
+      "mode": "chroma:magenta",
+      "keyed_pixels": 749648,
+      "transparent_pixels": 0,
+      "background_pixels": 749648
+    },
+    "palette": {
+      "requested": 48,
+      "colors": 48
+    },
+    "projection": {
+      "mode": "palette-cluster-weighted-mode",
+      "opaque_coverage_threshold": 0.18,
+      "coverage_min": 0.0,
+      "coverage_mean": 0.5297,
+      "resampling": null
+    },
+    "warnings": []
+  },
+  "cleanup": {
+    "kind": "ai-pixel-master-cleanup",
+    "version": 1,
+    "input_size": [
+      130,
+      128
+    ],
+    "output_size": [
+      130,
+      128
+    ],
+    "background": {
+      "mode": "disabled",
+      "background_pixels": 0
+    },
+    "style_risk": {
+      "painterly": false,
+      "opaque_colors": 33,
+      "color_ratio": 0.0036789297658862876
+    },
+    "subject_bbox": [
+      0,
+      0,
+      130,
+      128
+    ],
+    "scale": {
+      "resampling": null,
+      "target_height": null
+    },
+    "geometry": {
+      "resize": false,
+      "input_size_preserved": true
+    },
+    "background_policy": {
+      "remove_background": false
+    },
+    "palette": {
+      "mode": "preserved",
+      "requested": null,
+      "colors": 33,
+      "separation": {
+        "colors": 33,
+        "min_delta_e": 0.015745,
+        "closest_pair": [
+          [
+            202,
+            136,
+            94
+          ],
+          [
+            207,
+            141,
+            98
+          ]
+        ]
+      }
+    },
+    "alpha": {
+      "mode": "binary",
+      "threshold": 128
+    },
+    "isolated_noise": {
+      "removed_components": 0,
+      "removed_pixels": 0,
+      "pre_crop": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      },
+      "post_scale": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      }
+    },
+    "outline": {
+      "mode": "preserve",
+      "thickening": false
+    },
+    "warnings": [
+      {
+        "code": "ai-background-not-detected",
+        "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+      }
+    ]
+  },
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\logical\\R00.png",
+    "size": [
+      130,
+      128
+    ]
+  },
+  "preview": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\logical\\R00.preview-4x.png",
+    "scale": 4,
+    "resampling": "nearest"
+  },
+  "palette": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\logical\\R00.palette.json",
+    "colors": 48
+  },
+  "logical_validation": {
+    "pass": true,
+    "status": "PASS_LOGICAL_MASTER",
+    "metrics": {
+      "size": [
+        130,
+        128
+      ],
+      "bbox": [
+        0,
+        0,
+        130,
+        128
+      ],
+      "subject_height": 128,
+      "binary_alpha": true,
+      "palette_size": 33,
+      "max_palette_size": 48,
+      "isolated_pixels": 0,
+      "isolated_ratio": 0.0
+    },
+    "warnings": []
+  },
+  "accepted": "logical_post",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D2\\R00\\logical\\R00.png"
+}

@@ -1,0 +1,262 @@
+{
+  "kind": "sprite-studio-semantic-pse",
+  "version": 1,
+  "strategy": "semantic_d2_pse",
+  "pse_version": "v0",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\semantic\\R06.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Using the original character reference and the stage-1 semantic pixel-art intermediate, redraw a compact pixel-art design intended to survive conversion to approximately 128 logical pixels of character height. Spend visual detail only on identity-critical features. Increase the relative size of eyes and facial landmarks when necessary. Merge tiny regions that would disappear at 128px. Keep thin identity-defining equipment visually separable. Preserve silhouette, asymmetric identity details and readable costume hierarchy. Do not merely apply a pixel filter, and do not require an exact logical grid or integer transport. Avoid painterly texture, soft gradients, blur, bloom, text, UI, and extra characters. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\semantic\\R06.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\semantic\\R06.png.raw.png",
+      "raw_bytes": 1232776,
+      "elapsed_seconds": 44.266,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\intermediate\\R06.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\semantic\\R06.png",
+        "mode": "RGBA",
+        "size": "912x1136",
+        "key": "magenta",
+        "keyed_pixels": 700773,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 67.64,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll edit the two reference images once and save the result to the requested path.The edit was written as a JPEG elsewhere. I'll convert that file to PNG at the required path without resizing it.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_work\\D2\\R06\\stage2\\raw.png"
+      }
+    },
+    "size": [
+      912,
+      1136
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        912,
+        1136
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 700773
+      },
+      "subject_bbox": [
+        165,
+        16,
+        742,
+        1136
+      ],
+      "subject_area_ratio": 0.623765,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.874868,
+      "cluster_size_distribution": {
+        "opaque_pixels": 335259,
+        "opaque_color_count": 77200,
+        "color_ratio": 0.23027,
+        "median_quantized_cluster": 25.0,
+        "small_quantized_cluster_fraction": 0.261694
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\intermediate\\R06.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Translate the attached character into a clear authored pixel-art design language while preserving exact identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Simplify hair into intentional masses, group facial landmarks into readable shapes, merge tiny costume details into larger motifs, and use flat coherent color regions with crisp stepped contours. This is a high-resolution semantic intermediate; do not require an exact logical grid yet. Avoid painterly texture, blur, bloom, soft gradients, text, UI, and extra characters. Use a solid magenta background.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\intermediate\\R06.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\intermediate\\R06.png.raw.png",
+      "raw_bytes": 798960,
+      "elapsed_seconds": 29.968,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D2\\R06\\intermediate\\R06.png",
+        "mode": "RGBA",
+        "size": "912x1136",
+        "key": "magenta",
+        "keyed_pixels": 741638,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 71.58,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "The edit landed as a JPEG, so I’m converting that file to the required PNG path without resizing it.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_work\\D2\\R06\\stage1\\raw.png"
+      }
+    }
+  },
+  "status": "FAIL_LOGICAL_MASTER",
+  "accepted": null,
+  "accepted_path": null,
+  "pse": {
+    "kind": "pixel-structure-extractor",
+    "version": "v0",
+    "status": "PASS_PSE",
+    "input_size": [
+      912,
+      1136
+    ],
+    "input_subject_bbox": [
+      165,
+      16,
+      742,
+      1136
+    ],
+    "logical_size": [
+      66,
+      128
+    ],
+    "background": {
+      "mode": "transparent",
+      "background_pixels": 700773
+    },
+    "palette": {
+      "requested": 48,
+      "colors": 48
+    },
+    "projection": {
+      "mode": "palette-cluster-weighted-mode",
+      "opaque_coverage_threshold": 0.18,
+      "coverage_min": 0.0,
+      "coverage_mean": 0.519033,
+      "resampling": null
+    },
+    "warnings": []
+  },
+  "cleanup": {
+    "kind": "ai-pixel-master-cleanup",
+    "version": 1,
+    "input_size": [
+      66,
+      128
+    ],
+    "output_size": [
+      66,
+      128
+    ],
+    "background": {
+      "mode": "disabled",
+      "background_pixels": 0
+    },
+    "style_risk": {
+      "painterly": false,
+      "opaque_colors": 47,
+      "color_ratio": 0.0101097010109701
+    },
+    "subject_bbox": [
+      0,
+      0,
+      66,
+      127
+    ],
+    "scale": {
+      "resampling": null,
+      "target_height": null
+    },
+    "geometry": {
+      "resize": false,
+      "input_size_preserved": true
+    },
+    "background_policy": {
+      "remove_background": false
+    },
+    "palette": {
+      "mode": "preserved",
+      "requested": null,
+      "colors": 47,
+      "separation": {
+        "colors": 47,
+        "min_delta_e": 0.027072,
+        "closest_pair": [
+          [
+            46,
+            36,
+            39
+          ],
+          [
+            47,
+            43,
+            51
+          ]
+        ]
+      }
+    },
+    "alpha": {
+      "mode": "binary",
+      "threshold": 128
+    },
+    "isolated_noise": {
+      "removed_components": 0,
+      "removed_pixels": 0,
+      "pre_crop": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      },
+      "post_scale": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      }
+    },
+    "outline": {
+      "mode": "preserve",
+      "thickening": false
+    },
+    "warnings": [
+      {
+        "code": "ai-background-not-detected",
+        "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+      }
+    ]
+  },
+  "logical_validation": {
+    "pass": false,
+    "status": "FAIL_LOGICAL_MASTER",
+    "metrics": {
+      "size": [
+        66,
+        128
+      ],
+      "bbox": [
+        0,
+        0,
+        66,
+        127
+      ],
+      "subject_height": 127,
+      "binary_alpha": true,
+      "palette_size": 47,
+      "max_palette_size": 48,
+      "isolated_pixels": 1,
+      "isolated_ratio": 0.000215
+    },
+    "warnings": [
+      {
+        "code": "subject-height-invalid",
+        "message": "Logical subject height is 127; expected 128."
+      }
+    ]
+  }
+}

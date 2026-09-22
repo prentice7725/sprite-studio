@@ -1,0 +1,223 @@
+{
+  "kind": "sprite-studio-semantic-pse",
+  "version": 1,
+  "strategy": "semantic_d1_pse",
+  "pse_version": "v0",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D1\\R00\\semantic\\R00.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D1 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D1\\R00\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D1\\R00\\raw.png",
+      "raw_sha256": "4638db918a91f517dc81164d465c3b0a96a400ca3350042472ec1c0cbf659184",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    },
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "semantic_quality": {
+    "status": "PASS_SEMANTIC_SOURCE",
+    "metrics": {
+      "input_size": [
+        1254,
+        1254
+      ],
+      "background": {
+        "mode": "chroma:magenta",
+        "keyed_pixels": 754529,
+        "transparent_pixels": 0,
+        "background_pixels": 754529
+      },
+      "subject_bbox": [
+        0,
+        16,
+        1254,
+        1254
+      ],
+      "subject_area_ratio": 0.987241,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.676769,
+      "cluster_size_distribution": {
+        "opaque_pixels": 817987,
+        "opaque_color_count": 38502,
+        "color_ratio": 0.047069,
+        "median_quantized_cluster": 19.5,
+        "small_quantized_cluster_fraction": 0.283019
+      }
+    },
+    "warnings": []
+  },
+  "status": "PASS_LOGICAL_MASTER",
+  "pse": {
+    "kind": "pixel-structure-extractor",
+    "version": "v0",
+    "status": "PASS_PSE",
+    "input_size": [
+      1254,
+      1254
+    ],
+    "input_subject_bbox": [
+      0,
+      16,
+      1254,
+      1254
+    ],
+    "logical_size": [
+      130,
+      128
+    ],
+    "background": {
+      "mode": "chroma:magenta",
+      "keyed_pixels": 754529,
+      "transparent_pixels": 0,
+      "background_pixels": 754529
+    },
+    "palette": {
+      "requested": 48,
+      "colors": 48
+    },
+    "projection": {
+      "mode": "palette-cluster-weighted-mode",
+      "opaque_coverage_threshold": 0.18,
+      "coverage_min": 0.0,
+      "coverage_mean": 0.526547,
+      "resampling": null
+    },
+    "warnings": []
+  },
+  "cleanup": {
+    "kind": "ai-pixel-master-cleanup",
+    "version": 1,
+    "input_size": [
+      130,
+      128
+    ],
+    "output_size": [
+      130,
+      128
+    ],
+    "background": {
+      "mode": "disabled",
+      "background_pixels": 0
+    },
+    "style_risk": {
+      "painterly": false,
+      "opaque_colors": 42,
+      "color_ratio": 0.004707464694014795
+    },
+    "subject_bbox": [
+      0,
+      0,
+      130,
+      128
+    ],
+    "scale": {
+      "resampling": null,
+      "target_height": null
+    },
+    "geometry": {
+      "resize": false,
+      "input_size_preserved": true
+    },
+    "background_policy": {
+      "remove_background": false
+    },
+    "palette": {
+      "mode": "preserved",
+      "requested": null,
+      "colors": 42,
+      "separation": {
+        "colors": 42,
+        "min_delta_e": 0.0106,
+        "closest_pair": [
+          [
+            246,
+            200,
+            152
+          ],
+          [
+            248,
+            204,
+            156
+          ]
+        ]
+      }
+    },
+    "alpha": {
+      "mode": "binary",
+      "threshold": 128
+    },
+    "isolated_noise": {
+      "removed_components": 0,
+      "removed_pixels": 0,
+      "pre_crop": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      },
+      "post_scale": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      }
+    },
+    "outline": {
+      "mode": "preserve",
+      "thickening": false
+    },
+    "warnings": [
+      {
+        "code": "ai-background-not-detected",
+        "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+      }
+    ]
+  },
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D1\\R00\\logical\\R00.png",
+    "size": [
+      130,
+      128
+    ]
+  },
+  "preview": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D1\\R00\\logical\\R00.preview-4x.png",
+    "scale": 4,
+    "resampling": "nearest"
+  },
+  "palette": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D1\\R00\\logical\\R00.palette.json",
+    "colors": 48
+  },
+  "logical_validation": {
+    "pass": true,
+    "status": "PASS_LOGICAL_MASTER",
+    "metrics": {
+      "size": [
+        130,
+        128
+      ],
+      "bbox": [
+        0,
+        0,
+        130,
+        128
+      ],
+      "subject_height": 128,
+      "binary_alpha": true,
+      "palette_size": 42,
+      "max_palette_size": 48,
+      "isolated_pixels": 0,
+      "isolated_ratio": 0.0
+    },
+    "warnings": []
+  },
+  "accepted": "logical_post",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_production\\D1\\R00\\logical\\R00.png"
+}

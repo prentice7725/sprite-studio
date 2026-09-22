@@ -1,0 +1,50 @@
+{
+  "kind": "pixel-master-phase2b-semantic-pse",
+  "version": 1,
+  "config": "C:\\workspace\\sprite-studio\\benchmark_v2\\configs\\benchmark_matrix_r00_r08.json",
+  "sources": [
+    "R00",
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08"
+  ],
+  "methods": [
+    "A1",
+    "A2",
+    "B1",
+    "D1",
+    "D2"
+  ],
+  "provider": "grok",
+  "fixture_policy": "immutable-existing-files-only",
+  "logical_preview_scale": 4,
+  "strict_capability_appendix": "benchmark_v2/phase2A_rebench_128logical",
+  "fixture_sha256": {
+    "R00": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+    "R01": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+    "R02": "b4aa3e3df2a8255f6970e796deba720ccbbbc84f07567b33bd78554fb514f8b7",
+    "R03": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+    "R04": "338f7545215398277dbdd64642c747e80d7c14ad3c152fa66564f4537433e466",
+    "R05": "10ee0b91785aa6ba662c1fdfa6df5128153ae95d56f6d7a8d15f41b90bcc1857",
+    "R06": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+    "R07": "491d31d5dbb4b6178fe2d34a38d9db40162509a87741b98cd43edba6e649635d",
+    "R08": "49e4741c892d9f7858a699b446359f700f4a579ad4cc5c57d58247102864101b"
+  },
+  "fixture_paths": {
+    "R00": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+    "R01": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+    "R02": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R02.png",
+    "R03": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+    "R04": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R04.png",
+    "R05": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png",
+    "R06": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+    "R07": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png",
+    "R08": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png"
+  },
+  "run_label": "Full R00–R08"
+}

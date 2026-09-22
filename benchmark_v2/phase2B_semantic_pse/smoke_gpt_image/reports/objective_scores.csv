@@ -1,0 +1,16 @@
+source_id,method_id,status,path,width,height,palette_size,alpha_fringe_pixels,isolated_pixel_count,occupied_bbox_ratio,target_height_error,sha256
+R00,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A1\R00.png,128,128,48,0,2888,1.0,0,c1b82251e2b6ba4d85fcd391ccfa9f0f94ba16a367f2910cc304ab43f6467408
+R00,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A2\R00.png,128,128,48,0,2731,1.0,0,e754ff1cbe1fa6e11ad69f53a7df27112cc437f358cacb32b81452a671c1e710
+R00,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\B1\R00.png,128,128,48,0,2549,1.0,0,fca41ffb3e9252ee4084c7616ef392e7621a8579c4198c05275c5a05ec0af8cc
+R00,D1,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D1\R00\logical\R00.png,130,128,42,0,654,1.0,0,2496f651e40766d51003742b32da900fef475078d07aefa4b90069ab657cdef8
+R00,D2,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D2\R00\logical\R00.png,130,128,33,0,285,1.0,0,857b88498aa28bf9672be82b1888a1f7f28e83765c27b49de2a621162e9b22a9
+R03,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A1\R03.png,128,128,48,0,3027,0.625,0,5e324e1606018ff6568502e79948962b0ace8332eb55a49f5a7a1877e4f36478
+R03,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A2\R03.png,128,128,48,0,2292,0.625,0,0f5d85743282a27d6d29624510778459bd0ca1f861ab988420ad5d938eaa355b
+R03,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\B1\R03.png,128,128,48,0,2236,0.625,0,1b7a4305c59aa70e07d8848ed7bb054d1b95ab15f0bbf0d15514962200180837
+R03,D1,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D1\R03\logical\R03.png,82,128,36,0,726,1.0,0,267fe47f975fb366003ae45040ad0f787cfd2b2a51914ac618f04f4c0eabdcca
+R03,D2,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D2\R03\logical\R03.png,81,128,33,0,530,1.0,0,71a8a03fda550aca1b85b42bec557c3a23721ec8837c745d461fd05dfaae4ed9
+R06,A1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A1\R06.png,128,128,48,0,3045,0.507812,0,db0f079505df8242c2d7e21f068a2d725e5a152311ddd589edf772ed18cefc25
+R06,A2,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\A2\R06.png,128,128,48,0,2396,0.5,0,cf5038caa5c590ec10e49ec96031813a555f456cbad4bc108b0d488a5a88a4f0
+R06,B1,PASS,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\logical\B1\R06.png,128,128,48,0,2474,0.492188,0,764e310a16df09624c8ec35175d9278cd6292f49600e4b93d27c75275352b31d
+R06,D1,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D1\R06\logical\R06.png,67,128,41,0,1332,1.0,0,f884b33d288385264c447e46419396320ff45fa5421a3cbe0f5038b7d1827f13
+R06,D2,PASS_LOGICAL_MASTER,C:\workspace\sprite-studio\benchmark_v2\phase2B_semantic_pse\smoke_gpt_image\_production\D2\R06\logical\R06.png,65,128,43,0,1098,1.0,0,4912199614121c355da657f1d0267cf79c15173e1e1519de9c95fdf1ec83ea83

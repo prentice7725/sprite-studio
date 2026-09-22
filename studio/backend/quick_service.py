@@ -258,6 +258,9 @@ def make_sprite(session_id: str, body: Any) -> tuple[dict[str, Any], str, str, s
         if getattr(body, "strategy", "preserve") == "reference_pixel_master_128":
             from studio.backend.quick_c2_service import pixelize_c2_session
             payload, _ = pixelize_c2_session(session_id, body)
+        elif getattr(body, "strategy", "preserve") == "identity_preserving_auto":
+            from studio.backend.quick_auto_service import pixelize_auto_session
+            payload, _ = pixelize_auto_session(session_id, body)
         else:
             payload, _ = pixelize_session(session_id, body)
     selected = body.sprite_source or payload.get("source_selection", "original")

@@ -1,0 +1,240 @@
+{
+  "kind": "sprite-studio-semantic-pse",
+  "version": 1,
+  "strategy": "semantic_d1_pse",
+  "pse_version": "v0",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\semantic\\R05.png",
+    "provider": {
+      "kind": "sprite-studio-image-report",
+      "provider": "grok",
+      "prompt": "Preserve the exact identity of the attached character. Redraw the character in a deliberately low-resolution pixel-art design language. Do not merely apply a pixel filter. Reallocate visual information for small-scale readability. Simplify hair into clear intentional masses and clusters. Keep the eyes, brows, nose, mouth and jaw readable with fewer larger shapes. Merge tiny costume details into larger readable motifs. Preserve asymmetric identity details. Use flat coherent color regions, crisp block-like contours and stepped shading. Avoid painterly texture, soft gradients, blur, bloom and micro-detail. The result may be high resolution; its purpose is to provide semantically simplified pixel-art structure for deterministic conversion into a 128-logical-pixel master. Use a solid magenta background and no text, UI, or extra characters.",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\semantic\\R05.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\semantic\\R05.png.raw.png",
+      "raw_bytes": 1156599,
+      "elapsed_seconds": 36.328,
+      "model": null,
+      "session_id": null,
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png"
+      ],
+      "transparent": true,
+      "chroma": {
+        "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\semantic\\R05.png",
+        "mode": "RGBA",
+        "size": "912x1136",
+        "key": "magenta",
+        "keyed_pixels": 617651,
+        "fringe_pixels": 0,
+        "cleaned_transparent_rgb_pixels": 0,
+        "alpha_zero_pct": 59.62,
+        "stale_transparent_rgb_pixels": 0
+      },
+      "extra": {
+        "stdout_tail": "I'll edit the reference once into simplified pixel-art structure, then save that file to the required path.The edit landed as a JPEG elsewhere. I'll convert it to PNG at the required path without resizing.C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_work\\D1\\R05\\raw.png"
+      }
+    },
+    "size": [
+      912,
+      1136
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        912,
+        1136
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 617651
+      },
+      "subject_bbox": [
+        36,
+        15,
+        885,
+        1136
+      ],
+      "subject_area_ratio": 0.918629,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.7771,
+      "cluster_size_distribution": {
+        "opaque_pixels": 418381,
+        "opaque_color_count": 72513,
+        "color_ratio": 0.173318,
+        "median_quantized_cluster": 30.0,
+        "small_quantized_cluster_fraction": 0.186462
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "status": "PASS_LOGICAL_MASTER",
+  "pse": {
+    "kind": "pixel-structure-extractor",
+    "version": "v0",
+    "status": "PASS_PSE",
+    "input_size": [
+      912,
+      1136
+    ],
+    "input_subject_bbox": [
+      36,
+      15,
+      885,
+      1136
+    ],
+    "logical_size": [
+      97,
+      128
+    ],
+    "background": {
+      "mode": "transparent",
+      "background_pixels": 617651
+    },
+    "palette": {
+      "requested": 48,
+      "colors": 48
+    },
+    "projection": {
+      "mode": "palette-cluster-weighted-mode",
+      "opaque_coverage_threshold": 0.18,
+      "coverage_min": 0.0,
+      "coverage_mean": 0.439477,
+      "resampling": null
+    },
+    "warnings": []
+  },
+  "cleanup": {
+    "kind": "ai-pixel-master-cleanup",
+    "version": 1,
+    "input_size": [
+      97,
+      128
+    ],
+    "output_size": [
+      97,
+      128
+    ],
+    "background": {
+      "mode": "disabled",
+      "background_pixels": 0
+    },
+    "style_risk": {
+      "painterly": false,
+      "opaque_colors": 47,
+      "color_ratio": 0.008009543285616906
+    },
+    "subject_bbox": [
+      0,
+      0,
+      97,
+      128
+    ],
+    "scale": {
+      "resampling": null,
+      "target_height": null
+    },
+    "geometry": {
+      "resize": false,
+      "input_size_preserved": true
+    },
+    "background_policy": {
+      "remove_background": false
+    },
+    "palette": {
+      "mode": "preserved",
+      "requested": null,
+      "colors": 47,
+      "separation": {
+        "colors": 47,
+        "min_delta_e": 0.034012,
+        "closest_pair": [
+          [
+            193,
+            40,
+            157
+          ],
+          [
+            210,
+            27,
+            164
+          ]
+        ]
+      }
+    },
+    "alpha": {
+      "mode": "binary",
+      "threshold": 128
+    },
+    "isolated_noise": {
+      "removed_components": 0,
+      "removed_pixels": 0,
+      "pre_crop": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      },
+      "post_scale": {
+        "removed_components": 0,
+        "removed_pixels": 0
+      }
+    },
+    "outline": {
+      "mode": "preserve",
+      "thickening": false
+    },
+    "warnings": [
+      {
+        "code": "ai-background-not-detected",
+        "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+      }
+    ]
+  },
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\logical\\R05.png",
+    "size": [
+      97,
+      128
+    ]
+  },
+  "preview": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\logical\\R05.preview-4x.png",
+    "scale": 4,
+    "resampling": "nearest"
+  },
+  "palette": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\logical\\R05.palette.json",
+    "colors": 48
+  },
+  "logical_validation": {
+    "pass": true,
+    "status": "PASS_LOGICAL_MASTER",
+    "metrics": {
+      "size": [
+        97,
+        128
+      ],
+      "bbox": [
+        0,
+        0,
+        97,
+        128
+      ],
+      "subject_height": 128,
+      "binary_alpha": true,
+      "palette_size": 47,
+      "max_palette_size": 48,
+      "isolated_pixels": 0,
+      "isolated_ratio": 0.0
+    },
+    "warnings": []
+  },
+  "accepted": "logical_post",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\full_r00_r08\\_production\\D1\\R05\\logical\\R05.png"
+}

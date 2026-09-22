@@ -78,14 +78,15 @@ QuickStyle = Literal["pixel-art", "cel-shaded", "hand-painted", "3d-render"]
 QuickBackground = Literal["transparent", "chroma"]
 QuickDirectionCount = Literal[1, 4, 8]
 QuickFrameCount = Literal[4, 6, 8]
-QuickPixelSize = Literal[64, 96, 128, 192]
+QuickPixelSize = Literal[64, 96, 128, 160, 192, 256]
+QuickIdentityResolution = Literal[128, 160, 192, 256]
 QuickPalette = Literal["auto", 16, 24, 32, 48]
 QuickDither = Literal["none", "ordered-low", "ordered"]
 QuickOutline = Literal["preserve", "auto"]
 QuickSubjectMode = Literal["auto", "manual"]
 QuickDetail = Literal["clean", "balanced", "detailed"]
-QuickPixelMasterStrategy = Literal["preserve", "reference_pixel_master_128"]
-QuickAcceptedArtifact = Literal["post"]
+QuickPixelMasterStrategy = Literal["preserve", "reference_pixel_master_128", "identity_preserving_auto"]
+QuickAcceptedArtifact = Literal["post", "logical_master"]
 
 
 class QuickSessionCreateRequest(BaseModel):
@@ -132,6 +133,9 @@ class QuickPixelizeRequest(BaseModel):
     subject_bbox: tuple[int, int, int, int] | None = None
     detail: QuickDetail = "balanced"
     alpha_threshold: int = Field(default=128, ge=1, le=254)
+    identity_manifest: dict[str, Any] | None = None
+    resolution_mode: Literal["AUTO", "AUDIT"] = "AUTO"
+    resolution_override: QuickIdentityResolution | None = None
 
 
 class QuickPixelizeResponse(BaseModel):
@@ -151,6 +155,7 @@ class QuickPixelizeResponse(BaseModel):
     raw_source: str | None = None
     intermediate_source: str | None = None
     post_source: str | None = None
+    resolution: dict[str, Any] | None = None
 
 class QuickSourceSelectionRequest(BaseModel):
     source: QuickSourceSelection
@@ -175,6 +180,9 @@ class QuickMakeSpriteRequest(BaseModel):
     alpha_threshold: int = Field(default=128, ge=1, le=254)
     sprite_source: QuickSourceSelection | None = None
     generation_strategy: GenerationStrategy = "AUTO"
+    identity_manifest: dict[str, Any] | None = None
+    resolution_mode: Literal["AUTO", "AUDIT"] = "AUTO"
+    resolution_override: QuickIdentityResolution | None = None
 
 
 class QuickMakeSpriteResponse(BaseModel):
