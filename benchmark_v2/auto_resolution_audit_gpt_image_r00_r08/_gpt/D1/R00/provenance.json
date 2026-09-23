@@ -1,0 +1,20 @@
+{
+  "method": "D1",
+  "source_id": "R00",
+  "source_sha256": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+  "semantic_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image",
+    "prompt": "GPT Image D1 semantic redraw",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R00\\raw.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R00\\raw.png",
+    "raw_sha256": "4638db918a91f517dc81164d465c3b0a96a400ca3350042472ec1c0cbf659184",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+    ],
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool"
+  },
+  "reused_from": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\provenance\\D1\\R00.json",
+  "reused_from_run": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image"
+}

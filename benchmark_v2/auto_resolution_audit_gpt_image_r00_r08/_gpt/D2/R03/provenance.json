@@ -1,0 +1,34 @@
+{
+  "method": "D2",
+  "source_id": "R03",
+  "source_sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+  "intermediate_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image",
+    "prompt": "GPT Image D2 stage1 semantic redraw",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R03\\stage1.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R03\\stage1.png",
+    "raw_sha256": "7d51e9d4769276c266f8b35cdaa17f5ce00d5d7279c71fd009f4adedc137f0dc",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png"
+    ],
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool"
+  },
+  "semantic_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image",
+    "prompt": "GPT Image D2 stage2 semantic redraw",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R03\\stage2.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R03\\stage2.png",
+    "raw_sha256": "1a09e1a7ec429c78bb6b210ec08e869dc7cd4706be46d8a2ef39223112d6bf48",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R03\\stage1.png"
+    ],
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool"
+  },
+  "reused_from": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\provenance\\D2\\R03.json",
+  "reused_from_run": "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image"
+}

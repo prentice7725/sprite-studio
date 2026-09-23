@@ -1,0 +1,1214 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d1_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R03\\semantic\\R03.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D1 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R03\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R03\\raw.png",
+      "raw_sha256": "fd3f30622e14f647f95b8f75f1861199da8becb5b677307d552b1c57312a6d6d",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "PASS_SEMANTIC_SOURCE",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "chroma:magenta",
+        "keyed_pixels": 844770,
+        "transparent_pixels": 0,
+        "background_pixels": 844764
+      },
+      "subject_bbox": [
+        108,
+        24,
+        956,
+        1350
+      ],
+      "subject_area_ratio": 0.714823,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.76485,
+      "cluster_size_distribution": {
+        "opaque_pixels": 728280,
+        "opaque_color_count": 64076,
+        "color_ratio": 0.087983,
+        "median_quantized_cluster": 13.0,
+        "small_quantized_cluster_fraction": 0.326889
+      }
+    },
+    "warnings": []
+  },
+  "semantic_preservation": {
+    "pass": false,
+    "status": "FAIL_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "upright-bear-silhouette",
+        "label": "Broad upright bear build with rounded ears and large paws",
+        "importance": "CRITICAL",
+        "kind": "SILHOUETTE",
+        "state": "PRESERVED",
+        "reason": "Broad upright brown bear shape with rounded ears, thick limbs, and large paws remains clear.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.636668,
+          "bbox": [
+            129,
+            33,
+            947,
+            1330
+          ],
+          "width": 818,
+          "height": 1297,
+          "min_dimension": 818,
+          "mean_rgb": [
+            158.227,
+            83.457,
+            44.912
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.647678,
+          "bbox": [
+            0,
+            0,
+            848,
+            1326
+          ],
+          "width": 848,
+          "height": 1326,
+          "min_dimension": 848,
+          "mean_rgb": [
+            159.514,
+            86.545,
+            46.91
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          0,
+          0,
+          848,
+          1326
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 1.0
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "rounded-inner-ears",
+        "label": "Two rounded ears with lighter tan inner areas",
+        "importance": "CRITICAL",
+        "kind": "SPECIES_TRAIT",
+        "state": "PRESERVED",
+        "reason": "Both rounded brown ears have contrasting tan inner areas.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.758689,
+          "bbox": [
+            393,
+            33,
+            777,
+            201
+          ],
+          "width": 384,
+          "height": 168,
+          "min_dimension": 168,
+          "mean_rgb": [
+            144.983,
+            77.911,
+            40.046
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.745498,
+          "bbox": [
+            251,
+            0,
+            682,
+            145
+          ],
+          "width": 431,
+          "height": 145,
+          "min_dimension": 145,
+          "mean_rgb": [
+            141.044,
+            74.727,
+            36.537
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": "tan inner areas contrast with brown outer ears",
+        "candidate_location_bbox": [
+          251,
+          0,
+          683,
+          145
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.296,
+            "y": 0.0,
+            "w": 0.509,
+            "h": 0.109
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "smiling-bear-face",
+        "label": "Expressive face with dark eyes and brows, tan muzzle, black nose, and open smile",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Centered brows, dark eyes, tan muzzle, black nose, and open smiling mouth with tongue are readable in pixel form.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.999695,
+          "bbox": [
+            470,
+            103,
+            678,
+            355
+          ],
+          "width": 208,
+          "height": 252,
+          "min_dimension": 208,
+          "mean_rgb": [
+            165.437,
+            102.139,
+            62.212
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            366,
+            106,
+            556,
+            341
+          ],
+          "width": 190,
+          "height": 235,
+          "min_dimension": 190,
+          "mean_rgb": [
+            169.215,
+            113.293,
+            71.905
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          366,
+          106,
+          556,
+          341
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.432,
+            "y": 0.08,
+            "w": 0.223,
+            "h": 0.177
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "tan-belly-patch",
+        "label": "Large oval tan belly patch",
+        "importance": "CRITICAL",
+        "kind": "COLOR_BLOCK",
+        "state": "AMBIGUOUS",
+        "reason": "required-color-relation-not-preserved",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            352,
+            471,
+            706,
+            1035
+          ],
+          "width": 354,
+          "height": 564,
+          "min_dimension": 354,
+          "mean_rgb": [
+            195.592,
+            120.885,
+            70.934
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            245,
+            454,
+            591,
+            1002
+          ],
+          "width": 346,
+          "height": 548,
+          "min_dimension": 346,
+          "mean_rgb": [
+            204.558,
+            134.769,
+            81.481
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": "tan patch contrasts with surrounding brown fur",
+        "candidate_location_bbox": [
+          245,
+          454,
+          591,
+          1002
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.289,
+            "y": 0.343,
+            "w": 0.407,
+            "h": 0.412
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "red-neck-scarf",
+        "label": "Bright red scarf wrapped around the neck",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "PRESERVED",
+        "reason": "Bright red scarf remains a clear band below the head.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.969587,
+          "bbox": [
+            363,
+            321,
+            769,
+            505
+          ],
+          "width": 406,
+          "height": 184,
+          "min_dimension": 184,
+          "mean_rgb": [
+            176.233,
+            57.146,
+            35.121
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.992681,
+          "bbox": [
+            245,
+            323,
+            654,
+            479
+          ],
+          "width": 409,
+          "height": 156,
+          "min_dimension": 156,
+          "mean_rgb": [
+            188.396,
+            54.248,
+            32.18
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": "red scarf contrasts with brown fur",
+        "candidate_location_bbox": [
+          245,
+          323,
+          654,
+          479
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.289,
+            "y": 0.244,
+            "w": 0.482,
+            "h": 0.117
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "crossbody-strap-buckle",
+        "label": "Dark brown diagonal satchel strap with a small gold buckle",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "PRESERVED",
+        "reason": "Dark diagonal strap crosses the torso, with a contrasting gold buckle on the image-left belly.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            427,
+            419,
+            752,
+            765
+          ],
+          "width": 325,
+          "height": 346,
+          "min_dimension": 325,
+          "mean_rgb": [
+            186.053,
+            88.342,
+            53.899
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.996641,
+          "bbox": [
+            291,
+            407,
+            700,
+            795
+          ],
+          "width": 409,
+          "height": 388,
+          "min_dimension": 388,
+          "mean_rgb": [
+            188.661,
+            100.973,
+            59.907
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": "gold buckle contrasts with the dark brown strap",
+        "candidate_location_bbox": [
+          291,
+          407,
+          700,
+          795
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.344,
+            "y": 0.307,
+            "w": 0.481,
+            "h": 0.292
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "right-hip-satchel",
+        "label": "Brown satchel pouch with a round gold button",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "PRESERVED",
+        "reason": "Brown pouch remains on the image-right hip with a distinct round gold button.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.943333,
+          "bbox": [
+            703,
+            681,
+            915,
+            980
+          ],
+          "width": 212,
+          "height": 299,
+          "min_dimension": 212,
+          "mean_rgb": [
+            121.749,
+            59.797,
+            28.769
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.955388,
+          "bbox": [
+            633,
+            743,
+            817,
+            930
+          ],
+          "width": 184,
+          "height": 187,
+          "min_dimension": 184,
+          "mean_rgb": [
+            108.831,
+            58.0,
+            27.513
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": "gold button contrasts with the brown pouch",
+        "candidate_location_bbox": [
+          633,
+          743,
+          817,
+          930
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.747,
+            "y": 0.561,
+            "w": 0.216,
+            "h": 0.14
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0ce89-051b-7e32-a29a-42201780c59f",
+      "elapsed_seconds": 31.929,
+      "source_sha256": "f5a015056a2109565b93f6c8bf078be1ec7d02f8127938883def4c2c1e9072f4",
+      "candidate_sha256": "bf47f5b0d5368899258f622a93f6a4e203847514465ece60ea4d2b1374ce229e",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R03\\identity-review\\semantic-preservation-f5a015056a21-bf47f5b0d536",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "upright-bear-silhouette",
+          "state": "PRESERVED",
+          "confidence": 0.98,
+          "reason": "Broad upright brown bear shape with rounded ears, thick limbs, and large paws remains clear.",
+          "location": {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 1.0
+          }
+        },
+        {
+          "id": "rounded-inner-ears",
+          "state": "PRESERVED",
+          "confidence": 0.98,
+          "reason": "Both rounded brown ears have contrasting tan inner areas.",
+          "location": {
+            "x": 0.296,
+            "y": 0.0,
+            "w": 0.509,
+            "h": 0.109
+          }
+        },
+        {
+          "id": "smiling-bear-face",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Centered brows, dark eyes, tan muzzle, black nose, and open smiling mouth with tongue are readable in pixel form.",
+          "location": {
+            "x": 0.432,
+            "y": 0.08,
+            "w": 0.223,
+            "h": 0.177
+          }
+        },
+        {
+          "id": "tan-belly-patch",
+          "state": "PRESERVED",
+          "confidence": 0.98,
+          "reason": "Large pale tan patch remains distinct across the front torso.",
+          "location": {
+            "x": 0.289,
+            "y": 0.343,
+            "w": 0.407,
+            "h": 0.412
+          }
+        },
+        {
+          "id": "red-neck-scarf",
+          "state": "PRESERVED",
+          "confidence": 0.97,
+          "reason": "Bright red scarf remains a clear band below the head.",
+          "location": {
+            "x": 0.289,
+            "y": 0.244,
+            "w": 0.482,
+            "h": 0.117
+          }
+        },
+        {
+          "id": "crossbody-strap-buckle",
+          "state": "PRESERVED",
+          "confidence": 0.96,
+          "reason": "Dark diagonal strap crosses the torso, with a contrasting gold buckle on the image-left belly.",
+          "location": {
+            "x": 0.344,
+            "y": 0.307,
+            "w": 0.481,
+            "h": 0.292
+          }
+        },
+        {
+          "id": "right-hip-satchel",
+          "state": "PRESERVED",
+          "confidence": 0.97,
+          "reason": "Brown pouch remains on the image-right hip with a distinct round gold button.",
+          "location": {
+            "x": 0.747,
+            "y": 0.561,
+            "w": 0.216,
+            "h": 0.14
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": null,
+    "reason": "no_valid_resolution",
+    "candidate_results": {
+      "128": "NOT_REQUIRED",
+      "160": "NOT_REQUIRED",
+      "192": "NOT_REQUIRED",
+      "256": "NOT_REQUIRED"
+    },
+    "candidate_details": {},
+    "identity_loss_index": {},
+    "semantic_preservation": {
+      "pass": false,
+      "status": "FAIL_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "upright-bear-silhouette",
+          "label": "Broad upright bear build with rounded ears and large paws",
+          "importance": "CRITICAL",
+          "kind": "SILHOUETTE",
+          "state": "PRESERVED",
+          "reason": "Broad upright brown bear shape with rounded ears, thick limbs, and large paws remains clear.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.636668,
+            "bbox": [
+              129,
+              33,
+              947,
+              1330
+            ],
+            "width": 818,
+            "height": 1297,
+            "min_dimension": 818,
+            "mean_rgb": [
+              158.227,
+              83.457,
+              44.912
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.647678,
+            "bbox": [
+              0,
+              0,
+              848,
+              1326
+            ],
+            "width": 848,
+            "height": 1326,
+            "min_dimension": 848,
+            "mean_rgb": [
+              159.514,
+              86.545,
+              46.91
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            0,
+            0,
+            848,
+            1326
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.0,
+              "y": 0.0,
+              "w": 1.0,
+              "h": 1.0
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "rounded-inner-ears",
+          "label": "Two rounded ears with lighter tan inner areas",
+          "importance": "CRITICAL",
+          "kind": "SPECIES_TRAIT",
+          "state": "PRESERVED",
+          "reason": "Both rounded brown ears have contrasting tan inner areas.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.758689,
+            "bbox": [
+              393,
+              33,
+              777,
+              201
+            ],
+            "width": 384,
+            "height": 168,
+            "min_dimension": 168,
+            "mean_rgb": [
+              144.983,
+              77.911,
+              40.046
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.745498,
+            "bbox": [
+              251,
+              0,
+              682,
+              145
+            ],
+            "width": 431,
+            "height": 145,
+            "min_dimension": 145,
+            "mean_rgb": [
+              141.044,
+              74.727,
+              36.537
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": "tan inner areas contrast with brown outer ears",
+          "candidate_location_bbox": [
+            251,
+            0,
+            683,
+            145
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.296,
+              "y": 0.0,
+              "w": 0.509,
+              "h": 0.109
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "smiling-bear-face",
+          "label": "Expressive face with dark eyes and brows, tan muzzle, black nose, and open smile",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Centered brows, dark eyes, tan muzzle, black nose, and open smiling mouth with tongue are readable in pixel form.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.999695,
+            "bbox": [
+              470,
+              103,
+              678,
+              355
+            ],
+            "width": 208,
+            "height": 252,
+            "min_dimension": 208,
+            "mean_rgb": [
+              165.437,
+              102.139,
+              62.212
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              366,
+              106,
+              556,
+              341
+            ],
+            "width": 190,
+            "height": 235,
+            "min_dimension": 190,
+            "mean_rgb": [
+              169.215,
+              113.293,
+              71.905
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            366,
+            106,
+            556,
+            341
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.432,
+              "y": 0.08,
+              "w": 0.223,
+              "h": 0.177
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "tan-belly-patch",
+          "label": "Large oval tan belly patch",
+          "importance": "CRITICAL",
+          "kind": "COLOR_BLOCK",
+          "state": "AMBIGUOUS",
+          "reason": "required-color-relation-not-preserved",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              352,
+              471,
+              706,
+              1035
+            ],
+            "width": 354,
+            "height": 564,
+            "min_dimension": 354,
+            "mean_rgb": [
+              195.592,
+              120.885,
+              70.934
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              245,
+              454,
+              591,
+              1002
+            ],
+            "width": 346,
+            "height": 548,
+            "min_dimension": 346,
+            "mean_rgb": [
+              204.558,
+              134.769,
+              81.481
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": "tan patch contrasts with surrounding brown fur",
+          "candidate_location_bbox": [
+            245,
+            454,
+            591,
+            1002
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.289,
+              "y": 0.343,
+              "w": 0.407,
+              "h": 0.412
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "red-neck-scarf",
+          "label": "Bright red scarf wrapped around the neck",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "PRESERVED",
+          "reason": "Bright red scarf remains a clear band below the head.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.969587,
+            "bbox": [
+              363,
+              321,
+              769,
+              505
+            ],
+            "width": 406,
+            "height": 184,
+            "min_dimension": 184,
+            "mean_rgb": [
+              176.233,
+              57.146,
+              35.121
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.992681,
+            "bbox": [
+              245,
+              323,
+              654,
+              479
+            ],
+            "width": 409,
+            "height": 156,
+            "min_dimension": 156,
+            "mean_rgb": [
+              188.396,
+              54.248,
+              32.18
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": "red scarf contrasts with brown fur",
+          "candidate_location_bbox": [
+            245,
+            323,
+            654,
+            479
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.289,
+              "y": 0.244,
+              "w": 0.482,
+              "h": 0.117
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "crossbody-strap-buckle",
+          "label": "Dark brown diagonal satchel strap with a small gold buckle",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "PRESERVED",
+          "reason": "Dark diagonal strap crosses the torso, with a contrasting gold buckle on the image-left belly.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              427,
+              419,
+              752,
+              765
+            ],
+            "width": 325,
+            "height": 346,
+            "min_dimension": 325,
+            "mean_rgb": [
+              186.053,
+              88.342,
+              53.899
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.996641,
+            "bbox": [
+              291,
+              407,
+              700,
+              795
+            ],
+            "width": 409,
+            "height": 388,
+            "min_dimension": 388,
+            "mean_rgb": [
+              188.661,
+              100.973,
+              59.907
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": "gold buckle contrasts with the dark brown strap",
+          "candidate_location_bbox": [
+            291,
+            407,
+            700,
+            795
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.344,
+              "y": 0.307,
+              "w": 0.481,
+              "h": 0.292
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "right-hip-satchel",
+          "label": "Brown satchel pouch with a round gold button",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "PRESERVED",
+          "reason": "Brown pouch remains on the image-right hip with a distinct round gold button.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.943333,
+            "bbox": [
+              703,
+              681,
+              915,
+              980
+            ],
+            "width": 212,
+            "height": 299,
+            "min_dimension": 212,
+            "mean_rgb": [
+              121.749,
+              59.797,
+              28.769
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.955388,
+            "bbox": [
+              633,
+              743,
+              817,
+              930
+            ],
+            "width": 184,
+            "height": 187,
+            "min_dimension": 184,
+            "mean_rgb": [
+              108.831,
+              58.0,
+              27.513
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": "gold button contrasts with the brown pouch",
+          "candidate_location_bbox": [
+            633,
+            743,
+            817,
+            930
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.747,
+              "y": 0.561,
+              "w": 0.216,
+              "h": 0.14
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0ce89-051b-7e32-a29a-42201780c59f",
+        "elapsed_seconds": 31.929,
+        "source_sha256": "f5a015056a2109565b93f6c8bf078be1ec7d02f8127938883def4c2c1e9072f4",
+        "candidate_sha256": "bf47f5b0d5368899258f622a93f6a4e203847514465ece60ea4d2b1374ce229e",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R03\\identity-review\\semantic-preservation-f5a015056a21-bf47f5b0d536",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "upright-bear-silhouette",
+            "state": "PRESERVED",
+            "confidence": 0.98,
+            "reason": "Broad upright brown bear shape with rounded ears, thick limbs, and large paws remains clear.",
+            "location": {
+              "x": 0.0,
+              "y": 0.0,
+              "w": 1.0,
+              "h": 1.0
+            }
+          },
+          {
+            "id": "rounded-inner-ears",
+            "state": "PRESERVED",
+            "confidence": 0.98,
+            "reason": "Both rounded brown ears have contrasting tan inner areas.",
+            "location": {
+              "x": 0.296,
+              "y": 0.0,
+              "w": 0.509,
+              "h": 0.109
+            }
+          },
+          {
+            "id": "smiling-bear-face",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Centered brows, dark eyes, tan muzzle, black nose, and open smiling mouth with tongue are readable in pixel form.",
+            "location": {
+              "x": 0.432,
+              "y": 0.08,
+              "w": 0.223,
+              "h": 0.177
+            }
+          },
+          {
+            "id": "tan-belly-patch",
+            "state": "PRESERVED",
+            "confidence": 0.98,
+            "reason": "Large pale tan patch remains distinct across the front torso.",
+            "location": {
+              "x": 0.289,
+              "y": 0.343,
+              "w": 0.407,
+              "h": 0.412
+            }
+          },
+          {
+            "id": "red-neck-scarf",
+            "state": "PRESERVED",
+            "confidence": 0.97,
+            "reason": "Bright red scarf remains a clear band below the head.",
+            "location": {
+              "x": 0.289,
+              "y": 0.244,
+              "w": 0.482,
+              "h": 0.117
+            }
+          },
+          {
+            "id": "crossbody-strap-buckle",
+            "state": "PRESERVED",
+            "confidence": 0.96,
+            "reason": "Dark diagonal strap crosses the torso, with a contrasting gold buckle on the image-left belly.",
+            "location": {
+              "x": 0.344,
+              "y": 0.307,
+              "w": 0.481,
+              "h": 0.292
+            }
+          },
+          {
+            "id": "right-hip-satchel",
+            "state": "PRESERVED",
+            "confidence": 0.97,
+            "reason": "Brown pouch remains on the image-right hip with a distinct round gold button.",
+            "location": {
+              "x": 0.747,
+              "y": 0.561,
+              "w": 0.216,
+              "h": 0.14
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": "SEMANTIC_REDRAW_LOSS",
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": false
+  },
+  "status": "SEMANTIC_REDRAW_LOSS",
+  "accepted": null,
+  "accepted_path": null,
+  "source_id": "R03",
+  "method": "D1",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce4b-bd11-7633-9b70-53db212bdeef",
+    "elapsed_seconds": 87.467,
+    "source_id": "R03",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+    "source_sha256": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+    "prompt_sha256": "e39b29eb8620f423cc96c728643dfd699fd6fde9d2bbd1e20361a0d57f0a945a",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R03\\identity_feature_manifest.json",
+    "manifest_sha256": "8aa7df26f4bf0444e63dc6e2c071ec4996f8511ab5d486afc5aa3fb0a6de2972",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R03\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R03\\identity_feature_manifest.json",
+  "accepted_sha256": null
+}

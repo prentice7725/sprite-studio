@@ -1,0 +1,3821 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d1_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\semantic\\R07.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic Pixel Master redraw",
+      "source_id": "R07",
+      "stage": "raw",
+      "prompt": "Preserve the exact identity of the attached character. Redraw the character in a deliberately low-resolution pixel-art design language. Do not merely apply a pixel filter. Reallocate visual information for small-scale readability. Simplify hair into clear intentional masses and clusters. Keep the eyes, brows, nose, mouth and jaw readable with fewer larger shapes. Merge tiny costume details into larger readable motifs. Preserve asymmetric identity details. Use flat coherent color regions, crisp block-like contours and stepped shading. Avoid painterly texture, soft gradients, blur, bloom and micro-detail. The result may be high resolution; its purpose is to provide semantically simplified pixel-art structure for deterministic projection into a 128/160/192/256 logical-pixel master. Use a solid magenta background and no text, UI, or extra characters.",
+      "prompt_sha256": "b4cf7e5e1dcdd3555cef4ac584ccb38d91b3ff1dc0bdc5b56448770eba0a3bca",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png": "491d31d5dbb4b6178fe2d34a38d9db40162509a87741b98cd43edba6e649635d"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-aaace3e3-8b6e-40b5-ab8c-d17f502a88e2.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R07\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R07\\raw.png",
+      "raw_sha256": "dbcc210e2a42f38e6e54276c5be48ec2f258c7c9fc2de32b927e77d2076e2441",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T13:00:13.955540+00:00"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 814920
+      },
+      "subject_bbox": [
+        102,
+        22,
+        973,
+        1378
+      ],
+      "subject_area_ratio": 0.750822,
+      "edge_softness_ratio": 0.996489,
+      "adjacent_transition_ratio": 0.841254,
+      "cluster_size_distribution": {
+        "opaque_pixels": 721702,
+        "opaque_color_count": 120208,
+        "color_ratio": 0.166562,
+        "median_quantized_cluster": 33.0,
+        "small_quantized_cluster_fraction": 0.237419
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": true,
+    "status": "PASS_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "voluminous-white-hair",
+        "label": "Voluminous white hair with a curled forelock and long flowing locks",
+        "importance": "CRITICAL",
+        "kind": "HAIR",
+        "state": "SIMPLIFIED",
+        "reason": "Large pale hair mass, curled forelock, and long locks on both sides remain recognizable in pixel form.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.742812,
+          "bbox": [
+            273,
+            19,
+            940,
+            881
+          ],
+          "width": 667,
+          "height": 862,
+          "min_dimension": 667,
+          "mean_rgb": [
+            190.057,
+            181.272,
+            161.634
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.75559,
+          "bbox": [
+            130,
+            0,
+            871,
+            882
+          ],
+          "width": 741,
+          "height": 882,
+          "min_dimension": 741,
+          "mean_rgb": [
+            176.662,
+            166.298,
+            149.619
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          130,
+          0,
+          871,
+          882
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.15,
+            "y": 0.0,
+            "w": 0.85,
+            "h": 0.65
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "large-green-eyes",
+        "label": "Large bright green eyes",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Both prominent eyes remain bright green and distinct on the pale face.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            442,
+            391,
+            678,
+            470
+          ],
+          "width": 236,
+          "height": 79,
+          "min_dimension": 79,
+          "mean_rgb": [
+            163.221,
+            167.492,
+            146.48
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            322,
+            298,
+            584,
+            367
+          ],
+          "width": 262,
+          "height": 69,
+          "min_dimension": 69,
+          "mean_rgb": [
+            230.987,
+            216.257,
+            210.987
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          322,
+          298,
+          584,
+          367
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.37,
+            "y": 0.22,
+            "w": 0.3,
+            "h": 0.05
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "right-flower-hair-ornament",
+        "label": "White flower with gold and green leaf details beside the hair",
+        "importance": "CRITICAL",
+        "kind": "HEADGEAR",
+        "state": "SIMPLIFIED",
+        "reason": "White-petaled flower with gold center and green leaves remains visible on image-right beside the hair.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.705366,
+          "bbox": [
+            693,
+            100,
+            853,
+            403
+          ],
+          "width": 160,
+          "height": 303,
+          "min_dimension": 160,
+          "mean_rgb": [
+            169.247,
+            165.223,
+            136.472
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.918526,
+          "bbox": [
+            609,
+            135,
+            750,
+            299
+          ],
+          "width": 141,
+          "height": 164,
+          "min_dimension": 141,
+          "mean_rgb": [
+            119.871,
+            123.331,
+            86.541
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          609,
+          135,
+          750,
+          299
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.7,
+            "y": 0.1,
+            "w": 0.16,
+            "h": 0.12
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "branch-staff-and-green-crystal",
+        "label": "Tall twisted brown branch staff with a faceted green crystal",
+        "importance": "CRITICAL",
+        "kind": "WEAPON",
+        "state": "SIMPLIFIED",
+        "reason": "Twisted brown staff remains along image-left with a faceted green crystal near its top.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.430614,
+          "bbox": [
+            116,
+            162,
+            411,
+            1320
+          ],
+          "width": 295,
+          "height": 1158,
+          "min_dimension": 295,
+          "mean_rgb": [
+            155.394,
+            152.07,
+            117.55
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.483957,
+          "bbox": [
+            0,
+            157,
+            305,
+            1334
+          ],
+          "width": 305,
+          "height": 1177,
+          "min_dimension": 305,
+          "mean_rgb": [
+            142.778,
+            129.762,
+            105.607
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          0,
+          122,
+          305,
+          1343
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.0,
+            "y": 0.09,
+            "w": 0.35,
+            "h": 0.9
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "green-cream-gold-tunic",
+        "label": "Forest-green tunic with cream panels and gold edging",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "Green torso and skirt, cream inset panels, and gold trim remain clearly distinguishable.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            347,
+            559,
+            754,
+            1020
+          ],
+          "width": 407,
+          "height": 461,
+          "min_dimension": 407,
+          "mean_rgb": [
+            150.775,
+            138.911,
+            107.602
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.980502,
+          "bbox": [
+            252,
+            420,
+            662,
+            1099
+          ],
+          "width": 410,
+          "height": 679,
+          "min_dimension": 410,
+          "mean_rgb": [
+            154.158,
+            142.556,
+            115.284
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          252,
+          420,
+          662,
+          1099
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.29,
+            "y": 0.31,
+            "w": 0.47,
+            "h": 0.5
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "leather-belt-and-side-pouch",
+        "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Brown waist belt with gold-edged buckle and a separate brown pouch on the image-right hip remain readable.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            470,
+            734,
+            717,
+            888
+          ],
+          "width": 247,
+          "height": 154,
+          "min_dimension": 154,
+          "mean_rgb": [
+            140.031,
+            122.187,
+            88.15
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            357,
+            908,
+            628,
+            1045
+          ],
+          "width": 271,
+          "height": 137,
+          "min_dimension": 137,
+          "mean_rgb": [
+            172.99,
+            153.167,
+            115.807
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          357,
+          908,
+          628,
+          1045
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.94,
+          "location_in_candidate_subject": {
+            "x": 0.41,
+            "y": 0.67,
+            "w": 0.31,
+            "h": 0.1
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0ce9e-6f2c-76d2-9669-73d40b8bc437",
+      "elapsed_seconds": 59.421,
+      "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+      "candidate_sha256": "17706f692e8aeda5215846d66caad5b93bbddadfda6bc17c1c13b909c778d70e",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\semantic-preservation-047d4d7990fd-17706f692e8a",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "voluminous-white-hair",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Large pale hair mass, curled forelock, and long locks on both sides remain recognizable in pixel form.",
+          "location": {
+            "x": 0.15,
+            "y": 0.0,
+            "w": 0.85,
+            "h": 0.65
+          }
+        },
+        {
+          "id": "large-green-eyes",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Both prominent eyes remain bright green and distinct on the pale face.",
+          "location": {
+            "x": 0.37,
+            "y": 0.22,
+            "w": 0.3,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "right-flower-hair-ornament",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "White-petaled flower with gold center and green leaves remains visible on image-right beside the hair.",
+          "location": {
+            "x": 0.7,
+            "y": 0.1,
+            "w": 0.16,
+            "h": 0.12
+          }
+        },
+        {
+          "id": "branch-staff-and-green-crystal",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Twisted brown staff remains along image-left with a faceted green crystal near its top.",
+          "location": {
+            "x": 0.0,
+            "y": 0.09,
+            "w": 0.35,
+            "h": 0.9
+          }
+        },
+        {
+          "id": "green-cream-gold-tunic",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Green torso and skirt, cream inset panels, and gold trim remain clearly distinguishable.",
+          "location": {
+            "x": 0.29,
+            "y": 0.31,
+            "w": 0.47,
+            "h": 0.5
+          }
+        },
+        {
+          "id": "leather-belt-and-side-pouch",
+          "state": "SIMPLIFIED",
+          "confidence": 0.94,
+          "reason": "Brown waist belt with gold-edged buckle and a separate brown pouch on the image-right hip remain readable.",
+          "location": {
+            "x": 0.41,
+            "y": 0.67,
+            "w": 0.31,
+            "h": 0.1
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": 160,
+    "reason": "minimum_identity_preserving_height",
+    "candidate_results": {
+      "128": "FAIL_INFORMATION_LOSS",
+      "160": "PASS",
+      "192": "PASS",
+      "256": "PASS"
+    },
+    "candidate_details": {
+      "128": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.185,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.185,
+          "retention": 0.815,
+          "feature_results": [
+            {
+              "id": "voluminous-white-hair",
+              "label": "Voluminous white hair with a curled forelock and long flowing locks",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "Pale rounded hair, top curl, and long side locks remain recognizable with reduced strand detail.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.742812,
+                "bbox": [
+                  273,
+                  19,
+                  940,
+                  881
+                ],
+                "width": 667,
+                "height": 862,
+                "min_dimension": 667,
+                "mean_rgb": [
+                  190.057,
+                  181.272,
+                  161.634
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.834929,
+                "bbox": [
+                  18,
+                  1,
+                  78,
+                  95
+                ],
+                "width": 60,
+                "height": 94,
+                "min_dimension": 60,
+                "mean_rgb": [
+                  177.764,
+                  167.55,
+                  148.499
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                18,
+                1,
+                78,
+                95
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.22,
+                  "y": 0.01,
+                  "w": 0.72,
+                  "h": 0.73
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "label": "Large bright green eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Both eyes read as bright green, though their shape and detail are very small.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  442,
+                  391,
+                  678,
+                  470
+                ],
+                "width": 236,
+                "height": 79,
+                "min_dimension": 79,
+                "mean_rgb": [
+                  163.221,
+                  167.492,
+                  146.48
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  31,
+                  32,
+                  54,
+                  47
+                ],
+                "width": 23,
+                "height": 15,
+                "min_dimension": 15,
+                "mean_rgb": [
+                  194.664,
+                  193.913,
+                  180.649
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                31,
+                32,
+                54,
+                47
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.9,
+                "location_in_candidate_subject": {
+                  "x": 0.39,
+                  "y": 0.25,
+                  "w": 0.26,
+                  "h": 0.11
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "label": "White flower with gold and green leaf details beside the hair",
+              "importance": "CRITICAL",
+              "kind": "HEADGEAR",
+              "state": "SIMPLIFIED",
+              "reason": "A tiny pale blossom with gold and green accents remains visible on image-right.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.705366,
+                "bbox": [
+                  693,
+                  100,
+                  853,
+                  403
+                ],
+                "width": 160,
+                "height": 303,
+                "min_dimension": 160,
+                "mean_rgb": [
+                  169.247,
+                  165.223,
+                  136.472
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.90873,
+                "bbox": [
+                  59,
+                  14,
+                  73,
+                  32
+                ],
+                "width": 14,
+                "height": 18,
+                "min_dimension": 14,
+                "mean_rgb": [
+                  118.437,
+                  118.231,
+                  88.17
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                59,
+                14,
+                73,
+                32
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.84,
+                "location_in_candidate_subject": {
+                  "x": 0.72,
+                  "y": 0.11,
+                  "w": 0.16,
+                  "h": 0.14
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "label": "Tall twisted brown branch staff with a faceted green crystal",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "SIMPLIFIED",
+              "reason": "Image-left brown staff and green diamond-shaped crystal are visible, with little facet detail.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.430614,
+                "bbox": [
+                  116,
+                  162,
+                  411,
+                  1320
+                ],
+                "width": 295,
+                "height": 1158,
+                "min_dimension": 295,
+                "mean_rgb": [
+                  155.394,
+                  152.07,
+                  117.55
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.404587,
+                "bbox": [
+                  0,
+                  17,
+                  20,
+                  109
+                ],
+                "width": 20,
+                "height": 92,
+                "min_dimension": 20,
+                "mean_rgb": [
+                  121.625,
+                  111.934,
+                  81.811
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                17,
+                20,
+                126
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.9,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.14,
+                  "w": 0.24,
+                  "h": 0.84
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "label": "Forest-green tunic with cream panels and gold edging",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Green garment, pale inset, and gold edging remain distinguishable at small scale.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  347,
+                  559,
+                  754,
+                  1020
+                ],
+                "width": 407,
+                "height": 461,
+                "min_dimension": 407,
+                "mean_rgb": [
+                  150.775,
+                  138.911,
+                  107.602
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.981424,
+                "bbox": [
+                  24,
+                  53,
+                  62,
+                  104
+                ],
+                "width": 38,
+                "height": 51,
+                "min_dimension": 38,
+                "mean_rgb": [
+                  144.495,
+                  132.433,
+                  99.931
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                24,
+                53,
+                62,
+                104
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.88,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.42,
+                  "w": 0.45,
+                  "h": 0.39
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "Brown waist belt and gold buckle show, but a separate image-right pouch is difficult to confirm.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  470,
+                  734,
+                  717,
+                  888
+                ],
+                "width": 247,
+                "height": 154,
+                "min_dimension": 154,
+                "mean_rgb": [
+                  140.031,
+                  122.187,
+                  88.15
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  32,
+                  71,
+                  60,
+                  89
+                ],
+                "width": 28,
+                "height": 18,
+                "min_dimension": 18,
+                "mean_rgb": [
+                  142.341,
+                  126.607,
+                  84.98
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                32,
+                71,
+                60,
+                89
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.64,
+                "location_in_candidate_subject": {
+                  "x": 0.4,
+                  "y": 0.56,
+                  "w": 0.32,
+                  "h": 0.13
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "voluminous-white-hair": {
+                "projected_width": 60,
+                "projected_height": 94,
+                "min_visible_dimension": 60,
+                "risk": false
+              },
+              "large-green-eyes": {
+                "projected_width": 23,
+                "projected_height": 15,
+                "min_visible_dimension": 15,
+                "risk": false
+              },
+              "right-flower-hair-ornament": {
+                "projected_width": 14,
+                "projected_height": 18,
+                "min_visible_dimension": 14,
+                "risk": false
+              },
+              "branch-staff-and-green-crystal": {
+                "projected_width": 20,
+                "projected_height": 92,
+                "min_visible_dimension": 20,
+                "risk": false
+              },
+              "green-cream-gold-tunic": {
+                "projected_width": 38,
+                "projected_height": 51,
+                "min_visible_dimension": 38,
+                "risk": false
+              },
+              "leather-belt-and-side-pouch": {
+                "projected_width": 28,
+                "projected_height": 18,
+                "min_visible_dimension": 18,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            102,
+            22,
+            973,
+            1378
+          ],
+          "logical_size": [
+            82,
+            128
+          ],
+          "target_height": 128,
+          "actual_height": 128,
+          "logical_width": 82,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 814920
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.610973,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            82,
+            128
+          ],
+          "output_size": [
+            82,
+            128
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 43,
+            "color_ratio": 0.006436162251160006
+          },
+          "subject_bbox": [
+            0,
+            0,
+            82,
+            128
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 43,
+            "separation": {
+              "colors": 43,
+              "min_delta_e": 0.031811,
+              "closest_pair": [
+                [
+                  24,
+                  17,
+                  13
+                ],
+                [
+                  32,
+                  24,
+                  18
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              82,
+              128
+            ],
+            "bbox": [
+              0,
+              0,
+              82,
+              128
+            ],
+            "subject_height": 128,
+            "binary_alpha": true,
+            "palette_size": 43,
+            "max_palette_size": 48,
+            "target_height": 128,
+            "actual_height": 128,
+            "logical_width": 82,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce9f-b7bf-7100-bd70-8ef367703663",
+          "elapsed_seconds": 93.237,
+          "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+          "candidate_sha256": "5142d33de377b6953ccf1c06237f1d2156edb2cfe73d602598775f905dfcfd16",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\logical-resolution-grid-047d4d7990fd-128-5142d33d-160-29779c15-192-0338dd24-256-c5003a52",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "voluminous-white-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.94,
+              "reason": "Pale rounded hair, top curl, and long side locks remain recognizable with reduced strand detail.",
+              "location": {
+                "x": 0.22,
+                "y": 0.01,
+                "w": 0.72,
+                "h": 0.73
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.9,
+              "reason": "Both eyes read as bright green, though their shape and detail are very small.",
+              "location": {
+                "x": 0.39,
+                "y": 0.25,
+                "w": 0.26,
+                "h": 0.11
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "state": "SIMPLIFIED",
+              "confidence": 0.84,
+              "reason": "A tiny pale blossom with gold and green accents remains visible on image-right.",
+              "location": {
+                "x": 0.72,
+                "y": 0.11,
+                "w": 0.16,
+                "h": 0.14
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "state": "SIMPLIFIED",
+              "confidence": 0.9,
+              "reason": "Image-left brown staff and green diamond-shaped crystal are visible, with little facet detail.",
+              "location": {
+                "x": 0.0,
+                "y": 0.14,
+                "w": 0.24,
+                "h": 0.84
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "state": "SIMPLIFIED",
+              "confidence": 0.88,
+              "reason": "Green garment, pale inset, and gold edging remain distinguishable at small scale.",
+              "location": {
+                "x": 0.3,
+                "y": 0.42,
+                "w": 0.45,
+                "h": 0.39
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "state": "AMBIGUOUS",
+              "confidence": 0.64,
+              "reason": "Brown waist belt and gold buckle show, but a separate image-right pouch is difficult to confirm.",
+              "location": {
+                "x": 0.4,
+                "y": 0.56,
+                "w": 0.32,
+                "h": 0.13
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H128.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H128.preview-4x.png"
+      },
+      "160": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.12,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.12,
+          "retention": 0.88,
+          "feature_results": [
+            {
+              "id": "voluminous-white-hair",
+              "label": "Voluminous white hair with a curled forelock and long flowing locks",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "The pale volume, curled forelock, and flowing side locks are clear, with fewer strand details.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.742812,
+                "bbox": [
+                  273,
+                  19,
+                  940,
+                  881
+                ],
+                "width": 667,
+                "height": 862,
+                "min_dimension": 667,
+                "mean_rgb": [
+                  190.057,
+                  181.272,
+                  161.634
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.821801,
+                "bbox": [
+                  21,
+                  0,
+                  98,
+                  122
+                ],
+                "width": 77,
+                "height": 122,
+                "min_dimension": 77,
+                "mean_rgb": [
+                  174.177,
+                  163.923,
+                  144.356
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                21,
+                0,
+                98,
+                122
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.21,
+                  "y": 0.0,
+                  "w": 0.74,
+                  "h": 0.76
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "label": "Large bright green eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Both separated eyes are visibly green and prominent on the pale face.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  442,
+                  391,
+                  678,
+                  470
+                ],
+                "width": 236,
+                "height": 79,
+                "min_dimension": 79,
+                "mean_rgb": [
+                  163.221,
+                  167.492,
+                  146.48
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  40,
+                  40,
+                  68,
+                  60
+                ],
+                "width": 28,
+                "height": 20,
+                "min_dimension": 20,
+                "mean_rgb": [
+                  196.4,
+                  193.923,
+                  179.916
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                40,
+                40,
+                68,
+                60
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.93,
+                "location_in_candidate_subject": {
+                  "x": 0.39,
+                  "y": 0.25,
+                  "w": 0.27,
+                  "h": 0.12
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "label": "White flower with gold and green leaf details beside the hair",
+              "importance": "CRITICAL",
+              "kind": "HEADGEAR",
+              "state": "PRESERVED",
+              "reason": "The image-right white flower and its gold-green accents remain distinct.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.705366,
+                "bbox": [
+                  693,
+                  100,
+                  853,
+                  403
+                ],
+                "width": 160,
+                "height": 303,
+                "min_dimension": 160,
+                "mean_rgb": [
+                  169.247,
+                  165.223,
+                  136.472
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.796569,
+                "bbox": [
+                  76,
+                  16,
+                  93,
+                  40
+                ],
+                "width": 17,
+                "height": 24,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  117.049,
+                  116.123,
+                  84.825
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                76,
+                16,
+                93,
+                40
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.88,
+                "location_in_candidate_subject": {
+                  "x": 0.74,
+                  "y": 0.1,
+                  "w": 0.16,
+                  "h": 0.15
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "label": "Tall twisted brown branch staff with a faceted green crystal",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "SIMPLIFIED",
+              "reason": "The twisted brown staff and image-left green crystal are distinct, though crystal facets are reduced.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.430614,
+                "bbox": [
+                  116,
+                  162,
+                  411,
+                  1320
+                ],
+                "width": 295,
+                "height": 1158,
+                "min_dimension": 295,
+                "mean_rgb": [
+                  155.394,
+                  152.07,
+                  117.55
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.397956,
+                "bbox": [
+                  0,
+                  20,
+                  25,
+                  136
+                ],
+                "width": 25,
+                "height": 116,
+                "min_dimension": 25,
+                "mean_rgb": [
+                  121.767,
+                  112.143,
+                  81.273
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                20,
+                25,
+                157
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.93,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.13,
+                  "w": 0.24,
+                  "h": 0.85
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "label": "Forest-green tunic with cream panels and gold edging",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Green fabric, cream panels, and gold borders are readable with simplified trim.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  347,
+                  559,
+                  754,
+                  1020
+                ],
+                "width": 407,
+                "height": 461,
+                "min_dimension": 407,
+                "mean_rgb": [
+                  150.775,
+                  138.911,
+                  107.602
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.969846,
+                "bbox": [
+                  30,
+                  67,
+                  80,
+                  132
+                ],
+                "width": 50,
+                "height": 65,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  141.225,
+                  129.422,
+                  98.58
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                30,
+                67,
+                80,
+                132
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.92,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.42,
+                  "w": 0.47,
+                  "h": 0.4
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "SIMPLIFIED",
+              "reason": "The waist belt and buckle show; a small brown pouch is visible at the image-right hip.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  470,
+                  734,
+                  717,
+                  888
+                ],
+                "width": 247,
+                "height": 154,
+                "min_dimension": 154,
+                "mean_rgb": [
+                  140.031,
+                  122.187,
+                  88.15
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  41,
+                  89,
+                  79,
+                  116
+                ],
+                "width": 38,
+                "height": 27,
+                "min_dimension": 27,
+                "mean_rgb": [
+                  151.075,
+                  134.922,
+                  96.738
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                41,
+                89,
+                79,
+                116
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.79,
+                "location_in_candidate_subject": {
+                  "x": 0.4,
+                  "y": 0.56,
+                  "w": 0.36,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "voluminous-white-hair": {
+                "projected_width": 77,
+                "projected_height": 122,
+                "min_visible_dimension": 77,
+                "risk": false
+              },
+              "large-green-eyes": {
+                "projected_width": 28,
+                "projected_height": 20,
+                "min_visible_dimension": 20,
+                "risk": false
+              },
+              "right-flower-hair-ornament": {
+                "projected_width": 17,
+                "projected_height": 24,
+                "min_visible_dimension": 17,
+                "risk": false
+              },
+              "branch-staff-and-green-crystal": {
+                "projected_width": 25,
+                "projected_height": 116,
+                "min_visible_dimension": 25,
+                "risk": false
+              },
+              "green-cream-gold-tunic": {
+                "projected_width": 50,
+                "projected_height": 65,
+                "min_visible_dimension": 50,
+                "risk": false
+              },
+              "leather-belt-and-side-pouch": {
+                "projected_width": 38,
+                "projected_height": 27,
+                "min_visible_dimension": 27,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            102,
+            22,
+            973,
+            1378
+          ],
+          "logical_size": [
+            103,
+            160
+          ],
+          "target_height": 160,
+          "actual_height": 160,
+          "logical_width": 103,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 814920
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.611007,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            103,
+            160
+          ],
+          "output_size": [
+            103,
+            160
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 44,
+            "color_ratio": 0.004234433644500048
+          },
+          "subject_bbox": [
+            0,
+            0,
+            103,
+            160
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 44,
+            "separation": {
+              "colors": 44,
+              "min_delta_e": 0.031811,
+              "closest_pair": [
+                [
+                  24,
+                  17,
+                  13
+                ],
+                [
+                  32,
+                  24,
+                  18
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              103,
+              160
+            ],
+            "bbox": [
+              0,
+              0,
+              103,
+              160
+            ],
+            "subject_height": 160,
+            "binary_alpha": true,
+            "palette_size": 44,
+            "max_palette_size": 48,
+            "target_height": 160,
+            "actual_height": 160,
+            "logical_width": 103,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce9f-b7bf-7100-bd70-8ef367703663",
+          "elapsed_seconds": 93.237,
+          "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+          "candidate_sha256": "29779c1535d18c792ebf500181e07587c814fa273a9da1334d8bc11c17f9d625",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\logical-resolution-grid-047d4d7990fd-128-5142d33d-160-29779c15-192-0338dd24-256-c5003a52",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "voluminous-white-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.95,
+              "reason": "The pale volume, curled forelock, and flowing side locks are clear, with fewer strand details.",
+              "location": {
+                "x": 0.21,
+                "y": 0.0,
+                "w": 0.74,
+                "h": 0.76
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.93,
+              "reason": "Both separated eyes are visibly green and prominent on the pale face.",
+              "location": {
+                "x": 0.39,
+                "y": 0.25,
+                "w": 0.27,
+                "h": 0.12
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "state": "PRESERVED",
+              "confidence": 0.88,
+              "reason": "The image-right white flower and its gold-green accents remain distinct.",
+              "location": {
+                "x": 0.74,
+                "y": 0.1,
+                "w": 0.16,
+                "h": 0.15
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "state": "SIMPLIFIED",
+              "confidence": 0.93,
+              "reason": "The twisted brown staff and image-left green crystal are distinct, though crystal facets are reduced.",
+              "location": {
+                "x": 0.0,
+                "y": 0.13,
+                "w": 0.24,
+                "h": 0.85
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "state": "SIMPLIFIED",
+              "confidence": 0.92,
+              "reason": "Green fabric, cream panels, and gold borders are readable with simplified trim.",
+              "location": {
+                "x": 0.3,
+                "y": 0.42,
+                "w": 0.47,
+                "h": 0.4
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "state": "SIMPLIFIED",
+              "confidence": 0.79,
+              "reason": "The waist belt and buckle show; a small brown pouch is visible at the image-right hip.",
+              "location": {
+                "x": 0.4,
+                "y": 0.56,
+                "w": 0.36,
+                "h": 0.16
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H160.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H160.preview-4x.png"
+      },
+      "192": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.0,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.0,
+          "retention": 1.0,
+          "feature_results": [
+            {
+              "id": "voluminous-white-hair",
+              "label": "Voluminous white hair with a curled forelock and long flowing locks",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "PRESERVED",
+              "reason": "The large pale silhouette, curled forelock, and long locks on both sides are clear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.742812,
+                "bbox": [
+                  273,
+                  19,
+                  940,
+                  881
+                ],
+                "width": 667,
+                "height": 862,
+                "min_dimension": 667,
+                "mean_rgb": [
+                  190.057,
+                  181.272,
+                  161.634
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.809517,
+                "bbox": [
+                  25,
+                  0,
+                  119,
+                  148
+                ],
+                "width": 94,
+                "height": 148,
+                "min_dimension": 94,
+                "mean_rgb": [
+                  171.938,
+                  161.746,
+                  142.31
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                25,
+                0,
+                119,
+                148
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.21,
+                  "y": 0.0,
+                  "w": 0.75,
+                  "h": 0.77
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "label": "Large bright green eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "PRESERVED",
+              "reason": "Both prominent eyes are clearly green and separated on the pale face.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  442,
+                  391,
+                  678,
+                  470
+                ],
+                "width": 236,
+                "height": 79,
+                "min_dimension": 79,
+                "mean_rgb": [
+                  163.221,
+                  167.492,
+                  146.48
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  47,
+                  48,
+                  83,
+                  72
+                ],
+                "width": 36,
+                "height": 24,
+                "min_dimension": 24,
+                "mean_rgb": [
+                  190.999,
+                  188.416,
+                  174.214
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                47,
+                48,
+                83,
+                72
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.39,
+                  "y": 0.25,
+                  "w": 0.28,
+                  "h": 0.12
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "label": "White flower with gold and green leaf details beside the hair",
+              "importance": "CRITICAL",
+              "kind": "HEADGEAR",
+              "state": "PRESERVED",
+              "reason": "A distinct white flower with gold and green leaf details sits beside the image-right hair.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.705366,
+                "bbox": [
+                  693,
+                  100,
+                  853,
+                  403
+                ],
+                "width": 160,
+                "height": 303,
+                "min_dimension": 160,
+                "mean_rgb": [
+                  169.247,
+                  165.223,
+                  136.472
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.727586,
+                "bbox": [
+                  92,
+                  19,
+                  111,
+                  48
+                ],
+                "width": 19,
+                "height": 29,
+                "min_dimension": 19,
+                "mean_rgb": [
+                  118.344,
+                  116.863,
+                  84.687
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                92,
+                19,
+                112,
+                48
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.93,
+                "location_in_candidate_subject": {
+                  "x": 0.75,
+                  "y": 0.1,
+                  "w": 0.16,
+                  "h": 0.15
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "label": "Tall twisted brown branch staff with a faceted green crystal",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "PRESERVED",
+              "reason": "The image-left twisted branch and faceted green crystal are readily recognizable.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.430614,
+                "bbox": [
+                  116,
+                  162,
+                  411,
+                  1320
+                ],
+                "width": 295,
+                "height": 1158,
+                "min_dimension": 295,
+                "mean_rgb": [
+                  155.394,
+                  152.07,
+                  117.55
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.403322,
+                "bbox": [
+                  0,
+                  24,
+                  31,
+                  163
+                ],
+                "width": 31,
+                "height": 139,
+                "min_dimension": 31,
+                "mean_rgb": [
+                  118.074,
+                  108.137,
+                  78.964
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                24,
+                31,
+                191
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.13,
+                  "w": 0.25,
+                  "h": 0.86
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "label": "Forest-green tunic with cream panels and gold edging",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Green tunic, cream panels, and gold edging remain clearly distinct.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  347,
+                  559,
+                  754,
+                  1020
+                ],
+                "width": 407,
+                "height": 461,
+                "min_dimension": 407,
+                "mean_rgb": [
+                  150.775,
+                  138.911,
+                  107.602
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.969735,
+                "bbox": [
+                  35,
+                  80,
+                  96,
+                  158
+                ],
+                "width": 61,
+                "height": 78,
+                "min_dimension": 61,
+                "mean_rgb": [
+                  140.399,
+                  128.423,
+                  98.295
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                35,
+                80,
+                96,
+                158
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.29,
+                  "y": 0.42,
+                  "w": 0.49,
+                  "h": 0.4
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "PRESERVED",
+              "reason": "The broad brown belt, gold-edged buckle, and image-right hip pouch are distinguishable.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  470,
+                  734,
+                  717,
+                  888
+                ],
+                "width": 247,
+                "height": 154,
+                "min_dimension": 154,
+                "mean_rgb": [
+                  140.031,
+                  122.187,
+                  88.15
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  47,
+                  107,
+                  96,
+                  141
+                ],
+                "width": 49,
+                "height": 34,
+                "min_dimension": 34,
+                "mean_rgb": [
+                  152.261,
+                  136.208,
+                  99.666
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                47,
+                107,
+                96,
+                141
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.87,
+                "location_in_candidate_subject": {
+                  "x": 0.39,
+                  "y": 0.56,
+                  "w": 0.39,
+                  "h": 0.17
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "voluminous-white-hair": {
+                "projected_width": 94,
+                "projected_height": 148,
+                "min_visible_dimension": 94,
+                "risk": false
+              },
+              "large-green-eyes": {
+                "projected_width": 36,
+                "projected_height": 24,
+                "min_visible_dimension": 24,
+                "risk": false
+              },
+              "right-flower-hair-ornament": {
+                "projected_width": 19,
+                "projected_height": 29,
+                "min_visible_dimension": 19,
+                "risk": false
+              },
+              "branch-staff-and-green-crystal": {
+                "projected_width": 31,
+                "projected_height": 139,
+                "min_visible_dimension": 31,
+                "risk": false
+              },
+              "green-cream-gold-tunic": {
+                "projected_width": 61,
+                "projected_height": 78,
+                "min_visible_dimension": 61,
+                "risk": false
+              },
+              "leather-belt-and-side-pouch": {
+                "projected_width": 49,
+                "projected_height": 34,
+                "min_visible_dimension": 34,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            102,
+            22,
+            973,
+            1378
+          ],
+          "logical_size": [
+            123,
+            192
+          ],
+          "target_height": 192,
+          "actual_height": 192,
+          "logical_width": 123,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 814920
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.611284,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            123,
+            192
+          ],
+          "output_size": [
+            123,
+            192
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 45,
+            "color_ratio": 0.00303951367781155
+          },
+          "subject_bbox": [
+            0,
+            0,
+            123,
+            192
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 45,
+            "separation": {
+              "colors": 45,
+              "min_delta_e": 0.031811,
+              "closest_pair": [
+                [
+                  24,
+                  17,
+                  13
+                ],
+                [
+                  32,
+                  24,
+                  18
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              123,
+              192
+            ],
+            "bbox": [
+              0,
+              0,
+              123,
+              192
+            ],
+            "subject_height": 192,
+            "binary_alpha": true,
+            "palette_size": 45,
+            "max_palette_size": 48,
+            "target_height": 192,
+            "actual_height": 192,
+            "logical_width": 123,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce9f-b7bf-7100-bd70-8ef367703663",
+          "elapsed_seconds": 93.237,
+          "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+          "candidate_sha256": "0338dd249b3245ad0b786d99dabbb8f7d256b57cef3e8b50c6c27a2553c8a64d",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\logical-resolution-grid-047d4d7990fd-128-5142d33d-160-29779c15-192-0338dd24-256-c5003a52",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "voluminous-white-hair",
+              "state": "PRESERVED",
+              "confidence": 0.96,
+              "reason": "The large pale silhouette, curled forelock, and long locks on both sides are clear.",
+              "location": {
+                "x": 0.21,
+                "y": 0.0,
+                "w": 0.75,
+                "h": 0.77
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "state": "PRESERVED",
+              "confidence": 0.95,
+              "reason": "Both prominent eyes are clearly green and separated on the pale face.",
+              "location": {
+                "x": 0.39,
+                "y": 0.25,
+                "w": 0.28,
+                "h": 0.12
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "state": "PRESERVED",
+              "confidence": 0.93,
+              "reason": "A distinct white flower with gold and green leaf details sits beside the image-right hair.",
+              "location": {
+                "x": 0.75,
+                "y": 0.1,
+                "w": 0.16,
+                "h": 0.15
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "state": "PRESERVED",
+              "confidence": 0.95,
+              "reason": "The image-left twisted branch and faceted green crystal are readily recognizable.",
+              "location": {
+                "x": 0.0,
+                "y": 0.13,
+                "w": 0.25,
+                "h": 0.86
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "state": "PRESERVED",
+              "confidence": 0.94,
+              "reason": "Green tunic, cream panels, and gold edging remain clearly distinct.",
+              "location": {
+                "x": 0.29,
+                "y": 0.42,
+                "w": 0.49,
+                "h": 0.4
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "state": "PRESERVED",
+              "confidence": 0.87,
+              "reason": "The broad brown belt, gold-edged buckle, and image-right hip pouch are distinguishable.",
+              "location": {
+                "x": 0.39,
+                "y": 0.56,
+                "w": 0.39,
+                "h": 0.17
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H192.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H192.preview-4x.png"
+      },
+      "256": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.0,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.0,
+          "retention": 1.0,
+          "feature_results": [
+            {
+              "id": "voluminous-white-hair",
+              "label": "Voluminous white hair with a curled forelock and long flowing locks",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "PRESERVED",
+              "reason": "The voluminous white hair, curled forelock, and long flowing locks are all clear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.742812,
+                "bbox": [
+                  273,
+                  19,
+                  940,
+                  881
+                ],
+                "width": 667,
+                "height": 862,
+                "min_dimension": 667,
+                "mean_rgb": [
+                  190.057,
+                  181.272,
+                  161.634
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.811518,
+                "bbox": [
+                  32,
+                  0,
+                  158,
+                  203
+                ],
+                "width": 126,
+                "height": 203,
+                "min_dimension": 126,
+                "mean_rgb": [
+                  167.706,
+                  157.501,
+                  138.022
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                32,
+                0,
+                158,
+                203
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.2,
+                  "y": 0.0,
+                  "w": 0.76,
+                  "h": 0.79
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "label": "Large bright green eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "PRESERVED",
+              "reason": "Both large, bright green eyes are prominent and clearly separated.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  442,
+                  391,
+                  678,
+                  470
+                ],
+                "width": 236,
+                "height": 79,
+                "min_dimension": 79,
+                "mean_rgb": [
+                  163.221,
+                  167.492,
+                  146.48
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  62,
+                  64,
+                  112,
+                  98
+                ],
+                "width": 50,
+                "height": 34,
+                "min_dimension": 34,
+                "mean_rgb": [
+                  193.243,
+                  187.956,
+                  174.221
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                62,
+                64,
+                112,
+                98
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.25,
+                  "w": 0.3,
+                  "h": 0.13
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "label": "White flower with gold and green leaf details beside the hair",
+              "importance": "CRITICAL",
+              "kind": "HEADGEAR",
+              "state": "PRESERVED",
+              "reason": "The image-right white blossom and its gold-green leaves are distinct.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.705366,
+                "bbox": [
+                  693,
+                  100,
+                  853,
+                  403
+                ],
+                "width": 160,
+                "height": 303,
+                "min_dimension": 160,
+                "mean_rgb": [
+                  169.247,
+                  165.223,
+                  136.472
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.630533,
+                "bbox": [
+                  124,
+                  23,
+                  148,
+                  64
+                ],
+                "width": 24,
+                "height": 41,
+                "min_dimension": 24,
+                "mean_rgb": [
+                  115.675,
+                  114.566,
+                  83.734
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                124,
+                23,
+                151,
+                64
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.97,
+                "location_in_candidate_subject": {
+                  "x": 0.76,
+                  "y": 0.09,
+                  "w": 0.16,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "label": "Tall twisted brown branch staff with a faceted green crystal",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "PRESERVED",
+              "reason": "The tall twisted brown branch and faceted green crystal are clearly visible on image-left.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.430614,
+                "bbox": [
+                  116,
+                  162,
+                  411,
+                  1320
+                ],
+                "width": 295,
+                "height": 1158,
+                "min_dimension": 295,
+                "mean_rgb": [
+                  155.394,
+                  152.07,
+                  117.55
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.391551,
+                "bbox": [
+                  0,
+                  30,
+                  41,
+                  217
+                ],
+                "width": 41,
+                "height": 187,
+                "min_dimension": 41,
+                "mean_rgb": [
+                  119.443,
+                  109.677,
+                  80.134
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                30,
+                41,
+                254
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.12,
+                  "w": 0.25,
+                  "h": 0.87
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "label": "Forest-green tunic with cream panels and gold edging",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Green fabric, cream inset panels, and gold borders are all easy to distinguish.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  347,
+                  559,
+                  754,
+                  1020
+                ],
+                "width": 407,
+                "height": 461,
+                "min_dimension": 407,
+                "mean_rgb": [
+                  150.775,
+                  138.911,
+                  107.602
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.96275,
+                "bbox": [
+                  45,
+                  104,
+                  128,
+                  213
+                ],
+                "width": 83,
+                "height": 109,
+                "min_dimension": 83,
+                "mean_rgb": [
+                  139.331,
+                  127.098,
+                  98.35
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                45,
+                104,
+                128,
+                213
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.28,
+                  "y": 0.41,
+                  "w": 0.5,
+                  "h": 0.42
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "PRESERVED",
+              "reason": "The wide brown belt, gold-edged central buckle, and image-right brown pouch are clear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  470,
+                  734,
+                  717,
+                  888
+                ],
+                "width": 247,
+                "height": 154,
+                "min_dimension": 154,
+                "mean_rgb": [
+                  140.031,
+                  122.187,
+                  88.15
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  62,
+                  143,
+                  130,
+                  190
+                ],
+                "width": 68,
+                "height": 47,
+                "min_dimension": 47,
+                "mean_rgb": [
+                  152.222,
+                  137.316,
+                  102.681
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                62,
+                143,
+                130,
+                190
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.56,
+                  "w": 0.41,
+                  "h": 0.18
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "voluminous-white-hair": {
+                "projected_width": 126,
+                "projected_height": 203,
+                "min_visible_dimension": 126,
+                "risk": false
+              },
+              "large-green-eyes": {
+                "projected_width": 50,
+                "projected_height": 34,
+                "min_visible_dimension": 34,
+                "risk": false
+              },
+              "right-flower-hair-ornament": {
+                "projected_width": 24,
+                "projected_height": 41,
+                "min_visible_dimension": 24,
+                "risk": false
+              },
+              "branch-staff-and-green-crystal": {
+                "projected_width": 41,
+                "projected_height": 187,
+                "min_visible_dimension": 41,
+                "risk": false
+              },
+              "green-cream-gold-tunic": {
+                "projected_width": 83,
+                "projected_height": 109,
+                "min_visible_dimension": 83,
+                "risk": false
+              },
+              "leather-belt-and-side-pouch": {
+                "projected_width": 68,
+                "projected_height": 47,
+                "min_visible_dimension": 47,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            102,
+            22,
+            973,
+            1378
+          ],
+          "logical_size": [
+            164,
+            256
+          ],
+          "target_height": 256,
+          "actual_height": 256,
+          "logical_width": 164,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 814920
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.61102,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            164,
+            256
+          ],
+          "output_size": [
+            164,
+            256
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 47,
+            "color_ratio": 0.0017945095643541675
+          },
+          "subject_bbox": [
+            0,
+            0,
+            164,
+            256
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 47,
+            "separation": {
+              "colors": 47,
+              "min_delta_e": 0.031811,
+              "closest_pair": [
+                [
+                  24,
+                  17,
+                  13
+                ],
+                [
+                  32,
+                  24,
+                  18
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              164,
+              256
+            ],
+            "bbox": [
+              0,
+              0,
+              164,
+              256
+            ],
+            "subject_height": 256,
+            "binary_alpha": true,
+            "palette_size": 47,
+            "max_palette_size": 48,
+            "target_height": 256,
+            "actual_height": 256,
+            "logical_width": 164,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce9f-b7bf-7100-bd70-8ef367703663",
+          "elapsed_seconds": 93.237,
+          "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+          "candidate_sha256": "c5003a52bc716cad39c328ac5313cec3813a6bd10e1503c0ae2c2a530be2eae5",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\logical-resolution-grid-047d4d7990fd-128-5142d33d-160-29779c15-192-0338dd24-256-c5003a52",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "voluminous-white-hair",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "The voluminous white hair, curled forelock, and long flowing locks are all clear.",
+              "location": {
+                "x": 0.2,
+                "y": 0.0,
+                "w": 0.76,
+                "h": 0.79
+              }
+            },
+            {
+              "id": "large-green-eyes",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "Both large, bright green eyes are prominent and clearly separated.",
+              "location": {
+                "x": 0.38,
+                "y": 0.25,
+                "w": 0.3,
+                "h": 0.13
+              }
+            },
+            {
+              "id": "right-flower-hair-ornament",
+              "state": "PRESERVED",
+              "confidence": 0.97,
+              "reason": "The image-right white blossom and its gold-green leaves are distinct.",
+              "location": {
+                "x": 0.76,
+                "y": 0.09,
+                "w": 0.16,
+                "h": 0.16
+              }
+            },
+            {
+              "id": "branch-staff-and-green-crystal",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "The tall twisted brown branch and faceted green crystal are clearly visible on image-left.",
+              "location": {
+                "x": 0.0,
+                "y": 0.12,
+                "w": 0.25,
+                "h": 0.87
+              }
+            },
+            {
+              "id": "green-cream-gold-tunic",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "Green fabric, cream inset panels, and gold borders are all easy to distinguish.",
+              "location": {
+                "x": 0.28,
+                "y": 0.41,
+                "w": 0.5,
+                "h": 0.42
+              }
+            },
+            {
+              "id": "leather-belt-and-side-pouch",
+              "state": "PRESERVED",
+              "confidence": 0.96,
+              "reason": "The wide brown belt, gold-edged central buckle, and image-right brown pouch are clear.",
+              "location": {
+                "x": 0.38,
+                "y": 0.56,
+                "w": 0.41,
+                "h": 0.18
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H256.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\candidates\\R07\\H256.preview-4x.png"
+      }
+    },
+    "identity_loss_index": {
+      "128": 0.185,
+      "160": 0.12,
+      "192": 0.0,
+      "256": 0.0
+    },
+    "semantic_preservation": {
+      "pass": true,
+      "status": "PASS_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "voluminous-white-hair",
+          "label": "Voluminous white hair with a curled forelock and long flowing locks",
+          "importance": "CRITICAL",
+          "kind": "HAIR",
+          "state": "SIMPLIFIED",
+          "reason": "Large pale hair mass, curled forelock, and long locks on both sides remain recognizable in pixel form.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.742812,
+            "bbox": [
+              273,
+              19,
+              940,
+              881
+            ],
+            "width": 667,
+            "height": 862,
+            "min_dimension": 667,
+            "mean_rgb": [
+              190.057,
+              181.272,
+              161.634
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.75559,
+            "bbox": [
+              130,
+              0,
+              871,
+              882
+            ],
+            "width": 741,
+            "height": 882,
+            "min_dimension": 741,
+            "mean_rgb": [
+              176.662,
+              166.298,
+              149.619
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            130,
+            0,
+            871,
+            882
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.15,
+              "y": 0.0,
+              "w": 0.85,
+              "h": 0.65
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "large-green-eyes",
+          "label": "Large bright green eyes",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Both prominent eyes remain bright green and distinct on the pale face.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              442,
+              391,
+              678,
+              470
+            ],
+            "width": 236,
+            "height": 79,
+            "min_dimension": 79,
+            "mean_rgb": [
+              163.221,
+              167.492,
+              146.48
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              322,
+              298,
+              584,
+              367
+            ],
+            "width": 262,
+            "height": 69,
+            "min_dimension": 69,
+            "mean_rgb": [
+              230.987,
+              216.257,
+              210.987
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            322,
+            298,
+            584,
+            367
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.37,
+              "y": 0.22,
+              "w": 0.3,
+              "h": 0.05
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "right-flower-hair-ornament",
+          "label": "White flower with gold and green leaf details beside the hair",
+          "importance": "CRITICAL",
+          "kind": "HEADGEAR",
+          "state": "SIMPLIFIED",
+          "reason": "White-petaled flower with gold center and green leaves remains visible on image-right beside the hair.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.705366,
+            "bbox": [
+              693,
+              100,
+              853,
+              403
+            ],
+            "width": 160,
+            "height": 303,
+            "min_dimension": 160,
+            "mean_rgb": [
+              169.247,
+              165.223,
+              136.472
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.918526,
+            "bbox": [
+              609,
+              135,
+              750,
+              299
+            ],
+            "width": 141,
+            "height": 164,
+            "min_dimension": 141,
+            "mean_rgb": [
+              119.871,
+              123.331,
+              86.541
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            609,
+            135,
+            750,
+            299
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.7,
+              "y": 0.1,
+              "w": 0.16,
+              "h": 0.12
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "branch-staff-and-green-crystal",
+          "label": "Tall twisted brown branch staff with a faceted green crystal",
+          "importance": "CRITICAL",
+          "kind": "WEAPON",
+          "state": "SIMPLIFIED",
+          "reason": "Twisted brown staff remains along image-left with a faceted green crystal near its top.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.430614,
+            "bbox": [
+              116,
+              162,
+              411,
+              1320
+            ],
+            "width": 295,
+            "height": 1158,
+            "min_dimension": 295,
+            "mean_rgb": [
+              155.394,
+              152.07,
+              117.55
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.483957,
+            "bbox": [
+              0,
+              157,
+              305,
+              1334
+            ],
+            "width": 305,
+            "height": 1177,
+            "min_dimension": 305,
+            "mean_rgb": [
+              142.778,
+              129.762,
+              105.607
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            0,
+            122,
+            305,
+            1343
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.0,
+              "y": 0.09,
+              "w": 0.35,
+              "h": 0.9
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "green-cream-gold-tunic",
+          "label": "Forest-green tunic with cream panels and gold edging",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "Green torso and skirt, cream inset panels, and gold trim remain clearly distinguishable.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              347,
+              559,
+              754,
+              1020
+            ],
+            "width": 407,
+            "height": 461,
+            "min_dimension": 407,
+            "mean_rgb": [
+              150.775,
+              138.911,
+              107.602
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.980502,
+            "bbox": [
+              252,
+              420,
+              662,
+              1099
+            ],
+            "width": 410,
+            "height": 679,
+            "min_dimension": 410,
+            "mean_rgb": [
+              154.158,
+              142.556,
+              115.284
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            252,
+            420,
+            662,
+            1099
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.29,
+              "y": 0.31,
+              "w": 0.47,
+              "h": 0.5
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "leather-belt-and-side-pouch",
+          "label": "Wide brown leather belt with a gold-edged buckle and side pouch",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Brown waist belt with gold-edged buckle and a separate brown pouch on the image-right hip remain readable.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              470,
+              734,
+              717,
+              888
+            ],
+            "width": 247,
+            "height": 154,
+            "min_dimension": 154,
+            "mean_rgb": [
+              140.031,
+              122.187,
+              88.15
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              357,
+              908,
+              628,
+              1045
+            ],
+            "width": 271,
+            "height": 137,
+            "min_dimension": 137,
+            "mean_rgb": [
+              172.99,
+              153.167,
+              115.807
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            357,
+            908,
+            628,
+            1045
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.94,
+            "location_in_candidate_subject": {
+              "x": 0.41,
+              "y": 0.67,
+              "w": 0.31,
+              "h": 0.1
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0ce9e-6f2c-76d2-9669-73d40b8bc437",
+        "elapsed_seconds": 59.421,
+        "source_sha256": "047d4d7990fd95c8e10b1f9c4a9ba9b894bd6725462bfe21aea216b269a273f0",
+        "candidate_sha256": "17706f692e8aeda5215846d66caad5b93bbddadfda6bc17c1c13b909c778d70e",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\identity-review\\semantic-preservation-047d4d7990fd-17706f692e8a",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "voluminous-white-hair",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Large pale hair mass, curled forelock, and long locks on both sides remain recognizable in pixel form.",
+            "location": {
+              "x": 0.15,
+              "y": 0.0,
+              "w": 0.85,
+              "h": 0.65
+            }
+          },
+          {
+            "id": "large-green-eyes",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Both prominent eyes remain bright green and distinct on the pale face.",
+            "location": {
+              "x": 0.37,
+              "y": 0.22,
+              "w": 0.3,
+              "h": 0.05
+            }
+          },
+          {
+            "id": "right-flower-hair-ornament",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "White-petaled flower with gold center and green leaves remains visible on image-right beside the hair.",
+            "location": {
+              "x": 0.7,
+              "y": 0.1,
+              "w": 0.16,
+              "h": 0.12
+            }
+          },
+          {
+            "id": "branch-staff-and-green-crystal",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Twisted brown staff remains along image-left with a faceted green crystal near its top.",
+            "location": {
+              "x": 0.0,
+              "y": 0.09,
+              "w": 0.35,
+              "h": 0.9
+            }
+          },
+          {
+            "id": "green-cream-gold-tunic",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Green torso and skirt, cream inset panels, and gold trim remain clearly distinguishable.",
+            "location": {
+              "x": 0.29,
+              "y": 0.31,
+              "w": 0.47,
+              "h": 0.5
+            }
+          },
+          {
+            "id": "leather-belt-and-side-pouch",
+            "state": "SIMPLIFIED",
+            "confidence": 0.94,
+            "reason": "Brown waist belt with gold-edged buckle and a separate brown pouch on the image-right hip remain readable.",
+            "location": {
+              "x": 0.41,
+              "y": 0.67,
+              "w": 0.31,
+              "h": 0.1
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": null,
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": true
+  },
+  "status": "PASS_AUTO_RESOLUTION",
+  "accepted": "logical_master",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\R07.png",
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\logical\\R07.png",
+    "size": [
+      103,
+      160
+    ],
+    "target_height": 160
+  },
+  "source_id": "R07",
+  "method": "D1",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce50-ad3e-7553-8e77-9a6d70c47c44",
+    "elapsed_seconds": 62.703,
+    "source_id": "R07",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png",
+    "source_sha256": "491d31d5dbb4b6178fe2d34a38d9db40162509a87741b98cd43edba6e649635d",
+    "prompt_sha256": "c5d12049f4402fe4b67aa2cc532432f5b84c4e65d6ad41880443ff89e7c0bf9d",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R07\\identity_feature_manifest.json",
+    "manifest_sha256": "bd606e6e529215ade6700c1ec485ab6029ff93afc7de8e549e121d3f2b9d6b83",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R07\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R07\\identity_feature_manifest.json",
+  "accepted_sha256": "29779c1535d18c792ebf500181e07587c814fa273a9da1334d8bc11c17f9d625"
+}

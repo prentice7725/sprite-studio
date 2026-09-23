@@ -13,6 +13,26 @@ IdentityFeatureKind = Literal[
     "WEAPON", "EMBLEM", "MARKING", "COLOR_BLOCK", "ASYMMETRY", "SPECIES_TRAIT", "OTHER",
 ]
 Side = Literal["LEFT", "RIGHT", "CENTER"]
+_IMPORTANCE_VALUES = {"CRITICAL", "IMPORTANT", "OPTIONAL"}
+_KIND_VALUES = {
+    "SILHOUETTE", "FACE", "HAIR", "HEADGEAR", "BODY_PART", "GARMENT", "ACCESSORY",
+    "WEAPON", "EMBLEM", "MARKING", "COLOR_BLOCK", "ASYMMETRY", "SPECIES_TRAIT", "OTHER",
+}
+_SIDE_VALUES = {"LEFT", "RIGHT", "CENTER"}
+
+
+def _normalize_side(value: Any) -> Side | None:
+    if value is None:
+        return None
+    normalized = str(value).strip().upper().replace("_", "-")
+    normalized = {
+        "IMAGE-LEFT": "LEFT",
+        "IMAGE-RIGHT": "RIGHT",
+        "MIDDLE": "CENTER",
+    }.get(normalized, normalized)
+    if normalized not in _SIDE_VALUES:
+        raise ValueError(f"unsupported feature side: {value}")
+    return normalized  # type: ignore[return-value]
 
 
 @dataclass(frozen=True)
@@ -48,8 +68,14 @@ class IdentityFeature:
             raise ValueError("identity feature id must not be empty")
         if not self.label.strip():
             raise ValueError("identity feature label must not be empty")
-        if self.importance not in {"CRITICAL", "IMPORTANT", "OPTIONAL"}:
+        if self.importance not in _IMPORTANCE_VALUES:
             raise ValueError(f"unsupported feature importance: {self.importance}")
+        if self.kind not in _KIND_VALUES:
+            raise ValueError(f"unsupported feature kind: {self.kind}")
+        if self.must_remain_on_side is not None and self.must_remain_on_side not in _SIDE_VALUES:
+            raise ValueError(f"unsupported feature side: {self.must_remain_on_side}")
+        if not isinstance(self.must_remain_recognizable, bool):
+            raise ValueError("must_remain_recognizable must be a boolean")
 
 
 @dataclass(frozen=True)
@@ -82,7 +108,7 @@ class IdentityFeatureManifest:
                 region=FeatureRegion(**region) if region else None,
                 must_remain_recognizable=bool(item.get("mustRemainRecognizable", item.get("must_remain_recognizable", True))),
                 must_remain_separated_from=tuple(item.get("mustRemainSeparatedFrom", item.get("must_remain_separated_from", ()))),
-                must_remain_on_side=item.get("mustRemainOnSide", item.get("must_remain_on_side")),
+                must_remain_on_side=_normalize_side(item.get("mustRemainOnSide", item.get("must_remain_on_side"))),
                 required_color_relation=item.get("requiredColorRelation", item.get("required_color_relation")),
                 notes=item.get("notes"),
             )

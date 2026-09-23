@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any, Callable, Iterable
 
 from PIL import Image
@@ -23,6 +23,7 @@ class AutoResolutionResult:
     semantic_preservation: SemanticPreservationResult
     candidate_results: dict[int, dict[str, Any]]
     decision_report: dict[str, Any]
+    candidate_images: dict[int, Image.Image] = field(default_factory=dict)
 
     @property
     def passed(self) -> bool:
@@ -71,6 +72,8 @@ def project_auto_resolution(
     audit: bool = False,
     override_height: int | None = None,
     identity_reviewer: Callable[..., dict[str, Any]] | None = None,
+    identity_batch_reviewer: Callable[..., dict[int, dict[str, Any]]] | None = None,
+    review_workdir: Path | None = None,
 ) -> AutoResolutionResult:
     heights = tuple(require_logical_height(int(value), field_name="candidate height") for value in candidates)
     if override_height is not None:
@@ -78,13 +81,22 @@ def project_auto_resolution(
         heights = (override_height,)
     if len(set(heights)) != len(heights):
         raise ValueError("candidate heights must be unique")
-    semantic_review = identity_reviewer(source, semantic, manifest, stage="semantic-preservation") if identity_reviewer else None
+    def review_pair(left: Image.Image, right: Image.Image, stage: str) -> dict[str, Any] | None:
+        if identity_reviewer is None:
+            return None
+        if review_workdir is None:
+            return identity_reviewer(left, right, manifest, stage=stage)
+        return identity_reviewer(left, right, manifest, stage=stage, workdir=review_workdir)
+
+    semantic_review = review_pair(source, semantic, "semantic-preservation")
     semantic_gate = evaluate_semantic_preservation(source, semantic, manifest, identity_review=semantic_review)
     candidate_results: dict[int, dict[str, Any]] = {}
+    candidate_images: dict[int, Image.Image] = {}
     selected_height: int | None = None
     selected_image: Image.Image | None = None
 
     if semantic_gate.passed:
+        prepared_candidates: dict[int, dict[str, Any]] = {}
         for height in heights:
             extracted = extract_structure(
                 semantic,
@@ -127,28 +139,68 @@ def project_auto_resolution(
             )
             validation_metrics = dict(validation.metrics)
             validation_metrics["cleanup_mutated_dimensions"] = cleanup_mutated_dimensions
-            identity_review = identity_reviewer(source, cleanup.image, manifest, stage=f"logical-{height}") if identity_reviewer else None
-            information_loss = evaluate_information_loss(source, cleanup.image, manifest, identity_review=identity_review)
+            if validation.status == "PASS_LOGICAL_MASTER" and not cleanup_mutated_dimensions:
+                candidate_images[height] = cleanup.image.copy()
+            prepared_candidates[height] = {
+                "image": cleanup.image,
+                "extracted": extracted,
+                "cleanup": cleanup,
+                "validation": validation,
+                "validation_metrics": validation_metrics,
+                "cleanup_mutated_dimensions": cleanup_mutated_dimensions,
+            }
+
+        batch_reviews: dict[int, dict[str, Any]] = {}
+        if identity_batch_reviewer is not None and candidate_images:
+            try:
+                if review_workdir is None:
+                    batch_reviews = identity_batch_reviewer(
+                        source, candidate_images, manifest, stage="logical-resolution-grid"
+                    )
+                else:
+                    batch_reviews = identity_batch_reviewer(
+                        source, candidate_images, manifest,
+                        stage="logical-resolution-grid", workdir=review_workdir,
+                    )
+            except Exception as exc:
+                batch_reviews = {}
+                review_error = f"{type(exc).__name__}: {exc}"[:2000]
+                for height in candidate_images:
+                    batch_reviews[height] = {
+                        "status": "FAIL_REVIEW_UNAVAILABLE",
+                        "error": review_error,
+                        "features": [
+                            {"id": feature.id, "state": "AMBIGUOUS", "confidence": 0.0,
+                             "reason": "identity-review-unavailable", "location": None}
+                            for feature in manifest.features
+                        ],
+                    }
+
+        for height, prepared in prepared_candidates.items():
+            image = prepared["image"]
+            if height in batch_reviews:
+                identity_review = batch_reviews[height]
+            else:
+                identity_review = review_pair(source, image, f"logical-{height}")
+            information_loss = evaluate_information_loss(source, image, manifest, identity_review=identity_review)
+            validation = prepared["validation"]
+            cleanup_mutated_dimensions = prepared["cleanup_mutated_dimensions"]
             status = _candidate_label(information_loss, validation.status, cleanup_mutated_dimensions)
             candidate_results[height] = {
                 "status": status,
                 "validation_status": validation.status,
                 "identity_loss_index": information_loss.identity_loss_index,
                 "information_loss": information_loss.to_dict(),
-                "pse": extracted.report,
-                "cleanup": cleanup.report,
-                "logical_validation": {**validation.to_dict(), "metrics": validation_metrics},
+                "pse": prepared["extracted"].report,
+                "cleanup": prepared["cleanup"].report,
+                "logical_validation": {**validation.to_dict(), "metrics": prepared["validation_metrics"]},
                 "cleanup_mutated_dimensions": cleanup_mutated_dimensions,
                 "identity_review": identity_review,
             }
             structurally_valid = validation.status == "PASS_LOGICAL_MASTER" and not cleanup_mutated_dimensions
             if selected_height is None and (status == "PASS" or (override_height == height and structurally_valid)):
                 selected_height = height
-                selected_image = cleanup.image
-                if override_height == height:
-                    break
-                if not audit:
-                    break
+                selected_image = image
 
     root_cause = _root_cause(semantic_gate, candidate_results, manifest) if selected_height is None else None
     if selected_height is not None and override_height is not None:
@@ -187,7 +239,7 @@ def project_auto_resolution(
         },
         "semantic_preservation": semantic_gate.to_dict(),
         "root_cause": root_cause,
-        "identity_review_method": "codex-multimodal-ifm-review" if identity_reviewer else "pixel-proxy-only",
+        "identity_review_method": "codex-multimodal-ifm-review" if (identity_reviewer or identity_batch_reviewer) else "pixel-proxy-only",
         "identity_gate_authoritative": identity_reviewer is not None,
         "resize_rescue": False,
         "threshold_relaxation": False,
@@ -195,7 +247,7 @@ def project_auto_resolution(
         "resolution_override": override_height is not None,
         "identity_gate_passed": bool(selected_height is not None and candidate_results.get(selected_height, {}).get("status") == "PASS"),
     }
-    return AutoResolutionResult(status, selected_height, selected_image, semantic_gate, candidate_results, decision_report)
+    return AutoResolutionResult(status, selected_height, selected_image, semantic_gate, candidate_results, decision_report, candidate_images)
 
 
 __all__ = ["AutoResolutionResult", "project_auto_resolution"]

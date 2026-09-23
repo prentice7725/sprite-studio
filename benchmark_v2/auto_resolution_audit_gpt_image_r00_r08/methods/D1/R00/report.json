@@ -1,0 +1,3816 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d1_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\semantic\\R00.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D1 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R00\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R00\\raw.png",
+      "raw_sha256": "4638db918a91f517dc81164d465c3b0a96a400ca3350042472ec1c0cbf659184",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    },
+    "size": [
+      1254,
+      1254
+    ]
+  },
+  "semantic_quality": {
+    "status": "PASS_SEMANTIC_SOURCE",
+    "metrics": {
+      "input_size": [
+        1254,
+        1254
+      ],
+      "background": {
+        "mode": "chroma:magenta",
+        "keyed_pixels": 754529,
+        "transparent_pixels": 0,
+        "background_pixels": 754529
+      },
+      "subject_bbox": [
+        0,
+        16,
+        1254,
+        1254
+      ],
+      "subject_area_ratio": 0.987241,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.676769,
+      "cluster_size_distribution": {
+        "opaque_pixels": 817987,
+        "opaque_color_count": 38502,
+        "color_ratio": 0.047069,
+        "median_quantized_cluster": 19.5,
+        "small_quantized_cluster_fraction": 0.283019
+      }
+    },
+    "warnings": []
+  },
+  "semantic_preservation": {
+    "pass": true,
+    "status": "PASS_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "spiky-charcoal-hair",
+        "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+        "importance": "CRITICAL",
+        "kind": "HAIR",
+        "state": "SIMPLIFIED",
+        "reason": "Broad charcoal hair silhouette, pointed outer tufts, and long bangs remain recognizable in pixel art.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.746428,
+          "bbox": [
+            316,
+            13,
+            913,
+            661
+          ],
+          "width": 597,
+          "height": 648,
+          "min_dimension": 597,
+          "mean_rgb": [
+            121.307,
+            103.63,
+            91.504
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.775048,
+          "bbox": [
+            288,
+            0,
+            940,
+            565
+          ],
+          "width": 652,
+          "height": 565,
+          "min_dimension": 565,
+          "mean_rgb": [
+            99.675,
+            86.633,
+            74.55
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          287,
+          0,
+          941,
+          565
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.229,
+            "y": 0.0,
+            "w": 0.521,
+            "h": 0.456
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "pale-anime-face",
+        "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Centered peach face retains both ears, rounded cheeks, and a tapered chin.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.844296,
+          "bbox": [
+            362,
+            238,
+            875,
+            730
+          ],
+          "width": 513,
+          "height": 492,
+          "min_dimension": 492,
+          "mean_rgb": [
+            159.706,
+            132.077,
+            112.245
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.865832,
+          "bbox": [
+            359,
+            252,
+            875,
+            738
+          ],
+          "width": 516,
+          "height": 486,
+          "min_dimension": 486,
+          "mean_rgb": [
+            158.04,
+            131.095,
+            104.006
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          359,
+          252,
+          875,
+          738
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.287,
+            "y": 0.204,
+            "w": 0.41,
+            "h": 0.392
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "narrow-brown-eyes",
+        "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Both narrow eyes remain distinct, with dark brown irises and pale sclera.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            457,
+            416,
+            796,
+            466
+          ],
+          "width": 339,
+          "height": 50,
+          "min_dimension": 50,
+          "mean_rgb": [
+            185.539,
+            155.727,
+            134.153
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            460,
+            430,
+            787,
+            472
+          ],
+          "width": 327,
+          "height": 42,
+          "min_dimension": 42,
+          "mean_rgb": [
+            185.527,
+            162.403,
+            138.708
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          460,
+          430,
+          787,
+          472
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.367,
+            "y": 0.348,
+            "w": 0.26,
+            "h": 0.033
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "small-neutral-mouth",
+        "label": "Small closed, neutral mouth",
+        "importance": "OPTIONAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "A small closed, neutral mouth remains visible below the nose.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            600,
+            637,
+            655,
+            654
+          ],
+          "width": 55,
+          "height": 17,
+          "min_dimension": 17,
+          "mean_rgb": [
+            228.956,
+            183.24,
+            149.225
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            601,
+            642,
+            648,
+            655
+          ],
+          "width": 47,
+          "height": 13,
+          "min_dimension": 13,
+          "mean_rgb": [
+            204.782,
+            150.913,
+            109.717
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          601,
+          642,
+          648,
+          655
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.95,
+          "location_in_candidate_subject": {
+            "x": 0.48,
+            "y": 0.519,
+            "w": 0.036,
+            "h": 0.01
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "gray-crew-neck-collar",
+        "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "A rounded gray neckline still frames the base of the neck.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.98513,
+          "bbox": [
+            391,
+            783,
+            865,
+            990
+          ],
+          "width": 474,
+          "height": 207,
+          "min_dimension": 207,
+          "mean_rgb": [
+            174.609,
+            152.737,
+            137.139
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.992711,
+          "bbox": [
+            410,
+            793,
+            866,
+            1040
+          ],
+          "width": 456,
+          "height": 247,
+          "min_dimension": 247,
+          "mean_rgb": [
+            166.519,
+            145.869,
+            126.321
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          410,
+          793,
+          866,
+          1040
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.94,
+          "location_in_candidate_subject": {
+            "x": 0.327,
+            "y": 0.641,
+            "w": 0.363,
+            "h": 0.199
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "broad-gray-shirt",
+        "label": "Broad medium-gray shirt with sloping shoulders",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "The gray shirt remains broad across the lower frame with sloping shoulders.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.819518,
+          "bbox": [
+            0,
+            783,
+            1254,
+            1254
+          ],
+          "width": 1254,
+          "height": 471,
+          "min_dimension": 471,
+          "mean_rgb": [
+            128.573,
+            123.533,
+            123.325
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.825471,
+          "bbox": [
+            0,
+            797,
+            1254,
+            1238
+          ],
+          "width": 1254,
+          "height": 441,
+          "min_dimension": 441,
+          "mean_rgb": [
+            124.628,
+            119.372,
+            117.691
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          0,
+          797,
+          1254,
+          1238
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.0,
+            "y": 0.644,
+            "w": 1.0,
+            "h": 0.356
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0ce7d-482c-71c2-879d-5cb1758b3110",
+      "elapsed_seconds": 41.852,
+      "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+      "candidate_sha256": "48a320f3f779d3510ec2a701b20af1f7d6d370e6b35a37fe96179c6dd66284ca",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\semantic-preservation-2508e57455c8-48a320f3f779",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "spiky-charcoal-hair",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Broad charcoal hair silhouette, pointed outer tufts, and long bangs remain recognizable in pixel art.",
+          "location": {
+            "x": 0.229,
+            "y": 0.0,
+            "w": 0.521,
+            "h": 0.456
+          }
+        },
+        {
+          "id": "pale-anime-face",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Centered peach face retains both ears, rounded cheeks, and a tapered chin.",
+          "location": {
+            "x": 0.287,
+            "y": 0.204,
+            "w": 0.41,
+            "h": 0.392
+          }
+        },
+        {
+          "id": "narrow-brown-eyes",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Both narrow eyes remain distinct, with dark brown irises and pale sclera.",
+          "location": {
+            "x": 0.367,
+            "y": 0.348,
+            "w": 0.26,
+            "h": 0.033
+          }
+        },
+        {
+          "id": "small-neutral-mouth",
+          "state": "SIMPLIFIED",
+          "confidence": 0.95,
+          "reason": "A small closed, neutral mouth remains visible below the nose.",
+          "location": {
+            "x": 0.48,
+            "y": 0.519,
+            "w": 0.036,
+            "h": 0.01
+          }
+        },
+        {
+          "id": "gray-crew-neck-collar",
+          "state": "SIMPLIFIED",
+          "confidence": 0.94,
+          "reason": "A rounded gray neckline still frames the base of the neck.",
+          "location": {
+            "x": 0.327,
+            "y": 0.641,
+            "w": 0.363,
+            "h": 0.199
+          }
+        },
+        {
+          "id": "broad-gray-shirt",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "The gray shirt remains broad across the lower frame with sloping shoulders.",
+          "location": {
+            "x": 0.0,
+            "y": 0.644,
+            "w": 1.0,
+            "h": 0.356
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": 128,
+    "reason": "minimum_identity_preserving_height",
+    "candidate_results": {
+      "128": "PASS",
+      "160": "PASS",
+      "192": "PASS",
+      "256": "PASS"
+    },
+    "candidate_details": {
+      "128": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.132353,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.132353,
+          "retention": 0.867647,
+          "feature_results": [
+            {
+              "id": "spiky-charcoal-hair",
+              "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "Dark layered hair keeps its pointed silhouette and forehead-covering bangs.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.746428,
+                "bbox": [
+                  316,
+                  13,
+                  913,
+                  661
+                ],
+                "width": 597,
+                "height": 648,
+                "min_dimension": 597,
+                "mean_rgb": [
+                  121.307,
+                  103.63,
+                  91.504
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.777205,
+                "bbox": [
+                  32,
+                  0,
+                  98,
+                  59
+                ],
+                "width": 66,
+                "height": 59,
+                "min_dimension": 59,
+                "mean_rgb": [
+                  100.38,
+                  87.57,
+                  75.072
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                32,
+                0,
+                101,
+                59
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.25,
+                  "y": 0.0,
+                  "w": 0.52,
+                  "h": 0.46
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Centered peach face, ears, cheeks, and tapered chin remain readable.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.844296,
+                "bbox": [
+                  362,
+                  238,
+                  875,
+                  730
+                ],
+                "width": 513,
+                "height": 492,
+                "min_dimension": 492,
+                "mean_rgb": [
+                  159.706,
+                  132.077,
+                  112.245
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.805377,
+                "bbox": [
+                  36,
+                  26,
+                  95,
+                  84
+                ],
+                "width": 59,
+                "height": 58,
+                "min_dimension": 58,
+                "mean_rgb": [
+                  157.119,
+                  129.709,
+                  103.02
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                36,
+                26,
+                95,
+                84
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.28,
+                  "y": 0.21,
+                  "w": 0.45,
+                  "h": 0.44
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Both narrow eyes remain separate, with dark irises and light sclera pixels.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  457,
+                  416,
+                  796,
+                  466
+                ],
+                "width": 339,
+                "height": 50,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  185.539,
+                  155.727,
+                  134.153
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  44,
+                  43,
+                  86,
+                  53
+                ],
+                "width": 42,
+                "height": 10,
+                "min_dimension": 10,
+                "mean_rgb": [
+                  200.29,
+                  169.498,
+                  136.5
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                44,
+                43,
+                86,
+                53
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.87,
+                "location_in_candidate_subject": {
+                  "x": 0.34,
+                  "y": 0.34,
+                  "w": 0.32,
+                  "h": 0.07
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "label": "Small closed, neutral mouth",
+              "importance": "OPTIONAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "A short closed neutral line remains below the nose.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  600,
+                  637,
+                  655,
+                  654
+                ],
+                "width": 55,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  228.956,
+                  183.24,
+                  149.225
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  59,
+                  64,
+                  71,
+                  68
+                ],
+                "width": 12,
+                "height": 4,
+                "min_dimension": 4,
+                "mean_rgb": [
+                  223.167,
+                  177.833,
+                  134.292
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                59,
+                64,
+                71,
+                68
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.9,
+                "location_in_candidate_subject": {
+                  "x": 0.46,
+                  "y": 0.5,
+                  "w": 0.08,
+                  "h": 0.03
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "A curved gray neckline is visible around the base of the neck.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.98513,
+                "bbox": [
+                  391,
+                  783,
+                  865,
+                  990
+                ],
+                "width": 474,
+                "height": 207,
+                "min_dimension": 207,
+                "mean_rgb": [
+                  174.609,
+                  152.737,
+                  137.139
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  46,
+                  87,
+                  86,
+                  104
+                ],
+                "width": 40,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  175.438,
+                  151.61,
+                  128.968
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                46,
+                87,
+                86,
+                104
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.86,
+                "location_in_candidate_subject": {
+                  "x": 0.36,
+                  "y": 0.68,
+                  "w": 0.3,
+                  "h": 0.13
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "label": "Broad medium-gray shirt with sloping shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Broad medium-gray shirt and sloping shoulders fill the lower frame.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.819518,
+                "bbox": [
+                  0,
+                  783,
+                  1254,
+                  1254
+                ],
+                "width": 1254,
+                "height": 471,
+                "min_dimension": 471,
+                "mean_rgb": [
+                  128.573,
+                  123.533,
+                  123.325
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.911111,
+                "bbox": [
+                  2,
+                  88,
+                  128,
+                  128
+                ],
+                "width": 126,
+                "height": 40,
+                "min_dimension": 40,
+                "mean_rgb": [
+                  119.412,
+                  116.141,
+                  116.505
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                2,
+                88,
+                128,
+                128
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.02,
+                  "y": 0.69,
+                  "w": 0.96,
+                  "h": 0.31
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "spiky-charcoal-hair": {
+                "projected_width": 66,
+                "projected_height": 59,
+                "min_visible_dimension": 59,
+                "risk": false
+              },
+              "pale-anime-face": {
+                "projected_width": 59,
+                "projected_height": 58,
+                "min_visible_dimension": 58,
+                "risk": false
+              },
+              "narrow-brown-eyes": {
+                "projected_width": 42,
+                "projected_height": 10,
+                "min_visible_dimension": 10,
+                "risk": false
+              },
+              "small-neutral-mouth": {
+                "projected_width": 12,
+                "projected_height": 4,
+                "min_visible_dimension": 4,
+                "risk": false
+              },
+              "gray-crew-neck-collar": {
+                "projected_width": 40,
+                "projected_height": 17,
+                "min_visible_dimension": 17,
+                "risk": false
+              },
+              "broad-gray-shirt": {
+                "projected_width": 126,
+                "projected_height": 40,
+                "min_visible_dimension": 40,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1254,
+            1254
+          ],
+          "input_subject_bbox": [
+            0,
+            16,
+            1254,
+            1254
+          ],
+          "logical_size": [
+            130,
+            128
+          ],
+          "target_height": 128,
+          "actual_height": 128,
+          "logical_width": 130,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 754529,
+            "transparent_pixels": 0,
+            "background_pixels": 754529
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.526547,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            130,
+            128
+          ],
+          "output_size": [
+            130,
+            128
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 42,
+            "color_ratio": 0.004707464694014795
+          },
+          "subject_bbox": [
+            0,
+            0,
+            130,
+            128
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 42,
+            "separation": {
+              "colors": 42,
+              "min_delta_e": 0.0106,
+              "closest_pair": [
+                [
+                  246,
+                  200,
+                  152
+                ],
+                [
+                  248,
+                  204,
+                  156
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              130,
+              128
+            ],
+            "bbox": [
+              0,
+              0,
+              130,
+              128
+            ],
+            "subject_height": 128,
+            "binary_alpha": true,
+            "palette_size": 42,
+            "max_palette_size": 48,
+            "target_height": 128,
+            "actual_height": 128,
+            "logical_width": 130,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce7e-9995-7520-9cf7-fbf0ec40fc16",
+          "elapsed_seconds": 92.614,
+          "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+          "candidate_sha256": "364770314e5d8991c0145029541ea772aea7611d6021106bac5b0183cb78b68e",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\logical-resolution-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "spiky-charcoal-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.96,
+              "reason": "Dark layered hair keeps its pointed silhouette and forehead-covering bangs.",
+              "location": {
+                "x": 0.25,
+                "y": 0.0,
+                "w": 0.52,
+                "h": 0.46
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.94,
+              "reason": "Centered peach face, ears, cheeks, and tapered chin remain readable.",
+              "location": {
+                "x": 0.28,
+                "y": 0.21,
+                "w": 0.45,
+                "h": 0.44
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.87,
+              "reason": "Both narrow eyes remain separate, with dark irises and light sclera pixels.",
+              "location": {
+                "x": 0.34,
+                "y": 0.34,
+                "w": 0.32,
+                "h": 0.07
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "state": "SIMPLIFIED",
+              "confidence": 0.9,
+              "reason": "A short closed neutral line remains below the nose.",
+              "location": {
+                "x": 0.46,
+                "y": 0.5,
+                "w": 0.08,
+                "h": 0.03
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "state": "SIMPLIFIED",
+              "confidence": 0.86,
+              "reason": "A curved gray neckline is visible around the base of the neck.",
+              "location": {
+                "x": 0.36,
+                "y": 0.68,
+                "w": 0.3,
+                "h": 0.13
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "state": "PRESERVED",
+              "confidence": 0.96,
+              "reason": "Broad medium-gray shirt and sloping shoulders fill the lower frame.",
+              "location": {
+                "x": 0.02,
+                "y": 0.69,
+                "w": 0.96,
+                "h": 0.31
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H128.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H128.preview-4x.png"
+      },
+      "160": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.132353,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.132353,
+          "retention": 0.867647,
+          "feature_results": [
+            {
+              "id": "spiky-charcoal-hair",
+              "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "Uneven pointed charcoal hair and long bangs remain clear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.746428,
+                "bbox": [
+                  316,
+                  13,
+                  913,
+                  661
+                ],
+                "width": 597,
+                "height": 648,
+                "min_dimension": 597,
+                "mean_rgb": [
+                  121.307,
+                  103.63,
+                  91.504
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.758322,
+                "bbox": [
+                  38,
+                  0,
+                  122,
+                  77
+                ],
+                "width": 84,
+                "height": 77,
+                "min_dimension": 77,
+                "mean_rgb": [
+                  104.172,
+                  90.297,
+                  77.076
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                38,
+                0,
+                125,
+                77
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.97,
+                "location_in_candidate_subject": {
+                  "x": 0.24,
+                  "y": 0.0,
+                  "w": 0.53,
+                  "h": 0.48
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Centered peach face retains visible ears, rounded cheeks, and tapered chin.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.844296,
+                "bbox": [
+                  362,
+                  238,
+                  875,
+                  730
+                ],
+                "width": 513,
+                "height": 492,
+                "min_dimension": 492,
+                "mean_rgb": [
+                  159.706,
+                  132.077,
+                  112.245
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.836364,
+                "bbox": [
+                  48,
+                  38,
+                  114,
+                  108
+                ],
+                "width": 66,
+                "height": 70,
+                "min_dimension": 66,
+                "mean_rgb": [
+                  176.323,
+                  144.815,
+                  113.655
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                48,
+                38,
+                114,
+                108
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.24,
+                  "w": 0.4,
+                  "h": 0.43
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Separate narrow eyes show dark irises against pale sclera.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  457,
+                  416,
+                  796,
+                  466
+                ],
+                "width": 339,
+                "height": 50,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  185.539,
+                  155.727,
+                  134.153
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  59,
+                  56,
+                  103,
+                  68
+                ],
+                "width": 44,
+                "height": 12,
+                "min_dimension": 12,
+                "mean_rgb": [
+                  225.148,
+                  189.818,
+                  152.011
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                59,
+                56,
+                103,
+                68
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.92,
+                "location_in_candidate_subject": {
+                  "x": 0.37,
+                  "y": 0.35,
+                  "w": 0.26,
+                  "h": 0.07
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "label": "Small closed, neutral mouth",
+              "importance": "OPTIONAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Small closed neutral mouth remains visible below the nose.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  600,
+                  637,
+                  655,
+                  654
+                ],
+                "width": 55,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  228.956,
+                  183.24,
+                  149.225
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  77,
+                  80,
+                  90,
+                  84
+                ],
+                "width": 13,
+                "height": 4,
+                "min_dimension": 4,
+                "mean_rgb": [
+                  220.058,
+                  175.269,
+                  132.327
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                77,
+                80,
+                90,
+                84
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.48,
+                  "y": 0.5,
+                  "w": 0.07,
+                  "h": 0.025
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Rounded gray neckline frames the exposed neck.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.98513,
+                "bbox": [
+                  391,
+                  783,
+                  865,
+                  990
+                ],
+                "width": 474,
+                "height": 207,
+                "min_dimension": 207,
+                "mean_rgb": [
+                  174.609,
+                  152.737,
+                  137.139
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  58,
+                  105,
+                  107,
+                  130
+                ],
+                "width": 49,
+                "height": 25,
+                "min_dimension": 25,
+                "mean_rgb": [
+                  186.5,
+                  159.292,
+                  132.5
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                58,
+                105,
+                107,
+                130
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.91,
+                "location_in_candidate_subject": {
+                  "x": 0.36,
+                  "y": 0.66,
+                  "w": 0.3,
+                  "h": 0.15
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "label": "Broad medium-gray shirt with sloping shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Broad medium-gray shirt keeps its sloping shoulders and lower-frame coverage.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.819518,
+                "bbox": [
+                  0,
+                  783,
+                  1254,
+                  1254
+                ],
+                "width": 1254,
+                "height": 471,
+                "min_dimension": 471,
+                "mean_rgb": [
+                  128.573,
+                  123.533,
+                  123.325
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.89725,
+                "bbox": [
+                  1,
+                  110,
+                  161,
+                  160
+                ],
+                "width": 160,
+                "height": 50,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  119.244,
+                  115.992,
+                  116.259
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                1,
+                110,
+                161,
+                160
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.97,
+                "location_in_candidate_subject": {
+                  "x": 0.01,
+                  "y": 0.69,
+                  "w": 0.98,
+                  "h": 0.31
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "spiky-charcoal-hair": {
+                "projected_width": 84,
+                "projected_height": 77,
+                "min_visible_dimension": 77,
+                "risk": false
+              },
+              "pale-anime-face": {
+                "projected_width": 66,
+                "projected_height": 70,
+                "min_visible_dimension": 66,
+                "risk": false
+              },
+              "narrow-brown-eyes": {
+                "projected_width": 44,
+                "projected_height": 12,
+                "min_visible_dimension": 12,
+                "risk": false
+              },
+              "small-neutral-mouth": {
+                "projected_width": 13,
+                "projected_height": 4,
+                "min_visible_dimension": 4,
+                "risk": false
+              },
+              "gray-crew-neck-collar": {
+                "projected_width": 49,
+                "projected_height": 25,
+                "min_visible_dimension": 25,
+                "risk": false
+              },
+              "broad-gray-shirt": {
+                "projected_width": 160,
+                "projected_height": 50,
+                "min_visible_dimension": 50,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1254,
+            1254
+          ],
+          "input_subject_bbox": [
+            0,
+            16,
+            1254,
+            1254
+          ],
+          "logical_size": [
+            162,
+            160
+          ],
+          "target_height": 160,
+          "actual_height": 160,
+          "logical_width": 162,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 754529,
+            "transparent_pixels": 0,
+            "background_pixels": 754529
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.526442,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            162,
+            160
+          ],
+          "output_size": [
+            162,
+            160
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 44,
+            "color_ratio": 0.003186789309770406
+          },
+          "subject_bbox": [
+            0,
+            0,
+            162,
+            160
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 44,
+            "separation": {
+              "colors": 44,
+              "min_delta_e": 0.0106,
+              "closest_pair": [
+                [
+                  246,
+                  200,
+                  152
+                ],
+                [
+                  248,
+                  204,
+                  156
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              162,
+              160
+            ],
+            "bbox": [
+              0,
+              0,
+              162,
+              160
+            ],
+            "subject_height": 160,
+            "binary_alpha": true,
+            "palette_size": 44,
+            "max_palette_size": 48,
+            "target_height": 160,
+            "actual_height": 160,
+            "logical_width": 162,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce7e-9995-7520-9cf7-fbf0ec40fc16",
+          "elapsed_seconds": 92.614,
+          "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+          "candidate_sha256": "dbaf93a16383b594175d413a37d142448cf9f70d55658b038ceca5f90b038aca",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\logical-resolution-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "spiky-charcoal-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.97,
+              "reason": "Uneven pointed charcoal hair and long bangs remain clear.",
+              "location": {
+                "x": 0.24,
+                "y": 0.0,
+                "w": 0.53,
+                "h": 0.48
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.95,
+              "reason": "Centered peach face retains visible ears, rounded cheeks, and tapered chin.",
+              "location": {
+                "x": 0.3,
+                "y": 0.24,
+                "w": 0.4,
+                "h": 0.43
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.92,
+              "reason": "Separate narrow eyes show dark irises against pale sclera.",
+              "location": {
+                "x": 0.37,
+                "y": 0.35,
+                "w": 0.26,
+                "h": 0.07
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "state": "SIMPLIFIED",
+              "confidence": 0.94,
+              "reason": "Small closed neutral mouth remains visible below the nose.",
+              "location": {
+                "x": 0.48,
+                "y": 0.5,
+                "w": 0.07,
+                "h": 0.025
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "state": "SIMPLIFIED",
+              "confidence": 0.91,
+              "reason": "Rounded gray neckline frames the exposed neck.",
+              "location": {
+                "x": 0.36,
+                "y": 0.66,
+                "w": 0.3,
+                "h": 0.15
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "state": "PRESERVED",
+              "confidence": 0.97,
+              "reason": "Broad medium-gray shirt keeps its sloping shoulders and lower-frame coverage.",
+              "location": {
+                "x": 0.01,
+                "y": 0.69,
+                "w": 0.98,
+                "h": 0.31
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H160.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H160.preview-4x.png"
+      },
+      "192": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.132353,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.132353,
+          "retention": 0.867647,
+          "feature_results": [
+            {
+              "id": "spiky-charcoal-hair",
+              "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "Layered charcoal hair keeps its uneven pointed outline and long bangs.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.746428,
+                "bbox": [
+                  316,
+                  13,
+                  913,
+                  661
+                ],
+                "width": 597,
+                "height": 648,
+                "min_dimension": 597,
+                "mean_rgb": [
+                  121.307,
+                  103.63,
+                  91.504
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.708712,
+                "bbox": [
+                  44,
+                  0,
+                  146,
+                  96
+                ],
+                "width": 102,
+                "height": 96,
+                "min_dimension": 96,
+                "mean_rgb": [
+                  107.442,
+                  92.936,
+                  78.794
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                42,
+                0,
+                152,
+                96
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.22,
+                  "y": 0.0,
+                  "w": 0.56,
+                  "h": 0.5
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Centered peach face, both ears, rounded cheeks, and tapered chin are readable.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.844296,
+                "bbox": [
+                  362,
+                  238,
+                  875,
+                  730
+                ],
+                "width": 513,
+                "height": 492,
+                "min_dimension": 492,
+                "mean_rgb": [
+                  159.706,
+                  132.077,
+                  112.245
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.818377,
+                "bbox": [
+                  54,
+                  51,
+                  140,
+                  143
+                ],
+                "width": 86,
+                "height": 92,
+                "min_dimension": 86,
+                "mean_rgb": [
+                  182.166,
+                  150.234,
+                  118.853
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                54,
+                51,
+                140,
+                143
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.28,
+                  "y": 0.27,
+                  "w": 0.44,
+                  "h": 0.47
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Both narrow eyes remain distinct with dark irises and pale sclera.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  457,
+                  416,
+                  796,
+                  466
+                ],
+                "width": 339,
+                "height": 50,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  185.539,
+                  155.727,
+                  134.153
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  67,
+                  69,
+                  129,
+                  85
+                ],
+                "width": 62,
+                "height": 16,
+                "min_dimension": 16,
+                "mean_rgb": [
+                  229.385,
+                  190.041,
+                  148.499
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                67,
+                69,
+                129,
+                85
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.35,
+                  "y": 0.36,
+                  "w": 0.31,
+                  "h": 0.08
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "label": "Small closed, neutral mouth",
+              "importance": "OPTIONAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Short closed neutral mouth is distinct below the nose.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  600,
+                  637,
+                  655,
+                  654
+                ],
+                "width": 55,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  228.956,
+                  183.24,
+                  149.225
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  91,
+                  103,
+                  105,
+                  109
+                ],
+                "width": 14,
+                "height": 6,
+                "min_dimension": 6,
+                "mean_rgb": [
+                  248.0,
+                  204.0,
+                  156.0
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                91,
+                103,
+                105,
+                109
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.47,
+                  "y": 0.54,
+                  "w": 0.07,
+                  "h": 0.025
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Curved gray crew neckline frames the neck base.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.98513,
+                "bbox": [
+                  391,
+                  783,
+                  865,
+                  990
+                ],
+                "width": 474,
+                "height": 207,
+                "min_dimension": 207,
+                "mean_rgb": [
+                  174.609,
+                  152.737,
+                  137.139
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  60,
+                  136,
+                  136,
+                  162
+                ],
+                "width": 76,
+                "height": 26,
+                "min_dimension": 26,
+                "mean_rgb": [
+                  139.162,
+                  127.957,
+                  119.38
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                60,
+                136,
+                136,
+                162
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.31,
+                  "y": 0.71,
+                  "w": 0.39,
+                  "h": 0.13
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "label": "Broad medium-gray shirt with sloping shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Broad medium-gray shirt and sloping shoulders remain clear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.819518,
+                "bbox": [
+                  0,
+                  783,
+                  1254,
+                  1254
+                ],
+                "width": 1254,
+                "height": 471,
+                "min_dimension": 471,
+                "mean_rgb": [
+                  128.573,
+                  123.533,
+                  123.325
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.92058,
+                "bbox": [
+                  0,
+                  138,
+                  194,
+                  192
+                ],
+                "width": 194,
+                "height": 54,
+                "min_dimension": 54,
+                "mean_rgb": [
+                  115.836,
+                  113.986,
+                  115.766
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                138,
+                194,
+                192
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.72,
+                  "w": 1.0,
+                  "h": 0.28
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "spiky-charcoal-hair": {
+                "projected_width": 102,
+                "projected_height": 96,
+                "min_visible_dimension": 96,
+                "risk": false
+              },
+              "pale-anime-face": {
+                "projected_width": 86,
+                "projected_height": 92,
+                "min_visible_dimension": 86,
+                "risk": false
+              },
+              "narrow-brown-eyes": {
+                "projected_width": 62,
+                "projected_height": 16,
+                "min_visible_dimension": 16,
+                "risk": false
+              },
+              "small-neutral-mouth": {
+                "projected_width": 14,
+                "projected_height": 6,
+                "min_visible_dimension": 6,
+                "risk": false
+              },
+              "gray-crew-neck-collar": {
+                "projected_width": 76,
+                "projected_height": 26,
+                "min_visible_dimension": 26,
+                "risk": false
+              },
+              "broad-gray-shirt": {
+                "projected_width": 194,
+                "projected_height": 54,
+                "min_visible_dimension": 54,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1254,
+            1254
+          ],
+          "input_subject_bbox": [
+            0,
+            16,
+            1254,
+            1254
+          ],
+          "logical_size": [
+            194,
+            192
+          ],
+          "target_height": 192,
+          "actual_height": 192,
+          "logical_width": 194,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 754529,
+            "transparent_pixels": 0,
+            "background_pixels": 754529
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.52653,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            194,
+            192
+          ],
+          "output_size": [
+            194,
+            192
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 42,
+            "color_ratio": 0.0021211049946972377
+          },
+          "subject_bbox": [
+            0,
+            0,
+            194,
+            192
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 42,
+            "separation": {
+              "colors": 42,
+              "min_delta_e": 0.0106,
+              "closest_pair": [
+                [
+                  246,
+                  200,
+                  152
+                ],
+                [
+                  248,
+                  204,
+                  156
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              194,
+              192
+            ],
+            "bbox": [
+              0,
+              0,
+              194,
+              192
+            ],
+            "subject_height": 192,
+            "binary_alpha": true,
+            "palette_size": 42,
+            "max_palette_size": 48,
+            "target_height": 192,
+            "actual_height": 192,
+            "logical_width": 194,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce7e-9995-7520-9cf7-fbf0ec40fc16",
+          "elapsed_seconds": 92.614,
+          "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+          "candidate_sha256": "fd950315a1c7bc53dfd19bdff724b032e4044cf4b174174ed791038b40b7223c",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\logical-resolution-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "spiky-charcoal-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.98,
+              "reason": "Layered charcoal hair keeps its uneven pointed outline and long bangs.",
+              "location": {
+                "x": 0.22,
+                "y": 0.0,
+                "w": 0.56,
+                "h": 0.5
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.96,
+              "reason": "Centered peach face, both ears, rounded cheeks, and tapered chin are readable.",
+              "location": {
+                "x": 0.28,
+                "y": 0.27,
+                "w": 0.44,
+                "h": 0.47
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.94,
+              "reason": "Both narrow eyes remain distinct with dark irises and pale sclera.",
+              "location": {
+                "x": 0.35,
+                "y": 0.36,
+                "w": 0.31,
+                "h": 0.08
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "state": "SIMPLIFIED",
+              "confidence": 0.95,
+              "reason": "Short closed neutral mouth is distinct below the nose.",
+              "location": {
+                "x": 0.47,
+                "y": 0.54,
+                "w": 0.07,
+                "h": 0.025
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "state": "SIMPLIFIED",
+              "confidence": 0.94,
+              "reason": "Curved gray crew neckline frames the neck base.",
+              "location": {
+                "x": 0.31,
+                "y": 0.71,
+                "w": 0.39,
+                "h": 0.13
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "Broad medium-gray shirt and sloping shoulders remain clear.",
+              "location": {
+                "x": 0.0,
+                "y": 0.72,
+                "w": 1.0,
+                "h": 0.28
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H192.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H192.preview-4x.png"
+      },
+      "256": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.132353,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.132353,
+          "retention": 0.867647,
+          "feature_results": [
+            {
+              "id": "spiky-charcoal-hair",
+              "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "SIMPLIFIED",
+              "reason": "Voluminous charcoal hair retains pointed tufts and layered bangs across the forehead.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.746428,
+                "bbox": [
+                  316,
+                  13,
+                  913,
+                  661
+                ],
+                "width": 597,
+                "height": 648,
+                "min_dimension": 597,
+                "mean_rgb": [
+                  121.307,
+                  103.63,
+                  91.504
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.700726,
+                "bbox": [
+                  59,
+                  0,
+                  195,
+                  134
+                ],
+                "width": 136,
+                "height": 134,
+                "min_dimension": 134,
+                "mean_rgb": [
+                  109.202,
+                  93.923,
+                  79.65
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                59,
+                0,
+                205,
+                134
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.23,
+                  "y": 0.0,
+                  "w": 0.56,
+                  "h": 0.52
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Centered peach face retains visible ears, rounded cheeks, and tapered chin.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.844296,
+                "bbox": [
+                  362,
+                  238,
+                  875,
+                  730
+                ],
+                "width": 513,
+                "height": 492,
+                "min_dimension": 492,
+                "mean_rgb": [
+                  159.706,
+                  132.077,
+                  112.245
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.804809,
+                "bbox": [
+                  72,
+                  69,
+                  190,
+                  192
+                ],
+                "width": 118,
+                "height": 123,
+                "min_dimension": 118,
+                "mean_rgb": [
+                  179.733,
+                  148.0,
+                  117.791
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                72,
+                69,
+                190,
+                192
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.97,
+                "location_in_candidate_subject": {
+                  "x": 0.28,
+                  "y": 0.27,
+                  "w": 0.45,
+                  "h": 0.48
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Separate narrow eyes show dark brown irises and pale sclera.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  457,
+                  416,
+                  796,
+                  466
+                ],
+                "width": 339,
+                "height": 50,
+                "min_dimension": 50,
+                "mean_rgb": [
+                  185.539,
+                  155.727,
+                  134.153
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  95,
+                  87,
+                  169,
+                  105
+                ],
+                "width": 74,
+                "height": 18,
+                "min_dimension": 18,
+                "mean_rgb": [
+                  201.1,
+                  170.807,
+                  138.396
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                95,
+                87,
+                169,
+                105
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.37,
+                  "y": 0.34,
+                  "w": 0.28,
+                  "h": 0.07
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "label": "Small closed, neutral mouth",
+              "importance": "OPTIONAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Small closed neutral line remains below the nose.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  600,
+                  637,
+                  655,
+                  654
+                ],
+                "width": 55,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  228.956,
+                  183.24,
+                  149.225
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  121,
+                  130,
+                  143,
+                  137
+                ],
+                "width": 22,
+                "height": 7,
+                "min_dimension": 7,
+                "mean_rgb": [
+                  239.416,
+                  193.364,
+                  146.701
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                121,
+                130,
+                143,
+                137
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.96,
+                "location_in_candidate_subject": {
+                  "x": 0.47,
+                  "y": 0.51,
+                  "w": 0.08,
+                  "h": 0.025
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Rounded gray neckline visibly frames the base of the neck.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.98513,
+                "bbox": [
+                  391,
+                  783,
+                  865,
+                  990
+                ],
+                "width": 474,
+                "height": 207,
+                "min_dimension": 207,
+                "mean_rgb": [
+                  174.609,
+                  152.737,
+                  137.139
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  82,
+                  171,
+                  179,
+                  210
+                ],
+                "width": 97,
+                "height": 39,
+                "min_dimension": 39,
+                "mean_rgb": [
+                  165.252,
+                  145.471,
+                  126.959
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                82,
+                171,
+                179,
+                210
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.32,
+                  "y": 0.67,
+                  "w": 0.37,
+                  "h": 0.15
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "label": "Broad medium-gray shirt with sloping shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Broad medium-gray shirt with sloping shoulders fills the lower frame.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.819518,
+                "bbox": [
+                  0,
+                  783,
+                  1254,
+                  1254
+                ],
+                "width": 1254,
+                "height": 471,
+                "min_dimension": 471,
+                "mean_rgb": [
+                  128.573,
+                  123.533,
+                  123.325
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.937071,
+                "bbox": [
+                  0,
+                  189,
+                  259,
+                  256
+                ],
+                "width": 259,
+                "height": 67,
+                "min_dimension": 67,
+                "mean_rgb": [
+                  114.175,
+                  112.981,
+                  115.718
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                189,
+                259,
+                256
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.98,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.74,
+                  "w": 1.0,
+                  "h": 0.26
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "spiky-charcoal-hair": {
+                "projected_width": 136,
+                "projected_height": 134,
+                "min_visible_dimension": 134,
+                "risk": false
+              },
+              "pale-anime-face": {
+                "projected_width": 118,
+                "projected_height": 123,
+                "min_visible_dimension": 118,
+                "risk": false
+              },
+              "narrow-brown-eyes": {
+                "projected_width": 74,
+                "projected_height": 18,
+                "min_visible_dimension": 18,
+                "risk": false
+              },
+              "small-neutral-mouth": {
+                "projected_width": 22,
+                "projected_height": 7,
+                "min_visible_dimension": 7,
+                "risk": false
+              },
+              "gray-crew-neck-collar": {
+                "projected_width": 97,
+                "projected_height": 39,
+                "min_visible_dimension": 39,
+                "risk": false
+              },
+              "broad-gray-shirt": {
+                "projected_width": 259,
+                "projected_height": 67,
+                "min_visible_dimension": 67,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1254,
+            1254
+          ],
+          "input_subject_bbox": [
+            0,
+            16,
+            1254,
+            1254
+          ],
+          "logical_size": [
+            259,
+            256
+          ],
+          "target_height": 256,
+          "actual_height": 256,
+          "logical_width": 259,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 754529,
+            "transparent_pixels": 0,
+            "background_pixels": 754529
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.526544,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            259,
+            256
+          ],
+          "output_size": [
+            259,
+            256
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 47,
+            "color_ratio": 0.0013336738458046026
+          },
+          "subject_bbox": [
+            0,
+            0,
+            259,
+            256
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 47,
+            "separation": {
+              "colors": 47,
+              "min_delta_e": 0.0106,
+              "closest_pair": [
+                [
+                  246,
+                  200,
+                  152
+                ],
+                [
+                  248,
+                  204,
+                  156
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              259,
+              256
+            ],
+            "bbox": [
+              0,
+              0,
+              259,
+              256
+            ],
+            "subject_height": 256,
+            "binary_alpha": true,
+            "palette_size": 47,
+            "max_palette_size": 48,
+            "target_height": 256,
+            "actual_height": 256,
+            "logical_width": 259,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce7e-9995-7520-9cf7-fbf0ec40fc16",
+          "elapsed_seconds": 92.614,
+          "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+          "candidate_sha256": "85934fcae189cda8abc5286a6dcc113d8849d1b747b89cba3aefa9e27e6947b2",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\logical-resolution-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "spiky-charcoal-hair",
+              "state": "SIMPLIFIED",
+              "confidence": 0.98,
+              "reason": "Voluminous charcoal hair retains pointed tufts and layered bangs across the forehead.",
+              "location": {
+                "x": 0.23,
+                "y": 0.0,
+                "w": 0.56,
+                "h": 0.52
+              }
+            },
+            {
+              "id": "pale-anime-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.97,
+              "reason": "Centered peach face retains visible ears, rounded cheeks, and tapered chin.",
+              "location": {
+                "x": 0.28,
+                "y": 0.27,
+                "w": 0.45,
+                "h": 0.48
+              }
+            },
+            {
+              "id": "narrow-brown-eyes",
+              "state": "SIMPLIFIED",
+              "confidence": 0.96,
+              "reason": "Separate narrow eyes show dark brown irises and pale sclera.",
+              "location": {
+                "x": 0.37,
+                "y": 0.34,
+                "w": 0.28,
+                "h": 0.07
+              }
+            },
+            {
+              "id": "small-neutral-mouth",
+              "state": "SIMPLIFIED",
+              "confidence": 0.96,
+              "reason": "Small closed neutral line remains below the nose.",
+              "location": {
+                "x": 0.47,
+                "y": 0.51,
+                "w": 0.08,
+                "h": 0.025
+              }
+            },
+            {
+              "id": "gray-crew-neck-collar",
+              "state": "SIMPLIFIED",
+              "confidence": 0.95,
+              "reason": "Rounded gray neckline visibly frames the base of the neck.",
+              "location": {
+                "x": 0.32,
+                "y": 0.67,
+                "w": 0.37,
+                "h": 0.15
+              }
+            },
+            {
+              "id": "broad-gray-shirt",
+              "state": "PRESERVED",
+              "confidence": 0.98,
+              "reason": "Broad medium-gray shirt with sloping shoulders fills the lower frame.",
+              "location": {
+                "x": 0.0,
+                "y": 0.74,
+                "w": 1.0,
+                "h": 0.26
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H256.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\candidates\\R00\\H256.preview-4x.png"
+      }
+    },
+    "identity_loss_index": {
+      "128": 0.132353,
+      "160": 0.132353,
+      "192": 0.132353,
+      "256": 0.132353
+    },
+    "semantic_preservation": {
+      "pass": true,
+      "status": "PASS_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "spiky-charcoal-hair",
+          "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+          "importance": "CRITICAL",
+          "kind": "HAIR",
+          "state": "SIMPLIFIED",
+          "reason": "Broad charcoal hair silhouette, pointed outer tufts, and long bangs remain recognizable in pixel art.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.746428,
+            "bbox": [
+              316,
+              13,
+              913,
+              661
+            ],
+            "width": 597,
+            "height": 648,
+            "min_dimension": 597,
+            "mean_rgb": [
+              121.307,
+              103.63,
+              91.504
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.775048,
+            "bbox": [
+              288,
+              0,
+              940,
+              565
+            ],
+            "width": 652,
+            "height": 565,
+            "min_dimension": 565,
+            "mean_rgb": [
+              99.675,
+              86.633,
+              74.55
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            287,
+            0,
+            941,
+            565
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.229,
+              "y": 0.0,
+              "w": 0.521,
+              "h": 0.456
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "pale-anime-face",
+          "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Centered peach face retains both ears, rounded cheeks, and a tapered chin.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.844296,
+            "bbox": [
+              362,
+              238,
+              875,
+              730
+            ],
+            "width": 513,
+            "height": 492,
+            "min_dimension": 492,
+            "mean_rgb": [
+              159.706,
+              132.077,
+              112.245
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.865832,
+            "bbox": [
+              359,
+              252,
+              875,
+              738
+            ],
+            "width": 516,
+            "height": 486,
+            "min_dimension": 486,
+            "mean_rgb": [
+              158.04,
+              131.095,
+              104.006
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            359,
+            252,
+            875,
+            738
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.287,
+              "y": 0.204,
+              "w": 0.41,
+              "h": 0.392
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "narrow-brown-eyes",
+          "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Both narrow eyes remain distinct, with dark brown irises and pale sclera.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              457,
+              416,
+              796,
+              466
+            ],
+            "width": 339,
+            "height": 50,
+            "min_dimension": 50,
+            "mean_rgb": [
+              185.539,
+              155.727,
+              134.153
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              460,
+              430,
+              787,
+              472
+            ],
+            "width": 327,
+            "height": 42,
+            "min_dimension": 42,
+            "mean_rgb": [
+              185.527,
+              162.403,
+              138.708
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            460,
+            430,
+            787,
+            472
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.367,
+              "y": 0.348,
+              "w": 0.26,
+              "h": 0.033
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "small-neutral-mouth",
+          "label": "Small closed, neutral mouth",
+          "importance": "OPTIONAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "A small closed, neutral mouth remains visible below the nose.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              600,
+              637,
+              655,
+              654
+            ],
+            "width": 55,
+            "height": 17,
+            "min_dimension": 17,
+            "mean_rgb": [
+              228.956,
+              183.24,
+              149.225
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              601,
+              642,
+              648,
+              655
+            ],
+            "width": 47,
+            "height": 13,
+            "min_dimension": 13,
+            "mean_rgb": [
+              204.782,
+              150.913,
+              109.717
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            601,
+            642,
+            648,
+            655
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.95,
+            "location_in_candidate_subject": {
+              "x": 0.48,
+              "y": 0.519,
+              "w": 0.036,
+              "h": 0.01
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "gray-crew-neck-collar",
+          "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "A rounded gray neckline still frames the base of the neck.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.98513,
+            "bbox": [
+              391,
+              783,
+              865,
+              990
+            ],
+            "width": 474,
+            "height": 207,
+            "min_dimension": 207,
+            "mean_rgb": [
+              174.609,
+              152.737,
+              137.139
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.992711,
+            "bbox": [
+              410,
+              793,
+              866,
+              1040
+            ],
+            "width": 456,
+            "height": 247,
+            "min_dimension": 247,
+            "mean_rgb": [
+              166.519,
+              145.869,
+              126.321
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            410,
+            793,
+            866,
+            1040
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.94,
+            "location_in_candidate_subject": {
+              "x": 0.327,
+              "y": 0.641,
+              "w": 0.363,
+              "h": 0.199
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "broad-gray-shirt",
+          "label": "Broad medium-gray shirt with sloping shoulders",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "The gray shirt remains broad across the lower frame with sloping shoulders.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.819518,
+            "bbox": [
+              0,
+              783,
+              1254,
+              1254
+            ],
+            "width": 1254,
+            "height": 471,
+            "min_dimension": 471,
+            "mean_rgb": [
+              128.573,
+              123.533,
+              123.325
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.825471,
+            "bbox": [
+              0,
+              797,
+              1254,
+              1238
+            ],
+            "width": 1254,
+            "height": 441,
+            "min_dimension": 441,
+            "mean_rgb": [
+              124.628,
+              119.372,
+              117.691
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            0,
+            797,
+            1254,
+            1238
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.0,
+              "y": 0.644,
+              "w": 1.0,
+              "h": 0.356
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0ce7d-482c-71c2-879d-5cb1758b3110",
+        "elapsed_seconds": 41.852,
+        "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+        "candidate_sha256": "48a320f3f779d3510ec2a701b20af1f7d6d370e6b35a37fe96179c6dd66284ca",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review\\semantic-preservation-2508e57455c8-48a320f3f779",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "spiky-charcoal-hair",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Broad charcoal hair silhouette, pointed outer tufts, and long bangs remain recognizable in pixel art.",
+            "location": {
+              "x": 0.229,
+              "y": 0.0,
+              "w": 0.521,
+              "h": 0.456
+            }
+          },
+          {
+            "id": "pale-anime-face",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Centered peach face retains both ears, rounded cheeks, and a tapered chin.",
+            "location": {
+              "x": 0.287,
+              "y": 0.204,
+              "w": 0.41,
+              "h": 0.392
+            }
+          },
+          {
+            "id": "narrow-brown-eyes",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Both narrow eyes remain distinct, with dark brown irises and pale sclera.",
+            "location": {
+              "x": 0.367,
+              "y": 0.348,
+              "w": 0.26,
+              "h": 0.033
+            }
+          },
+          {
+            "id": "small-neutral-mouth",
+            "state": "SIMPLIFIED",
+            "confidence": 0.95,
+            "reason": "A small closed, neutral mouth remains visible below the nose.",
+            "location": {
+              "x": 0.48,
+              "y": 0.519,
+              "w": 0.036,
+              "h": 0.01
+            }
+          },
+          {
+            "id": "gray-crew-neck-collar",
+            "state": "SIMPLIFIED",
+            "confidence": 0.94,
+            "reason": "A rounded gray neckline still frames the base of the neck.",
+            "location": {
+              "x": 0.327,
+              "y": 0.641,
+              "w": 0.363,
+              "h": 0.199
+            }
+          },
+          {
+            "id": "broad-gray-shirt",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "The gray shirt remains broad across the lower frame with sloping shoulders.",
+            "location": {
+              "x": 0.0,
+              "y": 0.644,
+              "w": 1.0,
+              "h": 0.356
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": null,
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": true
+  },
+  "status": "PASS_AUTO_RESOLUTION",
+  "accepted": "logical_master",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\R00.png",
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\logical\\R00.png",
+    "size": [
+      130,
+      128
+    ],
+    "target_height": 128
+  },
+  "source_id": "R00",
+  "method": "D1",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce49-de0a-7ae1-85c1-0af2285d8cca",
+    "elapsed_seconds": 43.643,
+    "source_id": "R00",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+    "source_sha256": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+    "prompt_sha256": "e72f78c0b7d5ba4ae5f03a279669d2ec42961849a3ed7c6e919c74397849ac8a",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R00\\identity_feature_manifest.json",
+    "manifest_sha256": "e63f51fe675fecd555bfc9447b0a719737fb87c41e25bc7a8946d167eb6eda16",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R00\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R00\\identity_feature_manifest.json",
+  "accepted_sha256": "364770314e5d8991c0145029541ea772aea7611d6021106bac5b0183cb78b68e"
+}

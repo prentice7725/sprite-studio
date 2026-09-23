@@ -1,0 +1,1577 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d2_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R08\\semantic\\R08.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic Pixel Master redraw",
+      "source_id": "R08",
+      "stage": "stage2",
+      "prompt": "Using the original character reference and the stage-1 semantic pixel-art intermediate, redraw a compact pixel-art design intended to survive projection to one of 128, 160, 192, or 256 logical pixels of character height. Spend visual detail only on identity-critical features. Increase the relative size of eyes and facial landmarks when necessary. Merge only regions that would disappear at the selected logical resolution. Keep thin identity-defining equipment visually separable. Preserve silhouette, asymmetric identity details and readable costume hierarchy. Do not merely apply a pixel filter, and do not require an exact logical grid or integer transport. Avoid painterly texture, soft gradients, blur, bloom, text, UI, and extra characters. Use a solid magenta background.",
+      "prompt_sha256": "006c00e3fd3f2bd3b371215e200d3ce99a21011d6c4c726432f4652d35fa8271",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage1.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png": "49e4741c892d9f7858a699b446359f700f4a579ad4cc5c57d58247102864101b",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage1.png": "a402cfbe309bd820e7357bd0abf97aa4416182008c85bd61983a173287b485d3"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-0aae2b20-a964-4f29-9e62-c44f4df27cce.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage2.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage2.png",
+      "raw_sha256": "a81643ef9614b99423dc5fffce5e3ea54b836b5378b652c19626b66b48c854da",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T13:13:02.586167+00:00"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 1071141
+      },
+      "subject_bbox": [
+        304,
+        21,
+        898,
+        1378
+      ],
+      "subject_area_ratio": 0.512419,
+      "edge_softness_ratio": 0.997753,
+      "adjacent_transition_ratio": 0.898755,
+      "cluster_size_distribution": {
+        "opaque_pixels": 472287,
+        "opaque_color_count": 88564,
+        "color_ratio": 0.187522,
+        "median_quantized_cluster": 84.0,
+        "small_quantized_cluster_fraction": 0.151603
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": false,
+    "status": "FAIL_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "face",
+        "label": "Small, softly featured face with large brown eyes",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "AMBIGUOUS",
+        "reason": "required-side-relation-not-preserved",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            480,
+            102,
+            593,
+            221
+          ],
+          "width": 113,
+          "height": 119,
+          "min_dimension": 113,
+          "mean_rgb": [
+            177.333,
+            155.835,
+            140.038
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.968101,
+          "bbox": [
+            166,
+            94,
+            297,
+            245
+          ],
+          "width": 131,
+          "height": 151,
+          "min_dimension": 131,
+          "mean_rgb": [
+            191.249,
+            160.344,
+            133.601
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          166,
+          94,
+          297,
+          245
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.28,
+            "y": 0.07,
+            "w": 0.22,
+            "h": 0.11
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "loose-bun-hairstyle",
+        "label": "Light brown hair in a loose high bun with long face-framing strands",
+        "importance": "CRITICAL",
+        "kind": "HAIR",
+        "state": "AMBIGUOUS",
+        "reason": "required-side-relation-not-preserved",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.867712,
+          "bbox": [
+            427,
+            25,
+            662,
+            504
+          ],
+          "width": 235,
+          "height": 479,
+          "min_dimension": 235,
+          "mean_rgb": [
+            140.445,
+            124.626,
+            110.743
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.822578,
+          "bbox": [
+            95,
+            0,
+            363,
+            448
+          ],
+          "width": 268,
+          "height": 448,
+          "min_dimension": 268,
+          "mean_rgb": [
+            150.318,
+            131.173,
+            109.039
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          95,
+          0,
+          363,
+          448
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.16,
+            "y": 0.0,
+            "w": 0.45,
+            "h": 0.33
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "trailing-blue-hair-ribbon",
+        "label": "Dark blue ribbon tails trailing from the bun",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Dark blue tails extend from the bun toward image-right.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.398057,
+          "bbox": [
+            598,
+            64,
+            728,
+            229
+          ],
+          "width": 130,
+          "height": 165,
+          "min_dimension": 130,
+          "mean_rgb": [
+            126.377,
+            112.943,
+            103.101
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.470818,
+          "bbox": [
+            279,
+            27,
+            427,
+            218
+          ],
+          "width": 148,
+          "height": 191,
+          "min_dimension": 148,
+          "mean_rgb": [
+            109.43,
+            96.882,
+            84.657
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          279,
+          27,
+          428,
+          218
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.47,
+            "y": 0.02,
+            "w": 0.25,
+            "h": 0.14
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "sweeping-olive-cloak",
+        "label": "Large muted olive-gray cloak with a broad draped shoulder and flared hem",
+        "importance": "CRITICAL",
+        "kind": "SILHOUETTE",
+        "state": "SIMPLIFIED",
+        "reason": "Muted olive-gray cloak keeps its broad draped shoulders and flared hem.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.724328,
+          "bbox": [
+            324,
+            214,
+            894,
+            1167
+          ],
+          "width": 570,
+          "height": 953,
+          "min_dimension": 570,
+          "mean_rgb": [
+            129.664,
+            116.223,
+            103.638
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.780222,
+          "bbox": [
+            11,
+            257,
+            589,
+            1140
+          ],
+          "width": 578,
+          "height": 883,
+          "min_dimension": 578,
+          "mean_rgb": [
+            146.406,
+            132.359,
+            112.539
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          11,
+          257,
+          589,
+          1140
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.02,
+            "y": 0.19,
+            "w": 0.97,
+            "h": 0.65
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "ivory-dress-and-dark-panels",
+        "label": "Long ivory dress with narrow dark blue vertical front panels",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "Long ivory skirt and narrow dark blue vertical front panels remain distinct.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.958672,
+          "bbox": [
+            402,
+            462,
+            723,
+            1153
+          ],
+          "width": 321,
+          "height": 691,
+          "min_dimension": 321,
+          "mean_rgb": [
+            134.858,
+            121.424,
+            109.01
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.976314,
+          "bbox": [
+            95,
+            298,
+            422,
+            1127
+          ],
+          "width": 327,
+          "height": 829,
+          "min_dimension": 327,
+          "mean_rgb": [
+            155.807,
+            142.311,
+            123.687
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          95,
+          298,
+          422,
+          1127
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.95,
+          "location_in_candidate_subject": {
+            "x": 0.16,
+            "y": 0.22,
+            "w": 0.55,
+            "h": 0.61
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "strapped-travel-pack",
+        "label": "Large brown travel pack with visible strapped pockets behind the shoulders",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Bulky brown pack with visible leather compartments and straps remains behind the image-right shoulder.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.917352,
+          "bbox": [
+            658,
+            271,
+            823,
+            731
+          ],
+          "width": 165,
+          "height": 460,
+          "min_dimension": 165,
+          "mean_rgb": [
+            112.528,
+            98.517,
+            85.722
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.891121,
+          "bbox": [
+            344,
+            257,
+            529,
+            720
+          ],
+          "width": 185,
+          "height": 463,
+          "min_dimension": 185,
+          "mean_rgb": [
+            119.055,
+            102.152,
+            81.596
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          344,
+          257,
+          529,
+          720
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.94,
+          "location_in_candidate_subject": {
+            "x": 0.58,
+            "y": 0.19,
+            "w": 0.31,
+            "h": 0.34
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "held-decorated-book",
+        "label": "Rectangular dark brown book with worn gold detailing, held at the viewer's left",
+        "importance": "CRITICAL",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Dark rectangular book with gold detailing is held at image-left against the torso.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.933626,
+          "bbox": [
+            380,
+            330,
+            520,
+            501
+          ],
+          "width": 140,
+          "height": 171,
+          "min_dimension": 140,
+          "mean_rgb": [
+            131.361,
+            116.284,
+            103.394
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.956852,
+          "bbox": [
+            77,
+            325,
+            208,
+            489
+          ],
+          "width": 131,
+          "height": 164,
+          "min_dimension": 131,
+          "mean_rgb": [
+            144.713,
+            126.966,
+            105.588
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          77,
+          325,
+          208,
+          489
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.13,
+            "y": 0.24,
+            "w": 0.22,
+            "h": 0.12
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "hanging-lantern",
+        "label": "Small brass-framed lantern hanging at the viewer-right hip",
+        "importance": "CRITICAL",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Brass-framed lantern with a glass body and top handle hangs at the image-right hip.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.927073,
+          "bbox": [
+            764,
+            522,
+            830,
+            704
+          ],
+          "width": 66,
+          "height": 182,
+          "min_dimension": 66,
+          "mean_rgb": [
+            112.439,
+            98.618,
+            85.939
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.812461,
+          "bbox": [
+            451,
+            556,
+            529,
+            720
+          ],
+          "width": 78,
+          "height": 164,
+          "min_dimension": 78,
+          "mean_rgb": [
+            114.708,
+            96.854,
+            75.355
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          451,
+          556,
+          529,
+          720
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.76,
+            "y": 0.41,
+            "w": 0.13,
+            "h": 0.12
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "round-hanging-watch",
+        "label": "Round pale-faced watch hanging at the front waist",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Round pale-faced watch remains visible hanging at the front waist.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            552,
+            576,
+            599,
+            624
+          ],
+          "width": 47,
+          "height": 48,
+          "min_dimension": 47,
+          "mean_rgb": [
+            124.369,
+            109.086,
+            94.005
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            249,
+            569,
+            297,
+            625
+          ],
+          "width": 48,
+          "height": 56,
+          "min_dimension": 48,
+          "mean_rgb": [
+            140.58,
+            122.047,
+            94.892
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          249,
+          569,
+          297,
+          625
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.42,
+            "y": 0.42,
+            "w": 0.08,
+            "h": 0.04
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [
+      {
+        "feature_id": "face",
+        "reason": "required-side-relation-not-preserved"
+      },
+      {
+        "feature_id": "loose-bun-hairstyle",
+        "reason": "required-side-relation-not-preserved"
+      }
+    ],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0cea5-683a-7433-b282-56729177c4e3",
+      "elapsed_seconds": 60.76,
+      "source_sha256": "2f03ca4c362b7cf93c0e0d208f0419507a1871526e1351d90ab4b5605ca2caf8",
+      "candidate_sha256": "414ded679593ecce0b9ce0e77dde640fa02fa7666a8ec308f9acd52cdfc52ad2",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R08\\identity-review\\semantic-preservation-2f03ca4c362b-414ded679593",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "face",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Small face remains clear, with large brown eyes, nose and mouth visible.",
+          "location": {
+            "x": 0.28,
+            "y": 0.07,
+            "w": 0.22,
+            "h": 0.11
+          }
+        },
+        {
+          "id": "loose-bun-hairstyle",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Light brown high bun and long loose strands framing the face remain recognizable.",
+          "location": {
+            "x": 0.16,
+            "y": 0.0,
+            "w": 0.45,
+            "h": 0.33
+          }
+        },
+        {
+          "id": "trailing-blue-hair-ribbon",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Dark blue tails extend from the bun toward image-right.",
+          "location": {
+            "x": 0.47,
+            "y": 0.02,
+            "w": 0.25,
+            "h": 0.14
+          }
+        },
+        {
+          "id": "sweeping-olive-cloak",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Muted olive-gray cloak keeps its broad draped shoulders and flared hem.",
+          "location": {
+            "x": 0.02,
+            "y": 0.19,
+            "w": 0.97,
+            "h": 0.65
+          }
+        },
+        {
+          "id": "ivory-dress-and-dark-panels",
+          "state": "SIMPLIFIED",
+          "confidence": 0.95,
+          "reason": "Long ivory skirt and narrow dark blue vertical front panels remain distinct.",
+          "location": {
+            "x": 0.16,
+            "y": 0.22,
+            "w": 0.55,
+            "h": 0.61
+          }
+        },
+        {
+          "id": "strapped-travel-pack",
+          "state": "SIMPLIFIED",
+          "confidence": 0.94,
+          "reason": "Bulky brown pack with visible leather compartments and straps remains behind the image-right shoulder.",
+          "location": {
+            "x": 0.58,
+            "y": 0.19,
+            "w": 0.31,
+            "h": 0.34
+          }
+        },
+        {
+          "id": "held-decorated-book",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Dark rectangular book with gold detailing is held at image-left against the torso.",
+          "location": {
+            "x": 0.13,
+            "y": 0.24,
+            "w": 0.22,
+            "h": 0.12
+          }
+        },
+        {
+          "id": "hanging-lantern",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Brass-framed lantern with a glass body and top handle hangs at the image-right hip.",
+          "location": {
+            "x": 0.76,
+            "y": 0.41,
+            "w": 0.13,
+            "h": 0.12
+          }
+        },
+        {
+          "id": "round-hanging-watch",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Round pale-faced watch remains visible hanging at the front waist.",
+          "location": {
+            "x": 0.42,
+            "y": 0.42,
+            "w": 0.08,
+            "h": 0.04
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": null,
+    "reason": "no_valid_resolution",
+    "candidate_results": {
+      "128": "NOT_REQUIRED",
+      "160": "NOT_REQUIRED",
+      "192": "NOT_REQUIRED",
+      "256": "NOT_REQUIRED"
+    },
+    "candidate_details": {},
+    "identity_loss_index": {},
+    "semantic_preservation": {
+      "pass": false,
+      "status": "FAIL_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "face",
+          "label": "Small, softly featured face with large brown eyes",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "AMBIGUOUS",
+          "reason": "required-side-relation-not-preserved",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              480,
+              102,
+              593,
+              221
+            ],
+            "width": 113,
+            "height": 119,
+            "min_dimension": 113,
+            "mean_rgb": [
+              177.333,
+              155.835,
+              140.038
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.968101,
+            "bbox": [
+              166,
+              94,
+              297,
+              245
+            ],
+            "width": 131,
+            "height": 151,
+            "min_dimension": 131,
+            "mean_rgb": [
+              191.249,
+              160.344,
+              133.601
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            166,
+            94,
+            297,
+            245
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.28,
+              "y": 0.07,
+              "w": 0.22,
+              "h": 0.11
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "loose-bun-hairstyle",
+          "label": "Light brown hair in a loose high bun with long face-framing strands",
+          "importance": "CRITICAL",
+          "kind": "HAIR",
+          "state": "AMBIGUOUS",
+          "reason": "required-side-relation-not-preserved",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.867712,
+            "bbox": [
+              427,
+              25,
+              662,
+              504
+            ],
+            "width": 235,
+            "height": 479,
+            "min_dimension": 235,
+            "mean_rgb": [
+              140.445,
+              124.626,
+              110.743
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.822578,
+            "bbox": [
+              95,
+              0,
+              363,
+              448
+            ],
+            "width": 268,
+            "height": 448,
+            "min_dimension": 268,
+            "mean_rgb": [
+              150.318,
+              131.173,
+              109.039
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            95,
+            0,
+            363,
+            448
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.16,
+              "y": 0.0,
+              "w": 0.45,
+              "h": 0.33
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "trailing-blue-hair-ribbon",
+          "label": "Dark blue ribbon tails trailing from the bun",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Dark blue tails extend from the bun toward image-right.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.398057,
+            "bbox": [
+              598,
+              64,
+              728,
+              229
+            ],
+            "width": 130,
+            "height": 165,
+            "min_dimension": 130,
+            "mean_rgb": [
+              126.377,
+              112.943,
+              103.101
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.470818,
+            "bbox": [
+              279,
+              27,
+              427,
+              218
+            ],
+            "width": 148,
+            "height": 191,
+            "min_dimension": 148,
+            "mean_rgb": [
+              109.43,
+              96.882,
+              84.657
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            279,
+            27,
+            428,
+            218
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.47,
+              "y": 0.02,
+              "w": 0.25,
+              "h": 0.14
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "sweeping-olive-cloak",
+          "label": "Large muted olive-gray cloak with a broad draped shoulder and flared hem",
+          "importance": "CRITICAL",
+          "kind": "SILHOUETTE",
+          "state": "SIMPLIFIED",
+          "reason": "Muted olive-gray cloak keeps its broad draped shoulders and flared hem.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.724328,
+            "bbox": [
+              324,
+              214,
+              894,
+              1167
+            ],
+            "width": 570,
+            "height": 953,
+            "min_dimension": 570,
+            "mean_rgb": [
+              129.664,
+              116.223,
+              103.638
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.780222,
+            "bbox": [
+              11,
+              257,
+              589,
+              1140
+            ],
+            "width": 578,
+            "height": 883,
+            "min_dimension": 578,
+            "mean_rgb": [
+              146.406,
+              132.359,
+              112.539
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            11,
+            257,
+            589,
+            1140
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.02,
+              "y": 0.19,
+              "w": 0.97,
+              "h": 0.65
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "ivory-dress-and-dark-panels",
+          "label": "Long ivory dress with narrow dark blue vertical front panels",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "Long ivory skirt and narrow dark blue vertical front panels remain distinct.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.958672,
+            "bbox": [
+              402,
+              462,
+              723,
+              1153
+            ],
+            "width": 321,
+            "height": 691,
+            "min_dimension": 321,
+            "mean_rgb": [
+              134.858,
+              121.424,
+              109.01
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.976314,
+            "bbox": [
+              95,
+              298,
+              422,
+              1127
+            ],
+            "width": 327,
+            "height": 829,
+            "min_dimension": 327,
+            "mean_rgb": [
+              155.807,
+              142.311,
+              123.687
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            95,
+            298,
+            422,
+            1127
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.95,
+            "location_in_candidate_subject": {
+              "x": 0.16,
+              "y": 0.22,
+              "w": 0.55,
+              "h": 0.61
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "strapped-travel-pack",
+          "label": "Large brown travel pack with visible strapped pockets behind the shoulders",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Bulky brown pack with visible leather compartments and straps remains behind the image-right shoulder.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.917352,
+            "bbox": [
+              658,
+              271,
+              823,
+              731
+            ],
+            "width": 165,
+            "height": 460,
+            "min_dimension": 165,
+            "mean_rgb": [
+              112.528,
+              98.517,
+              85.722
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.891121,
+            "bbox": [
+              344,
+              257,
+              529,
+              720
+            ],
+            "width": 185,
+            "height": 463,
+            "min_dimension": 185,
+            "mean_rgb": [
+              119.055,
+              102.152,
+              81.596
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            344,
+            257,
+            529,
+            720
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.94,
+            "location_in_candidate_subject": {
+              "x": 0.58,
+              "y": 0.19,
+              "w": 0.31,
+              "h": 0.34
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "held-decorated-book",
+          "label": "Rectangular dark brown book with worn gold detailing, held at the viewer's left",
+          "importance": "CRITICAL",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Dark rectangular book with gold detailing is held at image-left against the torso.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.933626,
+            "bbox": [
+              380,
+              330,
+              520,
+              501
+            ],
+            "width": 140,
+            "height": 171,
+            "min_dimension": 140,
+            "mean_rgb": [
+              131.361,
+              116.284,
+              103.394
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.956852,
+            "bbox": [
+              77,
+              325,
+              208,
+              489
+            ],
+            "width": 131,
+            "height": 164,
+            "min_dimension": 131,
+            "mean_rgb": [
+              144.713,
+              126.966,
+              105.588
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            77,
+            325,
+            208,
+            489
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.13,
+              "y": 0.24,
+              "w": 0.22,
+              "h": 0.12
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "hanging-lantern",
+          "label": "Small brass-framed lantern hanging at the viewer-right hip",
+          "importance": "CRITICAL",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Brass-framed lantern with a glass body and top handle hangs at the image-right hip.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.927073,
+            "bbox": [
+              764,
+              522,
+              830,
+              704
+            ],
+            "width": 66,
+            "height": 182,
+            "min_dimension": 66,
+            "mean_rgb": [
+              112.439,
+              98.618,
+              85.939
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.812461,
+            "bbox": [
+              451,
+              556,
+              529,
+              720
+            ],
+            "width": 78,
+            "height": 164,
+            "min_dimension": 78,
+            "mean_rgb": [
+              114.708,
+              96.854,
+              75.355
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            451,
+            556,
+            529,
+            720
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.76,
+              "y": 0.41,
+              "w": 0.13,
+              "h": 0.12
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "round-hanging-watch",
+          "label": "Round pale-faced watch hanging at the front waist",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Round pale-faced watch remains visible hanging at the front waist.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              552,
+              576,
+              599,
+              624
+            ],
+            "width": 47,
+            "height": 48,
+            "min_dimension": 47,
+            "mean_rgb": [
+              124.369,
+              109.086,
+              94.005
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              249,
+              569,
+              297,
+              625
+            ],
+            "width": 48,
+            "height": 56,
+            "min_dimension": 48,
+            "mean_rgb": [
+              140.58,
+              122.047,
+              94.892
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            249,
+            569,
+            297,
+            625
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.42,
+              "y": 0.42,
+              "w": 0.08,
+              "h": 0.04
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [
+        {
+          "feature_id": "face",
+          "reason": "required-side-relation-not-preserved"
+        },
+        {
+          "feature_id": "loose-bun-hairstyle",
+          "reason": "required-side-relation-not-preserved"
+        }
+      ],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0cea5-683a-7433-b282-56729177c4e3",
+        "elapsed_seconds": 60.76,
+        "source_sha256": "2f03ca4c362b7cf93c0e0d208f0419507a1871526e1351d90ab4b5605ca2caf8",
+        "candidate_sha256": "414ded679593ecce0b9ce0e77dde640fa02fa7666a8ec308f9acd52cdfc52ad2",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R08\\identity-review\\semantic-preservation-2f03ca4c362b-414ded679593",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "face",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Small face remains clear, with large brown eyes, nose and mouth visible.",
+            "location": {
+              "x": 0.28,
+              "y": 0.07,
+              "w": 0.22,
+              "h": 0.11
+            }
+          },
+          {
+            "id": "loose-bun-hairstyle",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Light brown high bun and long loose strands framing the face remain recognizable.",
+            "location": {
+              "x": 0.16,
+              "y": 0.0,
+              "w": 0.45,
+              "h": 0.33
+            }
+          },
+          {
+            "id": "trailing-blue-hair-ribbon",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Dark blue tails extend from the bun toward image-right.",
+            "location": {
+              "x": 0.47,
+              "y": 0.02,
+              "w": 0.25,
+              "h": 0.14
+            }
+          },
+          {
+            "id": "sweeping-olive-cloak",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Muted olive-gray cloak keeps its broad draped shoulders and flared hem.",
+            "location": {
+              "x": 0.02,
+              "y": 0.19,
+              "w": 0.97,
+              "h": 0.65
+            }
+          },
+          {
+            "id": "ivory-dress-and-dark-panels",
+            "state": "SIMPLIFIED",
+            "confidence": 0.95,
+            "reason": "Long ivory skirt and narrow dark blue vertical front panels remain distinct.",
+            "location": {
+              "x": 0.16,
+              "y": 0.22,
+              "w": 0.55,
+              "h": 0.61
+            }
+          },
+          {
+            "id": "strapped-travel-pack",
+            "state": "SIMPLIFIED",
+            "confidence": 0.94,
+            "reason": "Bulky brown pack with visible leather compartments and straps remains behind the image-right shoulder.",
+            "location": {
+              "x": 0.58,
+              "y": 0.19,
+              "w": 0.31,
+              "h": 0.34
+            }
+          },
+          {
+            "id": "held-decorated-book",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Dark rectangular book with gold detailing is held at image-left against the torso.",
+            "location": {
+              "x": 0.13,
+              "y": 0.24,
+              "w": 0.22,
+              "h": 0.12
+            }
+          },
+          {
+            "id": "hanging-lantern",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Brass-framed lantern with a glass body and top handle hangs at the image-right hip.",
+            "location": {
+              "x": 0.76,
+              "y": 0.41,
+              "w": 0.13,
+              "h": 0.12
+            }
+          },
+          {
+            "id": "round-hanging-watch",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Round pale-faced watch remains visible hanging at the front waist.",
+            "location": {
+              "x": 0.42,
+              "y": 0.42,
+              "w": 0.08,
+              "h": 0.04
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": "SEMANTIC_REDRAW_LOSS",
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": false
+  },
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R08\\intermediate\\R08.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic stage 1",
+      "source_id": "R08",
+      "stage": "stage1",
+      "prompt": "Translate the attached character into a clear authored pixel-art design language while preserving exact identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Simplify hair into intentional masses, group facial landmarks into readable shapes, merge tiny costume details into larger motifs, and use flat coherent color regions with crisp stepped contours. This is a high-resolution semantic intermediate; do not require an exact logical grid yet. Avoid painterly texture, blur, bloom, soft gradients, text, UI, and extra characters. Use a solid magenta background.",
+      "prompt_sha256": "3990c8e8ec5bdfaa547223658bc48c21298cd8cf4483d8fcf0c23f5ffd65770d",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png": "49e4741c892d9f7858a699b446359f700f4a579ad4cc5c57d58247102864101b"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-3162373d-2697-49e5-9a73-8e21b81e47fc.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage1.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R08\\stage1.png",
+      "raw_sha256": "a402cfbe309bd820e7357bd0abf97aa4416182008c85bd61983a173287b485d3",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T13:12:16.929144+00:00"
+    }
+  },
+  "status": "SEMANTIC_REDRAW_LOSS",
+  "accepted": null,
+  "accepted_path": null,
+  "source_id": "R08",
+  "method": "D2",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce51-a0d1-72b3-955a-6b03997e1392",
+    "elapsed_seconds": 82.535,
+    "source_id": "R08",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png",
+    "source_sha256": "49e4741c892d9f7858a699b446359f700f4a579ad4cc5c57d58247102864101b",
+    "prompt_sha256": "03a66c1eb0f6fae8911a19dccbf16d1eed9b7452f1066858a873e890bc5c219a",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R08\\identity_feature_manifest.json",
+    "manifest_sha256": "5513d49e2f520d82ed7b45990781f07ae69e85a9c491847d99147c5583a87b10",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R08\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R08\\identity_feature_manifest.json",
+  "accepted_sha256": null
+}

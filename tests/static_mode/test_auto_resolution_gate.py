@@ -82,3 +82,41 @@ def test_manual_resolution_override_is_reported_separately() -> None:
     assert result.status == "PASS_RESOLUTION_OVERRIDE"
     assert result.decision_report["resolution_override"] is True
     assert result.decision_report["reason"] == "manual_resolution_override"
+
+
+def test_auto_resolution_reviews_all_valid_heights_in_one_candidate_batch() -> None:
+    source = _source()
+    calls: list[tuple[str, tuple[int, ...]]] = []
+
+    def semantic_review(left, right, manifest, *, stage, **kwargs):
+        calls.append((stage, ()))
+        return {
+            "status": "PASS_REVIEW_RESPONSE",
+            "features": [{
+                "id": "red-mark", "state": "PRESERVED", "confidence": 0.99,
+                "reason": "red marking retained", "location": {"x": 0.0, "y": 0.08, "w": 0.2, "h": 0.16},
+            }],
+        }
+
+    def candidate_review(left, images, manifest, *, stage, **kwargs):
+        calls.append((stage, tuple(sorted(images))))
+        return {
+            height: {
+                "status": "PASS_REVIEW_RESPONSE",
+                "features": [{
+                    "id": "red-mark", "state": "PRESERVED", "confidence": 0.99,
+                    "reason": "red marking retained", "location": {"x": 0.0, "y": 0.08, "w": 0.2, "h": 0.16},
+                }],
+            }
+            for height in images
+        }
+
+    result = project_auto_resolution(
+        source, source, _manifest(), audit=True,
+        identity_reviewer=semantic_review,
+        identity_batch_reviewer=candidate_review,
+    )
+    assert result.passed
+    assert result.selected_height == 128
+    assert calls == [("semantic-preservation", ()), ("logical-resolution-grid", AUTO_LOGICAL_HEIGHTS)]
+    assert set(result.candidate_results) == set(AUTO_LOGICAL_HEIGHTS)

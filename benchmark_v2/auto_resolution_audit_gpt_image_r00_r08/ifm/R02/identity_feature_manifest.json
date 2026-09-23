@@ -1,0 +1,142 @@
+{
+  "version": "ifm-v0.1",
+  "source_id": "R02",
+  "features": [
+    {
+      "id": "wide-pointed-wizard-hat",
+      "label": "Oversized, angular dark navy wizard hat with a broad brim and burgundy underside",
+      "importance": "CRITICAL",
+      "kind": "HEADGEAR",
+      "region": {
+        "x": 0.32,
+        "y": 0.007,
+        "w": 0.39,
+        "h": 0.174
+      },
+      "notes": "Tall folded crown and broad pointed brim frame the head.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    },
+    {
+      "id": "hat-compass-ornament",
+      "label": "Gold compass-star ornament mounted on the hat",
+      "importance": "CRITICAL",
+      "kind": "EMBLEM",
+      "region": {
+        "x": 0.532,
+        "y": 0.045,
+        "w": 0.07,
+        "h": 0.057
+      },
+      "notes": "Small gold compass-like star sits on the viewer-right side of the hat.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "RIGHT",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "pale-flowing-hair",
+      "label": "Long pale blonde-silver hair flowing past the shoulders",
+      "importance": "CRITICAL",
+      "kind": "HAIR",
+      "region": {
+        "x": 0.38,
+        "y": 0.076,
+        "w": 0.39,
+        "h": 0.29
+      },
+      "notes": "Light hair frames the face and trails in long locks, especially to viewer right.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    },
+    {
+      "id": "blue-eyed-face",
+      "label": "Fair-skinned face with large blue eyes",
+      "importance": "CRITICAL",
+      "kind": "FACE",
+      "region": {
+        "x": 0.426,
+        "y": 0.108,
+        "w": 0.123,
+        "h": 0.094
+      },
+      "notes": "Visible facial features include blue eyes and a small nose and mouth.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "ornate-left-hand-staff",
+      "label": "Tall dark staff with an ornate ring-shaped head, blue orb, and hanging blue crystal",
+      "importance": "CRITICAL",
+      "kind": "ACCESSORY",
+      "region": {
+        "x": 0.169,
+        "y": 0.039,
+        "w": 0.22,
+        "h": 0.83
+      },
+      "notes": "The staff stands on viewer left; its upper ring holds a bright blue orb.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "LEFT",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "navy-and-burgundy-cape",
+      "label": "Flowing dark navy cape with burgundy lining trailing behind the figure",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.565,
+        "y": 0.156,
+        "w": 0.255,
+        "h": 0.59
+      },
+      "notes": "The cape sweeps out to viewer right, with burgundy inner panels visible.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "RIGHT",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "gold-trimmed-navy-coat",
+      "label": "High-neck dark navy coat with gold trim and angular gold motifs",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.375,
+        "y": 0.194,
+        "w": 0.27,
+        "h": 0.18
+      },
+      "notes": "Layered coat covers the torso and has visible gold edging and star-like details.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "brown-pouch-belt",
+      "label": "Brown waist belt with several attached pouches",
+      "importance": "IMPORTANT",
+      "kind": "ACCESSORY",
+      "region": {
+        "x": 0.367,
+        "y": 0.338,
+        "w": 0.24,
+        "h": 0.151
+      },
+      "notes": "Broad leather belt and multiple pouches cross the waist.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    }
+  ]
+}

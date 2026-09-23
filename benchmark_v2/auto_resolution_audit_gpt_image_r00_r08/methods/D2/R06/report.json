@@ -1,0 +1,4090 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d2_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\semantic\\R06.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D2 stage2 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R06\\stage2.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R06\\stage2.png",
+      "raw_sha256": "6fae25293f2f940aa8d1a5cfaa0564959e1396ca4eff166af9fd81533422ecde",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\phase2B_semantic_pse\\smoke_gpt_image\\_gpt\\D2\\R06\\stage1.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "chroma:magenta",
+        "keyed_pixels": 1074794,
+        "transparent_pixels": 0,
+        "background_pixels": 1065895
+      },
+      "subject_bbox": [
+        212,
+        16,
+        904,
+        1382
+      ],
+      "subject_area_ratio": 0.600919,
+      "edge_softness_ratio": 0.0,
+      "adjacent_transition_ratio": 0.888021,
+      "cluster_size_distribution": {
+        "opaque_pixels": 507149,
+        "opaque_color_count": 167802,
+        "color_ratio": 0.330873,
+        "median_quantized_cluster": 18.0,
+        "small_quantized_cluster_fraction": 0.313973
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": true,
+    "status": "PASS_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "long-pale-flowing-hair",
+        "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+        "importance": "CRITICAL",
+        "kind": "HAIR",
+        "state": "SIMPLIFIED",
+        "reason": "Pale hair frames the face and fans behind both shoulders, with loose locks reaching past the waist.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.65044,
+          "bbox": [
+            416,
+            22,
+            893,
+            598
+          ],
+          "width": 477,
+          "height": 576,
+          "min_dimension": 477,
+          "mean_rgb": [
+            164.339,
+            155.851,
+            150.203
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.682193,
+          "bbox": [
+            197,
+            0,
+            686,
+            584
+          ],
+          "width": 489,
+          "height": 584,
+          "min_dimension": 489,
+          "mean_rgb": [
+            163.923,
+            154.244,
+            153.32
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          197,
+          0,
+          686,
+          584
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.286,
+            "y": 0.0,
+            "w": 0.704,
+            "h": 0.427
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "blue-eyed-face",
+        "label": "Fair anime-style face with large blue eyes",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Centered fair anime face retains both large blue eyes, nose, and mouth.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            501,
+            119,
+            618,
+            225
+          ],
+          "width": 117,
+          "height": 106,
+          "min_dimension": 106,
+          "mean_rgb": [
+            209.07,
+            180.183,
+            168.954
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            285,
+            87,
+            406,
+            201
+          ],
+          "width": 121,
+          "height": 114,
+          "min_dimension": 114,
+          "mean_rgb": [
+            206.103,
+            185.352,
+            170.8
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          285,
+          87,
+          406,
+          201
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.413,
+            "y": 0.064,
+            "w": 0.173,
+            "h": 0.083
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "right-side-hair-bow",
+        "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "Navy bow tails and a small gold ornament remain visible beside the hair on image-right.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.575935,
+          "bbox": [
+            638,
+            93,
+            709,
+            200
+          ],
+          "width": 71,
+          "height": 107,
+          "min_dimension": 71,
+          "mean_rgb": [
+            120.733,
+            121.415,
+            127.931
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.879107,
+          "bbox": [
+            401,
+            77,
+            479,
+            205
+          ],
+          "width": 78,
+          "height": 128,
+          "min_dimension": 78,
+          "mean_rgb": [
+            139.441,
+            132.477,
+            135.522
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          401,
+          77,
+          479,
+          205
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.58,
+            "y": 0.057,
+            "w": 0.112,
+            "h": 0.093
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "ornate-long-staff",
+        "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+        "importance": "CRITICAL",
+        "kind": "WEAPON",
+        "state": "SIMPLIFIED",
+        "reason": "Upright dark-blue staff remains on image-left with a gold star finial and cross-shaped ornaments, extending nearly the character's full height.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.387778,
+          "bbox": [
+            216,
+            231,
+            394,
+            1344
+          ],
+          "width": 178,
+          "height": 1113,
+          "min_dimension": 178,
+          "mean_rgb": [
+            132.99,
+            158.691,
+            123.678
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.461012,
+          "bbox": [
+            0,
+            199,
+            187,
+            1351
+          ],
+          "width": 187,
+          "height": 1152,
+          "min_dimension": 187,
+          "mean_rgb": [
+            164.984,
+            139.654,
+            154.039
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          0,
+          199,
+          187,
+          1356
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.0,
+            "y": 0.146,
+            "w": 0.27,
+            "h": 0.846
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "navy-white-gold-dress",
+        "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "High collar, fitted white chest, navy bodice and split skirt panels remain distinct with gold fastenings.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.933771,
+          "bbox": [
+            381,
+            215,
+            763,
+            903
+          ],
+          "width": 382,
+          "height": 688,
+          "min_dimension": 382,
+          "mean_rgb": [
+            137.669,
+            129.281,
+            134.604
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.943825,
+          "bbox": [
+            167,
+            203,
+            589,
+            890
+          ],
+          "width": 422,
+          "height": 687,
+          "min_dimension": 422,
+          "mean_rgb": [
+            135.812,
+            130.884,
+            137.194
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          167,
+          203,
+          589,
+          890
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.95,
+          "location_in_candidate_subject": {
+            "x": 0.242,
+            "y": 0.149,
+            "w": 0.609,
+            "h": 0.502
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "long-white-draped-panels",
+        "label": "Long white draped panels with gold edging hanging from both shoulders",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "White gold-edged panels hang from both shoulders and frame the outfit down toward the lower legs.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.752637,
+          "bbox": [
+            314,
+            241,
+            877,
+            1077
+          ],
+          "width": 563,
+          "height": 836,
+          "min_dimension": 563,
+          "mean_rgb": [
+            145.903,
+            145.12,
+            138.272
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.785896,
+          "bbox": [
+            38,
+            280,
+            666,
+            1067
+          ],
+          "width": 628,
+          "height": 787,
+          "min_dimension": 628,
+          "mean_rgb": [
+            151.501,
+            140.257,
+            145.821
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          38,
+          280,
+          666,
+          1067
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.055,
+            "y": 0.205,
+            "w": 0.907,
+            "h": 0.576
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "belt-and-left-hip-pouch",
+        "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+        "importance": "IMPORTANT",
+        "kind": "ACCESSORY",
+        "state": "SIMPLIFIED",
+        "reason": "A wide diagonal brown belt crosses the waist, with a rectangular pouch at the image-left hip.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            375,
+            458,
+            646,
+            697
+          ],
+          "width": 271,
+          "height": 239,
+          "min_dimension": 239,
+          "mean_rgb": [
+            145.544,
+            133.869,
+            132.89
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            170,
+            450,
+            419,
+            683
+          ],
+          "width": 249,
+          "height": 233,
+          "min_dimension": 233,
+          "mean_rgb": [
+            146.73,
+            135.445,
+            131.947
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          170,
+          450,
+          419,
+          683
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.95,
+          "location_in_candidate_subject": {
+            "x": 0.246,
+            "y": 0.33,
+            "w": 0.359,
+            "h": 0.17
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "white-gold-armored-greaves",
+        "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "Both bright lower-leg guards remain visible with gold-edged angular armor and cuffs, distinct from the dark thigh sections.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.398673,
+          "bbox": [
+            419,
+            845,
+            796,
+            1369
+          ],
+          "width": 377,
+          "height": 524,
+          "min_dimension": 377,
+          "mean_rgb": [
+            159.551,
+            148.056,
+            142.38
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.429547,
+          "bbox": [
+            197,
+            849,
+            590,
+            1365
+          ],
+          "width": 393,
+          "height": 516,
+          "min_dimension": 393,
+          "mean_rgb": [
+            172.269,
+            158.551,
+            147.63
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          197,
+          849,
+          590,
+          1365
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.95,
+          "location_in_candidate_subject": {
+            "x": 0.285,
+            "y": 0.622,
+            "w": 0.567,
+            "h": 0.377
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0ce99-06dd-7a32-b616-00ed0adfe83c",
+      "elapsed_seconds": 52.279,
+      "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e",
+      "candidate_sha256": "e6b5f97598220a6fd0a318d5e9b7de1913f5ed2aed3f1a012bc5e302700891ab",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\identity-review\\semantic-preservation-40a8a4925ed4-e6b5f9759822",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "long-pale-flowing-hair",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Pale hair frames the face and fans behind both shoulders, with loose locks reaching past the waist.",
+          "location": {
+            "x": 0.286,
+            "y": 0.0,
+            "w": 0.704,
+            "h": 0.427
+          }
+        },
+        {
+          "id": "blue-eyed-face",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "Centered fair anime face retains both large blue eyes, nose, and mouth.",
+          "location": {
+            "x": 0.413,
+            "y": 0.064,
+            "w": 0.173,
+            "h": 0.083
+          }
+        },
+        {
+          "id": "right-side-hair-bow",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Navy bow tails and a small gold ornament remain visible beside the hair on image-right.",
+          "location": {
+            "x": 0.58,
+            "y": 0.057,
+            "w": 0.112,
+            "h": 0.093
+          }
+        },
+        {
+          "id": "ornate-long-staff",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Upright dark-blue staff remains on image-left with a gold star finial and cross-shaped ornaments, extending nearly the character's full height.",
+          "location": {
+            "x": 0.0,
+            "y": 0.146,
+            "w": 0.27,
+            "h": 0.846
+          }
+        },
+        {
+          "id": "navy-white-gold-dress",
+          "state": "SIMPLIFIED",
+          "confidence": 0.95,
+          "reason": "High collar, fitted white chest, navy bodice and split skirt panels remain distinct with gold fastenings.",
+          "location": {
+            "x": 0.242,
+            "y": 0.149,
+            "w": 0.609,
+            "h": 0.502
+          }
+        },
+        {
+          "id": "long-white-draped-panels",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "White gold-edged panels hang from both shoulders and frame the outfit down toward the lower legs.",
+          "location": {
+            "x": 0.055,
+            "y": 0.205,
+            "w": 0.907,
+            "h": 0.576
+          }
+        },
+        {
+          "id": "belt-and-left-hip-pouch",
+          "state": "SIMPLIFIED",
+          "confidence": 0.95,
+          "reason": "A wide diagonal brown belt crosses the waist, with a rectangular pouch at the image-left hip.",
+          "location": {
+            "x": 0.246,
+            "y": 0.33,
+            "w": 0.359,
+            "h": 0.17
+          }
+        },
+        {
+          "id": "white-gold-armored-greaves",
+          "state": "SIMPLIFIED",
+          "confidence": 0.95,
+          "reason": "Both bright lower-leg guards remain visible with gold-edged angular armor and cuffs, distinct from the dark thigh sections.",
+          "location": {
+            "x": 0.285,
+            "y": 0.622,
+            "w": 0.567,
+            "h": 0.377
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": null,
+    "reason": "no_valid_resolution",
+    "candidate_results": {
+      "128": "FAIL_INFORMATION_LOSS",
+      "160": "FAIL_INFORMATION_LOSS",
+      "192": "FAIL_INFORMATION_LOSS",
+      "256": "FAIL_INFORMATION_LOSS"
+    },
+    "candidate_details": {
+      "128": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.5,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.5,
+          "retention": 0.5,
+          "feature_results": [
+            {
+              "id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.65044,
+                "bbox": [
+                  416,
+                  22,
+                  893,
+                  598
+                ],
+                "width": 477,
+                "height": 576,
+                "min_dimension": 477,
+                "mean_rgb": [
+                  164.339,
+                  155.851,
+                  150.203
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  501,
+                  119,
+                  618,
+                  225
+                ],
+                "width": 117,
+                "height": 106,
+                "min_dimension": 106,
+                "mean_rgb": [
+                  209.07,
+                  180.183,
+                  168.954
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-side-hair-bow",
+              "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.575935,
+                "bbox": [
+                  638,
+                  93,
+                  709,
+                  200
+                ],
+                "width": 71,
+                "height": 107,
+                "min_dimension": 71,
+                "mean_rgb": [
+                  120.733,
+                  121.415,
+                  127.931
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.387778,
+                "bbox": [
+                  216,
+                  231,
+                  394,
+                  1344
+                ],
+                "width": 178,
+                "height": 1113,
+                "min_dimension": 178,
+                "mean_rgb": [
+                  132.99,
+                  158.691,
+                  123.678
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.933771,
+                "bbox": [
+                  381,
+                  215,
+                  763,
+                  903
+                ],
+                "width": 382,
+                "height": 688,
+                "min_dimension": 382,
+                "mean_rgb": [
+                  137.669,
+                  129.281,
+                  134.604
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "long-white-draped-panels",
+              "label": "Long white draped panels with gold edging hanging from both shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.752637,
+                "bbox": [
+                  314,
+                  241,
+                  877,
+                  1077
+                ],
+                "width": 563,
+                "height": 836,
+                "min_dimension": 563,
+                "mean_rgb": [
+                  145.903,
+                  145.12,
+                  138.272
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  375,
+                  458,
+                  646,
+                  697
+                ],
+                "width": 271,
+                "height": 239,
+                "min_dimension": 239,
+                "mean_rgb": [
+                  145.544,
+                  133.869,
+                  132.89
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.398673,
+                "bbox": [
+                  419,
+                  845,
+                  796,
+                  1369
+                ],
+                "width": 377,
+                "height": 524,
+                "min_dimension": 377,
+                "mean_rgb": [
+                  159.551,
+                  148.056,
+                  142.38
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "long-pale-flowing-hair": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "blue-eyed-face": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "right-side-hair-bow": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "ornate-long-staff": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "navy-white-gold-dress": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "long-white-draped-panels": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "belt-and-left-hip-pouch": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "white-gold-armored-greaves": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            212,
+            16,
+            904,
+            1382
+          ],
+          "logical_size": [
+            65,
+            128
+          ],
+          "target_height": 128,
+          "actual_height": 128,
+          "logical_width": 65,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 1074794,
+            "transparent_pixels": 0,
+            "background_pixels": 1065895
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.536352,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            65,
+            128
+          ],
+          "output_size": [
+            65,
+            128
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 43,
+            "color_ratio": 0.009135330359039727
+          },
+          "subject_bbox": [
+            0,
+            0,
+            65,
+            128
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 43,
+            "separation": {
+              "colors": 43,
+              "min_delta_e": 0.035393,
+              "closest_pair": [
+                [
+                  200,
+                  216,
+                  230
+                ],
+                [
+                  221,
+                  217,
+                  213
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              65,
+              128
+            ],
+            "bbox": [
+              0,
+              0,
+              65,
+              128
+            ],
+            "subject_height": 128,
+            "binary_alpha": true,
+            "palette_size": 43,
+            "max_palette_size": 48,
+            "target_height": 128,
+            "actual_height": 128,
+            "logical_width": 65,
+            "opaque_magenta": 99,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "status": "FAIL_REVIEW_UNAVAILABLE",
+          "error": "TimeoutExpired: Command '['C:\\\\nvm4w\\\\nodejs\\\\codex.CMD', 'exec', '--model', 'gpt-6-luna', '--json', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '-C', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\source.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H128.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H160.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H192.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H256.png', '-']' timed out after 240 seconds",
+          "features": [
+            {
+              "id": "long-pale-flowing-hair",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "right-side-hair-bow",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "ornate-long-staff",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "long-white-draped-panels",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            }
+          ],
+          "elapsed_seconds": 276.533,
+          "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e"
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H128.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H128.preview-4x.png"
+      },
+      "160": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.5,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.5,
+          "retention": 0.5,
+          "feature_results": [
+            {
+              "id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.65044,
+                "bbox": [
+                  416,
+                  22,
+                  893,
+                  598
+                ],
+                "width": 477,
+                "height": 576,
+                "min_dimension": 477,
+                "mean_rgb": [
+                  164.339,
+                  155.851,
+                  150.203
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  501,
+                  119,
+                  618,
+                  225
+                ],
+                "width": 117,
+                "height": 106,
+                "min_dimension": 106,
+                "mean_rgb": [
+                  209.07,
+                  180.183,
+                  168.954
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-side-hair-bow",
+              "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.575935,
+                "bbox": [
+                  638,
+                  93,
+                  709,
+                  200
+                ],
+                "width": 71,
+                "height": 107,
+                "min_dimension": 71,
+                "mean_rgb": [
+                  120.733,
+                  121.415,
+                  127.931
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.387778,
+                "bbox": [
+                  216,
+                  231,
+                  394,
+                  1344
+                ],
+                "width": 178,
+                "height": 1113,
+                "min_dimension": 178,
+                "mean_rgb": [
+                  132.99,
+                  158.691,
+                  123.678
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.933771,
+                "bbox": [
+                  381,
+                  215,
+                  763,
+                  903
+                ],
+                "width": 382,
+                "height": 688,
+                "min_dimension": 382,
+                "mean_rgb": [
+                  137.669,
+                  129.281,
+                  134.604
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "long-white-draped-panels",
+              "label": "Long white draped panels with gold edging hanging from both shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.752637,
+                "bbox": [
+                  314,
+                  241,
+                  877,
+                  1077
+                ],
+                "width": 563,
+                "height": 836,
+                "min_dimension": 563,
+                "mean_rgb": [
+                  145.903,
+                  145.12,
+                  138.272
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  375,
+                  458,
+                  646,
+                  697
+                ],
+                "width": 271,
+                "height": 239,
+                "min_dimension": 239,
+                "mean_rgb": [
+                  145.544,
+                  133.869,
+                  132.89
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.398673,
+                "bbox": [
+                  419,
+                  845,
+                  796,
+                  1369
+                ],
+                "width": 377,
+                "height": 524,
+                "min_dimension": 377,
+                "mean_rgb": [
+                  159.551,
+                  148.056,
+                  142.38
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "long-pale-flowing-hair": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "blue-eyed-face": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "right-side-hair-bow": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "ornate-long-staff": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "navy-white-gold-dress": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "long-white-draped-panels": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "belt-and-left-hip-pouch": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "white-gold-armored-greaves": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            212,
+            16,
+            904,
+            1382
+          ],
+          "logical_size": [
+            81,
+            160
+          ],
+          "target_height": 160,
+          "actual_height": 160,
+          "logical_width": 81,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 1074794,
+            "transparent_pixels": 0,
+            "background_pixels": 1065895
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.536585,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            81,
+            160
+          ],
+          "output_size": [
+            81,
+            160
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 45,
+            "color_ratio": 0.006242197253433208
+          },
+          "subject_bbox": [
+            0,
+            0,
+            81,
+            160
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 45,
+            "separation": {
+              "colors": 45,
+              "min_delta_e": 0.035393,
+              "closest_pair": [
+                [
+                  200,
+                  216,
+                  230
+                ],
+                [
+                  221,
+                  217,
+                  213
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              81,
+              160
+            ],
+            "bbox": [
+              0,
+              0,
+              81,
+              160
+            ],
+            "subject_height": 160,
+            "binary_alpha": true,
+            "palette_size": 45,
+            "max_palette_size": 48,
+            "target_height": 160,
+            "actual_height": 160,
+            "logical_width": 81,
+            "opaque_magenta": 148,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "status": "FAIL_REVIEW_UNAVAILABLE",
+          "error": "TimeoutExpired: Command '['C:\\\\nvm4w\\\\nodejs\\\\codex.CMD', 'exec', '--model', 'gpt-6-luna', '--json', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '-C', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\source.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H128.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H160.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H192.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H256.png', '-']' timed out after 240 seconds",
+          "features": [
+            {
+              "id": "long-pale-flowing-hair",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "right-side-hair-bow",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "ornate-long-staff",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "long-white-draped-panels",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            }
+          ],
+          "elapsed_seconds": 276.533,
+          "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e"
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H160.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H160.preview-4x.png"
+      },
+      "192": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.5,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.5,
+          "retention": 0.5,
+          "feature_results": [
+            {
+              "id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.65044,
+                "bbox": [
+                  416,
+                  22,
+                  893,
+                  598
+                ],
+                "width": 477,
+                "height": 576,
+                "min_dimension": 477,
+                "mean_rgb": [
+                  164.339,
+                  155.851,
+                  150.203
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  501,
+                  119,
+                  618,
+                  225
+                ],
+                "width": 117,
+                "height": 106,
+                "min_dimension": 106,
+                "mean_rgb": [
+                  209.07,
+                  180.183,
+                  168.954
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-side-hair-bow",
+              "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.575935,
+                "bbox": [
+                  638,
+                  93,
+                  709,
+                  200
+                ],
+                "width": 71,
+                "height": 107,
+                "min_dimension": 71,
+                "mean_rgb": [
+                  120.733,
+                  121.415,
+                  127.931
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.387778,
+                "bbox": [
+                  216,
+                  231,
+                  394,
+                  1344
+                ],
+                "width": 178,
+                "height": 1113,
+                "min_dimension": 178,
+                "mean_rgb": [
+                  132.99,
+                  158.691,
+                  123.678
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.933771,
+                "bbox": [
+                  381,
+                  215,
+                  763,
+                  903
+                ],
+                "width": 382,
+                "height": 688,
+                "min_dimension": 382,
+                "mean_rgb": [
+                  137.669,
+                  129.281,
+                  134.604
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "long-white-draped-panels",
+              "label": "Long white draped panels with gold edging hanging from both shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.752637,
+                "bbox": [
+                  314,
+                  241,
+                  877,
+                  1077
+                ],
+                "width": 563,
+                "height": 836,
+                "min_dimension": 563,
+                "mean_rgb": [
+                  145.903,
+                  145.12,
+                  138.272
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  375,
+                  458,
+                  646,
+                  697
+                ],
+                "width": 271,
+                "height": 239,
+                "min_dimension": 239,
+                "mean_rgb": [
+                  145.544,
+                  133.869,
+                  132.89
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.398673,
+                "bbox": [
+                  419,
+                  845,
+                  796,
+                  1369
+                ],
+                "width": 377,
+                "height": 524,
+                "min_dimension": 377,
+                "mean_rgb": [
+                  159.551,
+                  148.056,
+                  142.38
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "long-pale-flowing-hair": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "blue-eyed-face": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "right-side-hair-bow": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "ornate-long-staff": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "navy-white-gold-dress": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "long-white-draped-panels": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "belt-and-left-hip-pouch": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "white-gold-armored-greaves": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            212,
+            16,
+            904,
+            1382
+          ],
+          "logical_size": [
+            97,
+            192
+          ],
+          "target_height": 192,
+          "actual_height": 192,
+          "logical_width": 97,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 1074794,
+            "transparent_pixels": 0,
+            "background_pixels": 1065895
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.536598,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            97,
+            192
+          ],
+          "output_size": [
+            97,
+            192
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 45,
+            "color_ratio": 0.0043511893250821896
+          },
+          "subject_bbox": [
+            0,
+            0,
+            97,
+            192
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 45,
+            "separation": {
+              "colors": 45,
+              "min_delta_e": 0.035393,
+              "closest_pair": [
+                [
+                  200,
+                  216,
+                  230
+                ],
+                [
+                  221,
+                  217,
+                  213
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              97,
+              192
+            ],
+            "bbox": [
+              0,
+              0,
+              97,
+              192
+            ],
+            "subject_height": 192,
+            "binary_alpha": true,
+            "palette_size": 45,
+            "max_palette_size": 48,
+            "target_height": 192,
+            "actual_height": 192,
+            "logical_width": 97,
+            "opaque_magenta": 205,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "status": "FAIL_REVIEW_UNAVAILABLE",
+          "error": "TimeoutExpired: Command '['C:\\\\nvm4w\\\\nodejs\\\\codex.CMD', 'exec', '--model', 'gpt-6-luna', '--json', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '-C', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\source.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H128.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H160.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H192.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H256.png', '-']' timed out after 240 seconds",
+          "features": [
+            {
+              "id": "long-pale-flowing-hair",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "right-side-hair-bow",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "ornate-long-staff",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "long-white-draped-panels",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            }
+          ],
+          "elapsed_seconds": 276.533,
+          "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e"
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H192.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H192.preview-4x.png"
+      },
+      "256": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.5,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.5,
+          "retention": 0.5,
+          "feature_results": [
+            {
+              "id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "importance": "CRITICAL",
+              "kind": "HAIR",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.65044,
+                "bbox": [
+                  416,
+                  22,
+                  893,
+                  598
+                ],
+                "width": 477,
+                "height": 576,
+                "min_dimension": 477,
+                "mean_rgb": [
+                  164.339,
+                  155.851,
+                  150.203
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  501,
+                  119,
+                  618,
+                  225
+                ],
+                "width": 117,
+                "height": 106,
+                "min_dimension": 106,
+                "mean_rgb": [
+                  209.07,
+                  180.183,
+                  168.954
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-side-hair-bow",
+              "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.575935,
+                "bbox": [
+                  638,
+                  93,
+                  709,
+                  200
+                ],
+                "width": 71,
+                "height": 107,
+                "min_dimension": 71,
+                "mean_rgb": [
+                  120.733,
+                  121.415,
+                  127.931
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "importance": "CRITICAL",
+              "kind": "WEAPON",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.387778,
+                "bbox": [
+                  216,
+                  231,
+                  394,
+                  1344
+                ],
+                "width": 178,
+                "height": 1113,
+                "min_dimension": 178,
+                "mean_rgb": [
+                  132.99,
+                  158.691,
+                  123.678
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.933771,
+                "bbox": [
+                  381,
+                  215,
+                  763,
+                  903
+                ],
+                "width": 382,
+                "height": 688,
+                "min_dimension": 382,
+                "mean_rgb": [
+                  137.669,
+                  129.281,
+                  134.604
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "long-white-draped-panels",
+              "label": "Long white draped panels with gold edging hanging from both shoulders",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.752637,
+                "bbox": [
+                  314,
+                  241,
+                  877,
+                  1077
+                ],
+                "width": 563,
+                "height": 836,
+                "min_dimension": 563,
+                "mean_rgb": [
+                  145.903,
+                  145.12,
+                  138.272
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+              "importance": "IMPORTANT",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  375,
+                  458,
+                  646,
+                  697
+                ],
+                "width": 271,
+                "height": 239,
+                "min_dimension": 239,
+                "mean_rgb": [
+                  145.544,
+                  133.869,
+                  132.89
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.398673,
+                "bbox": [
+                  419,
+                  845,
+                  796,
+                  1369
+                ],
+                "width": 377,
+                "height": 524,
+                "min_dimension": 377,
+                "mean_rgb": [
+                  159.551,
+                  148.056,
+                  142.38
+                ]
+              },
+              "candidate": {
+                "available": false,
+                "visible_ratio": 0.0,
+                "bbox": null,
+                "width": 0,
+                "height": 0,
+                "min_dimension": 0,
+                "mean_rgb": null
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": null,
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.0,
+                "location_in_candidate_subject": null,
+                "review_status": "FAIL_REVIEW_UNAVAILABLE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "long-pale-flowing-hair",
+              "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "blue-eyed-face",
+              "label": "Fair anime-style face with large blue eyes",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            },
+            {
+              "feature_id": "ornate-long-staff",
+              "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+              "state": "AMBIGUOUS",
+              "reason": "identity-review-unavailable"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "long-pale-flowing-hair": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "blue-eyed-face": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "right-side-hair-bow": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "ornate-long-staff": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "navy-white-gold-dress": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "long-white-draped-panels": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "belt-and-left-hip-pouch": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              },
+              "white-gold-armored-greaves": {
+                "projected_width": 0,
+                "projected_height": 0,
+                "min_visible_dimension": 0,
+                "risk": true
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            212,
+            16,
+            904,
+            1382
+          ],
+          "logical_size": [
+            130,
+            256
+          ],
+          "target_height": 256,
+          "actual_height": 256,
+          "logical_width": 130,
+          "background": {
+            "mode": "chroma:magenta",
+            "keyed_pixels": 1074794,
+            "transparent_pixels": 0,
+            "background_pixels": 1065895
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.536605,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            130,
+            256
+          ],
+          "output_size": [
+            130,
+            256
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 46,
+            "color_ratio": 0.0025197195442594215
+          },
+          "subject_bbox": [
+            0,
+            0,
+            130,
+            256
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 46,
+            "separation": {
+              "colors": 46,
+              "min_delta_e": 0.035393,
+              "closest_pair": [
+                [
+                  200,
+                  216,
+                  230
+                ],
+                [
+                  221,
+                  217,
+                  213
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              130,
+              256
+            ],
+            "bbox": [
+              0,
+              0,
+              130,
+              256
+            ],
+            "subject_height": 256,
+            "binary_alpha": true,
+            "palette_size": 46,
+            "max_palette_size": 48,
+            "target_height": 256,
+            "actual_height": 256,
+            "logical_width": 130,
+            "opaque_magenta": 344,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "status": "FAIL_REVIEW_UNAVAILABLE",
+          "error": "TimeoutExpired: Command '['C:\\\\nvm4w\\\\nodejs\\\\codex.CMD', 'exec', '--model', 'gpt-6-luna', '--json', '--ephemeral', '--sandbox', 'read-only', '--skip-git-repo-check', '-C', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\source.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H128.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H160.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H192.png', '-i', 'C:\\\\workspace\\\\sprite-studio\\\\benchmark_v2\\\\auto_resolution_audit_gpt_image_r00_r08\\\\methods\\\\D2\\\\R06\\\\identity-review\\\\logical-resolution-grid-40a8a4925ed4-128-5662c0b3-160-61bd7450-192-1ae58263-256-fc8781e5\\\\H256.png', '-']' timed out after 240 seconds",
+          "features": [
+            {
+              "id": "long-pale-flowing-hair",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "right-side-hair-bow",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "ornate-long-staff",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "navy-white-gold-dress",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "long-white-draped-panels",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "belt-and-left-hip-pouch",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            },
+            {
+              "id": "white-gold-armored-greaves",
+              "state": "AMBIGUOUS",
+              "confidence": 0.0,
+              "reason": "identity-review-unavailable",
+              "location": null
+            }
+          ],
+          "elapsed_seconds": 276.533,
+          "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e"
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H256.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\logical\\candidates\\R06\\H256.preview-4x.png"
+      }
+    },
+    "identity_loss_index": {
+      "128": 0.5,
+      "160": 0.5,
+      "192": 0.5,
+      "256": 0.5
+    },
+    "semantic_preservation": {
+      "pass": true,
+      "status": "PASS_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "long-pale-flowing-hair",
+          "label": "Very long pale silver-blonde hair with loose locks flowing past the waist",
+          "importance": "CRITICAL",
+          "kind": "HAIR",
+          "state": "SIMPLIFIED",
+          "reason": "Pale hair frames the face and fans behind both shoulders, with loose locks reaching past the waist.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.65044,
+            "bbox": [
+              416,
+              22,
+              893,
+              598
+            ],
+            "width": 477,
+            "height": 576,
+            "min_dimension": 477,
+            "mean_rgb": [
+              164.339,
+              155.851,
+              150.203
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.682193,
+            "bbox": [
+              197,
+              0,
+              686,
+              584
+            ],
+            "width": 489,
+            "height": 584,
+            "min_dimension": 489,
+            "mean_rgb": [
+              163.923,
+              154.244,
+              153.32
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            197,
+            0,
+            686,
+            584
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.286,
+              "y": 0.0,
+              "w": 0.704,
+              "h": 0.427
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "blue-eyed-face",
+          "label": "Fair anime-style face with large blue eyes",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Centered fair anime face retains both large blue eyes, nose, and mouth.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              501,
+              119,
+              618,
+              225
+            ],
+            "width": 117,
+            "height": 106,
+            "min_dimension": 106,
+            "mean_rgb": [
+              209.07,
+              180.183,
+              168.954
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              285,
+              87,
+              406,
+              201
+            ],
+            "width": 121,
+            "height": 114,
+            "min_dimension": 114,
+            "mean_rgb": [
+              206.103,
+              185.352,
+              170.8
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            285,
+            87,
+            406,
+            201
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.413,
+              "y": 0.064,
+              "w": 0.173,
+              "h": 0.083
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "right-side-hair-bow",
+          "label": "Navy ribbon bow with trailing tails and a small gold ornament at the temple",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "Navy bow tails and a small gold ornament remain visible beside the hair on image-right.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.575935,
+            "bbox": [
+              638,
+              93,
+              709,
+              200
+            ],
+            "width": 71,
+            "height": 107,
+            "min_dimension": 71,
+            "mean_rgb": [
+              120.733,
+              121.415,
+              127.931
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.879107,
+            "bbox": [
+              401,
+              77,
+              479,
+              205
+            ],
+            "width": 78,
+            "height": 128,
+            "min_dimension": 78,
+            "mean_rgb": [
+              139.441,
+              132.477,
+              135.522
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            401,
+            77,
+            479,
+            205
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.58,
+              "y": 0.057,
+              "w": 0.112,
+              "h": 0.093
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "ornate-long-staff",
+          "label": "Long dark-blue staff with gold star-shaped finial and cross-shaped ornaments",
+          "importance": "CRITICAL",
+          "kind": "WEAPON",
+          "state": "SIMPLIFIED",
+          "reason": "Upright dark-blue staff remains on image-left with a gold star finial and cross-shaped ornaments, extending nearly the character's full height.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.387778,
+            "bbox": [
+              216,
+              231,
+              394,
+              1344
+            ],
+            "width": 178,
+            "height": 1113,
+            "min_dimension": 178,
+            "mean_rgb": [
+              132.99,
+              158.691,
+              123.678
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.461012,
+            "bbox": [
+              0,
+              199,
+              187,
+              1351
+            ],
+            "width": 187,
+            "height": 1152,
+            "min_dimension": 187,
+            "mean_rgb": [
+              164.984,
+              139.654,
+              154.039
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            0,
+            199,
+            187,
+            1356
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.0,
+              "y": 0.146,
+              "w": 0.27,
+              "h": 0.846
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "navy-white-gold-dress",
+          "label": "Fitted high-collar navy and white outfit with gold fastenings and split navy skirt panels",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "High collar, fitted white chest, navy bodice and split skirt panels remain distinct with gold fastenings.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.933771,
+            "bbox": [
+              381,
+              215,
+              763,
+              903
+            ],
+            "width": 382,
+            "height": 688,
+            "min_dimension": 382,
+            "mean_rgb": [
+              137.669,
+              129.281,
+              134.604
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.943825,
+            "bbox": [
+              167,
+              203,
+              589,
+              890
+            ],
+            "width": 422,
+            "height": 687,
+            "min_dimension": 422,
+            "mean_rgb": [
+              135.812,
+              130.884,
+              137.194
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            167,
+            203,
+            589,
+            890
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.95,
+            "location_in_candidate_subject": {
+              "x": 0.242,
+              "y": 0.149,
+              "w": 0.609,
+              "h": 0.502
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "long-white-draped-panels",
+          "label": "Long white draped panels with gold edging hanging from both shoulders",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "White gold-edged panels hang from both shoulders and frame the outfit down toward the lower legs.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.752637,
+            "bbox": [
+              314,
+              241,
+              877,
+              1077
+            ],
+            "width": 563,
+            "height": 836,
+            "min_dimension": 563,
+            "mean_rgb": [
+              145.903,
+              145.12,
+              138.272
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.785896,
+            "bbox": [
+              38,
+              280,
+              666,
+              1067
+            ],
+            "width": 628,
+            "height": 787,
+            "min_dimension": 628,
+            "mean_rgb": [
+              151.501,
+              140.257,
+              145.821
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            38,
+            280,
+            666,
+            1067
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.055,
+              "y": 0.205,
+              "w": 0.907,
+              "h": 0.576
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "belt-and-left-hip-pouch",
+          "label": "Wide diagonal brown belt with a rectangular pouch at the viewer-left hip",
+          "importance": "IMPORTANT",
+          "kind": "ACCESSORY",
+          "state": "SIMPLIFIED",
+          "reason": "A wide diagonal brown belt crosses the waist, with a rectangular pouch at the image-left hip.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              375,
+              458,
+              646,
+              697
+            ],
+            "width": 271,
+            "height": 239,
+            "min_dimension": 239,
+            "mean_rgb": [
+              145.544,
+              133.869,
+              132.89
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              170,
+              450,
+              419,
+              683
+            ],
+            "width": 249,
+            "height": 233,
+            "min_dimension": 233,
+            "mean_rgb": [
+              146.73,
+              135.445,
+              131.947
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            170,
+            450,
+            419,
+            683
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.95,
+            "location_in_candidate_subject": {
+              "x": 0.246,
+              "y": 0.33,
+              "w": 0.359,
+              "h": 0.17
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "white-gold-armored-greaves",
+          "label": "Paired white armored greaves with gold-edged angular knee plates and cuffs",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "Both bright lower-leg guards remain visible with gold-edged angular armor and cuffs, distinct from the dark thigh sections.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.398673,
+            "bbox": [
+              419,
+              845,
+              796,
+              1369
+            ],
+            "width": 377,
+            "height": 524,
+            "min_dimension": 377,
+            "mean_rgb": [
+              159.551,
+              148.056,
+              142.38
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.429547,
+            "bbox": [
+              197,
+              849,
+              590,
+              1365
+            ],
+            "width": 393,
+            "height": 516,
+            "min_dimension": 393,
+            "mean_rgb": [
+              172.269,
+              158.551,
+              147.63
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            197,
+            849,
+            590,
+            1365
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.95,
+            "location_in_candidate_subject": {
+              "x": 0.285,
+              "y": 0.622,
+              "w": 0.567,
+              "h": 0.377
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0ce99-06dd-7a32-b616-00ed0adfe83c",
+        "elapsed_seconds": 52.279,
+        "source_sha256": "40a8a4925ed4a45ce87675b7654762527b86ebba0e064a3bee6f91e967c4920e",
+        "candidate_sha256": "e6b5f97598220a6fd0a318d5e9b7de1913f5ed2aed3f1a012bc5e302700891ab",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\identity-review\\semantic-preservation-40a8a4925ed4-e6b5f9759822",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "long-pale-flowing-hair",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Pale hair frames the face and fans behind both shoulders, with loose locks reaching past the waist.",
+            "location": {
+              "x": 0.286,
+              "y": 0.0,
+              "w": 0.704,
+              "h": 0.427
+            }
+          },
+          {
+            "id": "blue-eyed-face",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "Centered fair anime face retains both large blue eyes, nose, and mouth.",
+            "location": {
+              "x": 0.413,
+              "y": 0.064,
+              "w": 0.173,
+              "h": 0.083
+            }
+          },
+          {
+            "id": "right-side-hair-bow",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Navy bow tails and a small gold ornament remain visible beside the hair on image-right.",
+            "location": {
+              "x": 0.58,
+              "y": 0.057,
+              "w": 0.112,
+              "h": 0.093
+            }
+          },
+          {
+            "id": "ornate-long-staff",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Upright dark-blue staff remains on image-left with a gold star finial and cross-shaped ornaments, extending nearly the character's full height.",
+            "location": {
+              "x": 0.0,
+              "y": 0.146,
+              "w": 0.27,
+              "h": 0.846
+            }
+          },
+          {
+            "id": "navy-white-gold-dress",
+            "state": "SIMPLIFIED",
+            "confidence": 0.95,
+            "reason": "High collar, fitted white chest, navy bodice and split skirt panels remain distinct with gold fastenings.",
+            "location": {
+              "x": 0.242,
+              "y": 0.149,
+              "w": 0.609,
+              "h": 0.502
+            }
+          },
+          {
+            "id": "long-white-draped-panels",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "White gold-edged panels hang from both shoulders and frame the outfit down toward the lower legs.",
+            "location": {
+              "x": 0.055,
+              "y": 0.205,
+              "w": 0.907,
+              "h": 0.576
+            }
+          },
+          {
+            "id": "belt-and-left-hip-pouch",
+            "state": "SIMPLIFIED",
+            "confidence": 0.95,
+            "reason": "A wide diagonal brown belt crosses the waist, with a rectangular pouch at the image-left hip.",
+            "location": {
+              "x": 0.246,
+              "y": 0.33,
+              "w": 0.359,
+              "h": 0.17
+            }
+          },
+          {
+            "id": "white-gold-armored-greaves",
+            "state": "SIMPLIFIED",
+            "confidence": 0.95,
+            "reason": "Both bright lower-leg guards remain visible with gold-edged angular armor and cuffs, distinct from the dark thigh sections.",
+            "location": {
+              "x": 0.285,
+              "y": 0.622,
+              "w": 0.567,
+              "h": 0.377
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": "IDENTITY_REVIEW_UNAVAILABLE",
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": false
+  },
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\intermediate\\R06.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image",
+      "prompt": "GPT Image D2 stage1 semantic redraw",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R06\\stage1.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R06\\stage1.png",
+      "raw_sha256": "4ee2f3a5c1cb50111bbdf419edfa267fd8244f21704da524fcb0fcc9d72644e9",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png"
+      ],
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool"
+    }
+  },
+  "status": "IDENTITY_REVIEW_UNAVAILABLE",
+  "accepted": null,
+  "accepted_path": null,
+  "source_id": "R06",
+  "method": "D2",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce4f-9a3d-7ad2-85d3-148aa5206359",
+    "elapsed_seconds": 70.376,
+    "source_id": "R06",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+    "source_sha256": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+    "prompt_sha256": "a850c91f781b249f13b246d303b8aeee0d6b0fdfa8820de1a5d1d2a0b0bb0bdd",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R06\\identity_feature_manifest.json",
+    "manifest_sha256": "b29fdffcf9c0a11354429adcc0df329a2610bc3ebafd4e2f064f841290626219",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R06\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R06\\identity_feature_manifest.json",
+  "accepted_sha256": null
+}

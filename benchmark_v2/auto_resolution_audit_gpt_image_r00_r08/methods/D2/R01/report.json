@@ -1,0 +1,162 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d2_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R01\\semantic\\R01.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic Pixel Master redraw",
+      "source_id": "R01",
+      "stage": "stage2",
+      "prompt": "Using the original character reference and the stage-1 semantic pixel-art intermediate, redraw a compact pixel-art design intended to survive projection to one of 128, 160, 192, or 256 logical pixels of character height. Spend visual detail only on identity-critical features. Increase the relative size of eyes and facial landmarks when necessary. Merge only regions that would disappear at the selected logical resolution. Keep thin identity-defining equipment visually separable. Preserve silhouette, asymmetric identity details and readable costume hierarchy. Do not merely apply a pixel filter, and do not require an exact logical grid or integer transport. Avoid painterly texture, soft gradients, blur, bloom, text, UI, and extra characters. Use a solid magenta background.",
+      "prompt_sha256": "006c00e3fd3f2bd3b371215e200d3ce99a21011d6c4c726432f4652d35fa8271",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png": "e30844d27f33a2d642aec8007ef80abf098af30c947ff4a4a84f52053d2939fa"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-fcfc5cbf-0745-41fc-a0d7-f7d4b12e53da.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage2.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage2.png",
+      "raw_sha256": "243cb166ce2089dc9cac99077a7bf687a49520ef2b73479c6d9e8cc18d584167",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T13:03:10.055964+00:00"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "FAIL_NOT_ABSTRACTED",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 1186425
+      },
+      "subject_bbox": [
+        320,
+        10,
+        791,
+        1388
+      ],
+      "subject_area_ratio": 0.4126,
+      "edge_softness_ratio": 0.99724,
+      "adjacent_transition_ratio": 0.90755,
+      "cluster_size_distribution": {
+        "opaque_pixels": 344906,
+        "opaque_color_count": 93378,
+        "color_ratio": 0.270735,
+        "median_quantized_cluster": 37.0,
+        "small_quantized_cluster_fraction": 0.237347
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      },
+      {
+        "code": "FAIL_NOT_ABSTRACTED",
+        "message": "Source still resembles a high-frequency painterly illustration."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": false,
+    "status": "NOT_EVALUATED_SEMANTIC_QUALITY_REJECTED",
+    "feature_results": [],
+    "topology_warnings": [],
+    "identity_review": null
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": null,
+    "reason": "semantic_quality_rejected",
+    "candidate_results": {
+      "128": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "160": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "192": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "256": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED"
+    },
+    "candidate_details": {},
+    "identity_loss_index": {},
+    "root_cause": "SEMANTIC_QUALITY_GATE",
+    "identity_review_method": "not-run-semantic-quality-rejected",
+    "identity_gate_authoritative": false,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": false
+  },
+  "status": "FAIL_NOT_ABSTRACTED",
+  "accepted": null,
+  "accepted_path": null,
+  "pse": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+  "logical_validation": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+  "intermediate": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R01\\intermediate\\R01.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic stage 1",
+      "source_id": "R01",
+      "stage": "stage1",
+      "prompt": "Translate the attached character into a clear authored pixel-art design language while preserving exact identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Simplify hair into intentional masses, group facial landmarks into readable shapes, merge tiny costume details into larger motifs, and use flat coherent color regions with crisp stepped contours. This is a high-resolution semantic intermediate; do not require an exact logical grid yet. Avoid painterly texture, blur, bloom, soft gradients, text, UI, and extra characters. Use a solid magenta background.",
+      "prompt_sha256": "3990c8e8ec5bdfaa547223658bc48c21298cd8cf4483d8fcf0c23f5ffd65770d",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-4dbe19e7-178e-4c62-b977-deff53f3b477.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png",
+      "raw_sha256": "e30844d27f33a2d642aec8007ef80abf098af30c947ff4a4a84f52053d2939fa",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T13:02:13.319881+00:00"
+    }
+  },
+  "source_id": "R01",
+  "method": "D2",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce36-572d-7143-9f5d-594b2a28de0e",
+    "elapsed_seconds": 93.807,
+    "source_id": "R01",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+    "source_sha256": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+    "prompt_sha256": "8a036890ba8c6a4f1a61b579b06ecb45069eef87db83a78334968d32c0c9d5cc",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest.json",
+    "manifest_sha256": "fcb1396862022c8512ec1a6b3c6044d90b606870c6254744219f3abd2f036da9",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest.json",
+  "accepted_sha256": null
+}

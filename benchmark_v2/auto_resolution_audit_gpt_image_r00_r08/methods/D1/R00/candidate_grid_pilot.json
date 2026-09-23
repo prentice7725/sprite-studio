@@ -1,0 +1,346 @@
+{
+  "128": {
+    "provider": "codex",
+    "model": "gpt-6-luna",
+    "task": "multimodal_identity_candidate_grid_review",
+    "stage": "pilot-D1-candidate-grid",
+    "session_id": "01a0ce7a-d97f-7431-a215-ff4bebd8eb36",
+    "elapsed_seconds": 76.868,
+    "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+    "candidate_sha256": "364770314e5d8991c0145029541ea772aea7611d6021106bac5b0183cb78b68e",
+    "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review-pilot\\pilot-D1-candidate-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+    "status": "PASS_REVIEW_RESPONSE",
+    "features": [
+      {
+        "id": "spiky-charcoal-hair",
+        "state": "SIMPLIFIED",
+        "confidence": 0.91,
+        "reason": "Charcoal spiky silhouette and forehead-covering bangs remain clear.",
+        "location": {
+          "x": 0.24,
+          "y": 0.04,
+          "w": 0.52,
+          "h": 0.5
+        }
+      },
+      {
+        "id": "pale-anime-face",
+        "state": "SIMPLIFIED",
+        "confidence": 0.86,
+        "reason": "Centered peach face, ears, cheeks, and tapered chin are readable.",
+        "location": {
+          "x": 0.31,
+          "y": 0.31,
+          "w": 0.38,
+          "h": 0.38
+        }
+      },
+      {
+        "id": "narrow-brown-eyes",
+        "state": "SIMPLIFIED",
+        "confidence": 0.83,
+        "reason": "Both narrow eyes retain pale sclera and dark brown centers.",
+        "location": {
+          "x": 0.36,
+          "y": 0.36,
+          "w": 0.28,
+          "h": 0.07
+        }
+      },
+      {
+        "id": "small-neutral-mouth",
+        "state": "SIMPLIFIED",
+        "confidence": 0.79,
+        "reason": "Small closed line is visible below the nose.",
+        "location": {
+          "x": 0.47,
+          "y": 0.47,
+          "w": 0.07,
+          "h": 0.03
+        }
+      },
+      {
+        "id": "gray-crew-neck-collar",
+        "state": "SIMPLIFIED",
+        "confidence": 0.86,
+        "reason": "Centered rounded gray neckline frames the exposed neck.",
+        "location": {
+          "x": 0.34,
+          "y": 0.68,
+          "w": 0.32,
+          "h": 0.09
+        }
+      },
+      {
+        "id": "broad-gray-shirt",
+        "state": "PRESERVED",
+        "confidence": 0.95,
+        "reason": "Broad gray shirt and sloping shoulders fill the lower frame.",
+        "location": {
+          "x": 0.0,
+          "y": 0.71,
+          "w": 1.0,
+          "h": 0.29
+        }
+      }
+    ]
+  },
+  "160": {
+    "provider": "codex",
+    "model": "gpt-6-luna",
+    "task": "multimodal_identity_candidate_grid_review",
+    "stage": "pilot-D1-candidate-grid",
+    "session_id": "01a0ce7a-d97f-7431-a215-ff4bebd8eb36",
+    "elapsed_seconds": 76.868,
+    "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+    "candidate_sha256": "dbaf93a16383b594175d413a37d142448cf9f70d55658b038ceca5f90b038aca",
+    "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review-pilot\\pilot-D1-candidate-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+    "status": "PASS_REVIEW_RESPONSE",
+    "features": [
+      {
+        "id": "spiky-charcoal-hair",
+        "state": "SIMPLIFIED",
+        "confidence": 0.93,
+        "reason": "Uneven charcoal tufts and long bangs remain recognizable.",
+        "location": {
+          "x": 0.24,
+          "y": 0.03,
+          "w": 0.53,
+          "h": 0.47
+        }
+      },
+      {
+        "id": "pale-anime-face",
+        "state": "SIMPLIFIED",
+        "confidence": 0.9,
+        "reason": "Centered peach face retains visible ears and tapered lower contour.",
+        "location": {
+          "x": 0.29,
+          "y": 0.28,
+          "w": 0.42,
+          "h": 0.42
+        }
+      },
+      {
+        "id": "narrow-brown-eyes",
+        "state": "PRESERVED",
+        "confidence": 0.88,
+        "reason": "Paired narrow eyes show pale sclera and brown irises.",
+        "location": {
+          "x": 0.34,
+          "y": 0.34,
+          "w": 0.31,
+          "h": 0.08
+        }
+      },
+      {
+        "id": "small-neutral-mouth",
+        "state": "PRESERVED",
+        "confidence": 0.84,
+        "reason": "Short closed mouth line is visible below the nose.",
+        "location": {
+          "x": 0.48,
+          "y": 0.49,
+          "w": 0.06,
+          "h": 0.03
+        }
+      },
+      {
+        "id": "gray-crew-neck-collar",
+        "state": "PRESERVED",
+        "confidence": 0.91,
+        "reason": "Rounded gray crew neck is clearly separated around the neck.",
+        "location": {
+          "x": 0.34,
+          "y": 0.65,
+          "w": 0.32,
+          "h": 0.1
+        }
+      },
+      {
+        "id": "broad-gray-shirt",
+        "state": "PRESERVED",
+        "confidence": 0.97,
+        "reason": "Broad medium-gray shirt with sloping shoulders is clear.",
+        "location": {
+          "x": 0.0,
+          "y": 0.69,
+          "w": 1.0,
+          "h": 0.31
+        }
+      }
+    ]
+  },
+  "192": {
+    "provider": "codex",
+    "model": "gpt-6-luna",
+    "task": "multimodal_identity_candidate_grid_review",
+    "stage": "pilot-D1-candidate-grid",
+    "session_id": "01a0ce7a-d97f-7431-a215-ff4bebd8eb36",
+    "elapsed_seconds": 76.868,
+    "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+    "candidate_sha256": "fd950315a1c7bc53dfd19bdff724b032e4044cf4b174174ed791038b40b7223c",
+    "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review-pilot\\pilot-D1-candidate-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+    "status": "PASS_REVIEW_RESPONSE",
+    "features": [
+      {
+        "id": "spiky-charcoal-hair",
+        "state": "SIMPLIFIED",
+        "confidence": 0.95,
+        "reason": "Layered charcoal hair keeps pointed tufts and bangs across the forehead.",
+        "location": {
+          "x": 0.23,
+          "y": 0.0,
+          "w": 0.54,
+          "h": 0.49
+        }
+      },
+      {
+        "id": "pale-anime-face",
+        "state": "PRESERVED",
+        "confidence": 0.92,
+        "reason": "Centered peach face, both ears, cheeks, and chin read clearly.",
+        "location": {
+          "x": 0.29,
+          "y": 0.27,
+          "w": 0.42,
+          "h": 0.41
+        }
+      },
+      {
+        "id": "narrow-brown-eyes",
+        "state": "PRESERVED",
+        "confidence": 0.92,
+        "reason": "Both narrow eyes retain visible pale sclera and brown irises.",
+        "location": {
+          "x": 0.34,
+          "y": 0.35,
+          "w": 0.31,
+          "h": 0.07
+        }
+      },
+      {
+        "id": "small-neutral-mouth",
+        "state": "PRESERVED",
+        "confidence": 0.88,
+        "reason": "Small closed neutral mouth is distinct below the nose.",
+        "location": {
+          "x": 0.47,
+          "y": 0.51,
+          "w": 0.07,
+          "h": 0.03
+        }
+      },
+      {
+        "id": "gray-crew-neck-collar",
+        "state": "PRESERVED",
+        "confidence": 0.94,
+        "reason": "Rounded gray collar frames the neck at center.",
+        "location": {
+          "x": 0.34,
+          "y": 0.66,
+          "w": 0.33,
+          "h": 0.12
+        }
+      },
+      {
+        "id": "broad-gray-shirt",
+        "state": "PRESERVED",
+        "confidence": 0.98,
+        "reason": "Gray shirt spans the lower frame with broad sloping shoulders.",
+        "location": {
+          "x": 0.0,
+          "y": 0.69,
+          "w": 1.0,
+          "h": 0.31
+        }
+      }
+    ]
+  },
+  "256": {
+    "provider": "codex",
+    "model": "gpt-6-luna",
+    "task": "multimodal_identity_candidate_grid_review",
+    "stage": "pilot-D1-candidate-grid",
+    "session_id": "01a0ce7a-d97f-7431-a215-ff4bebd8eb36",
+    "elapsed_seconds": 76.868,
+    "source_sha256": "2508e57455c89495e06cf461b607b0f7f37018012325452912e9bbd17f43de8d",
+    "candidate_sha256": "85934fcae189cda8abc5286a6dcc113d8849d1b747b89cba3aefa9e27e6947b2",
+    "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\identity-review-pilot\\pilot-D1-candidate-grid-2508e57455c8-128-36477031-160-dbaf93a1-192-fd950315-256-85934fca",
+    "status": "PASS_REVIEW_RESPONSE",
+    "features": [
+      {
+        "id": "spiky-charcoal-hair",
+        "state": "PRESERVED",
+        "confidence": 0.97,
+        "reason": "Voluminous charcoal hair has pointed tufts and distinct long bangs.",
+        "location": {
+          "x": 0.24,
+          "y": 0.0,
+          "w": 0.52,
+          "h": 0.43
+        }
+      },
+      {
+        "id": "pale-anime-face",
+        "state": "PRESERVED",
+        "confidence": 0.96,
+        "reason": "Centered peach face retains both ears, rounded cheeks, and tapered chin.",
+        "location": {
+          "x": 0.3,
+          "y": 0.28,
+          "w": 0.4,
+          "h": 0.39
+        }
+      },
+      {
+        "id": "narrow-brown-eyes",
+        "state": "PRESERVED",
+        "confidence": 0.97,
+        "reason": "Pair of narrow eyes clearly shows brown irises and pale sclera.",
+        "location": {
+          "x": 0.35,
+          "y": 0.34,
+          "w": 0.3,
+          "h": 0.07
+        }
+      },
+      {
+        "id": "small-neutral-mouth",
+        "state": "PRESERVED",
+        "confidence": 0.94,
+        "reason": "Small closed neutral mouth is distinct below the nose.",
+        "location": {
+          "x": 0.47,
+          "y": 0.51,
+          "w": 0.07,
+          "h": 0.03
+        }
+      },
+      {
+        "id": "gray-crew-neck-collar",
+        "state": "PRESERVED",
+        "confidence": 0.96,
+        "reason": "Medium-gray rounded collar clearly frames the base of the neck.",
+        "location": {
+          "x": 0.36,
+          "y": 0.7,
+          "w": 0.28,
+          "h": 0.11
+        }
+      },
+      {
+        "id": "broad-gray-shirt",
+        "state": "PRESERVED",
+        "confidence": 0.99,
+        "reason": "Broad medium-gray shirt with sloping shoulders fills the lower frame.",
+        "location": {
+          "x": 0.0,
+          "y": 0.75,
+          "w": 1.0,
+          "h": 0.25
+        }
+      }
+    ]
+  }
+}

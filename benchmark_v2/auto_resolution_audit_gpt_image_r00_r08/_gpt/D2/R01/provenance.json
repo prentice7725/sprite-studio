@@ -1,0 +1,53 @@
+{
+  "method": "D2",
+  "source_id": "R01",
+  "source_sha256": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+  "semantic_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image (built-in image_gen)",
+    "provider_implementation": "Codex direct built-in image_gen tool",
+    "provider_role": "GPT Image semantic Pixel Master redraw",
+    "source_id": "R01",
+    "stage": "stage2",
+    "prompt": "Using the original character reference and the stage-1 semantic pixel-art intermediate, redraw a compact pixel-art design intended to survive projection to one of 128, 160, 192, or 256 logical pixels of character height. Spend visual detail only on identity-critical features. Increase the relative size of eyes and facial landmarks when necessary. Merge only regions that would disappear at the selected logical resolution. Keep thin identity-defining equipment visually separable. Preserve silhouette, asymmetric identity details and readable costume hierarchy. Do not merely apply a pixel filter, and do not require an exact logical grid or integer transport. Avoid painterly texture, soft gradients, blur, bloom, text, UI, and extra characters. Use a solid magenta background.",
+    "prompt_sha256": "006c00e3fd3f2bd3b371215e200d3ce99a21011d6c4c726432f4652d35fa8271",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png"
+    ],
+    "ref_sha256": {
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png": "e30844d27f33a2d642aec8007ef80abf098af30c947ff4a4a84f52053d2939fa"
+    },
+    "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-fcfc5cbf-0745-41fc-a0d7-f7d4b12e53da.png",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage2.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage2.png",
+    "raw_sha256": "243cb166ce2089dc9cac99077a7bf687a49520ef2b73479c6d9e8cc18d584167",
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool",
+    "recorded_at_utc": "2026-09-23T13:03:10.055964+00:00"
+  },
+  "intermediate_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image (built-in image_gen)",
+    "provider_implementation": "Codex direct built-in image_gen tool",
+    "provider_role": "GPT Image semantic stage 1",
+    "source_id": "R01",
+    "stage": "stage1",
+    "prompt": "Translate the attached character into a clear authored pixel-art design language while preserving exact identity, pose, silhouette, face, hair, costume, weapon and asymmetric details. Simplify hair into intentional masses, group facial landmarks into readable shapes, merge tiny costume details into larger motifs, and use flat coherent color regions with crisp stepped contours. This is a high-resolution semantic intermediate; do not require an exact logical grid yet. Avoid painterly texture, blur, bloom, soft gradients, text, UI, and extra characters. Use a solid magenta background.",
+    "prompt_sha256": "3990c8e8ec5bdfaa547223658bc48c21298cd8cf4483d8fcf0c23f5ffd65770d",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png"
+    ],
+    "ref_sha256": {
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7"
+    },
+    "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-4dbe19e7-178e-4c62-b977-deff53f3b477.png",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D2\\R01\\stage1.png",
+    "raw_sha256": "e30844d27f33a2d642aec8007ef80abf098af30c947ff4a4a84f52053d2939fa",
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool",
+    "recorded_at_utc": "2026-09-23T13:02:13.319881+00:00"
+  }
+}

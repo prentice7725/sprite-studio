@@ -1,0 +1,15 @@
+{
+  "provider": "codex",
+  "model": "codex-default",
+  "task": "identity_feature_manifest_draft",
+  "session_id": "01a0ce4f-9a3d-7ad2-85d3-148aa5206359",
+  "elapsed_seconds": 70.376,
+  "source_id": "R06",
+  "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+  "source_sha256": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+  "prompt_sha256": "a850c91f781b249f13b246d303b8aeee0d6b0fdfa8820de1a5d1d2a0b0bb0bdd",
+  "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R06\\identity_feature_manifest.json",
+  "manifest_sha256": "b29fdffcf9c0a11354429adcc0df329a2610bc3ebafd4e2f064f841290626219",
+  "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R06\\identity_feature_manifest_model_response.txt",
+  "review_required": true
+}

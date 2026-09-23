@@ -1,0 +1,134 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d1_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R01\\semantic\\R01.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic Pixel Master redraw",
+      "source_id": "R01",
+      "stage": "raw",
+      "prompt": "Preserve the exact identity of the attached character. Redraw the character in a deliberately low-resolution pixel-art design language. Do not merely apply a pixel filter. Reallocate visual information for small-scale readability. Simplify hair into clear intentional masses and clusters. Keep the eyes, brows, nose, mouth and jaw readable with fewer larger shapes. Merge tiny costume details into larger readable motifs. Preserve asymmetric identity details. Use flat coherent color regions, crisp block-like contours and stepped shading. Avoid painterly texture, soft gradients, blur, bloom and micro-detail. The result may be high resolution; its purpose is to provide semantically simplified pixel-art structure for deterministic projection into a 128/160/192/256 logical-pixel master. Use a solid magenta background and no text, UI, or extra characters.",
+      "prompt_sha256": "b4cf7e5e1dcdd3555cef4ac584ccb38d91b3ff1dc0bdc5b56448770eba0a3bca",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-2ea45810-02e8-4171-8844-061dd6cb17cc.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R01\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R01\\raw.png",
+      "raw_sha256": "d3fab70f0a7edc72171b070ef254f6f31914b3c0ff1255e348786c20b17d9d13",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T12:42:05.874661+00:00"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "FAIL_NOT_ABSTRACTED",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 1191665
+      },
+      "subject_bbox": [
+        305,
+        12,
+        796,
+        1383
+      ],
+      "subject_area_ratio": 0.427935,
+      "edge_softness_ratio": 0.995532,
+      "adjacent_transition_ratio": 0.893763,
+      "cluster_size_distribution": {
+        "opaque_pixels": 344908,
+        "opaque_color_count": 94196,
+        "color_ratio": 0.273105,
+        "median_quantized_cluster": 48.0,
+        "small_quantized_cluster_fraction": 0.231084
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      },
+      {
+        "code": "FAIL_NOT_ABSTRACTED",
+        "message": "Source still resembles a high-frequency painterly illustration."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": false,
+    "status": "NOT_EVALUATED_SEMANTIC_QUALITY_REJECTED",
+    "feature_results": [],
+    "topology_warnings": [],
+    "identity_review": null
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": null,
+    "reason": "semantic_quality_rejected",
+    "candidate_results": {
+      "128": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "160": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "192": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED",
+      "256": "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED"
+    },
+    "candidate_details": {},
+    "identity_loss_index": {},
+    "root_cause": "SEMANTIC_QUALITY_GATE",
+    "identity_review_method": "not-run-semantic-quality-rejected",
+    "identity_gate_authoritative": false,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": false
+  },
+  "status": "FAIL_NOT_ABSTRACTED",
+  "accepted": null,
+  "accepted_path": null,
+  "pse": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+  "logical_validation": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+  "source_id": "R01",
+  "method": "D1",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce36-572d-7143-9f5d-594b2a28de0e",
+    "elapsed_seconds": 93.807,
+    "source_id": "R01",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+    "source_sha256": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+    "prompt_sha256": "8a036890ba8c6a4f1a61b579b06ecb45069eef87db83a78334968d32c0c9d5cc",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest.json",
+    "manifest_sha256": "fcb1396862022c8512ec1a6b3c6044d90b606870c6254744219f3abd2f036da9",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R01\\identity_feature_manifest.json",
+  "accepted_sha256": null
+}

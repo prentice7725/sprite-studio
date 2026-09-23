@@ -1,0 +1,29 @@
+{
+  "method": "D1",
+  "source_id": "R02",
+  "source_sha256": "b4aa3e3df2a8255f6970e796deba720ccbbbc84f07567b33bd78554fb514f8b7",
+  "semantic_generation": {
+    "provider": "gpt-image",
+    "model": "gpt-image (built-in image_gen)",
+    "provider_implementation": "Codex direct built-in image_gen tool",
+    "provider_role": "GPT Image semantic Pixel Master redraw",
+    "source_id": "R02",
+    "stage": "raw",
+    "prompt": "Preserve the exact identity of the attached character. Redraw the character in a deliberately low-resolution pixel-art design language. Do not merely apply a pixel filter. Reallocate visual information for small-scale readability. Simplify hair into clear intentional masses and clusters. Keep the eyes, brows, nose, mouth and jaw readable with fewer larger shapes. Merge tiny costume details into larger readable motifs. Preserve asymmetric identity details. Use flat coherent color regions, crisp block-like contours and stepped shading. Avoid painterly texture, soft gradients, blur, bloom and micro-detail. The result may be high resolution; its purpose is to provide semantically simplified pixel-art structure for deterministic projection into a 128/160/192/256 logical-pixel master. Use a solid magenta background and no text, UI, or extra characters.",
+    "prompt_sha256": "b4cf7e5e1dcdd3555cef4ac584ccb38d91b3ff1dc0bdc5b56448770eba0a3bca",
+    "refs": [
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R02.png"
+    ],
+    "ref_sha256": {
+      "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R02.png": "b4aa3e3df2a8255f6970e796deba720ccbbbc84f07567b33bd78554fb514f8b7"
+    },
+    "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-64066a22-8b56-42ca-aa4d-2ba839cb433f.png",
+    "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R02\\raw.png",
+    "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R02\\raw.png",
+    "raw_sha256": "323b6f85568db9e75dba0be52d7c0f1a8c31eee2aee2ce9a3873518af310afdb",
+    "tool": "built-in image_gen",
+    "generation_mode": "direct_gpt_image_tool",
+    "recorded_at_utc": "2026-09-23T12:56:40.167582+00:00"
+  },
+  "intermediate_generation": null
+}

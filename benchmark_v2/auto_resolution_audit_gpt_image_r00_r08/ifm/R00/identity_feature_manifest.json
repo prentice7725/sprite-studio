@@ -1,0 +1,108 @@
+{
+  "version": "ifm-v0.1",
+  "source_id": "R00",
+  "features": [
+    {
+      "id": "spiky-charcoal-hair",
+      "label": "Voluminous, uneven charcoal-black hair with pointed outer tufts and long bangs across the forehead",
+      "importance": "CRITICAL",
+      "kind": "HAIR",
+      "region": {
+        "x": 0.251,
+        "y": 0.011,
+        "w": 0.478,
+        "h": 0.516
+      },
+      "notes": "Dark layered hair forms a broad, spiky silhouette and partly covers the eyes.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    },
+    {
+      "id": "pale-anime-face",
+      "label": "Light peach human face with visible ears, rounded cheeks, and a tapered chin",
+      "importance": "CRITICAL",
+      "kind": "FACE",
+      "region": {
+        "x": 0.289,
+        "y": 0.19,
+        "w": 0.408,
+        "h": 0.392
+      },
+      "notes": "A forward-facing face and both ears are visible beneath the hair.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "narrow-brown-eyes",
+      "label": "Pair of narrow eyes with dark brown irises and pale sclera",
+      "importance": "CRITICAL",
+      "kind": "FACE",
+      "region": {
+        "x": 0.365,
+        "y": 0.332,
+        "w": 0.269,
+        "h": 0.039
+      },
+      "notes": "Both eyes sit horizontally beneath the bangs.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "small-neutral-mouth",
+      "label": "Small closed, neutral mouth",
+      "importance": "OPTIONAL",
+      "kind": "FACE",
+      "region": {
+        "x": 0.479,
+        "y": 0.508,
+        "w": 0.043,
+        "h": 0.013
+      },
+      "notes": "A short, subtle line below the nose.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "gray-crew-neck-collar",
+      "label": "Medium-gray rounded crew-neck collar framing the base of the neck",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.312,
+        "y": 0.625,
+        "w": 0.377,
+        "h": 0.164
+      },
+      "notes": "The curved neckline is visible around the exposed neck.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "broad-gray-shirt",
+      "label": "Broad medium-gray shirt with sloping shoulders",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.0,
+        "y": 0.625,
+        "w": 1.0,
+        "h": 0.375
+      },
+      "notes": "The gray garment fills the lower frame beneath the head and neck.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    }
+  ]
+}

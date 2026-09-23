@@ -15,7 +15,8 @@ from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 from .auto_resolution import AutoResolutionResult, project_auto_resolution
 from .d1_d2 import SemanticPseOptions, _d1_prompt, _d2_stage1_prompt, _d2_stage2_prompt
 from .identity_manifest import IdentityFeatureManifest
-from .identity_review import review_identity_features
+from .identity_review import review_identity_candidate_grid, review_identity_features
+from .resolution import AUTO_LOGICAL_HEIGHTS
 from .semantic_pixel_quality import evaluate_semantic_source
 from .structure_extractor import PSE_VERSION
 
@@ -101,6 +102,57 @@ def _run_auto(
     with Image.open(source_path) as source_opened, Image.open(semantic_path) as semantic_opened:
         source = source_opened.convert("RGBA")
         semantic = semantic_opened.convert("RGBA")
+    quality_result = evaluate_semantic_source(semantic, alpha_threshold=options.alpha_threshold)
+    quality = quality_result.to_dict()
+    if not quality_result.passed:
+        heights = (override_height,) if override_height is not None else AUTO_LOGICAL_HEIGHTS
+        report: dict[str, Any] = {
+            "kind": "sprite-studio-semantic-auto-resolution",
+            "version": 1,
+            "strategy": strategy,
+            "pse_version": PSE_VERSION,
+            "source_reference": str(source_path.resolve()),
+            "semantic": {
+                "path": str(semantic_path.resolve()),
+                "provider": semantic_provider,
+                "size": list(semantic.size),
+            },
+            "semantic_quality": quality,
+            "semantic_preservation": {
+                "pass": False,
+                "status": "NOT_EVALUATED_SEMANTIC_QUALITY_REJECTED",
+                "feature_results": [],
+                "topology_warnings": [],
+                "identity_review": None,
+            },
+            "resolution": {
+                "mode": "AUDIT" if audit else "AUTO",
+                "candidates": list(heights),
+                "selected": None,
+                "reason": "semantic_quality_rejected",
+                "candidate_results": {str(height): "NOT_REQUIRED_SEMANTIC_QUALITY_REJECTED" for height in heights},
+                "candidate_details": {},
+                "identity_loss_index": {},
+                "root_cause": "SEMANTIC_QUALITY_GATE",
+                "identity_review_method": "not-run-semantic-quality-rejected",
+                "identity_gate_authoritative": False,
+                "resize_rescue": False,
+                "threshold_relaxation": False,
+                "palette_relaxation": False,
+                "resolution_override": override_height is not None,
+                "identity_gate_passed": False,
+            },
+            "status": quality_result.status,
+            "accepted": None,
+            "accepted_path": None,
+            "pse": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+            "logical_validation": "NOT_RUN_SEMANTIC_QUALITY_REJECTED",
+        }
+        if intermediate is not None:
+            report["intermediate"] = intermediate
+        atomic_write_text(report_path, json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+        return None, report, None
+
     resolution = project_auto_resolution(
         source,
         semantic,
@@ -111,8 +163,9 @@ def _run_auto(
         audit=audit,
         override_height=override_height,
         identity_reviewer=review_identity_features,
+        identity_batch_reviewer=review_identity_candidate_grid,
+        review_workdir=logical_path.parent.parent / "identity-review",
     )
-    quality = evaluate_semantic_source(semantic, alpha_threshold=options.alpha_threshold).to_dict()
     report = _resolution_report(
         source_path=source_path,
         semantic_path=semantic_path,
@@ -122,6 +175,20 @@ def _run_auto(
         strategy=strategy,
         intermediate=intermediate,
     )
+    if audit:
+        candidate_root = logical_path.parent / "candidates" / logical_path.stem
+        for height, image in resolution.candidate_images.items():
+            candidate_path = candidate_root / f"H{height}.png"
+            candidate_preview = candidate_root / f"H{height}.preview-4x.png"
+            candidate_path.parent.mkdir(parents=True, exist_ok=True)
+            atomic_save_image(image, candidate_path)
+            atomic_save_image(
+                image.resize((image.width * 4, image.height * 4), Image.Resampling.NEAREST),
+                candidate_preview,
+            )
+            detail = resolution.decision_report.get("candidate_details", {}).get(str(height), {})
+            detail["logical_candidate_path"] = str(candidate_path.resolve())
+            detail["logical_candidate_preview_path"] = str(candidate_preview.resolve())
     accepted: Path | None = None
     if resolution.selected_image is not None and resolution.selected_height is not None:
         atomic_save_image(resolution.selected_image, logical_path)

@@ -1,0 +1,4327 @@
+{
+  "kind": "sprite-studio-semantic-auto-resolution",
+  "version": 1,
+  "strategy": "semantic_d1_auto_resolution_audit",
+  "pse_version": "v0.1",
+  "source_reference": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png",
+  "semantic": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\semantic\\R05.png",
+    "provider": {
+      "provider": "gpt-image",
+      "model": "gpt-image (built-in image_gen)",
+      "provider_implementation": "Codex direct built-in image_gen tool",
+      "provider_role": "GPT Image semantic Pixel Master redraw",
+      "source_id": "R05",
+      "stage": "raw",
+      "prompt": "Preserve the exact identity of the attached character. Redraw the character in a deliberately low-resolution pixel-art design language. Do not merely apply a pixel filter. Reallocate visual information for small-scale readability. Simplify hair into clear intentional masses and clusters. Keep the eyes, brows, nose, mouth and jaw readable with fewer larger shapes. Merge tiny costume details into larger readable motifs. Preserve asymmetric identity details. Use flat coherent color regions, crisp block-like contours and stepped shading. Avoid painterly texture, soft gradients, blur, bloom and micro-detail. The result may be high resolution; its purpose is to provide semantically simplified pixel-art structure for deterministic projection into a 128/160/192/256 logical-pixel master. Use a solid magenta background and no text, UI, or extra characters.",
+      "prompt_sha256": "b4cf7e5e1dcdd3555cef4ac584ccb38d91b3ff1dc0bdc5b56448770eba0a3bca",
+      "refs": [
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png"
+      ],
+      "ref_sha256": {
+        "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png": "10ee0b91785aa6ba662c1fdfa6df5128153ae95d56f6d7a8d15f41b90bcc1857"
+      },
+      "tool_saved_path": "C:\\Users\\seung\\.codex\\generated_images\\01a0c3cf-d3e4-7ef2-8c5c-1755f92d5f8d\\exec-41bbcf9b-2656-4597-a8b7-0d6d331ce9a3.png",
+      "out": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R05\\raw.png",
+      "raw": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\_gpt\\D1\\R05\\raw.png",
+      "raw_sha256": "0713e08397e45c9f7c2ea78386b9056cfc2f65cd82eb97eb661c638b167a03b4",
+      "tool": "built-in image_gen",
+      "generation_mode": "direct_gpt_image_tool",
+      "recorded_at_utc": "2026-09-23T12:58:59.054743+00:00"
+    },
+    "size": [
+      1122,
+      1402
+    ]
+  },
+  "semantic_quality": {
+    "status": "WARN_PAINTERLY",
+    "metrics": {
+      "input_size": [
+        1122,
+        1402
+      ],
+      "background": {
+        "mode": "transparent",
+        "background_pixels": 800131
+      },
+      "subject_bbox": [
+        36,
+        16,
+        1090,
+        1386
+      ],
+      "subject_area_ratio": 0.917953,
+      "edge_softness_ratio": 0.997542,
+      "adjacent_transition_ratio": 0.813775,
+      "cluster_size_distribution": {
+        "opaque_pixels": 643291,
+        "opaque_color_count": 86276,
+        "color_ratio": 0.134117,
+        "median_quantized_cluster": 19.0,
+        "small_quantized_cluster_fraction": 0.265403
+      }
+    },
+    "warnings": [
+      {
+        "code": "WARN_PAINTERLY",
+        "message": "Semantic source retains unusually soft or color-rich detail."
+      }
+    ]
+  },
+  "semantic_preservation": {
+    "pass": true,
+    "status": "PASS_SEMANTIC_PRESERVATION",
+    "feature_results": [
+      {
+        "id": "sweeping-silver-hair",
+        "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+        "importance": "CRITICAL",
+        "kind": "SILHOUETTE",
+        "state": "SIMPLIFIED",
+        "reason": "Silver-white hair still spreads into broad looping locks around and behind the figure, with pixelated contours.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.536592,
+          "bbox": [
+            47,
+            14,
+            1075,
+            1131
+          ],
+          "width": 1028,
+          "height": 1117,
+          "min_dimension": 1028,
+          "mean_rgb": [
+            171.973,
+            192.893,
+            170.627
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.507668,
+          "bbox": [
+            0,
+            0,
+            1054,
+            1151
+          ],
+          "width": 1054,
+          "height": 1151,
+          "min_dimension": 1054,
+          "mean_rgb": [
+            194.799,
+            191.508,
+            194.851
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          0,
+          0,
+          1054,
+          1151
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 0.84
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "blue-eyed-face",
+        "label": "Small pale face with large blue eyes and a subtle smile",
+        "importance": "CRITICAL",
+        "kind": "FACE",
+        "state": "SIMPLIFIED",
+        "reason": "Centered pale face retains both large blue eyes and a subtle smile.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            492,
+            110,
+            618,
+            205
+          ],
+          "width": 126,
+          "height": 95,
+          "min_dimension": 95,
+          "mean_rgb": [
+            209.492,
+            195.182,
+            193.052
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            453,
+            123,
+            601,
+            247
+          ],
+          "width": 148,
+          "height": 124,
+          "min_dimension": 124,
+          "mean_rgb": [
+            188.418,
+            179.584,
+            179.886
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          453,
+          123,
+          601,
+          247
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.99,
+          "location_in_candidate_subject": {
+            "x": 0.43,
+            "y": 0.09,
+            "w": 0.14,
+            "h": 0.09
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "right-hair-flower",
+        "label": "White flower with a gold center worn in the hair",
+        "importance": "CRITICAL",
+        "kind": "ACCESSORY",
+        "state": "PRESERVED",
+        "reason": "White flower with a gold center remains visible on the image-right side of the head.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.836287,
+          "bbox": [
+            599,
+            40,
+            643,
+            99
+          ],
+          "width": 44,
+          "height": 59,
+          "min_dimension": 44,
+          "mean_rgb": [
+            189.777,
+            188.341,
+            182.307
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.980859,
+          "bbox": [
+            569,
+            41,
+            622,
+            110
+          ],
+          "width": 53,
+          "height": 69,
+          "min_dimension": 53,
+          "mean_rgb": [
+            187.849,
+            188.244,
+            179.339
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          569,
+          41,
+          622,
+          110
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.99,
+          "location_in_candidate_subject": {
+            "x": 0.54,
+            "y": 0.03,
+            "w": 0.05,
+            "h": 0.05
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "navy-jeweled-neck-bow",
+        "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+        "importance": "CRITICAL",
+        "kind": "ACCESSORY",
+        "state": "PRESERVED",
+        "reason": "Dark navy bow and blue diamond jewel remain distinct below the face.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            510,
+            206,
+            599,
+            305
+          ],
+          "width": 89,
+          "height": 99,
+          "min_dimension": 89,
+          "mean_rgb": [
+            123.129,
+            118.991,
+            126.728
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            474,
+            246,
+            580,
+            343
+          ],
+          "width": 106,
+          "height": 97,
+          "min_dimension": 97,
+          "mean_rgb": [
+            137.978,
+            143.191,
+            154.008
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          474,
+          246,
+          580,
+          343
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.45,
+            "y": 0.18,
+            "w": 0.1,
+            "h": 0.07
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "ornate-navy-bodice",
+        "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "Fitted navy bodice keeps gold decoration and a blue center jewel against the white blouse.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            476,
+            368,
+            627,
+            515
+          ],
+          "width": 151,
+          "height": 147,
+          "min_dimension": 147,
+          "mean_rgb": [
+            108.958,
+            104.248,
+            109.197
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            453,
+            411,
+            612,
+            548
+          ],
+          "width": 159,
+          "height": 137,
+          "min_dimension": 137,
+          "mean_rgb": [
+            115.386,
+            112.855,
+            115.951
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          453,
+          411,
+          612,
+          548
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.96,
+          "location_in_candidate_subject": {
+            "x": 0.43,
+            "y": 0.3,
+            "w": 0.15,
+            "h": 0.1
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "layered-white-skirt",
+        "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "White ruffled skirt remains layered, with navy panels and gold trim visible beneath.",
+        "source": {
+          "available": true,
+          "visible_ratio": 1.0,
+          "bbox": [
+            309,
+            455,
+            812,
+            780
+          ],
+          "width": 503,
+          "height": 325,
+          "min_dimension": 325,
+          "mean_rgb": [
+            192.351,
+            187.459,
+            191.068
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.996358,
+          "bbox": [
+            284,
+            506,
+            780,
+            795
+          ],
+          "width": 496,
+          "height": 289,
+          "min_dimension": 289,
+          "mean_rgb": [
+            192.284,
+            188.693,
+            192.193
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          284,
+          506,
+          780,
+          795
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.97,
+          "location_in_candidate_subject": {
+            "x": 0.27,
+            "y": 0.37,
+            "w": 0.47,
+            "h": 0.21
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      },
+      {
+        "id": "white-blue-ornamented-boots",
+        "label": "White knee-high boots with navy straps and blue jewel accents",
+        "importance": "IMPORTANT",
+        "kind": "GARMENT",
+        "state": "SIMPLIFIED",
+        "reason": "Both white knee-high boots retain navy crossed straps and blue jewel accents.",
+        "source": {
+          "available": true,
+          "visible_ratio": 0.540173,
+          "bbox": [
+            472,
+            1118,
+            673,
+            1379
+          ],
+          "width": 201,
+          "height": 261,
+          "min_dimension": 201,
+          "mean_rgb": [
+            153.523,
+            155.181,
+            154.963
+          ]
+        },
+        "candidate": {
+          "available": true,
+          "visible_ratio": 0.651949,
+          "bbox": [
+            453,
+            1109,
+            633,
+            1357
+          ],
+          "width": 180,
+          "height": 248,
+          "min_dimension": 180,
+          "mean_rgb": [
+            155.775,
+            158.044,
+            163.809
+          ]
+        },
+        "must_remain_separated_from": [],
+        "required_color_relation": null,
+        "candidate_location_bbox": [
+          453,
+          1109,
+          633,
+          1357
+        ],
+        "recognition_evidence": {
+          "method": "codex-multimodal-ifm-review",
+          "confidence": 0.98,
+          "location_in_candidate_subject": {
+            "x": 0.43,
+            "y": 0.81,
+            "w": 0.17,
+            "h": 0.18
+          },
+          "review_status": "PASS_REVIEW_RESPONSE",
+          "must_remain_recognizable": true
+        }
+      }
+    ],
+    "topology_warnings": [],
+    "identity_review": {
+      "provider": "codex",
+      "model": "gpt-6-luna",
+      "task": "multimodal_identity_review",
+      "stage": "semantic-preservation",
+      "session_id": "01a0ce8a-68ae-72e0-a751-005fe8826729",
+      "elapsed_seconds": 56.689,
+      "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+      "candidate_sha256": "fa1c9cb9195f530f98c21226260c58687e2506ed9d87e0d5375dec137f754dfe",
+      "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\semantic-preservation-5d52f66cc515-fa1c9cb9195f",
+      "status": "PASS_REVIEW_RESPONSE",
+      "features": [
+        {
+          "id": "sweeping-silver-hair",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Silver-white hair still spreads into broad looping locks around and behind the figure, with pixelated contours.",
+          "location": {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 0.84
+          }
+        },
+        {
+          "id": "blue-eyed-face",
+          "state": "SIMPLIFIED",
+          "confidence": 0.99,
+          "reason": "Centered pale face retains both large blue eyes and a subtle smile.",
+          "location": {
+            "x": 0.43,
+            "y": 0.09,
+            "w": 0.14,
+            "h": 0.09
+          }
+        },
+        {
+          "id": "right-hair-flower",
+          "state": "PRESERVED",
+          "confidence": 0.99,
+          "reason": "White flower with a gold center remains visible on the image-right side of the head.",
+          "location": {
+            "x": 0.54,
+            "y": 0.03,
+            "w": 0.05,
+            "h": 0.05
+          }
+        },
+        {
+          "id": "navy-jeweled-neck-bow",
+          "state": "PRESERVED",
+          "confidence": 0.98,
+          "reason": "Dark navy bow and blue diamond jewel remain distinct below the face.",
+          "location": {
+            "x": 0.45,
+            "y": 0.18,
+            "w": 0.1,
+            "h": 0.07
+          }
+        },
+        {
+          "id": "ornate-navy-bodice",
+          "state": "SIMPLIFIED",
+          "confidence": 0.96,
+          "reason": "Fitted navy bodice keeps gold decoration and a blue center jewel against the white blouse.",
+          "location": {
+            "x": 0.43,
+            "y": 0.3,
+            "w": 0.15,
+            "h": 0.1
+          }
+        },
+        {
+          "id": "layered-white-skirt",
+          "state": "SIMPLIFIED",
+          "confidence": 0.97,
+          "reason": "White ruffled skirt remains layered, with navy panels and gold trim visible beneath.",
+          "location": {
+            "x": 0.27,
+            "y": 0.37,
+            "w": 0.47,
+            "h": 0.21
+          }
+        },
+        {
+          "id": "white-blue-ornamented-boots",
+          "state": "SIMPLIFIED",
+          "confidence": 0.98,
+          "reason": "Both white knee-high boots retain navy crossed straps and blue jewel accents.",
+          "location": {
+            "x": 0.43,
+            "y": 0.81,
+            "w": 0.17,
+            "h": 0.18
+          }
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "mode": "AUDIT",
+    "candidates": [
+      128,
+      160,
+      192,
+      256
+    ],
+    "selected": 192,
+    "reason": "minimum_identity_preserving_height",
+    "candidate_results": {
+      "128": "FAIL_INFORMATION_LOSS",
+      "160": "FAIL_INFORMATION_LOSS",
+      "192": "PASS",
+      "256": "PASS"
+    },
+    "candidate_details": {
+      "128": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.377273,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.377273,
+          "retention": 0.622727,
+          "feature_results": [
+            {
+              "id": "sweeping-silver-hair",
+              "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+              "importance": "CRITICAL",
+              "kind": "SILHOUETTE",
+              "state": "PRESERVED",
+              "reason": "Broad pale looping locks remain readable around the figure.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.536592,
+                "bbox": [
+                  47,
+                  14,
+                  1075,
+                  1131
+                ],
+                "width": 1028,
+                "height": 1117,
+                "min_dimension": 1028,
+                "mean_rgb": [
+                  171.973,
+                  192.893,
+                  170.627
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.552964,
+                "bbox": [
+                  0,
+                  7,
+                  98,
+                  112
+                ],
+                "width": 98,
+                "height": 105,
+                "min_dimension": 98,
+                "mean_rgb": [
+                  198.995,
+                  196.473,
+                  199.739
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                7,
+                98,
+                112
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.91,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.06,
+                  "w": 1.0,
+                  "h": 0.81
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Small pale face with large blue eyes and a subtle smile",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  492,
+                  110,
+                  618,
+                  205
+                ],
+                "width": 126,
+                "height": 95,
+                "min_dimension": 95,
+                "mean_rgb": [
+                  209.492,
+                  195.182,
+                  193.052
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  41,
+                  3,
+                  57,
+                  17
+                ],
+                "width": 16,
+                "height": 14,
+                "min_dimension": 14,
+                "mean_rgb": [
+                  217.982,
+                  214.433,
+                  212.357
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                41,
+                3,
+                57,
+                17
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.69,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.03,
+                  "w": 0.16,
+                  "h": 0.1
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "A tiny light and gold mark appears on image-right, but flower shape is unclear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.836287,
+                "bbox": [
+                  599,
+                  40,
+                  643,
+                  99
+                ],
+                "width": 44,
+                "height": 59,
+                "min_dimension": 44,
+                "mean_rgb": [
+                  189.777,
+                  188.341,
+                  182.307
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.857143,
+                "bbox": [
+                  53,
+                  2,
+                  59,
+                  9
+                ],
+                "width": 6,
+                "height": 7,
+                "min_dimension": 6,
+                "mean_rgb": [
+                  184.583,
+                  186.556,
+                  182.75
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                53,
+                2,
+                59,
+                9
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.45,
+                "location_in_candidate_subject": {
+                  "x": 0.55,
+                  "y": 0.02,
+                  "w": 0.05,
+                  "h": 0.05
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  510,
+                  206,
+                  599,
+                  305
+                ],
+                "width": 89,
+                "height": 99,
+                "min_dimension": 89,
+                "mean_rgb": [
+                  123.129,
+                  118.991,
+                  126.728
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  42,
+                  17,
+                  57,
+                  29
+                ],
+                "width": 15,
+                "height": 12,
+                "min_dimension": 12,
+                "mean_rgb": [
+                  170.35,
+                  169.717,
+                  176.383
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                42,
+                17,
+                57,
+                29
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.62,
+                "location_in_candidate_subject": {
+                  "x": 0.43,
+                  "y": 0.14,
+                  "w": 0.15,
+                  "h": 0.08
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  476,
+                  368,
+                  627,
+                  515
+                ],
+                "width": 151,
+                "height": 147,
+                "min_dimension": 147,
+                "mean_rgb": [
+                  108.958,
+                  104.248,
+                  109.197
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  37,
+                  32,
+                  61,
+                  53
+                ],
+                "width": 24,
+                "height": 21,
+                "min_dimension": 21,
+                "mean_rgb": [
+                  156.917,
+                  157.067,
+                  163.456
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                37,
+                32,
+                61,
+                53
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.61,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.25,
+                  "w": 0.24,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "White flared skirt and blue side panels show, but layers are indistinct.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  309,
+                  455,
+                  812,
+                  780
+                ],
+                "width": 503,
+                "height": 325,
+                "min_dimension": 325,
+                "mean_rgb": [
+                  192.351,
+                  187.459,
+                  191.068
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  29,
+                  51,
+                  69,
+                  77
+                ],
+                "width": 40,
+                "height": 26,
+                "min_dimension": 26,
+                "mean_rgb": [
+                  202.482,
+                  198.906,
+                  200.904
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                29,
+                51,
+                69,
+                77
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.7,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.4,
+                  "w": 0.4,
+                  "h": 0.2
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "label": "White knee-high boots with navy straps and blue jewel accents",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "AMBIGUOUS",
+              "reason": "Small white footwear and blue marks are visible; crossed straps are unclear.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.540173,
+                "bbox": [
+                  472,
+                  1118,
+                  673,
+                  1379
+                ],
+                "width": 201,
+                "height": 261,
+                "min_dimension": 201,
+                "mean_rgb": [
+                  153.523,
+                  155.181,
+                  154.963
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.696078,
+                "bbox": [
+                  41,
+                  104,
+                  58,
+                  128
+                ],
+                "width": 17,
+                "height": 24,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  161.162,
+                  164.725,
+                  172.732
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                41,
+                104,
+                58,
+                128
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.48,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.82,
+                  "w": 0.17,
+                  "h": 0.18
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "blue-eyed-face",
+              "label": "Small pale face with large blue eyes and a subtle smile",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient"
+            },
+            {
+              "feature_id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "state": "AMBIGUOUS",
+              "reason": "A tiny light and gold mark appears on image-right, but flower shape is unclear."
+            },
+            {
+              "feature_id": "navy-jeweled-neck-bow",
+              "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "sweeping-silver-hair": {
+                "projected_width": 98,
+                "projected_height": 105,
+                "min_visible_dimension": 98,
+                "risk": false
+              },
+              "blue-eyed-face": {
+                "projected_width": 16,
+                "projected_height": 14,
+                "min_visible_dimension": 14,
+                "risk": false
+              },
+              "right-hair-flower": {
+                "projected_width": 6,
+                "projected_height": 7,
+                "min_visible_dimension": 6,
+                "risk": false
+              },
+              "navy-jeweled-neck-bow": {
+                "projected_width": 15,
+                "projected_height": 12,
+                "min_visible_dimension": 12,
+                "risk": false
+              },
+              "ornate-navy-bodice": {
+                "projected_width": 24,
+                "projected_height": 21,
+                "min_visible_dimension": 21,
+                "risk": false
+              },
+              "layered-white-skirt": {
+                "projected_width": 40,
+                "projected_height": 26,
+                "min_visible_dimension": 26,
+                "risk": false
+              },
+              "white-blue-ornamented-boots": {
+                "projected_width": 17,
+                "projected_height": 24,
+                "min_visible_dimension": 17,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            36,
+            16,
+            1090,
+            1386
+          ],
+          "logical_size": [
+            98,
+            128
+          ],
+          "target_height": 128,
+          "actual_height": 128,
+          "logical_width": 98,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 800131
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.445127,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            98,
+            128
+          ],
+          "output_size": [
+            98,
+            128
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 47,
+            "color_ratio": 0.007842482896712832
+          },
+          "subject_bbox": [
+            0,
+            0,
+            98,
+            128
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 47,
+            "separation": {
+              "colors": 47,
+              "min_delta_e": 0.023914,
+              "closest_pair": [
+                [
+                  62,
+                  81,
+                  116
+                ],
+                [
+                  65,
+                  88,
+                  125
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              98,
+              128
+            ],
+            "bbox": [
+              0,
+              0,
+              98,
+              128
+            ],
+            "subject_height": 128,
+            "binary_alpha": true,
+            "palette_size": 47,
+            "max_palette_size": 48,
+            "target_height": 128,
+            "actual_height": 128,
+            "logical_width": 98,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 0,
+            "isolated_ratio": 0.0
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce8b-8120-7c41-9df5-e5c70a8ff0d6",
+          "elapsed_seconds": 111.912,
+          "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+          "candidate_sha256": "da049f83a2f94f5b2246457b6b2365bda402acccd683cbfcb06c12c307b98ba9",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\logical-resolution-grid-5d52f66cc515-128-da049f83-160-ee5a2726-192-3b191ca9-256-81d901a3",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "sweeping-silver-hair",
+              "state": "PRESERVED",
+              "confidence": 0.91,
+              "reason": "Broad pale looping locks remain readable around the figure.",
+              "location": {
+                "x": 0.0,
+                "y": 0.06,
+                "w": 1.0,
+                "h": 0.81
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.69,
+              "reason": "Small face and blue eye marks show; the smile is hard to distinguish.",
+              "location": {
+                "x": 0.42,
+                "y": 0.03,
+                "w": 0.16,
+                "h": 0.1
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "state": "AMBIGUOUS",
+              "confidence": 0.45,
+              "reason": "A tiny light and gold mark appears on image-right, but flower shape is unclear.",
+              "location": {
+                "x": 0.55,
+                "y": 0.02,
+                "w": 0.05,
+                "h": 0.05
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "state": "SIMPLIFIED",
+              "confidence": 0.62,
+              "reason": "Dark neck shape and a blue center mark remain, with little bow detail.",
+              "location": {
+                "x": 0.43,
+                "y": 0.14,
+                "w": 0.15,
+                "h": 0.08
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "state": "SIMPLIFIED",
+              "confidence": 0.61,
+              "reason": "Navy center section remains distinct; gold ornament is reduced to small marks.",
+              "location": {
+                "x": 0.38,
+                "y": 0.25,
+                "w": 0.24,
+                "h": 0.16
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "state": "SIMPLIFIED",
+              "confidence": 0.7,
+              "reason": "White flared skirt and blue side panels show, but layers are indistinct.",
+              "location": {
+                "x": 0.3,
+                "y": 0.4,
+                "w": 0.4,
+                "h": 0.2
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "state": "AMBIGUOUS",
+              "confidence": 0.48,
+              "reason": "Small white footwear and blue marks are visible; crossed straps are unclear.",
+              "location": {
+                "x": 0.42,
+                "y": 0.82,
+                "w": 0.17,
+                "h": 0.18
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H128.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H128.preview-4x.png"
+      },
+      "160": {
+        "status": "FAIL_INFORMATION_LOSS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.186364,
+        "information_loss": {
+          "pass": false,
+          "status": "FAIL_INFORMATION_LOSS",
+          "identity_loss_index": 0.186364,
+          "retention": 0.813636,
+          "feature_results": [
+            {
+              "id": "sweeping-silver-hair",
+              "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+              "importance": "CRITICAL",
+              "kind": "SILHOUETTE",
+              "state": "PRESERVED",
+              "reason": "Wide pale locks form clear loops around and behind the figure.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.536592,
+                "bbox": [
+                  47,
+                  14,
+                  1075,
+                  1131
+                ],
+                "width": 1028,
+                "height": 1117,
+                "min_dimension": 1028,
+                "mean_rgb": [
+                  171.973,
+                  192.893,
+                  170.627
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.54695,
+                "bbox": [
+                  0,
+                  9,
+                  123,
+                  140
+                ],
+                "width": 123,
+                "height": 131,
+                "min_dimension": 123,
+                "mean_rgb": [
+                  196.994,
+                  194.306,
+                  197.535
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                9,
+                123,
+                140
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.94,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.06,
+                  "w": 1.0,
+                  "h": 0.81
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Small pale face with large blue eyes and a subtle smile",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Centered pale face and blue eyes read clearly; the smile is faint.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  492,
+                  110,
+                  618,
+                  205
+                ],
+                "width": 126,
+                "height": 95,
+                "min_dimension": 95,
+                "mean_rgb": [
+                  209.492,
+                  195.182,
+                  193.052
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.997199,
+                "bbox": [
+                  51,
+                  4,
+                  72,
+                  21
+                ],
+                "width": 21,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  215.211,
+                  212.183,
+                  210.593
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                51,
+                4,
+                72,
+                21
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.76,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.03,
+                  "w": 0.16,
+                  "h": 0.1
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.836287,
+                "bbox": [
+                  599,
+                  40,
+                  643,
+                  99
+                ],
+                "width": 44,
+                "height": 59,
+                "min_dimension": 44,
+                "mean_rgb": [
+                  189.777,
+                  188.341,
+                  182.307
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.873016,
+                "bbox": [
+                  67,
+                  3,
+                  74,
+                  12
+                ],
+                "width": 7,
+                "height": 9,
+                "min_dimension": 7,
+                "mean_rgb": [
+                  191.382,
+                  190.545,
+                  186.309
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                67,
+                3,
+                74,
+                12
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.67,
+                "location_in_candidate_subject": {
+                  "x": 0.55,
+                  "y": 0.02,
+                  "w": 0.05,
+                  "h": 0.05
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "SIMPLIFIED",
+              "reason": "Dark bow shape and blue jewel are visible below the face, with reduced detail.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  510,
+                  206,
+                  599,
+                  305
+                ],
+                "width": 89,
+                "height": 99,
+                "min_dimension": 89,
+                "mean_rgb": [
+                  123.129,
+                  118.991,
+                  126.728
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  52,
+                  22,
+                  72,
+                  36
+                ],
+                "width": 20,
+                "height": 14,
+                "min_dimension": 14,
+                "mean_rgb": [
+                  167.786,
+                  165.468,
+                  171.175
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                52,
+                22,
+                72,
+                36
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.75,
+                "location_in_candidate_subject": {
+                  "x": 0.43,
+                  "y": 0.14,
+                  "w": 0.15,
+                  "h": 0.08
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Navy bodice and center blue accent remain; gold decoration is simplified.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  476,
+                  368,
+                  627,
+                  515
+                ],
+                "width": 151,
+                "height": 147,
+                "min_dimension": 147,
+                "mean_rgb": [
+                  108.958,
+                  104.248,
+                  109.197
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  46,
+                  40,
+                  77,
+                  66
+                ],
+                "width": 31,
+                "height": 26,
+                "min_dimension": 26,
+                "mean_rgb": [
+                  156.206,
+                  156.114,
+                  162.292
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                46,
+                40,
+                77,
+                66
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.74,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.25,
+                  "w": 0.24,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "White skirt, ruffle shapes, and blue panels are readable with limited trim detail.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  309,
+                  455,
+                  812,
+                  780
+                ],
+                "width": 503,
+                "height": 325,
+                "min_dimension": 325,
+                "mean_rgb": [
+                  192.351,
+                  187.459,
+                  191.068
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  36,
+                  64,
+                  87,
+                  97
+                ],
+                "width": 51,
+                "height": 33,
+                "min_dimension": 33,
+                "mean_rgb": [
+                  196.99,
+                  193.281,
+                  195.623
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                36,
+                64,
+                87,
+                97
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.78,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.4,
+                  "w": 0.4,
+                  "h": 0.2
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "label": "White knee-high boots with navy straps and blue jewel accents",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "White boots with blue accents show, though crossed navy straps are small.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.540173,
+                "bbox": [
+                  472,
+                  1118,
+                  673,
+                  1379
+                ],
+                "width": 201,
+                "height": 261,
+                "min_dimension": 201,
+                "mean_rgb": [
+                  153.523,
+                  155.181,
+                  154.963
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.702194,
+                "bbox": [
+                  51,
+                  131,
+                  73,
+                  160
+                ],
+                "width": 22,
+                "height": 29,
+                "min_dimension": 22,
+                "mean_rgb": [
+                  148.672,
+                  152.766,
+                  161.808
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                51,
+                131,
+                73,
+                160
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.7,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.82,
+                  "w": 0.17,
+                  "h": 0.18
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [
+            {
+              "feature_id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "state": "AMBIGUOUS",
+              "reason": "recognition-confidence-or-location-insufficient"
+            }
+          ],
+          "pixel_evidence": {
+            "features": {
+              "sweeping-silver-hair": {
+                "projected_width": 123,
+                "projected_height": 131,
+                "min_visible_dimension": 123,
+                "risk": false
+              },
+              "blue-eyed-face": {
+                "projected_width": 21,
+                "projected_height": 17,
+                "min_visible_dimension": 17,
+                "risk": false
+              },
+              "right-hair-flower": {
+                "projected_width": 7,
+                "projected_height": 9,
+                "min_visible_dimension": 7,
+                "risk": false
+              },
+              "navy-jeweled-neck-bow": {
+                "projected_width": 20,
+                "projected_height": 14,
+                "min_visible_dimension": 14,
+                "risk": false
+              },
+              "ornate-navy-bodice": {
+                "projected_width": 31,
+                "projected_height": 26,
+                "min_visible_dimension": 26,
+                "risk": false
+              },
+              "layered-white-skirt": {
+                "projected_width": 51,
+                "projected_height": 33,
+                "min_visible_dimension": 33,
+                "risk": false
+              },
+              "white-blue-ornamented-boots": {
+                "projected_width": 22,
+                "projected_height": 29,
+                "min_visible_dimension": 22,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            36,
+            16,
+            1090,
+            1386
+          ],
+          "logical_size": [
+            123,
+            160
+          ],
+          "target_height": 160,
+          "actual_height": 160,
+          "logical_width": 123,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 800131
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.445445,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            123,
+            160
+          ],
+          "output_size": [
+            123,
+            160
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 47,
+            "color_ratio": 0.005054306914722013
+          },
+          "subject_bbox": [
+            0,
+            0,
+            123,
+            160
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 47,
+            "separation": {
+              "colors": 47,
+              "min_delta_e": 0.023914,
+              "closest_pair": [
+                [
+                  62,
+                  81,
+                  116
+                ],
+                [
+                  65,
+                  88,
+                  125
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              123,
+              160
+            ],
+            "bbox": [
+              0,
+              0,
+              123,
+              160
+            ],
+            "subject_height": 160,
+            "binary_alpha": true,
+            "palette_size": 47,
+            "max_palette_size": 48,
+            "target_height": 160,
+            "actual_height": 160,
+            "logical_width": 123,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 3,
+            "isolated_ratio": 0.000323
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce8b-8120-7c41-9df5-e5c70a8ff0d6",
+          "elapsed_seconds": 111.912,
+          "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+          "candidate_sha256": "ee5a2726cbb66e21925ee08ce2418d3bb5fbaefdf4000ca8edfdc2f9ed7ce725",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\logical-resolution-grid-5d52f66cc515-128-da049f83-160-ee5a2726-192-3b191ca9-256-81d901a3",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "sweeping-silver-hair",
+              "state": "PRESERVED",
+              "confidence": 0.94,
+              "reason": "Wide pale locks form clear loops around and behind the figure.",
+              "location": {
+                "x": 0.0,
+                "y": 0.06,
+                "w": 1.0,
+                "h": 0.81
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.76,
+              "reason": "Centered pale face and blue eyes read clearly; the smile is faint.",
+              "location": {
+                "x": 0.42,
+                "y": 0.03,
+                "w": 0.16,
+                "h": 0.1
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "state": "SIMPLIFIED",
+              "confidence": 0.67,
+              "reason": "Small white flower-like shape with a gold center appears on image-right.",
+              "location": {
+                "x": 0.55,
+                "y": 0.02,
+                "w": 0.05,
+                "h": 0.05
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "state": "SIMPLIFIED",
+              "confidence": 0.75,
+              "reason": "Dark bow shape and blue jewel are visible below the face, with reduced detail.",
+              "location": {
+                "x": 0.43,
+                "y": 0.14,
+                "w": 0.15,
+                "h": 0.08
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "state": "SIMPLIFIED",
+              "confidence": 0.74,
+              "reason": "Navy bodice and center blue accent remain; gold decoration is simplified.",
+              "location": {
+                "x": 0.38,
+                "y": 0.25,
+                "w": 0.24,
+                "h": 0.16
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "state": "SIMPLIFIED",
+              "confidence": 0.78,
+              "reason": "White skirt, ruffle shapes, and blue panels are readable with limited trim detail.",
+              "location": {
+                "x": 0.3,
+                "y": 0.4,
+                "w": 0.4,
+                "h": 0.2
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "state": "SIMPLIFIED",
+              "confidence": 0.7,
+              "reason": "White boots with blue accents show, though crossed navy straps are small.",
+              "location": {
+                "x": 0.42,
+                "y": 0.82,
+                "w": 0.17,
+                "h": 0.18
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H160.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H160.preview-4x.png"
+      },
+      "192": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.122727,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.122727,
+          "retention": 0.877273,
+          "feature_results": [
+            {
+              "id": "sweeping-silver-hair",
+              "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+              "importance": "CRITICAL",
+              "kind": "SILHOUETTE",
+              "state": "PRESERVED",
+              "reason": "Pale hair keeps its broad looping silhouette on both sides.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.536592,
+                "bbox": [
+                  47,
+                  14,
+                  1075,
+                  1131
+                ],
+                "width": 1028,
+                "height": 1117,
+                "min_dimension": 1028,
+                "mean_rgb": [
+                  171.973,
+                  192.893,
+                  170.627
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.540928,
+                "bbox": [
+                  0,
+                  11,
+                  148,
+                  168
+                ],
+                "width": 148,
+                "height": 157,
+                "min_dimension": 148,
+                "mean_rgb": [
+                  195.973,
+                  193.179,
+                  196.443
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                11,
+                148,
+                168
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.95,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.06,
+                  "w": 1.0,
+                  "h": 0.81
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Small pale face with large blue eyes and a subtle smile",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "SIMPLIFIED",
+              "reason": "Blue eyes are visible on the centered pale face; the smile remains subtle.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  492,
+                  110,
+                  618,
+                  205
+                ],
+                "width": 126,
+                "height": 95,
+                "min_dimension": 95,
+                "mean_rgb": [
+                  209.492,
+                  195.182,
+                  193.052
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  62,
+                  5,
+                  86,
+                  25
+                ],
+                "width": 24,
+                "height": 20,
+                "min_dimension": 20,
+                "mean_rgb": [
+                  213.685,
+                  210.185,
+                  208.527
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                62,
+                5,
+                86,
+                25
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.79,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.03,
+                  "w": 0.16,
+                  "h": 0.1
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "SIMPLIFIED",
+              "reason": "White petals and a small gold center are discernible on image-right.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.836287,
+                "bbox": [
+                  599,
+                  40,
+                  643,
+                  99
+                ],
+                "width": 44,
+                "height": 59,
+                "min_dimension": 44,
+                "mean_rgb": [
+                  189.777,
+                  188.341,
+                  182.307
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.795455,
+                "bbox": [
+                  81,
+                  3,
+                  89,
+                  14
+                ],
+                "width": 8,
+                "height": 11,
+                "min_dimension": 8,
+                "mean_rgb": [
+                  184.143,
+                  184.443,
+                  178.429
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                81,
+                3,
+                89,
+                14
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.73,
+                "location_in_candidate_subject": {
+                  "x": 0.55,
+                  "y": 0.02,
+                  "w": 0.05,
+                  "h": 0.05
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "SIMPLIFIED",
+              "reason": "Navy bow and blue jewel remain distinct below the face, with compact detail.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  510,
+                  206,
+                  599,
+                  305
+                ],
+                "width": 89,
+                "height": 99,
+                "min_dimension": 89,
+                "mean_rgb": [
+                  123.129,
+                  118.991,
+                  126.728
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  63,
+                  26,
+                  86,
+                  43
+                ],
+                "width": 23,
+                "height": 17,
+                "min_dimension": 17,
+                "mean_rgb": [
+                  165.279,
+                  162.65,
+                  168.425
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                63,
+                26,
+                86,
+                43
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.79,
+                "location_in_candidate_subject": {
+                  "x": 0.43,
+                  "y": 0.14,
+                  "w": 0.15,
+                  "h": 0.08
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "Fitted navy bodice and gold center ornament show, though fine decoration is reduced.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  476,
+                  368,
+                  627,
+                  515
+                ],
+                "width": 151,
+                "height": 147,
+                "min_dimension": 147,
+                "mean_rgb": [
+                  108.958,
+                  104.248,
+                  109.197
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  56,
+                  48,
+                  92,
+                  79
+                ],
+                "width": 36,
+                "height": 31,
+                "min_dimension": 31,
+                "mean_rgb": [
+                  151.746,
+                  151.706,
+                  158.545
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                56,
+                48,
+                92,
+                79
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.81,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.25,
+                  "w": 0.24,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "White ruffle layers and blue panels are recognizable; gold trim is sparse.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  309,
+                  455,
+                  812,
+                  780
+                ],
+                "width": 503,
+                "height": 325,
+                "min_dimension": 325,
+                "mean_rgb": [
+                  192.351,
+                  187.459,
+                  191.068
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  44,
+                  76,
+                  104,
+                  116
+                ],
+                "width": 60,
+                "height": 40,
+                "min_dimension": 40,
+                "mean_rgb": [
+                  197.538,
+                  194.14,
+                  196.655
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                44,
+                76,
+                104,
+                116
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.82,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.4,
+                  "w": 0.4,
+                  "h": 0.2
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "label": "White knee-high boots with navy straps and blue jewel accents",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "SIMPLIFIED",
+              "reason": "White boots and blue accents are visible; strap details remain small.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.540173,
+                "bbox": [
+                  472,
+                  1118,
+                  673,
+                  1379
+                ],
+                "width": 201,
+                "height": 261,
+                "min_dimension": 201,
+                "mean_rgb": [
+                  153.523,
+                  155.181,
+                  154.963
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.669231,
+                "bbox": [
+                  62,
+                  157,
+                  88,
+                  192
+                ],
+                "width": 26,
+                "height": 35,
+                "min_dimension": 26,
+                "mean_rgb": [
+                  156.772,
+                  158.517,
+                  164.742
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                62,
+                157,
+                88,
+                192
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.76,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.82,
+                  "w": 0.17,
+                  "h": 0.18
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "sweeping-silver-hair": {
+                "projected_width": 148,
+                "projected_height": 157,
+                "min_visible_dimension": 148,
+                "risk": false
+              },
+              "blue-eyed-face": {
+                "projected_width": 24,
+                "projected_height": 20,
+                "min_visible_dimension": 20,
+                "risk": false
+              },
+              "right-hair-flower": {
+                "projected_width": 8,
+                "projected_height": 11,
+                "min_visible_dimension": 8,
+                "risk": false
+              },
+              "navy-jeweled-neck-bow": {
+                "projected_width": 23,
+                "projected_height": 17,
+                "min_visible_dimension": 17,
+                "risk": false
+              },
+              "ornate-navy-bodice": {
+                "projected_width": 36,
+                "projected_height": 31,
+                "min_visible_dimension": 31,
+                "risk": false
+              },
+              "layered-white-skirt": {
+                "projected_width": 60,
+                "projected_height": 40,
+                "min_visible_dimension": 40,
+                "risk": false
+              },
+              "white-blue-ornamented-boots": {
+                "projected_width": 26,
+                "projected_height": 35,
+                "min_visible_dimension": 26,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            36,
+            16,
+            1090,
+            1386
+          ],
+          "logical_size": [
+            148,
+            192
+          ],
+          "target_height": 192,
+          "actual_height": 192,
+          "logical_width": 148,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 800131
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.445338,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            148,
+            192
+          ],
+          "output_size": [
+            148,
+            192
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 48,
+            "color_ratio": 0.0036231884057971015
+          },
+          "subject_bbox": [
+            0,
+            0,
+            148,
+            192
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 48,
+            "separation": {
+              "colors": 48,
+              "min_delta_e": 0.023914,
+              "closest_pair": [
+                [
+                  62,
+                  81,
+                  116
+                ],
+                [
+                  65,
+                  88,
+                  125
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              148,
+              192
+            ],
+            "bbox": [
+              0,
+              0,
+              148,
+              192
+            ],
+            "subject_height": 192,
+            "binary_alpha": true,
+            "palette_size": 48,
+            "max_palette_size": 48,
+            "target_height": 192,
+            "actual_height": 192,
+            "logical_width": 148,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 1,
+            "isolated_ratio": 7.5e-05
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce8b-8120-7c41-9df5-e5c70a8ff0d6",
+          "elapsed_seconds": 111.912,
+          "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+          "candidate_sha256": "3b191ca92510877ac7f127126cbc9cbc72e06368a7547cdca14fd0fd01f5e831",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\logical-resolution-grid-5d52f66cc515-128-da049f83-160-ee5a2726-192-3b191ca9-256-81d901a3",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "sweeping-silver-hair",
+              "state": "PRESERVED",
+              "confidence": 0.95,
+              "reason": "Pale hair keeps its broad looping silhouette on both sides.",
+              "location": {
+                "x": 0.0,
+                "y": 0.06,
+                "w": 1.0,
+                "h": 0.81
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "SIMPLIFIED",
+              "confidence": 0.79,
+              "reason": "Blue eyes are visible on the centered pale face; the smile remains subtle.",
+              "location": {
+                "x": 0.42,
+                "y": 0.03,
+                "w": 0.16,
+                "h": 0.1
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "state": "SIMPLIFIED",
+              "confidence": 0.73,
+              "reason": "White petals and a small gold center are discernible on image-right.",
+              "location": {
+                "x": 0.55,
+                "y": 0.02,
+                "w": 0.05,
+                "h": 0.05
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "state": "SIMPLIFIED",
+              "confidence": 0.79,
+              "reason": "Navy bow and blue jewel remain distinct below the face, with compact detail.",
+              "location": {
+                "x": 0.43,
+                "y": 0.14,
+                "w": 0.15,
+                "h": 0.08
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "state": "SIMPLIFIED",
+              "confidence": 0.81,
+              "reason": "Fitted navy bodice and gold center ornament show, though fine decoration is reduced.",
+              "location": {
+                "x": 0.38,
+                "y": 0.25,
+                "w": 0.24,
+                "h": 0.16
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "state": "SIMPLIFIED",
+              "confidence": 0.82,
+              "reason": "White ruffle layers and blue panels are recognizable; gold trim is sparse.",
+              "location": {
+                "x": 0.3,
+                "y": 0.4,
+                "w": 0.4,
+                "h": 0.2
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "state": "SIMPLIFIED",
+              "confidence": 0.76,
+              "reason": "White boots and blue accents are visible; strap details remain small.",
+              "location": {
+                "x": 0.42,
+                "y": 0.82,
+                "w": 0.17,
+                "h": 0.18
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H192.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H192.preview-4x.png"
+      },
+      "256": {
+        "status": "PASS",
+        "validation_status": "PASS_LOGICAL_MASTER",
+        "identity_loss_index": 0.0,
+        "information_loss": {
+          "pass": true,
+          "status": "PASS_INFORMATION_PRESERVATION",
+          "identity_loss_index": 0.0,
+          "retention": 1.0,
+          "feature_results": [
+            {
+              "id": "sweeping-silver-hair",
+              "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+              "importance": "CRITICAL",
+              "kind": "SILHOUETTE",
+              "state": "PRESERVED",
+              "reason": "Long silver-white locks clearly sweep into broad loops around the body.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.536592,
+                "bbox": [
+                  47,
+                  14,
+                  1075,
+                  1131
+                ],
+                "width": 1028,
+                "height": 1117,
+                "min_dimension": 1028,
+                "mean_rgb": [
+                  171.973,
+                  192.893,
+                  170.627
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.538364,
+                "bbox": [
+                  0,
+                  15,
+                  197,
+                  223
+                ],
+                "width": 197,
+                "height": 208,
+                "min_dimension": 197,
+                "mean_rgb": [
+                  194.804,
+                  191.949,
+                  195.311
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                0,
+                15,
+                197,
+                223
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.97,
+                "location_in_candidate_subject": {
+                  "x": 0.0,
+                  "y": 0.06,
+                  "w": 1.0,
+                  "h": 0.81
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "label": "Small pale face with large blue eyes and a subtle smile",
+              "importance": "CRITICAL",
+              "kind": "FACE",
+              "state": "PRESERVED",
+              "reason": "Centered pale face retains both blue eyes and a subtle smile.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  492,
+                  110,
+                  618,
+                  205
+                ],
+                "width": 126,
+                "height": 95,
+                "min_dimension": 95,
+                "mean_rgb": [
+                  209.492,
+                  195.182,
+                  193.052
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.998878,
+                "bbox": [
+                  82,
+                  7,
+                  115,
+                  34
+                ],
+                "width": 33,
+                "height": 27,
+                "min_dimension": 27,
+                "mean_rgb": [
+                  212.49,
+                  208.5,
+                  206.733
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                82,
+                7,
+                115,
+                34
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.9,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.03,
+                  "w": 0.16,
+                  "h": 0.1
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "label": "White flower with a gold center worn in the hair",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "PRESERVED",
+              "reason": "White flower with gold center is recognizable on image-right of the head.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.836287,
+                "bbox": [
+                  599,
+                  40,
+                  643,
+                  99
+                ],
+                "width": 44,
+                "height": 59,
+                "min_dimension": 44,
+                "mean_rgb": [
+                  189.777,
+                  188.341,
+                  182.307
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.804196,
+                "bbox": [
+                  108,
+                  5,
+                  119,
+                  18
+                ],
+                "width": 11,
+                "height": 13,
+                "min_dimension": 11,
+                "mean_rgb": [
+                  180.461,
+                  181.409,
+                  176.617
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                108,
+                5,
+                119,
+                18
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.87,
+                "location_in_candidate_subject": {
+                  "x": 0.55,
+                  "y": 0.02,
+                  "w": 0.05,
+                  "h": 0.05
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+              "importance": "CRITICAL",
+              "kind": "ACCESSORY",
+              "state": "PRESERVED",
+              "reason": "Dark navy bow and blue diamond jewel are clear below the face.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  510,
+                  206,
+                  599,
+                  305
+                ],
+                "width": 89,
+                "height": 99,
+                "min_dimension": 89,
+                "mean_rgb": [
+                  123.129,
+                  118.991,
+                  126.728
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  84,
+                  35,
+                  115,
+                  57
+                ],
+                "width": 31,
+                "height": 22,
+                "min_dimension": 22,
+                "mean_rgb": [
+                  162.16,
+                  160.01,
+                  166.302
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                84,
+                35,
+                115,
+                57
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.88,
+                "location_in_candidate_subject": {
+                  "x": 0.43,
+                  "y": 0.14,
+                  "w": 0.15,
+                  "h": 0.08
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Navy bodice, gold ornament, and blue center jewel remain legible.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  476,
+                  368,
+                  627,
+                  515
+                ],
+                "width": 151,
+                "height": 147,
+                "min_dimension": 147,
+                "mean_rgb": [
+                  108.958,
+                  104.248,
+                  109.197
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  74,
+                  64,
+                  123,
+                  105
+                ],
+                "width": 49,
+                "height": 41,
+                "min_dimension": 41,
+                "mean_rgb": [
+                  152.911,
+                  152.402,
+                  158.513
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                74,
+                64,
+                123,
+                105
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.87,
+                "location_in_candidate_subject": {
+                  "x": 0.38,
+                  "y": 0.25,
+                  "w": 0.24,
+                  "h": 0.16
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "Layered white ruffles and navy panels with gold trim are recognizable.",
+              "source": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  309,
+                  455,
+                  812,
+                  780
+                ],
+                "width": 503,
+                "height": 325,
+                "min_dimension": 325,
+                "mean_rgb": [
+                  192.351,
+                  187.459,
+                  191.068
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 1.0,
+                "bbox": [
+                  59,
+                  102,
+                  138,
+                  154
+                ],
+                "width": 79,
+                "height": 52,
+                "min_dimension": 52,
+                "mean_rgb": [
+                  196.005,
+                  192.523,
+                  195.072
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                59,
+                102,
+                138,
+                154
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.88,
+                "location_in_candidate_subject": {
+                  "x": 0.3,
+                  "y": 0.4,
+                  "w": 0.4,
+                  "h": 0.2
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "label": "White knee-high boots with navy straps and blue jewel accents",
+              "importance": "IMPORTANT",
+              "kind": "GARMENT",
+              "state": "PRESERVED",
+              "reason": "White boots show dark strap marks and blue jewel accents.",
+              "source": {
+                "available": true,
+                "visible_ratio": 0.540173,
+                "bbox": [
+                  472,
+                  1118,
+                  673,
+                  1379
+                ],
+                "width": 201,
+                "height": 261,
+                "min_dimension": 201,
+                "mean_rgb": [
+                  153.523,
+                  155.181,
+                  154.963
+                ]
+              },
+              "candidate": {
+                "available": true,
+                "visible_ratio": 0.668085,
+                "bbox": [
+                  82,
+                  209,
+                  117,
+                  256
+                ],
+                "width": 35,
+                "height": 47,
+                "min_dimension": 35,
+                "mean_rgb": [
+                  149.585,
+                  152.063,
+                  159.588
+                ]
+              },
+              "must_remain_separated_from": [],
+              "required_color_relation": null,
+              "candidate_location_bbox": [
+                82,
+                209,
+                117,
+                256
+              ],
+              "recognition_evidence": {
+                "method": "codex-multimodal-ifm-review",
+                "confidence": 0.83,
+                "location_in_candidate_subject": {
+                  "x": 0.42,
+                  "y": 0.82,
+                  "w": 0.17,
+                  "h": 0.18
+                },
+                "review_status": "PASS_REVIEW_RESPONSE",
+                "must_remain_recognizable": true
+              }
+            }
+          ],
+          "hard_failures": [],
+          "pixel_evidence": {
+            "features": {
+              "sweeping-silver-hair": {
+                "projected_width": 197,
+                "projected_height": 208,
+                "min_visible_dimension": 197,
+                "risk": false
+              },
+              "blue-eyed-face": {
+                "projected_width": 33,
+                "projected_height": 27,
+                "min_visible_dimension": 27,
+                "risk": false
+              },
+              "right-hair-flower": {
+                "projected_width": 11,
+                "projected_height": 13,
+                "min_visible_dimension": 11,
+                "risk": false
+              },
+              "navy-jeweled-neck-bow": {
+                "projected_width": 31,
+                "projected_height": 22,
+                "min_visible_dimension": 22,
+                "risk": false
+              },
+              "ornate-navy-bodice": {
+                "projected_width": 49,
+                "projected_height": 41,
+                "min_visible_dimension": 41,
+                "risk": false
+              },
+              "layered-white-skirt": {
+                "projected_width": 79,
+                "projected_height": 52,
+                "min_visible_dimension": 52,
+                "risk": false
+              },
+              "white-blue-ornamented-boots": {
+                "projected_width": 35,
+                "projected_height": 47,
+                "min_visible_dimension": 35,
+                "risk": false
+              }
+            }
+          }
+        },
+        "pse": {
+          "kind": "pixel-structure-extractor",
+          "version": "v0.1",
+          "status": "PASS_PSE",
+          "input_size": [
+            1122,
+            1402
+          ],
+          "input_subject_bbox": [
+            36,
+            16,
+            1090,
+            1386
+          ],
+          "logical_size": [
+            197,
+            256
+          ],
+          "target_height": 256,
+          "actual_height": 256,
+          "logical_width": 197,
+          "background": {
+            "mode": "transparent",
+            "background_pixels": 800131
+          },
+          "palette": {
+            "requested": 48,
+            "colors": 48
+          },
+          "projection": {
+            "mode": "palette-cluster-weighted-mode",
+            "opaque_coverage_threshold": 0.18,
+            "coverage_min": 0.0,
+            "coverage_mean": 0.445573,
+            "resampling": null,
+            "resize_rescue": false,
+            "palette_relaxation": false,
+            "background_redetect_after_projection": false,
+            "remove_isolated_pixels": false
+          },
+          "warnings": []
+        },
+        "cleanup": {
+          "kind": "ai-pixel-master-cleanup",
+          "version": 1,
+          "input_size": [
+            197,
+            256
+          ],
+          "output_size": [
+            197,
+            256
+          ],
+          "background": {
+            "mode": "disabled",
+            "background_pixels": 0
+          },
+          "style_risk": {
+            "painterly": false,
+            "opaque_colors": 48,
+            "color_ratio": 0.0020607049328124328
+          },
+          "subject_bbox": [
+            0,
+            0,
+            197,
+            256
+          ],
+          "scale": {
+            "resampling": null,
+            "target_height": null
+          },
+          "geometry": {
+            "resize": false,
+            "input_size_preserved": true
+          },
+          "background_policy": {
+            "remove_background": false
+          },
+          "palette": {
+            "mode": "preserved",
+            "requested": null,
+            "colors": 48,
+            "separation": {
+              "colors": 48,
+              "min_delta_e": 0.023914,
+              "closest_pair": [
+                [
+                  62,
+                  81,
+                  116
+                ],
+                [
+                  65,
+                  88,
+                  125
+                ]
+              ]
+            }
+          },
+          "alpha": {
+            "mode": "binary",
+            "threshold": 128
+          },
+          "isolated_noise": {
+            "removed_components": 0,
+            "removed_pixels": 0,
+            "pre_crop": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            },
+            "post_scale": {
+              "removed_components": 0,
+              "removed_pixels": 0
+            }
+          },
+          "outline": {
+            "mode": "preserve",
+            "thickening": false
+          },
+          "warnings": [
+            {
+              "code": "ai-background-not-detected",
+              "message": "AI cleanup could not prove a removable border/chroma background; it was preserved."
+            }
+          ]
+        },
+        "logical_validation": {
+          "pass": true,
+          "status": "PASS_LOGICAL_MASTER",
+          "metrics": {
+            "size": [
+              197,
+              256
+            ],
+            "bbox": [
+              0,
+              0,
+              197,
+              256
+            ],
+            "subject_height": 256,
+            "binary_alpha": true,
+            "palette_size": 48,
+            "max_palette_size": 48,
+            "target_height": 256,
+            "actual_height": 256,
+            "logical_width": 197,
+            "opaque_magenta": 0,
+            "projection_warnings": [],
+            "cleanup_mutated_dimensions": false,
+            "isolated_pixels": 1,
+            "isolated_ratio": 4.3e-05
+          },
+          "warnings": []
+        },
+        "cleanup_mutated_dimensions": false,
+        "identity_review": {
+          "provider": "codex",
+          "model": "gpt-6-luna",
+          "task": "multimodal_identity_candidate_grid_review",
+          "stage": "logical-resolution-grid",
+          "session_id": "01a0ce8b-8120-7c41-9df5-e5c70a8ff0d6",
+          "elapsed_seconds": 111.912,
+          "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+          "candidate_sha256": "81d901a3f792b16b353b81a1ddcd9e49aa17125b20df0b2f3702e17a50063921",
+          "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\logical-resolution-grid-5d52f66cc515-128-da049f83-160-ee5a2726-192-3b191ca9-256-81d901a3",
+          "status": "PASS_REVIEW_RESPONSE",
+          "features": [
+            {
+              "id": "sweeping-silver-hair",
+              "state": "PRESERVED",
+              "confidence": 0.97,
+              "reason": "Long silver-white locks clearly sweep into broad loops around the body.",
+              "location": {
+                "x": 0.0,
+                "y": 0.06,
+                "w": 1.0,
+                "h": 0.81
+              }
+            },
+            {
+              "id": "blue-eyed-face",
+              "state": "PRESERVED",
+              "confidence": 0.9,
+              "reason": "Centered pale face retains both blue eyes and a subtle smile.",
+              "location": {
+                "x": 0.42,
+                "y": 0.03,
+                "w": 0.16,
+                "h": 0.1
+              }
+            },
+            {
+              "id": "right-hair-flower",
+              "state": "PRESERVED",
+              "confidence": 0.87,
+              "reason": "White flower with gold center is recognizable on image-right of the head.",
+              "location": {
+                "x": 0.55,
+                "y": 0.02,
+                "w": 0.05,
+                "h": 0.05
+              }
+            },
+            {
+              "id": "navy-jeweled-neck-bow",
+              "state": "PRESERVED",
+              "confidence": 0.88,
+              "reason": "Dark navy bow and blue diamond jewel are clear below the face.",
+              "location": {
+                "x": 0.43,
+                "y": 0.14,
+                "w": 0.15,
+                "h": 0.08
+              }
+            },
+            {
+              "id": "ornate-navy-bodice",
+              "state": "PRESERVED",
+              "confidence": 0.87,
+              "reason": "Navy bodice, gold ornament, and blue center jewel remain legible.",
+              "location": {
+                "x": 0.38,
+                "y": 0.25,
+                "w": 0.24,
+                "h": 0.16
+              }
+            },
+            {
+              "id": "layered-white-skirt",
+              "state": "PRESERVED",
+              "confidence": 0.88,
+              "reason": "Layered white ruffles and navy panels with gold trim are recognizable.",
+              "location": {
+                "x": 0.3,
+                "y": 0.4,
+                "w": 0.4,
+                "h": 0.2
+              }
+            },
+            {
+              "id": "white-blue-ornamented-boots",
+              "state": "PRESERVED",
+              "confidence": 0.83,
+              "reason": "White boots show dark strap marks and blue jewel accents.",
+              "location": {
+                "x": 0.42,
+                "y": 0.82,
+                "w": 0.17,
+                "h": 0.18
+              }
+            }
+          ]
+        },
+        "logical_candidate_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H256.png",
+        "logical_candidate_preview_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\candidates\\R05\\H256.preview-4x.png"
+      }
+    },
+    "identity_loss_index": {
+      "128": 0.377273,
+      "160": 0.186364,
+      "192": 0.122727,
+      "256": 0.0
+    },
+    "semantic_preservation": {
+      "pass": true,
+      "status": "PASS_SEMANTIC_PRESERVATION",
+      "feature_results": [
+        {
+          "id": "sweeping-silver-hair",
+          "label": "Very long silver-white hair spreads into broad looping locks around and behind the body",
+          "importance": "CRITICAL",
+          "kind": "SILHOUETTE",
+          "state": "SIMPLIFIED",
+          "reason": "Silver-white hair still spreads into broad looping locks around and behind the figure, with pixelated contours.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.536592,
+            "bbox": [
+              47,
+              14,
+              1075,
+              1131
+            ],
+            "width": 1028,
+            "height": 1117,
+            "min_dimension": 1028,
+            "mean_rgb": [
+              171.973,
+              192.893,
+              170.627
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.507668,
+            "bbox": [
+              0,
+              0,
+              1054,
+              1151
+            ],
+            "width": 1054,
+            "height": 1151,
+            "min_dimension": 1054,
+            "mean_rgb": [
+              194.799,
+              191.508,
+              194.851
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            0,
+            0,
+            1054,
+            1151
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.0,
+              "y": 0.0,
+              "w": 1.0,
+              "h": 0.84
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "blue-eyed-face",
+          "label": "Small pale face with large blue eyes and a subtle smile",
+          "importance": "CRITICAL",
+          "kind": "FACE",
+          "state": "SIMPLIFIED",
+          "reason": "Centered pale face retains both large blue eyes and a subtle smile.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              492,
+              110,
+              618,
+              205
+            ],
+            "width": 126,
+            "height": 95,
+            "min_dimension": 95,
+            "mean_rgb": [
+              209.492,
+              195.182,
+              193.052
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              453,
+              123,
+              601,
+              247
+            ],
+            "width": 148,
+            "height": 124,
+            "min_dimension": 124,
+            "mean_rgb": [
+              188.418,
+              179.584,
+              179.886
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            453,
+            123,
+            601,
+            247
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.99,
+            "location_in_candidate_subject": {
+              "x": 0.43,
+              "y": 0.09,
+              "w": 0.14,
+              "h": 0.09
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "right-hair-flower",
+          "label": "White flower with a gold center worn in the hair",
+          "importance": "CRITICAL",
+          "kind": "ACCESSORY",
+          "state": "PRESERVED",
+          "reason": "White flower with a gold center remains visible on the image-right side of the head.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.836287,
+            "bbox": [
+              599,
+              40,
+              643,
+              99
+            ],
+            "width": 44,
+            "height": 59,
+            "min_dimension": 44,
+            "mean_rgb": [
+              189.777,
+              188.341,
+              182.307
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.980859,
+            "bbox": [
+              569,
+              41,
+              622,
+              110
+            ],
+            "width": 53,
+            "height": 69,
+            "min_dimension": 53,
+            "mean_rgb": [
+              187.849,
+              188.244,
+              179.339
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            569,
+            41,
+            622,
+            110
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.99,
+            "location_in_candidate_subject": {
+              "x": 0.54,
+              "y": 0.03,
+              "w": 0.05,
+              "h": 0.05
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "navy-jeweled-neck-bow",
+          "label": "Dark navy neck bow with a blue diamond-shaped jewel",
+          "importance": "CRITICAL",
+          "kind": "ACCESSORY",
+          "state": "PRESERVED",
+          "reason": "Dark navy bow and blue diamond jewel remain distinct below the face.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              510,
+              206,
+              599,
+              305
+            ],
+            "width": 89,
+            "height": 99,
+            "min_dimension": 89,
+            "mean_rgb": [
+              123.129,
+              118.991,
+              126.728
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              474,
+              246,
+              580,
+              343
+            ],
+            "width": 106,
+            "height": 97,
+            "min_dimension": 97,
+            "mean_rgb": [
+              137.978,
+              143.191,
+              154.008
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            474,
+            246,
+            580,
+            343
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.45,
+              "y": 0.18,
+              "w": 0.1,
+              "h": 0.07
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "ornate-navy-bodice",
+          "label": "Fitted navy bodice with gold decoration and a blue center jewel",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "Fitted navy bodice keeps gold decoration and a blue center jewel against the white blouse.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              476,
+              368,
+              627,
+              515
+            ],
+            "width": 151,
+            "height": 147,
+            "min_dimension": 147,
+            "mean_rgb": [
+              108.958,
+              104.248,
+              109.197
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              453,
+              411,
+              612,
+              548
+            ],
+            "width": 159,
+            "height": 137,
+            "min_dimension": 137,
+            "mean_rgb": [
+              115.386,
+              112.855,
+              115.951
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            453,
+            411,
+            612,
+            548
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.96,
+            "location_in_candidate_subject": {
+              "x": 0.43,
+              "y": 0.3,
+              "w": 0.15,
+              "h": 0.1
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "layered-white-skirt",
+          "label": "Short layered white ruffle skirt with navy and gold-trimmed panels",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "White ruffled skirt remains layered, with navy panels and gold trim visible beneath.",
+          "source": {
+            "available": true,
+            "visible_ratio": 1.0,
+            "bbox": [
+              309,
+              455,
+              812,
+              780
+            ],
+            "width": 503,
+            "height": 325,
+            "min_dimension": 325,
+            "mean_rgb": [
+              192.351,
+              187.459,
+              191.068
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.996358,
+            "bbox": [
+              284,
+              506,
+              780,
+              795
+            ],
+            "width": 496,
+            "height": 289,
+            "min_dimension": 289,
+            "mean_rgb": [
+              192.284,
+              188.693,
+              192.193
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            284,
+            506,
+            780,
+            795
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.97,
+            "location_in_candidate_subject": {
+              "x": 0.27,
+              "y": 0.37,
+              "w": 0.47,
+              "h": 0.21
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        },
+        {
+          "id": "white-blue-ornamented-boots",
+          "label": "White knee-high boots with navy straps and blue jewel accents",
+          "importance": "IMPORTANT",
+          "kind": "GARMENT",
+          "state": "SIMPLIFIED",
+          "reason": "Both white knee-high boots retain navy crossed straps and blue jewel accents.",
+          "source": {
+            "available": true,
+            "visible_ratio": 0.540173,
+            "bbox": [
+              472,
+              1118,
+              673,
+              1379
+            ],
+            "width": 201,
+            "height": 261,
+            "min_dimension": 201,
+            "mean_rgb": [
+              153.523,
+              155.181,
+              154.963
+            ]
+          },
+          "candidate": {
+            "available": true,
+            "visible_ratio": 0.651949,
+            "bbox": [
+              453,
+              1109,
+              633,
+              1357
+            ],
+            "width": 180,
+            "height": 248,
+            "min_dimension": 180,
+            "mean_rgb": [
+              155.775,
+              158.044,
+              163.809
+            ]
+          },
+          "must_remain_separated_from": [],
+          "required_color_relation": null,
+          "candidate_location_bbox": [
+            453,
+            1109,
+            633,
+            1357
+          ],
+          "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": 0.98,
+            "location_in_candidate_subject": {
+              "x": 0.43,
+              "y": 0.81,
+              "w": 0.17,
+              "h": 0.18
+            },
+            "review_status": "PASS_REVIEW_RESPONSE",
+            "must_remain_recognizable": true
+          }
+        }
+      ],
+      "topology_warnings": [],
+      "identity_review": {
+        "provider": "codex",
+        "model": "gpt-6-luna",
+        "task": "multimodal_identity_review",
+        "stage": "semantic-preservation",
+        "session_id": "01a0ce8a-68ae-72e0-a751-005fe8826729",
+        "elapsed_seconds": 56.689,
+        "source_sha256": "5d52f66cc515817991dba9c0e58d229d3b4cbceee5c847534fb88212dfd67553",
+        "candidate_sha256": "fa1c9cb9195f530f98c21226260c58687e2506ed9d87e0d5375dec137f754dfe",
+        "review_artifacts": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\identity-review\\semantic-preservation-5d52f66cc515-fa1c9cb9195f",
+        "status": "PASS_REVIEW_RESPONSE",
+        "features": [
+          {
+            "id": "sweeping-silver-hair",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Silver-white hair still spreads into broad looping locks around and behind the figure, with pixelated contours.",
+            "location": {
+              "x": 0.0,
+              "y": 0.0,
+              "w": 1.0,
+              "h": 0.84
+            }
+          },
+          {
+            "id": "blue-eyed-face",
+            "state": "SIMPLIFIED",
+            "confidence": 0.99,
+            "reason": "Centered pale face retains both large blue eyes and a subtle smile.",
+            "location": {
+              "x": 0.43,
+              "y": 0.09,
+              "w": 0.14,
+              "h": 0.09
+            }
+          },
+          {
+            "id": "right-hair-flower",
+            "state": "PRESERVED",
+            "confidence": 0.99,
+            "reason": "White flower with a gold center remains visible on the image-right side of the head.",
+            "location": {
+              "x": 0.54,
+              "y": 0.03,
+              "w": 0.05,
+              "h": 0.05
+            }
+          },
+          {
+            "id": "navy-jeweled-neck-bow",
+            "state": "PRESERVED",
+            "confidence": 0.98,
+            "reason": "Dark navy bow and blue diamond jewel remain distinct below the face.",
+            "location": {
+              "x": 0.45,
+              "y": 0.18,
+              "w": 0.1,
+              "h": 0.07
+            }
+          },
+          {
+            "id": "ornate-navy-bodice",
+            "state": "SIMPLIFIED",
+            "confidence": 0.96,
+            "reason": "Fitted navy bodice keeps gold decoration and a blue center jewel against the white blouse.",
+            "location": {
+              "x": 0.43,
+              "y": 0.3,
+              "w": 0.15,
+              "h": 0.1
+            }
+          },
+          {
+            "id": "layered-white-skirt",
+            "state": "SIMPLIFIED",
+            "confidence": 0.97,
+            "reason": "White ruffled skirt remains layered, with navy panels and gold trim visible beneath.",
+            "location": {
+              "x": 0.27,
+              "y": 0.37,
+              "w": 0.47,
+              "h": 0.21
+            }
+          },
+          {
+            "id": "white-blue-ornamented-boots",
+            "state": "SIMPLIFIED",
+            "confidence": 0.98,
+            "reason": "Both white knee-high boots retain navy crossed straps and blue jewel accents.",
+            "location": {
+              "x": 0.43,
+              "y": 0.81,
+              "w": 0.17,
+              "h": 0.18
+            }
+          }
+        ]
+      }
+    },
+    "root_cause": null,
+    "identity_review_method": "codex-multimodal-ifm-review",
+    "identity_gate_authoritative": true,
+    "resize_rescue": false,
+    "threshold_relaxation": false,
+    "palette_relaxation": false,
+    "resolution_override": false,
+    "identity_gate_passed": true
+  },
+  "status": "PASS_AUTO_RESOLUTION",
+  "accepted": "logical_master",
+  "accepted_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\R05.png",
+  "logical": {
+    "path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\logical\\R05.png",
+    "size": [
+      148,
+      192
+    ],
+    "target_height": 192
+  },
+  "source_id": "R05",
+  "method": "D1",
+  "ifm_provenance": {
+    "provider": "codex",
+    "model": "codex-default",
+    "task": "identity_feature_manifest_draft",
+    "session_id": "01a0ce4e-64a6-76f1-ba29-c8f069bae8e8",
+    "elapsed_seconds": 78.896,
+    "source_id": "R05",
+    "source_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png",
+    "source_sha256": "10ee0b91785aa6ba662c1fdfa6df5128153ae95d56f6d7a8d15f41b90bcc1857",
+    "prompt_sha256": "4ca08e4085c614aa0f9075260acd961f83967ff77c67eb528ed461fc15f6ac38",
+    "manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R05\\identity_feature_manifest.json",
+    "manifest_sha256": "59f73ec62d14a24bfb490520e2f64e49928b5a3afd8b5735ec9a556cc4612157",
+    "raw_response_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R05\\identity_feature_manifest_model_response.txt",
+    "review_required": true
+  },
+  "identity_manifest_path": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\ifm\\R05\\identity_feature_manifest.json",
+  "accepted_sha256": "3b191ca92510877ac7f127126cbc9cbc72e06368a7547cdca14fd0fd01f5e831"
+}

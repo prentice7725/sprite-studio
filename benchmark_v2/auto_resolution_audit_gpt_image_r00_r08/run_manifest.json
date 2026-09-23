@@ -1,0 +1,79 @@
+{
+  "kind": "sprite-studio-auto-resolution-identity-audit",
+  "version": 1,
+  "created_at_utc": "2026-09-23T14:23:23.892769+00:00",
+  "sources": [
+    "R00",
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08"
+  ],
+  "methods": [
+    "D1",
+    "D2"
+  ],
+  "provider_policy": "GPT Image only for D1/D2 semantic redraw; no Grok fallback",
+  "identity_review": "Codex multimodal IFM review; semantic gate then one side-by-side candidate-grid review per method/source",
+  "candidate_heights": [
+    128,
+    160,
+    192,
+    256
+  ],
+  "palette_size": 48,
+  "resize_rescue": false,
+  "threshold_relaxation": false,
+  "human_scores_blank": true,
+  "automatic_visual_winner": false,
+  "hard_case": {
+    "source_id": "R08",
+    "label": "hard case; evaluate separately"
+  },
+  "fixture_sha256": {
+    "R00": "25e2772e52bf7fb61320a4bf5081f6f6a636e3f82a8a14c767627060a7a7b833",
+    "R01": "885d7db7de6debe128a1d294661240cc75d1599b0930634f2b55074d227f7ce7",
+    "R02": "b4aa3e3df2a8255f6970e796deba720ccbbbc84f07567b33bd78554fb514f8b7",
+    "R03": "08b5490fb88b263ce59080b797d728b71abc99fdb1f7bebdaf3343c5264ddefc",
+    "R04": "338f7545215398277dbdd64642c747e80d7c14ad3c152fa66564f4537433e466",
+    "R05": "10ee0b91785aa6ba662c1fdfa6df5128153ae95d56f6d7a8d15f41b90bcc1857",
+    "R06": "6164690229dd1dfe68aa9a609d5db4cbdc1e75464f13273ac0a4b8a114ca05bf",
+    "R07": "491d31d5dbb4b6178fe2d34a38d9db40162509a87741b98cd43edba6e649635d",
+    "R08": "49e4741c892d9f7858a699b446359f700f4a579ad4cc5c57d58247102864101b"
+  },
+  "fixture_paths": {
+    "R00": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R00.png",
+    "R01": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R01.png",
+    "R02": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R02.png",
+    "R03": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R03.png",
+    "R04": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R04.png",
+    "R05": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R05.png",
+    "R06": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R06.png",
+    "R07": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R07.png",
+    "R08": "C:\\workspace\\sprite-studio\\benchmark_v2\\sources\\tier_b\\R08.png"
+  },
+  "reports": {
+    "D1/R00": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R00\\report.json",
+    "D2/R00": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R00\\report.json",
+    "D1/R01": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R01\\report.json",
+    "D2/R01": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R01\\report.json",
+    "D1/R02": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R02\\report.json",
+    "D2/R02": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R02\\report.json",
+    "D1/R03": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R03\\report.json",
+    "D2/R03": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R03\\report.json",
+    "D1/R04": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R04\\report.json",
+    "D2/R04": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R04\\report.json",
+    "D1/R05": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R05\\report.json",
+    "D2/R05": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R05\\report.json",
+    "D1/R06": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R06\\report.json",
+    "D2/R06": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R06\\report.json",
+    "D1/R07": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R07\\report.json",
+    "D2/R07": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R07\\report.json",
+    "D1/R08": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D1\\R08\\report.json",
+    "D2/R08": "C:\\workspace\\sprite-studio\\benchmark_v2\\auto_resolution_audit_gpt_image_r00_r08\\methods\\D2\\R08\\report.json"
+  }
+}

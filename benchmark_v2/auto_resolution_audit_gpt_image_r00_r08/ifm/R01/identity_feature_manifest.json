@@ -1,0 +1,142 @@
+{
+  "version": "ifm-v0.1",
+  "source_id": "R01",
+  "features": [
+    {
+      "id": "long-blonde-hair",
+      "label": "Long golden-blonde hair with a single curved ahoge and loose side locks reaching the hips",
+      "importance": "CRITICAL",
+      "kind": "HAIR",
+      "region": {
+        "x": 0.306,
+        "y": 0.007,
+        "w": 0.386,
+        "h": 0.361
+      },
+      "notes": "The curved strand rises above the crown; long locks frame the body.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    },
+    {
+      "id": "green-eyed-face",
+      "label": "Fair face with large green eyes and a small, gentle smile",
+      "importance": "CRITICAL",
+      "kind": "FACE",
+      "region": {
+        "x": 0.432,
+        "y": 0.09,
+        "w": 0.123,
+        "h": 0.08
+      },
+      "notes": "Green irises and facial features are visible beneath the bangs.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "red-trimmed-cape",
+      "label": "Deep red shoulder cape with pale edging and broad draped sleeves",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.336,
+        "y": 0.169,
+        "w": 0.318,
+        "h": 0.149
+      },
+      "notes": "The red cape spans the shoulders and arms, with light trim at the sleeve edges.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    },
+    {
+      "id": "white-laced-blouse",
+      "label": "Ivory high-collar blouse with a fitted front and dark crisscross lacing",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.411,
+        "y": 0.168,
+        "w": 0.168,
+        "h": 0.14
+      },
+      "notes": "The pale blouse and central dark lacing are clearly visible below the cape.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "gold-round-brooch",
+      "label": "Round gold brooch with a raised central design on the viewer-left chest",
+      "importance": "CRITICAL",
+      "kind": "ACCESSORY",
+      "region": {
+        "x": 0.433,
+        "y": 0.204,
+        "w": 0.038,
+        "h": 0.028
+      },
+      "notes": "A prominent circular ornament fastens the cape near the left shoulder.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "LEFT",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "layered-waist-belts-and-pouch",
+      "label": "Layered brown waist belts with gold buckles and a pouch at the viewer-right hip",
+      "importance": "IMPORTANT",
+      "kind": "ACCESSORY",
+      "region": {
+        "x": 0.408,
+        "y": 0.301,
+        "w": 0.229,
+        "h": 0.178
+      },
+      "notes": "Several belts cross the waist; a rectangular pouch hangs on the viewer-right side.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "RIGHT",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "red-split-overskirt",
+      "label": "Short red split-front overskirt with pale trim over light inner panels",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.352,
+        "y": 0.387,
+        "w": 0.284,
+        "h": 0.13
+      },
+      "notes": "The red front panels end above the knees and have light edging.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": "CENTER",
+      "requiredColorRelation": null
+    },
+    {
+      "id": "tall-brown-boots",
+      "label": "Pair of tall dark-brown boots with folded cuffs and gold angular ornaments",
+      "importance": "IMPORTANT",
+      "kind": "GARMENT",
+      "region": {
+        "x": 0.355,
+        "y": 0.645,
+        "w": 0.289,
+        "h": 0.338
+      },
+      "notes": "The boots rise to just below the knees and have visible gold details.",
+      "mustRemainRecognizable": true,
+      "mustRemainSeparatedFrom": [],
+      "mustRemainOnSide": null,
+      "requiredColorRelation": null
+    }
+  ]
+}
