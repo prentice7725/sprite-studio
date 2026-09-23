@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from PIL import Image
 
@@ -43,10 +43,15 @@ def _candidate_label(result: InformationLossResult, validation_status: str, clea
 def _root_cause(semantic: SemanticPreservationResult, candidate_results: dict[int, dict[str, Any]], manifest: IdentityFeatureManifest) -> str | None:
     if not manifest.features:
         return "FEATURE_MANIFEST_ERROR"
+    if semantic.identity_review and semantic.identity_review.get("status") == "FAIL_REVIEW_UNAVAILABLE":
+        return "IDENTITY_REVIEW_UNAVAILABLE"
     if not semantic.passed:
         return "SEMANTIC_REDRAW_LOSS"
     if not candidate_results:
         return "PSE_PROJECTION_FAILURE"
+    reviews = [item.get("identity_review") for item in candidate_results.values()]
+    if reviews and all(isinstance(item, dict) and item.get("status") == "FAIL_REVIEW_UNAVAILABLE" for item in reviews):
+        return "IDENTITY_REVIEW_UNAVAILABLE"
     if all(item.get("validation_status") != "PASS_LOGICAL_MASTER" for item in candidate_results.values()):
         return "PSE_PROJECTION_FAILURE"
     if all(item.get("information_loss", {}).get("status") == "FAIL_INFORMATION_LOSS" for item in candidate_results.values()):
@@ -65,6 +70,7 @@ def project_auto_resolution(
     opaque_coverage_threshold: float = 0.18,
     audit: bool = False,
     override_height: int | None = None,
+    identity_reviewer: Callable[..., dict[str, Any]] | None = None,
 ) -> AutoResolutionResult:
     heights = tuple(require_logical_height(int(value), field_name="candidate height") for value in candidates)
     if override_height is not None:
@@ -72,7 +78,8 @@ def project_auto_resolution(
         heights = (override_height,)
     if len(set(heights)) != len(heights):
         raise ValueError("candidate heights must be unique")
-    semantic_gate = evaluate_semantic_preservation(source, semantic, manifest)
+    semantic_review = identity_reviewer(source, semantic, manifest, stage="semantic-preservation") if identity_reviewer else None
+    semantic_gate = evaluate_semantic_preservation(source, semantic, manifest, identity_review=semantic_review)
     candidate_results: dict[int, dict[str, Any]] = {}
     selected_height: int | None = None
     selected_image: Image.Image | None = None
@@ -120,7 +127,8 @@ def project_auto_resolution(
             )
             validation_metrics = dict(validation.metrics)
             validation_metrics["cleanup_mutated_dimensions"] = cleanup_mutated_dimensions
-            information_loss = evaluate_information_loss(source, cleanup.image, manifest)
+            identity_review = identity_reviewer(source, cleanup.image, manifest, stage=f"logical-{height}") if identity_reviewer else None
+            information_loss = evaluate_information_loss(source, cleanup.image, manifest, identity_review=identity_review)
             status = _candidate_label(information_loss, validation.status, cleanup_mutated_dimensions)
             candidate_results[height] = {
                 "status": status,
@@ -131,8 +139,10 @@ def project_auto_resolution(
                 "cleanup": cleanup.report,
                 "logical_validation": {**validation.to_dict(), "metrics": validation_metrics},
                 "cleanup_mutated_dimensions": cleanup_mutated_dimensions,
+                "identity_review": identity_review,
             }
-            if selected_height is None and (status == "PASS" or override_height == height):
+            structurally_valid = validation.status == "PASS_LOGICAL_MASTER" and not cleanup_mutated_dimensions
+            if selected_height is None and (status == "PASS" or (override_height == height and structurally_valid)):
                 selected_height = height
                 selected_image = cleanup.image
                 if override_height == height:
@@ -144,7 +154,19 @@ def project_auto_resolution(
     if selected_height is not None and override_height is not None:
         status = "PASS_RESOLUTION_OVERRIDE"
     else:
-        status = "PASS_AUTO_RESOLUTION" if selected_height is not None else ("SEMANTIC_REDRAW_LOSS" if not semantic_gate.passed else "NO_VALID_RESOLUTION")
+        override_result = candidate_results.get(override_height, {}) if override_height is not None else {}
+        if override_height is not None and (
+            override_result.get("validation_status") != "PASS_LOGICAL_MASTER"
+            or override_result.get("cleanup_mutated_dimensions")
+        ):
+            status = "FAIL_OVERRIDE_LOGICAL_VALIDATION"
+        else:
+            if selected_height is not None:
+                status = "PASS_AUTO_RESOLUTION"
+            elif root_cause == "IDENTITY_REVIEW_UNAVAILABLE":
+                status = "IDENTITY_REVIEW_UNAVAILABLE"
+            else:
+                status = "SEMANTIC_REDRAW_LOSS" if not semantic_gate.passed else "NO_VALID_RESOLUTION"
     candidate_report = {
         str(height): ("PASS" if item["status"] == "PASS" else item["status"])
         for height, item in candidate_results.items()
@@ -165,6 +187,8 @@ def project_auto_resolution(
         },
         "semantic_preservation": semantic_gate.to_dict(),
         "root_cause": root_cause,
+        "identity_review_method": "codex-multimodal-ifm-review" if identity_reviewer else "pixel-proxy-only",
+        "identity_gate_authoritative": identity_reviewer is not None,
         "resize_rescue": False,
         "threshold_relaxation": False,
         "palette_relaxation": False,

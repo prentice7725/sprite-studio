@@ -30,6 +30,7 @@ class SemanticPreservationResult:
     status: str
     feature_results: tuple[dict[str, Any], ...]
     topology_warnings: tuple[dict[str, Any], ...]
+    identity_review: dict[str, Any] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -37,6 +38,7 @@ class SemanticPreservationResult:
             "status": self.status,
             "feature_results": list(self.feature_results),
             "topology_warnings": list(self.topology_warnings),
+            "identity_review": self.identity_review,
         }
 
 
@@ -211,6 +213,96 @@ def _feature_state(feature: IdentityFeature, source: np.ndarray, source_bbox: tu
     }
 
 
+def _apply_visual_review(
+    item: dict[str, Any],
+    feature: IdentityFeature,
+    review: dict[str, Any],
+    candidate: np.ndarray,
+    candidate_bbox: tuple[int, int, int, int] | None,
+) -> dict[str, Any]:
+    """Use the vision verdict and its candidate-relative feature location.
+
+    The model is allowed to locate a feature after a redraw changes proportions;
+    source-coordinate projection is retained only as fallback pixel evidence.
+    Pixel checks can downgrade a visual verdict, never upgrade one.
+    """
+    state = str(review.get("state", "AMBIGUOUS")).upper()
+    if state not in STATE_SCORE:
+        state = "AMBIGUOUS"
+    try:
+        confidence = float(review.get("confidence", 0.0))
+    except (TypeError, ValueError):
+        confidence = 0.0
+    location = review.get("location")
+    subject: np.ndarray | None = None
+    candidate_evidence: dict[str, Any] = {
+        "available": False, "visible_ratio": 0.0, "bbox": None,
+        "width": 0, "height": 0, "min_dimension": 0, "mean_rgb": None,
+    }
+    if candidate_bbox is not None:
+        left, top, right, bottom = candidate_bbox
+        subject = candidate[top:bottom, left:right]
+    located_box: list[int] | None = None
+    if subject is not None and isinstance(location, dict):
+        try:
+            x, y, width, height = (float(location[key]) for key in ("x", "y", "w", "h"))
+        except (KeyError, TypeError, ValueError):
+            x = y = width = height = -1.0
+        if (
+            0.0 <= x <= 1.0 and 0.0 <= y <= 1.0
+            and 0.0 < width <= 1.0 and 0.0 < height <= 1.0
+            and x + width <= 1.0 and y + height <= 1.0
+        ):
+            x0 = int(np.floor(x * subject.shape[1]))
+            y0 = int(np.floor(y * subject.shape[0]))
+            x1 = max(x0 + 1, int(np.ceil((x + width) * subject.shape[1])))
+            y1 = max(y0 + 1, int(np.ceil((y + height) * subject.shape[0])))
+            located_box = [max(0, x0), max(0, y0), min(subject.shape[1], x1), min(subject.shape[0], y1)]
+            candidate_evidence = _region_evidence(subject, tuple(located_box))
+
+    reason = str(review.get("reason", "visual identity review"))[:1000]
+    if state in {"PRESERVED", "SIMPLIFIED"}:
+        if candidate_evidence.get("visible_ratio", 0.0) <= 0.0:
+            state = "OMITTED"
+            reason = "visual-verdict-has-no-visible-pixel-evidence"
+        elif (
+            (feature.must_remain_recognizable or feature.must_remain_on_side or feature.must_remain_separated_from)
+            and (confidence < 0.70 or located_box is None)
+        ):
+            state = "AMBIGUOUS"
+            reason = "recognition-confidence-or-location-insufficient"
+    if state not in {"OMITTED", "AMBIGUOUS"} and not _color_relation_matches(
+        candidate_evidence.get("mean_rgb"), feature.required_color_relation
+    ):
+        state = "AMBIGUOUS"
+        reason = "required-color-relation-not-preserved"
+    if located_box is not None and feature.must_remain_on_side:
+        center_x = (located_box[0] + located_box[2]) / (2 * max(1, subject.shape[1]))
+        wrong_side = (
+            (feature.must_remain_on_side == "LEFT" and center_x >= 0.5)
+            or (feature.must_remain_on_side == "RIGHT" and center_x <= 0.5)
+            or (feature.must_remain_on_side == "CENTER" and not 0.4 <= center_x <= 0.6)
+        )
+        if wrong_side and state not in {"OMITTED", "AMBIGUOUS"}:
+            state = "AMBIGUOUS"
+            reason = "required-side-relation-not-preserved"
+
+    item.update({
+        "state": state,
+        "reason": reason,
+        "candidate": candidate_evidence,
+        "candidate_location_bbox": located_box,
+        "recognition_evidence": {
+            "method": "codex-multimodal-ifm-review",
+            "confidence": round(confidence, 4),
+            "location_in_candidate_subject": location if located_box is not None else None,
+            "review_status": review.get("review_status"),
+            "must_remain_recognizable": feature.must_remain_recognizable,
+        },
+    })
+    return item
+
+
 def _apply_separation_states(manifest: IdentityFeatureManifest, results: list[dict[str, Any]]) -> list[dict[str, Any]]:
     by_id = {item["id"]: item for item in results}
     for feature in manifest.features:
@@ -219,7 +311,10 @@ def _apply_separation_states(manifest: IdentityFeatureManifest, results: list[di
             other = by_id.get(other_id)
             if other is None:
                 continue
-            gap = _rect_gap(current.get("candidate", {}).get("bbox"), other.get("candidate", {}).get("bbox"))
+            gap = _rect_gap(
+                current.get("candidate_location_bbox") or current.get("candidate", {}).get("bbox"),
+                other.get("candidate_location_bbox") or other.get("candidate", {}).get("bbox"),
+            )
             current.setdefault("pixel_evidence", {})[f"separation_to:{other_id}"] = gap
             if gap is not None and gap < 1 and current["state"] not in {"OMITTED", "AMBIGUOUS"}:
                 current["state"] = "MERGED"
@@ -227,10 +322,34 @@ def _apply_separation_states(manifest: IdentityFeatureManifest, results: list[di
     return results
 
 
-def evaluate_information_loss(source: Image.Image, candidate: Image.Image, manifest: IdentityFeatureManifest) -> InformationLossResult:
+def evaluate_information_loss(
+    source: Image.Image,
+    candidate: Image.Image,
+    manifest: IdentityFeatureManifest,
+    *,
+    identity_review: dict[str, Any] | None = None,
+) -> InformationLossResult:
     source_array, source_bbox = _subject_view(source)
     candidate_array, candidate_bbox = _subject_view(candidate)
-    results = [_feature_state(feature, source_array, source_bbox, candidate_array, candidate_bbox) for feature in manifest.features]
+    results = []
+    review_by_id = {
+        str(item.get("id")): item
+        for item in (identity_review or {}).get("features", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+    for feature in manifest.features:
+        item = _feature_state(feature, source_array, source_bbox, candidate_array, candidate_bbox)
+        if identity_review is not None:
+            visual = review_by_id.get(feature.id, {
+                "id": feature.id,
+                "state": "AMBIGUOUS",
+                "confidence": 0.0,
+                "reason": "feature-missing-from-visual-review",
+                "location": None,
+            })
+            visual = {**visual, "review_status": identity_review.get("status")}
+            item = _apply_visual_review(item, feature, visual, candidate_array, candidate_bbox)
+        results.append(item)
     results = _apply_separation_states(manifest, results)
     total_weight = sum(IMPORTANCE_WEIGHT[item["importance"]] for item in results)
     retained = sum(IMPORTANCE_WEIGHT[item["importance"]] * STATE_SCORE[item["state"]] for item in results)
@@ -259,8 +378,14 @@ def evaluate_information_loss(source: Image.Image, candidate: Image.Image, manif
     return InformationLossResult(passed, status, round(ili, 6), round(retention, 6), tuple(results), tuple(hard_failures), pixel_evidence)
 
 
-def evaluate_semantic_preservation(source: Image.Image, semantic: Image.Image, manifest: IdentityFeatureManifest) -> SemanticPreservationResult:
-    result = evaluate_information_loss(source, semantic, manifest)
+def evaluate_semantic_preservation(
+    source: Image.Image,
+    semantic: Image.Image,
+    manifest: IdentityFeatureManifest,
+    *,
+    identity_review: dict[str, Any] | None = None,
+) -> SemanticPreservationResult:
+    result = evaluate_information_loss(source, semantic, manifest, identity_review=identity_review)
     topology = tuple(
         {"feature_id": item["feature_id"], "reason": item["reason"]}
         for item in result.hard_failures
@@ -268,7 +393,10 @@ def evaluate_semantic_preservation(source: Image.Image, semantic: Image.Image, m
     )
     passed = not result.hard_failures and bool(manifest.features)
     status = "PASS_SEMANTIC_PRESERVATION" if passed else "FAIL_SEMANTIC_PRESERVATION"
-    return SemanticPreservationResult(passed, status, result.feature_results, topology)
+    if identity_review is not None and identity_review.get("status") == "FAIL_REVIEW_UNAVAILABLE":
+        status = "FAIL_IDENTITY_REVIEW_UNAVAILABLE"
+        passed = False
+    return SemanticPreservationResult(passed, status, result.feature_results, topology, identity_review)
 
 
 __all__ = [

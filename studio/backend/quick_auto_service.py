@@ -23,7 +23,9 @@ def pixelize_auto_session(session_id: str, body: Any) -> tuple[dict[str, Any], d
     result = d2_semantic_auto_file(
         source,
         root / "pixelized",
-        provider=str(payload.get("provider") or "grok"),
+        # Identity masters use GPT Image semantic redraw regardless of the
+        # provider that created the original Quick source.
+        provider="codex",
         manifest=manifest,
         options=SemanticPseOptions(
             palette_size=None if body.palette == "auto" else int(body.palette),
@@ -60,6 +62,8 @@ def pixelize_auto_session(session_id: str, body: Any) -> tuple[dict[str, Any], d
         "pixelized_report": relative["report"],
         "pixelize_options": body.model_dump(),
         "identity_manifest": manifest.to_dict(),
+        "pixelize_semantic_provider": "codex",
+        "pixelize_semantic_provider_role": "GPT Image semantic redraw via Codex image_gen",
     })
     quick_service._write(session_id, payload)
     base_url = f"/api/quick/sessions/{session_id}/assets/"
@@ -78,7 +82,10 @@ def pixelize_auto_session(session_id: str, body: Any) -> tuple[dict[str, Any], d
         "logical_size": list(logical.size),
         "palette_size": int(result.report.get("resolution", {}).get("candidate_details", {}).get(str(result.selected_height), {}).get("logical_validation", {}).get("metrics", {}).get("palette_size", 0)),
         "palette": [],
-        "warnings": result.report.get("semantic_quality", {}).get("warnings", []),
+        "warnings": [
+            *result.report.get("semantic_quality", {}).get("warnings", []),
+            *result.report.get("warnings", []),
+        ],
         "report": result.report,
         "resolution": result.report.get("resolution"),
     }

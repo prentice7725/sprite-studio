@@ -15,6 +15,7 @@ from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 from .auto_resolution import AutoResolutionResult, project_auto_resolution
 from .d1_d2 import SemanticPseOptions, _d1_prompt, _d2_stage1_prompt, _d2_stage2_prompt
 from .identity_manifest import IdentityFeatureManifest
+from .identity_review import review_identity_features
 from .semantic_pixel_quality import evaluate_semantic_source
 from .structure_extractor import PSE_VERSION
 
@@ -109,6 +110,7 @@ def _run_auto(
         opaque_coverage_threshold=options.opaque_coverage_threshold,
         audit=audit,
         override_height=override_height,
+        identity_reviewer=review_identity_features,
     )
     quality = evaluate_semantic_source(semantic, alpha_threshold=options.alpha_threshold).to_dict()
     report = _resolution_report(
@@ -128,7 +130,7 @@ def _run_auto(
             preview_path,
         )
         accepted = logical_path
-        report["status"] = "PASS_AUTO_RESOLUTION"
+        report["status"] = resolution.status
         report["accepted"] = "logical_master"
         report["accepted_path"] = str(logical_path.resolve())
         report["logical"] = {"path": str(logical_path.resolve()), "size": list(resolution.selected_image.size), "target_height": resolution.selected_height}
@@ -137,9 +139,15 @@ def _run_auto(
         report["accepted"] = None
         report["accepted_path"] = None
     if resolution.decision_report.get("resolution_override"):
+        identity_passed = bool(resolution.decision_report.get("identity_gate_passed"))
         report["warnings"] = [{
             "code": "identity-resolution-override",
-            "message": "Manual resolution override may export a non-identity-preserving master.",
+            "message": (
+                "Manual resolution override selected a structurally valid master and passed the identity gate."
+                if identity_passed else
+                "Manual resolution override exported a structurally valid master without passing the identity-preservation gate."
+            ),
+            "identity_gate_passed": identity_passed,
         }]
     atomic_write_text(report_path, json.dumps(report, ensure_ascii=False, indent=2) + "\n")
     return accepted, report, resolution.selected_height
@@ -158,6 +166,8 @@ def d1_semantic_auto_file(
 ) -> AutoD1Result:
     from studio.backend import provider_service
 
+    if provider != "codex":
+        raise ValueError("D1 semantic redraw is pinned to GPT Image via the Codex image_gen provider")
     output_dir = output_dir.resolve()
     semantic_path, logical_path, preview_path, report_path = _paths(output_dir, stem)
     generated = provider_service.generate_image(
@@ -169,13 +179,16 @@ def d1_semantic_auto_file(
         chroma_key="magenta",
         workdir=(workdir or output_dir / "work").resolve(),
     )
+    provider_record = generated.to_dict()
+    provider_record["provider_role"] = "GPT Image semantic Pixel Master redraw"
+    provider_record["provider_implementation"] = "Codex built-in image_gen"
     accepted, report, selected_height = _run_auto(
         source_path=source_path,
         semantic_path=semantic_path,
         logical_path=logical_path,
         preview_path=preview_path,
         report_path=report_path,
-        semantic_provider=generated.to_dict(),
+        semantic_provider=provider_record,
         manifest=manifest,
         options=options,
         strategy="semantic_d1_auto_resolution",
@@ -197,6 +210,8 @@ def d2_semantic_auto_file(
 ) -> AutoD2Result:
     from studio.backend import provider_service
 
+    if provider != "codex":
+        raise ValueError("D2 semantic redraw is pinned to GPT Image via the Codex image_gen provider")
     output_dir = output_dir.resolve()
     intermediate_path = output_dir / "intermediate" / f"{stem}.png"
     semantic_path, logical_path, preview_path, report_path = _paths(output_dir, stem)
@@ -219,14 +234,20 @@ def d2_semantic_auto_file(
         chroma_key="magenta",
         workdir=(workdir or output_dir / "work").resolve() / "stage2",
     )
-    intermediate = {"path": str(intermediate_path.resolve()), "provider": stage1.to_dict()}
+    stage1_record = stage1.to_dict()
+    stage1_record["provider_role"] = "GPT Image semantic stage 1"
+    stage1_record["provider_implementation"] = "Codex built-in image_gen"
+    stage2_record = stage2.to_dict()
+    stage2_record["provider_role"] = "GPT Image semantic Pixel Master redraw"
+    stage2_record["provider_implementation"] = "Codex built-in image_gen"
+    intermediate = {"path": str(intermediate_path.resolve()), "provider": stage1_record}
     accepted, report, selected_height = _run_auto(
         source_path=source_path,
         semantic_path=semantic_path,
         logical_path=logical_path,
         preview_path=preview_path,
         report_path=report_path,
-        semantic_provider=stage2.to_dict(),
+        semantic_provider=stage2_record,
         manifest=manifest,
         options=options,
         strategy="semantic_d2_auto_resolution",
