@@ -77,14 +77,18 @@ service-backed routes.
 
 | Method | Path | Request | Response | Backend owner |
 |---|---|---|---|---|
-| POST | `/api/quick/sessions` | `QuickSessionCreateRequest` | `QuickSessionResponse` (`201`) | `quick_service.create_session` → upload storage or existing provider service |
+| POST | `/api/quick/sessions` | `QuickSessionCreateRequest` | `QuickSessionResponse` (`201`) | upload-only `quick_service.create_session`; prompt-to-character source generation is retired |
 | GET | `/api/quick/sessions/{session_id}` | — | `QuickSessionResponse` | persisted Quick session metadata |
 | GET | `/api/quick/sessions/{session_id}/assets/{path:path}` | — | file stream | contained Quick source/session asset |
-| POST | `/api/quick/sessions/{session_id}/pixelize` | `QuickPixelizeRequest` | `QuickPixelizeResponse` | `preserve` → deterministic Pixelize M1.1; `reference_pixel_master_128` → reference-guided C2 with raw/intermediate/post artifacts |
+| POST | `/api/quick/sessions/{session_id}/pixelize` | `QuickPixelizeRequest` | `QuickPixelizeResponse` | deterministic Pixelize M1.1; only the resulting logical master is accepted |
 | PUT | `/api/quick/sessions/{session_id}/source` | `QuickSourceSelectionRequest` | `QuickSessionResponse` | explicit original/pixelized source selection |
 | POST | `/api/quick/sessions/{session_id}/make-sprite` | `QuickMakeSpriteRequest` | `QuickMakeSpriteResponse` (`202`) | auto-created Run + persisted `quick_make` Job |
 
-Quick Pixelize defaults to `reference_pixel_master_128` at 128px. `preserve` remains available for the deterministic M1.1 route. C2 accepts only the validator-approved logical post-cleanup master; raw transport and intermediate artifacts remain available for audit. Preserve uses the subject-first `size`, `subject_mode`, and `detail` options.
+Quick and Static Pixelize expose only deterministic Preserve conversion. C1/C2/D1/D2 and Identity Auto remain retired experiment implementations, not product API strategies. Unknown strategy/artifact-selection fields are rejected. Existing legacy semantic session assets are retained on disk but cannot be selected for sprite generation; users must choose the original source or rerun deterministic Preserve Pixelize.
+
+The selectable logical subject heights are `128`, `160`, `192`, and `256` across Quick, Static, the deterministic engine, and the standalone CLI. `size`/`pixel_size` name the logical character height (not a square canvas size); aspect ratio is preserved and output width follows the selected subject crop. The former `64`/`96` choices are retired from the product path. No automatic resolution selection is performed.
+
+The deterministic engine's centralized `report.validation` is the acceptance record: logical and subject height, binary alpha, palette limit/membership, readable PNG artifacts, and exact 4× NEAREST preview consistency must pass before the API returns success. A failed Quick rerun is marked unaccepted in the saved session; it cannot be selected for sprite generation. Byte-identical repeat runs are covered by regression tests.
 
 Quick does not return base64 image data. The session API is a user-facing façade;
 Make Sprite automatically builds the internal Run and then delegates the same

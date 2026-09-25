@@ -26,15 +26,17 @@ from pathlib import Path
 from typing import Any, Literal
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFilter
 
 from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 from studio.shared.config import DitherSettings
 from studio.shared.palette import apply_palette, build_palette, palette_distance_report
 from studio.static_mode.refine.dither import apply_dither
+from .resolution import SUPPORTED_LOGICAL_HEIGHTS
+from .validation import PixelMasterValidationError, validate_deterministic_pixel_master, validate_pixelize_artifacts
 
 
-SUPPORTED_SIZES = (64, 96, 128, 192)
+SUPPORTED_SIZES = SUPPORTED_LOGICAL_HEIGHTS
 SUPPORTED_PALETTES = (16, 24, 32, 48)
 DitherMode = Literal["none", "ordered-low", "ordered"]
 BackgroundMode = Literal["keep", "cleanup"]
@@ -147,8 +149,85 @@ def _bbox(mask: np.ndarray) -> SubjectBox | None:
     return int(xs.min()), int(ys.min()), int(xs.max() + 1), int(ys.max() + 1)
 
 
+def _trim_subject_content(
+    crop: np.ndarray,
+    source_bbox: SubjectBox,
+    alpha_threshold: int,
+) -> tuple[np.ndarray, SubjectBox]:
+    """Remove detector/crop padding so target height describes the subject."""
+    local_bbox = _bbox(crop[:, :, 3] >= alpha_threshold)
+    if local_bbox is None:
+        return crop, source_bbox
+    left, top, right, bottom = local_bbox
+    source_left, source_top, _, _ = source_bbox
+    content_bbox = (
+        source_left + left,
+        source_top + top,
+        source_left + right,
+        source_top + bottom,
+    )
+    return crop[top:bottom, left:right].copy(), content_bbox
+
+
+def _border_connected_chroma_background(
+    source: np.ndarray,
+    reference_rgb: np.ndarray,
+    alpha_threshold: int,
+) -> np.ndarray:
+    """Find chroma-key-like pixels connected to the image border.
+
+    RGB distance alone leaves antialiased green-screen spill and noisy key-colour
+    pixels inside the subject crop. For saturated border colours, flood through
+    a broad chroma band from the image border, remove near-identical key chroma
+    globally, and remove a one-pixel halo of lighter mixed key colour adjacent
+    to that exterior region. Enclosed, less key-like green details remain
+    foreground. Exact background-hue details are inherently indistinguishable
+    from chroma-key contamination and are treated as key.
+    """
+    reference = np.asarray(reference_rgb, dtype=np.float32) / 255.0
+    reference_max = float(reference.max(initial=0.0))
+    if reference_max <= 0.0 or float(reference.max() - reference.min()) < 64.0 / 255.0:
+        return np.zeros(source.shape[:2], dtype=bool)
+
+    reference_chroma = reference / reference_max
+    rgb = source[:, :, :3].astype(np.float32) / 255.0
+    maximum = np.max(rgb, axis=2, keepdims=True)
+    chroma = np.divide(rgb, maximum, out=np.zeros_like(rgb), where=maximum > 1e-6)
+    chroma_distance = np.sqrt(np.sum((chroma - reference_chroma) ** 2, axis=2))
+    candidate = (chroma_distance <= 0.62) & (source[:, :, 3] >= alpha_threshold)
+    if not candidate.any():
+        return np.zeros(source.shape[:2], dtype=bool)
+    # ``fromarray`` may expose a read-only view; Pillow's floodfill silently
+    # leaves such images unchanged, so copy before mutating the mask.
+    flood = Image.fromarray((candidate.astype(np.uint8) * 255), mode="L").copy()
+    height, width = candidate.shape
+    border_points = (
+        [(x, 0) for x in range(width)]
+        + [(x, height - 1) for x in range(width)]
+        + [(0, y) for y in range(1, height - 1)]
+        + [(width - 1, y) for y in range(1, height - 1)]
+    )
+    for point in border_points:
+        if flood.getpixel(point) == 255:
+            ImageDraw.floodfill(flood, point, 0, thresh=0)
+
+    filled = np.asarray(flood, dtype=np.uint8)
+    border_connected = candidate & (filled == 0)
+    exact_hue_key = (chroma_distance <= 0.15) & (source[:, :, 3] >= alpha_threshold)
+    near_border = np.asarray(
+        Image.fromarray((border_connected.astype(np.uint8) * 255), mode="L").filter(ImageFilter.MaxFilter(3)),
+        dtype=np.uint8,
+    ) > 0
+    blended_edge_spill = (
+        (chroma_distance <= 0.80)
+        & (source[:, :, 3] >= alpha_threshold)
+        & near_border
+    )
+    return exact_hue_key | border_connected | blended_edge_spill
+
+
 def _border_foreground_mask(source: np.ndarray, alpha_threshold: int) -> np.ndarray:
-    """Find pixels that differ from the dominant border colour in opaque art."""
+    """Find foreground away from the dominant border colour and its spill."""
     height, width, _ = source.shape
     border = np.concatenate((source[0, :, :], source[-1, :, :], source[:, 0, :], source[:, -1, :]), axis=0)
     valid_border = border[border[:, 3] >= alpha_threshold]
@@ -158,10 +237,40 @@ def _border_foreground_mask(source: np.ndarray, alpha_threshold: int) -> np.ndar
     colours, counts = np.unique(quantised, axis=0, return_counts=True)
     reference = colours[int(np.argmax(counts))].astype(np.float32) * 16.0 + 8.0
     distance = np.sqrt(np.sum((source[:, :, :3].astype(np.float32) - reference) ** 2, axis=2))
-    mask = (distance >= 28.0) & (source[:, :, 3] >= alpha_threshold)
+    opaque = source[:, :, 3] >= alpha_threshold
+    connected_chroma = _border_connected_chroma_background(source, reference, alpha_threshold)
+    mask = (distance >= 28.0) & opaque & ~connected_chroma
     minimum = max(8, int(height * width * 0.001))
     if int(mask.sum()) < minimum:
-        mask = (distance >= 16.0) & (source[:, :, 3] >= alpha_threshold)
+        mask = (distance >= 16.0) & opaque & ~connected_chroma
+
+    # A few antialiased screen-colour pixels can be separated from the exterior
+    # by hair/outline pixels and therefore evade border-connected flood fill.
+    # Only trim bright, strongly green pixels in the one-pixel silhouette edge;
+    # interior green costume, eyes, and accessories remain untouched.
+    reference_rgb = reference / 255.0
+    reference_max = float(reference_rgb.max(initial=0.0))
+    if reference_max > 0.0 and float(reference_rgb.max() - reference_rgb.min()) >= 64.0 / 255.0:
+        reference_chroma = reference_rgb / reference_max
+        rgb = source[:, :, :3].astype(np.float32) / 255.0
+        rgb_max = np.max(rgb, axis=2, keepdims=True)
+        chroma = np.divide(rgb, rgb_max, out=np.zeros_like(rgb), where=rgb_max > 1e-6)
+        chroma_distance = np.sqrt(np.sum((chroma - reference_chroma) ** 2, axis=2))
+        eroded = np.asarray(
+            Image.fromarray((mask.astype(np.uint8) * 255), mode="L").filter(ImageFilter.MinFilter(3)),
+            dtype=np.uint8,
+        ) > 0
+        green = source[:, :, 1].astype(np.int16)
+        other_channels = np.maximum(source[:, :, 0], source[:, :, 2]).astype(np.int16)
+        likely_edge_spill = (
+            mask
+            & ~eroded
+            & opaque
+            & (chroma_distance <= 0.80)
+            & (green >= 150)
+            & (green - other_channels >= 70)
+        )
+        mask &= ~likely_edge_spill
     return mask
 
 
@@ -233,7 +342,8 @@ def _subject_selection(source: Image.Image, options: PixelizeOptions) -> tuple[I
             local_mask = _border_foreground_mask(crop, options.alpha_threshold)
             crop[:, :, 3] = np.where(local_mask, 255, 0).astype(np.uint8)
             crop[~local_mask, :3] = 0
-        return Image.fromarray(crop, mode="RGBA"), selected, candidates, warnings
+        crop, content_bbox = _trim_subject_content(crop, selected, options.alpha_threshold)
+        return Image.fromarray(crop, mode="RGBA"), content_bbox, candidates, warnings
 
     candidates = _component_candidates(foreground)
     full_box = _bbox(foreground)
@@ -257,7 +367,8 @@ def _subject_selection(source: Image.Image, options: PixelizeOptions) -> tuple[I
         crop[:, :, 3] = np.where(local_mask, 255, 0).astype(np.uint8)
         crop[~local_mask, :3] = 0
         warnings.append({"code": "opaque-background-masked", "message": "auto subject detection masked background pixels outside the selected subject"})
-    return Image.fromarray(crop, mode="RGBA"), selected, candidates, warnings
+    crop, content_bbox = _trim_subject_content(crop, selected, options.alpha_threshold)
+    return Image.fromarray(crop, mode="RGBA"), content_bbox, candidates, warnings
 
 
 def _auto_palette_size(image: Image.Image, alpha_threshold: int, detail: DetailMode) -> int:
@@ -470,6 +581,7 @@ def pixelize_image(image: Image.Image, options: PixelizeOptions) -> tuple[Image.
         "logical_size": list(logical_size),
         "profile": {
             **asdict(options),
+            "target_height": options.target_size,
             "subject_bbox": list(subject_bbox),
             "palette_mode": "auto" if options.palette_size is None else "fixed",
             "resolved_palette_size": len(palette),
@@ -491,6 +603,13 @@ def pixelize_image(image: Image.Image, options: PixelizeOptions) -> tuple[Image.
         },
         "warnings": warnings,
     }
+    report["validation"] = validate_deterministic_pixel_master(
+        logical,
+        palette,
+        target_height=options.target_size,
+        alpha_threshold=options.alpha_threshold,
+        max_palette_size=palette_size,
+    ).to_dict()
     return logical, tuple(palette), report
 
 
@@ -519,15 +638,29 @@ def pixelize_file(
     preview_path = output_dir / f"{stem}.preview-4x.png"
     subject_path = output_dir / f"{stem}.subject.png"
 
+    preview = logical.resize((logical.width * 4, logical.height * 4), Image.Resampling.NEAREST)
     atomic_save_image(logical, output_path)
-    atomic_save_image(logical.resize((logical.width * 4, logical.height * 4), Image.Resampling.NEAREST), preview_path)
+    atomic_save_image(preview, preview_path)
     atomic_save_image(subject, subject_path)
     atomic_write_text(
         palette_path,
         json.dumps({"kind": "sprite-studio-pixel-palette", "entries": [list(entry) for entry in palette]}, ensure_ascii=False, indent=2) + "\n",
     )
+    validation = validate_pixelize_artifacts(
+        logical,
+        palette,
+        target_height=options.target_size,
+        alpha_threshold=options.alpha_threshold,
+        max_palette_size=int(report["palette"]["requested"]),
+        output_path=output_path,
+        preview_path=preview_path,
+        subject_path=subject_path,
+    )
+    report["validation"] = validation.to_dict()
     atomic_write_text(profile_path, json.dumps(report["profile"], ensure_ascii=False, indent=2) + "\n")
     atomic_write_text(report_path, json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    if not validation.pass_:
+        raise PixelMasterValidationError(validation)
     return PixelizeResult(
         output_path=output_path,
         palette_path=palette_path,

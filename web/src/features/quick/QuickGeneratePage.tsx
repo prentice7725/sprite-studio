@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import type { JobStatus, Provider, QuickPixelizeResult, QuickSession } from '../../api'
+import type { JobStatus, QuickPixelizeResult, QuickSession } from '../../api'
 import { createQuickSession, getJob, getQuickSession, jobWebsocketUrl, makeQuickSprite, quickPixelize, retryJob, selectQuickSource, uploadImage } from '../../api'
 import SourceInputPanel, { type QuickSourceDraft } from './SourceInputPanel'
 import SourcePreview from './SourcePreview'
@@ -11,9 +11,9 @@ import { useQuickText } from './quickText'
 
 type Stage = 'input' | 'ready' | 'pixelize' | 'make' | 'progress' | 'result'
 
-interface Props { providerChoices: Provider[]; onOpenStudio: (runId?: string) => void }
+interface Props { onOpenStudio: (runId?: string) => void }
 
-export default function QuickGeneratePage({ providerChoices, onOpenStudio }: Props) {
+export default function QuickGeneratePage({ onOpenStudio }: Props) {
   const text = useQuickText()
   const [stage, setStage] = useState<Stage>('input')
   const [session, setSession] = useState<QuickSession | null>(null)
@@ -72,24 +72,11 @@ export default function QuickGeneratePage({ providerChoices, onOpenStudio }: Pro
     setBusy(true)
     setError('')
     try {
-      let uploadId: string | undefined
-      let referenceUploadId: string | undefined
-      if (draft.sourceKind === 'upload') {
-        if (!draft.file) throw new Error('Choose a source image first.')
-        uploadId = (await uploadImage(draft.file)).upload_id
-      }
-      if (draft.referenceFile) referenceUploadId = (await uploadImage(draft.referenceFile)).upload_id
+      if (!draft.file) throw new Error('Choose a source image first.')
+      const uploadId = (await uploadImage(draft.file)).upload_id
       const next = await createQuickSession({
-        source_kind: draft.sourceKind,
-        ...(uploadId ? { upload_id: uploadId } : {}),
-        ...(referenceUploadId ? { reference_upload_id: referenceUploadId } : {}),
-        prompt: draft.prompt,
-        motion: draft.motion,
-        custom_motion: draft.customMotion,
-        style: draft.style,
-        background: draft.background,
-        notes: draft.notes,
-        provider: draft.provider,
+        source_kind: 'upload',
+        upload_id: uploadId,
       })
       setSession(next)
       setPixelizeResult(null)
@@ -160,7 +147,7 @@ export default function QuickGeneratePage({ providerChoices, onOpenStudio }: Pro
     <section className="quick-hero" aria-labelledby="quick-page-heading"><div><p className="eyebrow">{text.quickGenerate}</p><h2 id="quick-page-heading">{text.sourceToSprite}</h2><p className="muted">{text.sourceDescription}</p></div><button className="secondary-button" type="button" onClick={() => onOpenStudio()}>{text.advancedStudio}</button></section>
     <nav className="quick-stepper" aria-label={text.quickGenerate}>{(['input', 'ready', 'pixelize', 'make', 'progress', 'result'] as Stage[]).map((item, index) => <span className={item === stage ? 'active' : ''} key={item}><b>{index + 1}</b>{item === 'input' ? text.sourceStep : item === 'ready' ? text.readyStep : item === 'pixelize' ? text.pixelizeStep : item === 'make' ? text.makeStep : item === 'progress' ? text.progressStep : text.resultStep}</span>)}</nav>
     {error && <div className="error-box" role="alert">{error}</div>}
-    {!session && <SourceInputPanel providerChoices={providerChoices} busy={busy} onSubmit={(draft) => void createSource(draft)} />}
+    {!session && <SourceInputPanel busy={busy} onSubmit={(draft) => void createSource(draft)} />}
     {session && stage === 'ready' && <SourcePreview session={session} onReplace={replaceSource} onPixelize={() => setStage('pixelize')} onMakeSprite={() => setStage('make')} onSelectSource={(source) => void chooseSource(source)} onOpenStudio={() => onOpenStudio(session.run_id ?? undefined)} />}
     {session && stage === 'pixelize' && <QuickPixelizePanel session={session} result={pixelizeResult} busy={busy} onRun={(options) => void runPixelize(options)} onSelectSource={(source) => void chooseSource(source)} onBack={() => setStage('ready')} />}
     {session && stage === 'make' && <MakeSpritePanel session={session} busy={busy} onSubmit={(options) => void startMakeSprite(options)} onBack={() => setStage('ready')} />}

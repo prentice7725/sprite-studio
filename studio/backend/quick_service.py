@@ -19,10 +19,11 @@ from PIL import Image
 
 from sprite_studio.spec.runio import atomic_save_image, atomic_write_text
 from studio.api.uploads import resolve_upload
-from studio.backend import job_service, provider_service, run_manager
+from studio.backend import job_service, run_manager
 from studio.backend.prompt_service import write_assembled_prompt
 from studio.backend.schemas import StudioRunConfig
 from studio.static_mode.pixelize import PixelizeOptions
+from studio.static_mode.pixelize.validation import PixelMasterValidationError
 
 
 QUICK_ROOT_ENV = "SPRITE_STUDIO_QUICK_ROOT"
@@ -64,35 +65,6 @@ def _copy_as_png(source: Path, destination: Path) -> None:
         atomic_save_image(opened.convert("RGBA"), destination)
 
 
-def _style_label(style: str) -> str:
-    return {
-        "pixel-art": "pixel art",
-        "cel-shaded": "clean cel-shaded game art",
-        "hand-painted": "hand-painted game art",
-        "3d-render": "3D-rendered game art",
-    }.get(style, style)
-
-
-def _source_prompt(payload: dict[str, Any]) -> str:
-    prompt = str(payload.get("prompt") or "").strip()
-    style = _style_label(str(payload.get("style") or "pixel-art"))
-    background = "transparent background with clean alpha" if payload.get("background") == "transparent" else "solid magenta chroma-key background"
-    motion = str(payload.get("motion") or "idle")
-    custom = str(payload.get("custom_motion") or "").strip()
-    motion_text = custom if motion == "custom" and custom else motion
-    notes = str(payload.get("notes") or "").strip()
-    parts = [
-        prompt or "a clear full-body game character source illustration",
-        f"{style}, full body, centered, readable silhouette",
-        f"prepare the character for a {motion_text} sprite animation",
-        background,
-        "no text, no UI, no frame labels, no unrelated characters",
-    ]
-    if notes:
-        parts.append(notes)
-    return ", ".join(parts)
-
-
 def _response_payload(payload: dict[str, Any]) -> dict[str, Any]:
     session_id = str(payload["session_id"])
     root = _session_dir(session_id)
@@ -127,49 +99,25 @@ def create_session(body: Any) -> dict[str, Any]:
     session_id = uuid4().hex[:12]
     root = _session_dir(session_id)
     source_dir = root / "source"
-    refs_dir = root / "references"
     source_dir.mkdir(parents=True, exist_ok=False)
-    refs_dir.mkdir(parents=True, exist_ok=True)
     payload: dict[str, Any] = {
         "kind": "sprite-studio-quick-session",
         "version": 1,
         "session_id": session_id,
-        "source_kind": body.source_kind,
+        "source_kind": "upload",
         "source_selection": "original",
-        "prompt": str(body.prompt or "").strip(),
+        "prompt": "",
         "motion": body.motion,
         "custom_motion": str(body.custom_motion or "").strip(),
-        "style": body.style,
-        "background": body.background,
-        "notes": str(body.notes or "").strip(),
-        "provider": body.provider,
+        "style": "pixel-art",
+        "background": "transparent",
+        "notes": "",
+        "provider": "grok",
         "run_id": None,
         "job_id": None,
         "subject_source": None,
     }
-    if body.source_kind == "upload":
-        if not body.upload_id:
-            raise ValueError("upload source requires upload_id")
-        _copy_as_png(resolve_upload(body.upload_id), source_dir / "original.png")
-    else:
-        if not payload["prompt"]:
-            raise ValueError("prompt source requires a character prompt")
-        refs: list[Path] = []
-        if body.reference_upload_id:
-            reference = refs_dir / "reference.png"
-            _copy_as_png(resolve_upload(body.reference_upload_id), reference)
-            refs.append(reference)
-        result = provider_service.generate_image(
-            body.provider,
-            _source_prompt(payload),
-            source_dir / "original.png",
-            refs=refs,
-            transparent=body.background == "transparent",
-            chroma_key="magenta",
-            aspect_ratio="1:1" if body.provider == "grok" else None,
-            workdir=root / "work" / "source",
-        )
-        payload["source_generation"] = result.to_dict()
+    _copy_as_png(resolve_upload(body.upload_id), source_dir / "original.png")
     _write(session_id, payload)
     return payload
 
@@ -182,25 +130,40 @@ def pixelize_session(session_id: str, body: Any) -> tuple[dict[str, Any], dict[s
     # Reuse the M1.1 engine directly; Static Mode's project adapter is not
     # duplicated just to make a source-session façade.
     from studio.static_mode.pixelize import pixelize_file
+    target_size = getattr(body, "size", getattr(body, "pixel_size", 128))
+    background = getattr(body, "background", None)
+    if background is None:
+        background = "cleanup" if getattr(body, "background_cleanup", False) else "keep"
     options = PixelizeOptions(
-        target_size=body.size,
+        target_size=target_size,
         palette_size=None if body.palette == "auto" else int(body.palette),
         dither=body.dither,
-        background=body.background,
+        background=background,
         outline=body.outline,
         subject_mode=body.subject_mode,
         subject_bbox=body.subject_bbox,
         detail=body.detail,
         alpha_threshold=body.alpha_threshold,
     )
-    output = pixelize_file(source, _session_dir(session_id) / "pixelized", options, stem="source")
+    try:
+        output = pixelize_file(source, _session_dir(session_id) / "pixelized", options, stem="source")
+    except PixelMasterValidationError as exc:
+        payload["pixelize_strategy"] = "preserve"
+        payload["pixelize_accepted"] = "validation_failed"
+        payload["pixelize_validation"] = exc.validation.to_dict()
+        _write(session_id, payload)
+        raise
     payload["pixelized_source"] = "pixelized/source.png"
     payload["pixelized_preview"] = "pixelized/source.preview-4x.png"
     payload["subject_source"] = "pixelized/source.subject.png"
+    payload["pixelize_strategy"] = "preserve"
+    payload["pixelize_accepted"] = "logical_master"
     payload["pixelize_options"] = body.model_dump()
     _write(session_id, payload)
     detail = {
         "session_id": session_id,
+        "strategy": "preserve",
+        "accepted": "logical_master",
         "output_source": f"/api/quick/sessions/{session_id}/assets/pixelized/source.png",
         "preview_source": f"/api/quick/sessions/{session_id}/assets/pixelized/source.preview-4x.png",
         "subject_source": f"/api/quick/sessions/{session_id}/assets/pixelized/source.subject.png",
@@ -218,6 +181,23 @@ def select_source(session_id: str, source: str) -> dict[str, Any]:
     payload = _read(session_id)
     if source not in {"original", "pixelized"}:
         raise ValueError("source must be original or pixelized")
+    if source == "pixelized" and payload.get("pixelize_strategy") in {
+        "reference_pixel_master_128",
+        "identity_preserving_auto",
+        "c1",
+        "c2",
+        "d1",
+        "d2",
+    }:
+        raise ValueError(
+            "legacy semantic Pixel Master is not accepted; choose the original source "
+            "or rerun deterministic Preserve Pixelize first"
+        )
+    if source == "pixelized" and payload.get("pixelize_accepted") == "validation_failed":
+        raise ValueError(
+            "the latest Preserve Pixelize output failed validation; choose the original source "
+            "or rerun Pixelize after correcting the input/options"
+        )
     pixelized_relative = str(payload.get("pixelized_source") or "pixelized/source.png")
     if source == "pixelized" and not (_session_dir(session_id) / pixelized_relative).is_file():
         raise ValueError("pixelized source is not ready; run Pixelize first")
@@ -255,15 +235,25 @@ def _motion_config(body: Any) -> tuple[str, str, bool]:
 def make_sprite(session_id: str, body: Any) -> tuple[dict[str, Any], str, str, str]:
     payload = _read(session_id)
     if body.pixelize:
-        if getattr(body, "strategy", "preserve") == "reference_pixel_master_128":
-            from studio.backend.quick_c2_service import pixelize_c2_session
-            payload, _ = pixelize_c2_session(session_id, body)
-        elif getattr(body, "strategy", "preserve") == "identity_preserving_auto":
-            from studio.backend.quick_auto_service import pixelize_auto_session
-            payload, _ = pixelize_auto_session(session_id, body)
-        else:
-            payload, _ = pixelize_session(session_id, body)
+        payload, _ = pixelize_session(session_id, body)
     selected = body.sprite_source or payload.get("source_selection", "original")
+    if selected == "pixelized" and payload.get("pixelize_strategy") in {
+        "reference_pixel_master_128",
+        "identity_preserving_auto",
+        "c1",
+        "c2",
+        "d1",
+        "d2",
+    }:
+        raise RuntimeError(
+            "legacy semantic Pixel Master is not accepted; choose the original source "
+            "or rerun deterministic Preserve Pixelize first"
+        )
+    if selected == "pixelized" and payload.get("pixelize_accepted") == "validation_failed":
+        raise RuntimeError(
+            "the latest Preserve Pixelize output failed validation; choose the original source "
+            "or rerun Pixelize after correcting the input/options"
+        )
     if selected == "pixelized" and not payload.get("pixelized_source"):
         payload, _ = pixelize_session(session_id, body)
     source = _session_dir(session_id) / (Path(str(payload.get("pixelized_source") or "pixelized/source.png")) if selected == "pixelized" else Path("source") / "original.png")

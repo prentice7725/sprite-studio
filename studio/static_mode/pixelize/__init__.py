@@ -18,8 +18,9 @@ from .d1_d2_auto import AutoD1Result, AutoD2Result, d1_semantic_auto_file, d2_se
 from .auto_resolution import AutoResolutionResult, project_auto_resolution
 from .identity_manifest import FeatureRegion, IdentityFeature, IdentityFeatureManifest
 from .information_loss_gate import InformationLossResult, SemanticPreservationResult, evaluate_information_loss, evaluate_semantic_preservation
-from .resolution import AUTO_LOGICAL_HEIGHTS, LOGICAL_HEIGHTS
+from .resolution import AUTO_LOGICAL_HEIGHTS, LOGICAL_HEIGHTS, SUPPORTED_LOGICAL_HEIGHTS
 from .structure_extractor import LogicalMasterValidation, StructureExtractionResult, StructureExtractorOptions, extract_structure, validate_logical_master
+from .validation import PixelMasterValidation, PixelMasterValidationError, validate_deterministic_pixel_master, validate_pixelize_artifacts
 
 __all__ = [
     "SUPPORTED_PALETTES",
@@ -53,9 +54,14 @@ __all__ = [
     "evaluate_semantic_preservation",
     "AUTO_LOGICAL_HEIGHTS",
     "LOGICAL_HEIGHTS",
+    "SUPPORTED_LOGICAL_HEIGHTS",
     "LogicalMasterValidation",
     "StructureExtractionResult",
     "StructureExtractorOptions",
     "extract_structure",
     "validate_logical_master",
+    "PixelMasterValidation",
+    "PixelMasterValidationError",
+    "validate_deterministic_pixel_master",
+    "validate_pixelize_artifacts",
 ]

@@ -871,7 +871,7 @@ function App() {
 
         {notice && <div className={`notice ${notice.kind}`} role={notice.kind === 'error' ? 'alert' : 'status'}>{notice.text}</div>}
 
-        {tab === 'quick' && <QuickGeneratePage providerChoices={providerChoices} onOpenStudio={(runId) => void openStudio(runId)} />}
+        {tab === 'quick' && <QuickGeneratePage onOpenStudio={(runId) => void openStudio(runId)} />}
 
         {tab === 'project' && (
           <div className="content-grid project-grid">

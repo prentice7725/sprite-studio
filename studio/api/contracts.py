@@ -22,7 +22,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 GenerationProfile = Literal["direct_pixel", "refine_first"]
 Provider = Literal["grok", "codex"]
@@ -78,28 +78,19 @@ QuickStyle = Literal["pixel-art", "cel-shaded", "hand-painted", "3d-render"]
 QuickBackground = Literal["transparent", "chroma"]
 QuickDirectionCount = Literal[1, 4, 8]
 QuickFrameCount = Literal[4, 6, 8]
-QuickPixelSize = Literal[64, 96, 128, 160, 192, 256]
-QuickIdentityResolution = Literal[128, 160, 192, 256]
+QuickLogicalHeight = Literal[128, 160, 192, 256]
 QuickPalette = Literal["auto", 16, 24, 32, 48]
 QuickDither = Literal["none", "ordered-low", "ordered"]
 QuickOutline = Literal["preserve", "auto"]
 QuickSubjectMode = Literal["auto", "manual"]
 QuickDetail = Literal["clean", "balanced", "detailed"]
-QuickPixelMasterStrategy = Literal["preserve", "reference_pixel_master_128", "identity_preserving_auto"]
-QuickAcceptedArtifact = Literal["post", "logical_master"]
-
-
 class QuickSessionCreateRequest(BaseModel):
-    source_kind: QuickSourceKind
-    upload_id: str | None = None
-    reference_upload_id: str | None = None
-    prompt: str = ""
+    model_config = ConfigDict(extra="forbid")
+
+    source_kind: Literal["upload"]
+    upload_id: str
     motion: QuickMotion = "idle"
     custom_motion: str = ""
-    style: QuickStyle = "pixel-art"
-    background: QuickBackground = "transparent"
-    notes: str = ""
-    provider: Provider = "grok"
 
 
 class QuickSessionResponse(BaseModel):
@@ -122,9 +113,10 @@ class QuickSessionResponse(BaseModel):
 
 
 class QuickPixelizeRequest(BaseModel):
-    strategy: QuickPixelMasterStrategy = "reference_pixel_master_128"
-    accepted: QuickAcceptedArtifact = "post"
-    size: QuickPixelSize = 128
+    model_config = ConfigDict(extra="forbid")
+
+    strategy: Literal["preserve"] = "preserve"
+    size: QuickLogicalHeight = 128
     palette: QuickPalette = "auto"
     dither: QuickDither = "none"
     background: Literal["keep", "cleanup"] = "keep"
@@ -133,15 +125,12 @@ class QuickPixelizeRequest(BaseModel):
     subject_bbox: tuple[int, int, int, int] | None = None
     detail: QuickDetail = "balanced"
     alpha_threshold: int = Field(default=128, ge=1, le=254)
-    identity_manifest: dict[str, Any] | None = None
-    resolution_mode: Literal["AUTO", "AUDIT"] = "AUTO"
-    resolution_override: QuickIdentityResolution | None = None
 
 
 class QuickPixelizeResponse(BaseModel):
     session_id: str
-    strategy: QuickPixelMasterStrategy = "preserve"
-    accepted: QuickAcceptedArtifact = "post"
+    strategy: Literal["preserve"] = "preserve"
+    accepted: Literal["logical_master"] = "logical_master"
     output_source: str
     preview_source: str
     subject_source: str
@@ -152,24 +141,21 @@ class QuickPixelizeResponse(BaseModel):
     palette: list[list[int]]
     warnings: list[dict[str, Any]]
     report: dict[str, Any]
-    raw_source: str | None = None
-    intermediate_source: str | None = None
-    post_source: str | None = None
-    resolution: dict[str, Any] | None = None
 
 class QuickSourceSelectionRequest(BaseModel):
     source: QuickSourceSelection
 
 
 class QuickMakeSpriteRequest(BaseModel):
-    strategy: QuickPixelMasterStrategy = "reference_pixel_master_128"
-    accepted: QuickAcceptedArtifact = "post"
+    model_config = ConfigDict(extra="forbid")
+
+    strategy: Literal["preserve"] = "preserve"
     motion: QuickMotion = "idle"
     custom_motion: str = ""
     directions: QuickDirectionCount = 1
     frames: QuickFrameCount = 6
     pixelize: bool = False
-    pixel_size: QuickPixelSize = 128
+    pixel_size: QuickLogicalHeight = 128
     palette: QuickPalette = "auto"
     dither: QuickDither = "none"
     background_cleanup: bool = False
@@ -180,9 +166,6 @@ class QuickMakeSpriteRequest(BaseModel):
     alpha_threshold: int = Field(default=128, ge=1, le=254)
     sprite_source: QuickSourceSelection | None = None
     generation_strategy: GenerationStrategy = "AUTO"
-    identity_manifest: dict[str, Any] | None = None
-    resolution_mode: Literal["AUTO", "AUDIT"] = "AUTO"
-    resolution_override: QuickIdentityResolution | None = None
 
 
 class QuickMakeSpriteResponse(BaseModel):

@@ -6,8 +6,10 @@ from __future__ import annotations
 from typing import Final
 
 
-AUTO_LOGICAL_HEIGHTS: Final[tuple[int, ...]] = (128, 160, 192, 256)
-LOGICAL_HEIGHTS: Final[frozenset[int]] = frozenset(AUTO_LOGICAL_HEIGHTS)
+SUPPORTED_LOGICAL_HEIGHTS: Final[tuple[int, ...]] = (128, 160, 192, 256)
+# Retain the experiment-facing name for archived auto-resolution modules.
+AUTO_LOGICAL_HEIGHTS: Final[tuple[int, ...]] = SUPPORTED_LOGICAL_HEIGHTS
+LOGICAL_HEIGHTS: Final[frozenset[int]] = frozenset(SUPPORTED_LOGICAL_HEIGHTS)
 
 
 def is_logical_height(value: int) -> bool:
@@ -21,4 +23,4 @@ def require_logical_height(value: int, *, field_name: str = "target_height") -> 
     return value
 
 
-__all__ = ["AUTO_LOGICAL_HEIGHTS", "LOGICAL_HEIGHTS", "is_logical_height", "require_logical_height"]
+__all__ = ["AUTO_LOGICAL_HEIGHTS", "LOGICAL_HEIGHTS", "SUPPORTED_LOGICAL_HEIGHTS", "is_logical_height", "require_logical_height"]

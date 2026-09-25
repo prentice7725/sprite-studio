@@ -1,0 +1,28 @@
+{
+  "kind": "sprite-studio-deterministic-pixelize-baseline",
+  "version": 1,
+  "fixture_manifest": "benchmark_v2/configs/tier_b_fixtures_r00_r08.json",
+  "source_root": "benchmark_v2/sources/tier_b",
+  "target_heights": [128],
+  "pixelize_options": {
+    "palette_size": null,
+    "dither": "none",
+    "background": "cleanup",
+    "outline": "preserve",
+    "alpha_threshold": 128,
+    "subject_mode": "auto",
+    "detail": "balanced"
+  },
+  "cases": [
+    {"case_id": "R00-opaque-background", "source_id": "R00", "category": "opaque_background"},
+    {"case_id": "R01-complex-costume", "source_id": "R01", "category": "complex_costume"},
+    {"case_id": "R01-transparent-single", "source_id": "R01", "category": "derived_transparent_single_character", "preparation": "dominant_border_distance_gt_20_to_alpha"},
+    {"case_id": "R02-thin-weapon", "source_id": "R02", "category": "thin_weapon"},
+    {"case_id": "R03-sd-character", "source_id": "R03", "category": "sd_character"},
+    {"case_id": "R04-complex-costume-accessory", "source_id": "R04", "category": "complex_costume_asymmetric_accessory"},
+    {"case_id": "R05-long-hair", "source_id": "R05", "category": "long_hair"},
+    {"case_id": "R06-asymmetric-accessory", "source_id": "R06", "category": "asymmetric_accessory_thin_weapon"},
+    {"case_id": "R07-long-hair-complex-costume", "source_id": "R07", "category": "long_hair_complex_costume"},
+    {"case_id": "R08-realistic-anime-hard-case", "source_id": "R08", "category": "realistic_anime_hard_case"}
+  ]
+}

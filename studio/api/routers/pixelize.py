@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, Literal
 
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from studio.backend import pixelize_service, static_service
 
@@ -16,10 +16,11 @@ router = APIRouter(prefix="/static", tags=["pixelize"])
 
 
 class PixelizeRequest(BaseModel):
-    strategy: Literal["preserve", "reference_pixel_master_128"] = "preserve"
-    accepted: Literal["post"] = "post"
+    model_config = ConfigDict(extra="forbid")
+
+    strategy: Literal["preserve"] = "preserve"
     asset: str = "scene"
-    size: Literal[64, 96, 128, 192] = 128
+    size: Literal[128, 160, 192, 256] = 128
     palette: Literal["auto", 16, 24, 32, 48] = 32
     detail: Literal["clean", "balanced", "detailed"] = "balanced"
     subject_mode: Literal["auto", "manual"] = "auto"
@@ -31,8 +32,8 @@ class PixelizeRequest(BaseModel):
 
 
 class PixelizeResponse(BaseModel):
-    strategy: Literal["preserve", "reference_pixel_master_128"] = "preserve"
-    accepted: Literal["post"] = "post"
+    strategy: Literal["preserve"] = "preserve"
+    accepted: Literal["logical_master"] = "logical_master"
     output_asset: str
     preview_asset: str
     subject_asset: str
@@ -46,9 +47,6 @@ class PixelizeResponse(BaseModel):
     palette: list[list[int]]
     warnings: list[dict[str, Any]]
     report: dict[str, Any]
-    raw_asset: str | None = None
-    intermediate_asset: str | None = None
-    post_asset: str | None = None
 
 
 def _load(project_id: str):
@@ -74,38 +72,26 @@ def _asset_url(project_id: str, project_root: Path, path: Path) -> str:
 def pixelize_static_asset(project_id: str, body: PixelizeRequest) -> PixelizeResponse:
     info = _load(project_id)
     try:
-        if body.strategy == "reference_pixel_master_128":
-            if body.size != 128:
-                raise ValueError("reference_pixel_master_128 requires size=128")
-            result_payload = pixelize_service.c2_result_payload(pixelize_service.c2_pixelize_asset(
-                info,
-                body.asset,
-                target_size=128,
-                palette_size=None if body.palette == "auto" else int(body.palette),
-                alpha_threshold=body.alpha_threshold,
-                accepted=body.accepted,
-            ))
-        else:
-            result_payload = pixelize_service.result_payload(pixelize_service.pixelize_asset(
-                info,
-                body.asset,
-                target_size=body.size,
-                palette_size=None if body.palette == "auto" else int(body.palette),
-                dither=body.dither,
-                background=body.background,
-                outline=body.outline,
-                subject_mode=body.subject_mode,
-                subject_bbox=body.subject_bbox,
-                detail=body.detail,
-                alpha_threshold=body.alpha_threshold,
-            ))
+        result_payload = pixelize_service.result_payload(pixelize_service.pixelize_asset(
+            info,
+            body.asset,
+            target_size=body.size,
+            palette_size=None if body.palette == "auto" else int(body.palette),
+            dither=body.dither,
+            background=body.background,
+            outline=body.outline,
+            subject_mode=body.subject_mode,
+            subject_bbox=body.subject_bbox,
+            detail=body.detail,
+            alpha_threshold=body.alpha_threshold,
+        ))
     except (ValueError, FileNotFoundError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     payload = result_payload
     paths = payload["paths"]
     return PixelizeResponse(
         strategy=body.strategy,
-        accepted=body.accepted,
+        accepted="logical_master",
         output_asset=_asset_url(project_id, info.path, paths["output"]),
         preview_asset=_asset_url(project_id, info.path, paths["preview"]),
         subject_asset=_asset_url(project_id, info.path, paths["subject"]),
@@ -119,7 +105,4 @@ def pixelize_static_asset(project_id: str, body: PixelizeRequest) -> PixelizeRes
         palette=payload["palette"],
         warnings=payload["warnings"],
         report=payload["report"],
-        raw_asset=_asset_url(project_id, info.path, paths["raw"]) if "raw" in paths else None,
-        intermediate_asset=_asset_url(project_id, info.path, paths["intermediate"]) if "intermediate" in paths else None,
-        post_asset=_asset_url(project_id, info.path, paths["post"]) if "post" in paths else None,
     )

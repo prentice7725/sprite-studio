@@ -31,7 +31,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("input", type=Path)
     parser.add_argument("--out-dir", required=True, type=Path)
     parser.add_argument("--stem", default="master_pixel")
-    parser.add_argument("--size", type=int, choices=(64, 96, 128, 192), default=128)
+    parser.add_argument("--size", type=int, choices=(128, 160, 192, 256), default=128)
     parser.add_argument("--palette", type=_palette, default=32)
     parser.add_argument("--dither", choices=("none", "ordered-low", "ordered"), default="none")
     parser.add_argument("--background", choices=("keep", "cleanup"), default="keep")
